@@ -1,0 +1,23 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/redTab</item>
+        <item name="colorPrimaryDark">@color/redTab</item>
+        <item name="colorAccent">@color/redTab</item>
+        <item name="playBarBackground">@drawable/play_bar_bg_selector</item>
+    </style>
+    <style name="AppBaseThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/nightColor</item>
+        <item name="colorPrimaryDark">@color/nightColor</item>
+        <item name="colorAccent">@color/nightColor</item>
+        <item name="playBarBackground">@drawable/play_bar_bg_selector_dark</item>
+    </style>
+    <attr name="playBarBackground" format="reference" />
+
+    <!--白天模式-->
+    <style name="AppTheme" parent="AppBaseTheme" />
+    <!--夜间模式-->
+    <style name="AppThemeDark" parent="AppBaseThemeDark" />
+    <style name="AppTheme.Text" parent="TextAppearance.AppCompat" />
+
+</resources>
