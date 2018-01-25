@@ -27,10 +27,10 @@
     </string-array>
 
     <string-array name="local_music_dialog">
-        <item>分享</item>
+        <item>分享音乐</item>
         <item>设为铃声</item>
         <item>歌曲信息</item>
-        <item>删除</item>
+        <item>删除音乐</item>
     </string-array>
 
     <string-array name="online_music_list_title">

@@ -41,6 +41,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
@@ -58,7 +59,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -146,10 +147,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initFragment();
         initTabLayout();
         initNavigationView();
-        initPermissions();
         initPlayServiceListener();
+        parseIntent();
     }
 
+    /**
+     * 这个方法的作用是？？？
+     * @param intent        intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        parseIntent();
+    }
 
     @Override
     public void initListener() {
@@ -181,6 +191,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initData() {
+        //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
         onChangeImpl(getPlayService().getPlayingMusic());
     }
 
@@ -212,15 +223,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ToastUtil.showToast(this, "谈出对话框");
                 break;
             case R.id.iv_play_bar_play:
-                ToastUtil.showToast(this, "播放");
+                getPlayService().playPause();
                 break;
             case R.id.iv_play_bar_next:
-                ToastUtil.showToast(this, "下一首");
+                getPlayService().next();
                 break;
             default:
                 break;
         }
     }
+
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
@@ -314,6 +326,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
+    private void parseIntent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(Constant.EXTRA_NOTIFICATION)) {
+            showPlayingFragment();
+            setIntent(new Intent());
+        }
+    }
+
+
     private void showPlayingFragment() {
         if (isPlayFragmentShow) {
             return;
@@ -341,103 +362,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     /**
-     * 初始化权限
-     */
-    private void initPermissions() {
-        locationPermissionsTask();
-    }
-
-
-    private static final int RC_LOCATION_CONTACTS_PERM = 124;
-    private static final String[] LOCATION_AND_CONTACTS = {
-            Manifest.permission.CALL_PHONE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO
-    };
-
-    @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
-    public void locationPermissionsTask() {
-        //检查是否获取该权限
-        if (hasPermissions()) {
-            //具备权限 直接进行操作
-            //Toast.makeText(this, "Location and Contacts things", Toast.LENGTH_LONG).show();
-        } else {
-            //权限拒绝 申请权限
-            //第二个参数是被拒绝后再次申请该权限的解释
-            //第三个参数是请求码
-            //第四个参数是要申请的权限
-            EasyPermissions.requestPermissions(MainActivity.this,
-                    getString(R.string.easy_permissions), RC_LOCATION_CONTACTS_PERM, LOCATION_AND_CONTACTS);
-        }
-    }
-
-    /**
-     * 判断是否添加了权限
-     *
-     * @return true
-     */
-    private boolean hasPermissions() {
-        return EasyPermissions.hasPermissions(MainActivity.this, LOCATION_AND_CONTACTS);
-    }
-
-    /**
-     * 将结果转发到EasyPermissions
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // 将结果转发到EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, MainActivity.this);
-    }
-
-    /**
-     * 某些权限已被授予
-     */
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        //某些权限已被授予
-        Log.d("权限", "onPermissionsGranted:" + requestCode + ":" + perms.size());
-    }
-
-    /**
-     * 某些权限已被拒绝
-     */
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        //某些权限已被拒绝
-        Log.d("权限", "onPermissionsDenied:" + requestCode + ":" + perms.size());
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(MainActivity.this, perms)) {
-            //new AppSettingsDialog.Builder(MainActivity.this).build().show();
-            AppSettingsDialog.Builder builder = new AppSettingsDialog.Builder(MainActivity.this);
-            builder.setTitle("允许权限")
-                    .setRationale("没有该权限，此应用程序部分功能可能无法正常工作。打开应用设置界面以修改应用权限")
-                    .setPositiveButton("去设置")
-                    .setNegativeButton("取消")
-                    .setRequestCode(RC_LOCATION_CONTACTS_PERM)
-                    .build()
-                    .show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-            // Do something after user returned from app settings screen, like showing a Toast.
-            // 当用户从应用设置界面返回的时候，可以做一些事情，比如弹出一个土司。
-        }
-    }
-
-
-    /**
      * 初始化服务播放音频播放进度监听器
+     * 这个是要是通过监听即时更新主页面的底部控制器视图
+     * 同时还要同步播放详情页面mPlayFragment的视图
      */
     public void initPlayServiceListener() {
         getPlayService().setOnPlayEventListener(new OnPlayerEventListener() {
+            /**
+             * 切换歌曲
+             * 主要是切换歌曲的时候需要及时刷新界面信息
+             */
             @Override
             public void onChange(LocalMusic music) {
                 onChangeImpl(music);
@@ -446,6 +380,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
             }
 
+            /**
+             * 继续播放
+             * 主要是切换歌曲的时候需要及时刷新界面信息，比如播放暂停按钮
+             */
             @Override
             public void onPlayerStart() {
                 ivPlayBarPlay.setSelected(true);
@@ -454,11 +392,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
             }
 
+            /**
+             * 暂停播放
+             * 主要是切换歌曲的时候需要及时刷新界面信息，比如播放暂停按钮
+             */
             @Override
             public void onPlayerPause() {
                 ivPlayBarPlay.setSelected(false);
                 if (mPlayFragment != null && mPlayFragment.isAdded()) {
                     mPlayFragment.onPlayerPause();
+                }
+            }
+
+            /**
+             * 更新进度
+             * 主要是播放音乐或者拖动进度条时，需要更新进度
+             */
+            @Override
+            public void onUpdateProgress(int progress) {
+                pbPlayBar.setProgress(progress);
+                if (mPlayFragment != null && mPlayFragment.isAdded()) {
+                    mPlayFragment.onUpdateProgress(progress);
                 }
             }
         });
@@ -483,9 +437,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         ivPlayBarPlay.setSelected(getPlayService().isPlaying() || getPlayService().isPreparing());
         pbPlayBar.setMax((int) music.getDuration());
         pbPlayBar.setProgress((int) getPlayService().getCurrentPosition());
-        /*if (mLocalMusicFragment != null && mLocalMusicFragment.isAdded()) {
-            mLocalMusicFragment.onItemPlay();
-        }*/
+
+
+        /**点击MainActivity中的控制器，如何更新musicFragment中的mLocalMusicFragment呢？*/
+        if (musicFragment != null && musicFragment.isAdded()) {
+            musicFragment.onItemPlay();
+        }
     }
 
 

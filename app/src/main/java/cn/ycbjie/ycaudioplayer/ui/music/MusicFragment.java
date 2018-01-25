@@ -40,6 +40,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
     @Bind(R.id.vp_music)
     public ViewPager vpMusic;
     private MainActivity activity;
+    private LocalMusicFragment mLocalMusicFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -119,7 +120,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
-        LocalMusicFragment mLocalMusicFragment = new LocalMusicFragment();
+        mLocalMusicFragment = new LocalMusicFragment();
         OnLineMusicFragment onLineMusicFragment = new OnLineMusicFragment();
         CutEditMusicFragment cutEditMusicFragment = new CutEditMusicFragment();
         fragments.add(mLocalMusicFragment);
@@ -131,4 +132,9 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
     }
 
 
+    public void onItemPlay() {
+        if (mLocalMusicFragment != null && mLocalMusicFragment.isAdded()) {
+            mLocalMusicFragment.onItemPlay();
+        }
+    }
 }

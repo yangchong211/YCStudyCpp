@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -72,6 +73,10 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     LinearLayout llContent;
     private MainActivity activity;
     private int mLastProgress;
+    /**
+     * 是否拖进度，默认是false
+     */
+    private boolean isDraggingProgress;
 
 
 
@@ -105,6 +110,54 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         ivPlay.setOnClickListener(this);
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
+        initSeekBarListener();
+    }
+
+    private void initSeekBarListener() {
+        sbProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (seekBar == sbProgress) {
+                    if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
+                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss",progress));
+                        mLastProgress = progress;
+                    }
+                }
+            }
+
+            /**
+             * 通知用户已启动触摸手势,开始触摸时调用
+             * @param seekBar               seekBar
+             */
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                if (seekBar == sbProgress) {
+                    isDraggingProgress = true;
+                }
+            }
+
+
+            /**
+             * 通知用户已结束触摸手势,触摸结束时调用
+             * @param seekBar               seekBar
+             */
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (seekBar == sbProgress) {
+                    isDraggingProgress = false;
+                    //如果是正在播放，或者暂停，那么直接拖动进度
+                    if (getPlayService().isPlaying() || getPlayService().isPausing()) {
+                        //获取进度
+                        int progress = seekBar.getProgress();
+                        //直接移动进度
+                        getPlayService().seekTo(progress);
+                    } else {
+                        //其他情况，直接设置进度为0
+                        seekBar.setProgress(0);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -216,7 +269,6 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         if (playingMusic == null) {
             return;
         }
-
         tvTitle.setText(playingMusic.getTitle());
         tvArtist.setText(playingMusic.getArtist());
         sbProgress.setProgress((int) getPlayService().getCurrentPosition());
@@ -257,6 +309,14 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onPlayerPause() {
         ivPlay.setSelected(false);
+    }
+
+    @Override
+    public void onUpdateProgress(int progress) {
+        //如果没有拖动进度，则开始更新进度条进度
+        if (!isDraggingProgress) {
+            sbProgress.setProgress(progress);
+        }
     }
 
 

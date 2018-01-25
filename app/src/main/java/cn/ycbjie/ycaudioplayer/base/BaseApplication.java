@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
 
+import cn.ycbjie.ycaudioplayer.util.LogUtils;
+
 /**
  * ================================================
  * 作    者：杨充
@@ -52,6 +54,7 @@ public class BaseApplication extends Application {
         //初始化配置信息
         BaseConfig.INSTANCE.initConfig();
         BaseAppHelper.get().init(this);
+        LogUtils.logDebug = true;
     }
 
     /**

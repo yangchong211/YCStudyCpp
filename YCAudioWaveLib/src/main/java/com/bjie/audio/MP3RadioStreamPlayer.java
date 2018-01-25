@@ -26,8 +26,6 @@ import static android.media.MediaExtractor.SEEK_TO_PREVIOUS_SYNC;
 
 /**
  * Plays a MP3 Radio stream using MediaExtractor, MediaCodec and AudioTrack
- *
- * @author Juan Carlos Ospina Gonzalez / juan@supersteil.com
  */
 
 public class MP3RadioStreamPlayer extends BaseRecorder {

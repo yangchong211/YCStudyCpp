@@ -54,6 +54,12 @@
 
         <service android:name=".service.PlayService" />
 
+        <receiver android:name=".receiver.NotifiyStatusBarReceiver">
+            <intent-filter>
+                <action android:name="YC_ACTION_STATUS_BAR" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -68,7 +68,7 @@ dependencies {
     compile 'cn.yc:YCCountDownViewLib:1.0'                          //倒计时器
     compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
     compile 'cn.yc:YCDialogLib:3.4'                                 //弹窗
-    compile project(':YCAudioWaveLib')
-    //compile 'com.github.CarGuo:RecordWave:v1.1.6'
+    compile 'cn.yc:YCAudioWaveLib:1.1'                              //录音封装库
+    //compile project(':YCAudioWaveLib')
 
 }

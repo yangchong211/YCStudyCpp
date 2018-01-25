@@ -117,6 +117,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onItemClick(int position) {
                 getPlayService().play(position);
+                //adapter.updatePlayingPosition(getPlayService());
             }
         });
     }
@@ -158,6 +159,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             adapter.addAll(music);
             adapter.notifyDataSetChanged();
             recyclerView.showRecycler();
+            adapter.updatePlayingPosition(getPlayService());
         } else {
             recyclerView.showEmpty();
         }
@@ -218,6 +220,14 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         cursor.close();
     }
 
-
-
+    /**
+     * 点击MainActivity中的控制器，更新musicFragment中的mLocalMusicFragment
+     */
+    public void onItemPlay() {
+        if (getPlayService().getPlayingMusic().getType() == LocalMusic.Type.LOCAL) {
+            recyclerView.scrollToPosition(getPlayService().getPlayingPosition());
+        }
+        adapter.updatePlayingPosition(getPlayService());
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -13,11 +13,17 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 
 public class LocalMusicAdapter extends RecyclerArrayAdapter<LocalMusic> {
+
+    /**
+     * 正在播放音乐的索引位置
+     */
+    private int mPlayingPosition;
 
     public LocalMusicAdapter(Activity activity) {
         super(activity);
@@ -66,12 +72,30 @@ public class LocalMusicAdapter extends RecyclerArrayAdapter<LocalMusic> {
                     }
                 });
                 vDivider.setVisibility(isShowDivider(getAdapterPosition()) ? View.VISIBLE : View.GONE);
+                if (getAdapterPosition() == mPlayingPosition) {
+                    vPlaying.setVisibility(View.VISIBLE);
+                } else {
+                    vPlaying.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }
 
     private boolean isShowDivider(int position) {
         return position != getAllData().size() - 1;
+    }
+
+    /**
+     * 当播放位置发生了变化，那么就可以更新播放位置视图
+     * @param playService       PlayService
+     */
+    public void updatePlayingPosition(PlayService playService) {
+        if (playService.getPlayingMusic() != null &&
+                playService.getPlayingMusic().getType() == LocalMusic.Type.LOCAL) {
+            mPlayingPosition = playService.getPlayingPosition();
+        } else {
+            mPlayingPosition = -1;
+        }
     }
 
 

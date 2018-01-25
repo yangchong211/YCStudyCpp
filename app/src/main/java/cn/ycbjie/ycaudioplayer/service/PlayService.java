@@ -2,11 +2,14 @@ package cn.ycbjie.ycaudioplayer.service;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -23,7 +26,9 @@ import cn.ycbjie.ycaudioplayer.model.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;
 
 
 public class PlayService extends Service {
@@ -48,6 +53,26 @@ public class PlayService extends Service {
      * 播放进度监听器
      */
     private OnPlayerEventListener mListener;
+    /**
+     * 更新播放进度的显示，时间的显示
+     */
+    private static final int UPDATE_PLAY_PROGRESS_SHOW = 0;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case UPDATE_PLAY_PROGRESS_SHOW:
+                    updatePlayProgressShow();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     /**
      * 绑定服务时才会调用
@@ -59,6 +84,17 @@ public class PlayService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return new PlayBinder();
+    }
+
+    /**
+     * 通过通知栏点击按钮实现音乐切换
+     * @param context       上下文
+     * @param type          类型
+     */
+    public static void startCommand(Context context, String type) {
+        Intent intent = new Intent(context, PlayService.class);
+        intent.setAction(type);
+        context.startService(intent);
     }
 
 
@@ -76,6 +112,7 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        NotificationUtils.init(this);
         createMediaPlayer();
     }
 
@@ -91,6 +128,15 @@ public class PlayService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+        mPlayer.reset();
+        mPlayer.release();
+        mPlayer = null;
+        NotificationUtils.cancelAll();
+        BaseAppHelper.get().setPlayService(null);
     }
 
 
@@ -152,6 +198,7 @@ public class PlayService extends Service {
         }
     }
 
+
     /**
      * 上一首
      * 记住有播放类型，单曲循环，顺序循环，随机播放
@@ -189,6 +236,7 @@ public class PlayService extends Service {
                 break;
         }
     }
+
 
     /**
      * 下一首
@@ -242,24 +290,37 @@ public class PlayService extends Service {
         if(mPlayer!=null){
             mPlayer.start();
             mPlayState = MusicPlayAction.STATE_PLAYING;
+            //开始发送消息，执行进度条进度更新
+            handler.sendEmptyMessage(UPDATE_PLAY_PROGRESS_SHOW);
             if (mListener != null) {
                 mListener.onPlayerStart();
             }
+            //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
+            NotificationUtils.showPlay(mPlayingMusic);
         }
     }
+
 
     /**
      * 暂停
      */
     private void pause() {
         if(mPlayer!=null){
+            //暂停
             mPlayer.pause();
+            //切换状态
             mPlayState = MusicPlayAction.STATE_PAUSE;
+            //移除，注意一定要移除，否则一直走更新方法
+            handler.removeMessages(UPDATE_PLAY_PROGRESS_SHOW);
+            //监听
             if (mListener != null) {
                 mListener.onPlayerPause();
             }
+            //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
+            NotificationUtils.showPause(mPlayingMusic);
         }
     }
+
 
     /**
      * 停止播放
@@ -274,6 +335,7 @@ public class PlayService extends Service {
             mPlayState = MusicPlayAction.STATE_IDLE;
         }
     }
+
 
     /**
      * 播放索引为position的音乐
@@ -297,6 +359,96 @@ public class PlayService extends Service {
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,music.getId());
         play(music);
     }
+
+
+    /**
+     * 拖动seekBar时，调节进度
+     * @param progress          进度
+     */
+    public void seekTo(int progress) {
+        if (isPlaying() || isPausing()) {
+            mPlayer.seekTo(progress);
+            if(mListener!=null){
+                mListener.onUpdateProgress(progress);
+            }
+        }
+    }
+
+
+    /**
+     * 播放
+     * @param music         music
+     */
+    public void play(LocalMusic music) {
+        mPlayingMusic = music;
+        createMediaPlayer();
+        try {
+            mPlayer.reset();
+            //把音频路径传给播放器
+            mPlayer.setDataSource(music.getPath());
+            //准备
+            mPlayer.prepareAsync();
+            //设置状态为准备中
+            mPlayState = MusicPlayAction.STATE_PREPARING;
+            //监听
+            mPlayer.setOnPreparedListener(mOnPreparedListener);
+            mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
+            mPlayer.setOnCompletionListener(mOnCompletionListener);
+            //当播放的时候，需要刷新界面信息
+            if (mListener != null) {
+                mListener.onChange(music);
+            }
+            //更新通知栏
+            NotificationUtils.showPlay(music);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 更新播放进度的显示，时间的显示
+     */
+    private void updatePlayProgressShow() {
+        if (isPlaying() && mListener != null) {
+            int currentPosition =  mPlayer.getCurrentPosition();
+            mListener.onUpdateProgress(currentPosition);
+        }
+        LogUtils.e("updatePlayProgressShow");
+        // 每30毫秒更新一下显示的内容
+        handler.sendEmptyMessageDelayed(UPDATE_PLAY_PROGRESS_SHOW, 300);
+    }
+
+
+    /** 音频准备好的监听器 */
+    private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
+        /** 当音频准备好可以播放了，则这个方法会被调用  */
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            if (isPreparing()) {
+                start();
+            }
+        }
+    };
+
+
+    /** 当音频播放结果的时候的监听器 */
+    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
+        /** 当音频播放结果的时候这个方法会被调用 */
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            next();
+        }
+    };
+
+
+    /** 当音频缓冲的监听器 */
+    private MediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
+        @Override
+        public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
+        }
+    };
 
 
     /**
@@ -334,63 +486,6 @@ public class PlayService extends Service {
         return mPlayState == MusicPlayAction.STATE_IDLE;
     }
 
-
-    public void play(LocalMusic music) {
-        mPlayingMusic = music;
-        createMediaPlayer();
-        try {
-            mPlayer.reset();
-            //把音频路径传给播放器
-            mPlayer.setDataSource(music.getPath());
-            //准备
-            mPlayer.prepareAsync();
-            //设置状态为准备中
-            mPlayState = MusicPlayAction.STATE_PREPARING;
-            //监听
-            mPlayer.setOnPreparedListener(mOnPreparedListener);
-            mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
-            mPlayer.setOnCompletionListener(mOnCompletionListener);
-            //当播放的时候，需要刷新界面信息
-            if (mListener != null) {
-                mListener.onChange(music);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    /** 音频准备好的监听器 */
-    private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
-        /** 当音频准备好可以播放了，则这个方法会被调用  */
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-            if (isPreparing()) {
-                start();
-            }
-        }
-    };
-
-
-    /** 当音频播放结果的时候的监听器 */
-    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
-        /** 当音频播放结果的时候这个方法会被调用 */
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            next();
-        }
-    };
-
-    /** 当音频缓冲的监听器 */
-    private MediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
-        @Override
-        public void onBufferingUpdate(MediaPlayer mp, int percent) {
-
-        }
-    };
-
-
     /**------------------------------------------------------------------------------------------*/
 
 
@@ -409,6 +504,7 @@ public class PlayService extends Service {
         return mPlayingMusic;
     }
 
+
     /**
      * 获取播放的进度
      * @return          long类型值
@@ -420,7 +516,6 @@ public class PlayService extends Service {
             return 0;
         }
     }
-
 
 
     /**

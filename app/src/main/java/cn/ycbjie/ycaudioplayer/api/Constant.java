@@ -10,19 +10,15 @@ public class Constant {
     public static String SP_NAME = "yc";
 
 
+    /**--------------------------------------action----------------------------------------------------**/
+    public static final String EXTRA_NOTIFICATION = "extra_notification";
+
     /**--------------------------------------键----------------------------------------------------**/
-    public static final String KEY_IS_LOGIN = "is_login";                         //登录
-    public static final String KEY_NIGHT_STATE = "night_state";                   //启动页夜间模式
-
-
-
-    //过滤大小
+    public static final String KEY_IS_LOGIN = "is_login";
+    public static final String KEY_NIGHT_STATE = "night_state";
     public static final String FILTER_SIZE = "filter_size";
-    //过滤时间
     public static final String FILTER_TIME = "filter_time";
-    //音乐id
     public static final String MUSIC_ID = "music_id";
-    //播放模式
     public static final String PLAY_MODE = "play_mode";
 
 

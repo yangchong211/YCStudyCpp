@@ -27,4 +27,9 @@ public interface OnPlayerEventListener {
      */
     void onPlayerPause();
 
+    /**
+     * 更新进度
+     * 主要是播放音乐或者拖动进度条时，需要更新进度
+     */
+    void onUpdateProgress(int progress);
 }
