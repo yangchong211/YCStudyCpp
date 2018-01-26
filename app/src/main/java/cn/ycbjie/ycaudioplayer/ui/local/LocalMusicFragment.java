@@ -141,9 +141,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        final RecycleViewItemLine line = new RecycleViewItemLine(activity, LinearLayout.HORIZONTAL,
-                SizeUtils.dp2px(1), Color.parseColor("#f5f5f7"));
-        recyclerView.addItemDecoration(line);
         adapter = new LocalMusicAdapter(activity);
         recyclerView.setAdapter(adapter);
     }

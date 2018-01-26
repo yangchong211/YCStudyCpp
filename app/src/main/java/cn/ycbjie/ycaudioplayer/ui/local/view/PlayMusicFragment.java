@@ -1,37 +1,56 @@
 package cn.ycbjie.ycaudioplayer.ui.local.view;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+
+import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
+
+import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
 
 /**
  * Created by yc on 2018/1/24.
  */
 
-public class PlayMusicFragment extends BaseFragment implements View.OnClickListener ,OnPlayerEventListener {
+public class PlayMusicFragment extends BaseFragment implements View.OnClickListener, OnPlayerEventListener {
 
     @Bind(R.id.iv_play_page_bg)
     ImageView ivPlayPageBg;
@@ -71,13 +90,17 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     ImageView ivOther;
     @Bind(R.id.ll_content)
     LinearLayout llContent;
+    @Bind(R.id.lrc_view)
+    YCLrcCustomView lrcView;
+    @Bind(R.id.sb_volume)
+    SeekBar sbVolume;
     private MainActivity activity;
     private int mLastProgress;
     /**
      * 是否拖进度，默认是false
      */
     private boolean isDraggingProgress;
-
+    private AudioManager mAudioManager;
 
 
     @Override
@@ -92,6 +115,34 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         activity = null;
     }
 
+    /**
+     * 返回监听
+     */
+    private void onBackPressed() {
+        getActivity().onBackPressed();
+        ivBack.setEnabled(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ivBack.setEnabled(true);
+            }
+        }, 300);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(mVolumeReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        getContext().registerReceiver(mVolumeReceiver, filter);
+    }
+
+
     @Override
     public int getContentView() {
         return R.layout.fragment_play_music;
@@ -101,6 +152,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     public void initView() {
         initSystemBar();
         initPlayMode();
+        initVolume();
     }
 
     @Override
@@ -110,6 +162,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         ivPlay.setOnClickListener(this);
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
+        ivOther.setOnClickListener(this);
         initSeekBarListener();
     }
 
@@ -119,7 +172,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (seekBar == sbProgress) {
                     if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
-                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss",progress));
+                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss", progress));
                         mLastProgress = progress;
                     }
                 }
@@ -155,6 +208,9 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                         //其他情况，直接设置进度为0
                         seekBar.setProgress(0);
                     }
+                }else if (seekBar == sbVolume) {
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, seekBar.getProgress(),
+                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                 }
             }
         });
@@ -167,7 +223,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 onBackPressed();
                 break;
@@ -183,27 +239,30 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             case R.id.iv_prev:
                 prev();
                 break;
+            case R.id.iv_other:
+                showListDialog();
+                break;
             default:
                 break;
         }
     }
 
     private void prev() {
-        if(getPlayService()!=null){
+        if (getPlayService() != null) {
             ToastUtils.showShort(R.string.state_prev);
             getPlayService().prev();
         }
     }
 
     private void next() {
-        if(getPlayService()!=null){
+        if (getPlayService() != null) {
             ToastUtils.showShort(R.string.state_next);
             getPlayService().next();
         }
     }
 
     private void play() {
-        if(getPlayService()!=null){
+        if (getPlayService() != null) {
             getPlayService().playPause();
         }
     }
@@ -227,23 +286,69 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             default:
                 break;
         }
-        SPUtils.getInstance(Constant.SP_NAME).put(Constant.PLAY_MODE,mode.value());
+        SPUtils.getInstance(Constant.SP_NAME).put(Constant.PLAY_MODE, mode.value());
         initPlayMode();
     }
 
-    /**
-     * 返回监听
-     */
-    private void onBackPressed() {
-        getActivity().onBackPressed();
-        ivBack.setEnabled(false);
-        new Handler().postDelayed(new Runnable() {
+    public void showListDialog() {
+        final List<LocalMusic> musicList = BaseAppHelper.get().getMusicList();
+        final BottomDialogFragment dialog = new BottomDialogFragment();
+        dialog.setFragmentManager(getChildFragmentManager());
+        dialog.setViewListener(new BottomDialogFragment.ViewListener() {
             @Override
-            public void run() {
-                ivBack.setEnabled(true);
+            public void bindView(View v) {
+                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+                TextView tv_play_type = (TextView) v.findViewById(R.id.tv_play_type);
+                TextView tv_collect = (TextView) v.findViewById(R.id.tv_collect);
+                ImageView iv_close = (ImageView) v.findViewById(R.id.iv_close);
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(activity, musicList);
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.updatePlayingPosition(getPlayService());
+                final RecycleViewItemLine line = new RecycleViewItemLine(activity, LinearLayout.HORIZONTAL,
+                        SizeUtils.dp2px(1), activity.getResources().getColor(R.color.grayLine));
+                recyclerView.addItemDecoration(line);
+                mAdapter.setOnItemClickListener(new OnListItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        getPlayService().play(position);
+                        mAdapter.updatePlayingPosition(getPlayService());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.tv_play_type:
+                                switchPlayMode();
+                                break;
+                            case R.id.tv_collect:
+                                ToastUtil.showToast(activity, "收藏，后期在做");
+                                break;
+                            case R.id.iv_close:
+                                dialog.dismissDialogFragment();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
+                tv_play_type.setOnClickListener(listener);
+                tv_collect.setOnClickListener(listener);
+                iv_close.setOnClickListener(listener);
             }
-        }, 300);
+        });
+        dialog.setLayoutRes(R.layout.dialog_bottom_list_view);
+        dialog.setDimAmount(0.5f);
+        dialog.setTag("BottomDialogFragment");
+        dialog.setCancelOutside(true);
+        //这个高度可以自己设置，十分灵活
+        dialog.setHeight(ScreenUtils.getScreenHeight() * 7 / 10);
+        dialog.show();
     }
+
 
     /**
      * 沉浸式状态栏
@@ -261,8 +366,29 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
     /**
+     * 初始化音量
+     */
+    private void initVolume() {
+        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        sbVolume.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        sbVolume.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+    }
+
+    /**
+     * 发送广播接收者
+     */
+    private BroadcastReceiver mVolumeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sbVolume.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        }
+    };
+
+
+    /**
      * 填充页面数据
-     * @param playingMusic          正在播放的音乐
+     *
+     * @param playingMusic 正在播放的音乐
      */
     @SuppressLint("SetTextI18n")
     private void setViewData(LocalMusic playingMusic) {
@@ -276,7 +402,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         sbProgress.setMax((int) playingMusic.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
-        tvTotalTime.setText(AppUtils.formatTime("mm:ss",playingMusic.getDuration()));
+        tvTotalTime.setText(AppUtils.formatTime("mm:ss", playingMusic.getDuration()));
         setCoverAndBg(playingMusic);
         //setLrc(playingMusic);
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
@@ -294,8 +420,9 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-
-    /**---------------通过MainActivity进行调用-----------------------------**/
+    /**
+     * ---------------通过MainActivity进行调用-----------------------------
+     **/
     @Override
     public void onChange(LocalMusic music) {
         setViewData(music);

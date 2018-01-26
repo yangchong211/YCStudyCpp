@@ -12,7 +12,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -70,5 +69,6 @@ dependencies {
     compile 'cn.yc:YCDialogLib:3.4'                                 //弹窗
     compile 'cn.yc:YCAudioWaveLib:1.1'                              //录音封装库
     //compile project(':YCAudioWaveLib')
+    compile project(':YCAudioPlayerLib')
 
 }

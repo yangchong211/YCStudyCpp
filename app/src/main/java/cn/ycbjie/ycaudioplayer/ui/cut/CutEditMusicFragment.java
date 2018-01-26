@@ -83,7 +83,7 @@ public class CutEditMusicFragment extends BaseFragment implements View.OnClickLi
     private AudioPlayer audioPlayer;
     private MP3RadioStreamPlayer player;
     private long timeWhenPaused;
-    private Timer timer;
+    private Timer timer = new Timer();
 
 
     @Override

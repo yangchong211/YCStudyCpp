@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -29,11 +31,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager;
+import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+
+import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +52,13 @@ import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
+import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.TabEntity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.test.TestLrcActivity;
 import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.local.view.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
@@ -220,7 +230,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showPlayingFragment();
                 break;
             case R.id.iv_play_bar_list:
-                ToastUtil.showToast(this, "谈出对话框");
+                startActivity(TestLrcActivity.class);
+                //showListDialog();
                 break;
             case R.id.iv_play_bar_play:
                 getPlayService().playPause();
@@ -444,6 +455,67 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             musicFragment.onItemPlay();
         }
     }
+
+
+    public void showListDialog() {
+        final List<LocalMusic> musicList = BaseAppHelper.get().getMusicList();
+        final BottomDialogFragment dialog = new BottomDialogFragment();
+        dialog.setFragmentManager(getSupportFragmentManager());
+        dialog.setViewListener(new BottomDialogFragment.ViewListener() {
+            @Override
+            public void bindView(View v) {
+                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+                TextView tv_play_type = (TextView) v.findViewById(R.id.tv_play_type);
+                TextView tv_collect = (TextView) v.findViewById(R.id.tv_collect);
+                ImageView iv_close = (ImageView) v.findViewById(R.id.iv_close);
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(MainActivity.this, musicList);
+                recyclerView.setAdapter(mAdapter);
+                mAdapter.updatePlayingPosition(getPlayService());
+                final RecycleViewItemLine line = new RecycleViewItemLine(MainActivity.this, LinearLayout.HORIZONTAL,
+                        SizeUtils.dp2px(1), MainActivity.this.getResources().getColor(R.color.grayLine));
+                recyclerView.addItemDecoration(line);
+                mAdapter.setOnItemClickListener(new OnListItemClickListener() {
+                    @Override
+                    public void onItemClick(View view , int position) {
+                        getPlayService().play(position);
+                        mAdapter.updatePlayingPosition(getPlayService());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.tv_play_type:
+
+                                break;
+                            case R.id.tv_collect:
+                                ToastUtil.showToast(MainActivity.this,"收藏，后期在做");
+                                break;
+                            case R.id.iv_close:
+                                dialog.dismissDialogFragment();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                };
+                tv_play_type.setOnClickListener(listener);
+                tv_collect.setOnClickListener(listener);
+                iv_close.setOnClickListener(listener);
+            }
+        });
+        dialog.setLayoutRes(R.layout.dialog_bottom_list_view);
+        dialog.setDimAmount(0.5f);
+        dialog.setTag("BottomDialogFragment");
+        dialog.setCancelOutside(true);
+        //这个高度可以自己设置，十分灵活
+        dialog.setHeight(ScreenUtils.getScreenHeight()*6/10);
+        dialog.show();
+    }
+
 
 
 }

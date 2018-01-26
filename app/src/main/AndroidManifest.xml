@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.local.view.MusicInfoActivity" />
+        <activity android:name=".test.TestLrcActivity"/>
 
         <service android:name=".service.PlayService" />
 

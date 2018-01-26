@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/YCAudioPlayerLib/YCAudioPlayerLib.iml" filepath="$PROJECT_DIR$/YCAudioPlayerLib/YCAudioPlayerLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/YCAudioWaveLib/YCAudioWaveLib.iml" filepath="$PROJECT_DIR$/YCAudioWaveLib/YCAudioWaveLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\AndroidCustom\YCAudioPlayer\YCAudioWaveLib\waveview.iml" filepath="E:\AndroidCustom\YCAudioPlayer\YCAudioWaveLib\waveview.iml" />
     </modules>
   </component>
 </project>
