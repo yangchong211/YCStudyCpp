@@ -49,8 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".ui.local.view.MusicInfoActivity" />
+        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.music.local.view.MusicInfoActivity" />
         <activity android:name=".test.TestLrcActivity"/>
 
         <service android:name=".service.PlayService" />

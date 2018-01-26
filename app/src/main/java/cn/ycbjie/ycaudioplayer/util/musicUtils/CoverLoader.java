@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 
 
 /**

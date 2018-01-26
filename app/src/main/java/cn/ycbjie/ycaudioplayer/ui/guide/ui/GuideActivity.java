@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.ns.yc.yccountdownviewlib.CountDownView;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -29,7 +28,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;

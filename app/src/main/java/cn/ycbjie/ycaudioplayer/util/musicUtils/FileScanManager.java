@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.api.Constant;
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 
 /**
  * Created by yc on 2018/1/23.

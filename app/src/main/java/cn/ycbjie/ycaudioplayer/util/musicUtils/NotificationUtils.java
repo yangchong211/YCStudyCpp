@@ -6,28 +6,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.receiver.NotifiyStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 
 /**
  * Created by yc on 2018/1/25.

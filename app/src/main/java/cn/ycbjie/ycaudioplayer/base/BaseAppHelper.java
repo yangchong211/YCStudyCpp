@@ -8,9 +8,9 @@ import android.support.v4.util.LongSparseArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ycbjie.ycaudioplayer.model.DownloadMusicInfo;
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
-import cn.ycbjie.ycaudioplayer.ui.onLine.model.bean.OnLineSongListInfo;
+import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 

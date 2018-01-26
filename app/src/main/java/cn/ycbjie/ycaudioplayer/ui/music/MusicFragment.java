@@ -1,32 +1,22 @@
 package cn.ycbjie.ycaudioplayer.ui.music;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
-import cn.ycbjie.ycaudioplayer.ui.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.cut.CutEditMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.local.LocalMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.onLine.OnLineMusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.cut.CutEditMusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 
 /**
  * Created by yc on 2018/1/24.

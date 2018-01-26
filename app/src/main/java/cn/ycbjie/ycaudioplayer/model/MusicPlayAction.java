@@ -27,30 +27,4 @@ public class MusicPlayAction {
     /** 暂停状态*/
     public static final int STATE_PAUSE = 103;
 
-
-    /**--------------通知栏--------------------------------*/
-
-    /** 点击了通知栏上的上一首按钮*/
-    public static final int TYPE_NOTIFICATION_PRE = 1001;
-    /** 点击了通知栏上的下一首按钮*/
-    public static final int TYPE_NOTIFICATION_NEXT = 1002;
-    /** 点击了通知栏上的根容器*/
-    public static final int TYPE_NOTIFICATION_ROOT = 1003;
-    /** 点击了通知栏上的播放暂停按钮*/
-    public static final int TYPE_NOTIFICATION_START = 1004;
-
-
-    /**--------------播放页面--------------------------------*/
-
-    /** 播放模式：顺序播放并且循环 */
-    public static final int PLAY_MODE_ORDER = 1005;
-    /** 播放模式：单曲播放 */
-    public static final int PLAY_MODE_SINGLE = 1006;
-    /** 播放模式：随机播放 */
-    public static final int PLAY_MODE_RANDOM = 1007;
-
-
-    /**--------------底部控制栏--------------------------------*/
-
-
 }

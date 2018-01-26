@@ -13,7 +13,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.Random;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
-import cn.ycbjie.ycaudioplayer.model.EventCallback;
+import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;

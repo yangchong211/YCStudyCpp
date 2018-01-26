@@ -1,7 +1,7 @@
 package cn.ycbjie.ycaudioplayer.inter;
 
 
-import cn.ycbjie.ycaudioplayer.ui.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 
 /**
  * 播放进度监听器

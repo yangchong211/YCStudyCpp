@@ -4,9 +4,9 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 
 public class TabEntity implements CustomTabEntity {
 
-    public String title;
-    public int selectedIcon;
-    public int unSelectedIcon;
+    private String title;
+    private int selectedIcon;
+    private int unSelectedIcon;
 
     public TabEntity(String title, int selectedIcon, int unSelectedIcon) {
         this.title = title;
