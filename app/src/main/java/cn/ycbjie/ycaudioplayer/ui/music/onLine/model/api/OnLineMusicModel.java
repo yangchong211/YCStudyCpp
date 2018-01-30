@@ -13,6 +13,7 @@ import rx.Observable;
 public class OnLineMusicModel {
 
     private static final String baseUrl = "http://tingapi.ting.baidu.com/";
+    public static final String lineMusic = "baidu.ting.billboard.billList";
     private static OnLineMusicModel model;
     private OnLineMusicApi mApiService;
 

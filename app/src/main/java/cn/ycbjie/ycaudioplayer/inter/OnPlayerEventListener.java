@@ -32,4 +32,10 @@ public interface OnPlayerEventListener {
      * 主要是播放音乐或者拖动进度条时，需要更新进度
      */
     void onUpdateProgress(int progress);
+
+    /**
+     * 更新定时停止播放时间
+     */
+    void onTimer(long remain);
+
 }

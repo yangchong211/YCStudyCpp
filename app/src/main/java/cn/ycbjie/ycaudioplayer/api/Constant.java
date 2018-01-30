@@ -10,10 +10,11 @@ public class Constant {
     public static String SP_NAME = "yc";
 
 
-    /**--------------------------------------action----------------------------------------------------**/
+    /**--------------------------------------action----------------------------------------------**/
     public static final String EXTRA_NOTIFICATION = "extra_notification";
 
-    /**--------------------------------------键----------------------------------------------------**/
+
+    /**--------------------------------------键--------------------------------------------------**/
     public static final String KEY_IS_LOGIN = "is_login";
     public static final String KEY_NIGHT_STATE = "night_state";
     public static final String FILTER_SIZE = "filter_size";

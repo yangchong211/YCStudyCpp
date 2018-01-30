@@ -10,7 +10,7 @@
             android:icon="@drawable/ic_menu_night"
             android:title="@string/menu_night" />
         <item
-            android:id="@+id/action_msg"
+            android:id="@+id/action_timer"
             android:icon="@drawable/ic_menu_timer"
             android:title="@string/menu_box" />
         <item

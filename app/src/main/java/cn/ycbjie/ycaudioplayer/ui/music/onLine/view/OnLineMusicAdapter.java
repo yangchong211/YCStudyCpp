@@ -19,6 +19,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.api.http.AppApiService;
+import cn.ycbjie.ycaudioplayer.api.http.HttpCallback;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
@@ -91,7 +93,7 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                 tvMusic3.setText("3.加载中…");
                 //开始请求网络
                 OnLineMusicModel model = OnLineMusicModel.getInstance();
-                model.getList("baidu.ting.billboard.billList" , data.getType(), 0 ,3)
+                model.getList(OnLineMusicModel.lineMusic , data.getType(), 0 ,3)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<OnlineMusicList>() {
@@ -157,7 +159,6 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                 songListInfo.setMusic3("");
             }
         }
-
 
     }
 

@@ -55,8 +55,13 @@ import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.StudyFragment;
+import cn.ycbjie.ycaudioplayer.util.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 
+/**
+ * 关于bug整理
+ * 1.当定时结束后，程序崩溃
+ */
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Bind(R.id.toolbar)
@@ -203,16 +208,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 ToastUtil.showToast(this, "搜索");
                 break;
             case R.id.tv_local_music:
-                musicFragment.vpMusic.setCurrentItem(0);
-                flPlayBar.setVisibility(View.VISIBLE);
+                if(musicFragment!=null){
+                    musicFragment.vpMusic.setCurrentItem(0);
+                    flPlayBar.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.tv_online_music:
-                musicFragment.vpMusic.setCurrentItem(1);
-                flPlayBar.setVisibility(View.VISIBLE);
+                if(musicFragment!=null){
+                    musicFragment.vpMusic.setCurrentItem(1);
+                    flPlayBar.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.tv_cut_music:
-                musicFragment.vpMusic.setCurrentItem(2);
-                flPlayBar.setVisibility(View.GONE);
+                if(musicFragment!=null){
+                    musicFragment.vpMusic.setCurrentItem(2);
+                    flPlayBar.setVisibility(View.GONE);
+                }
                 break;
             case R.id.fl_play_bar:
                 showPlayingFragment();
@@ -366,6 +377,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      */
     public void initPlayServiceListener() {
         getPlayService().setOnPlayEventListener(new OnPlayerEventListener() {
+
+            private MenuItem timerItem;
+
             /**
              * 切换歌曲
              * 主要是切换歌曲的时候需要及时刷新界面信息
@@ -412,6 +426,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (mPlayFragment != null && mPlayFragment.isAdded()) {
                     mPlayFragment.onUpdateProgress(progress);
                 }
+            }
+
+            /**
+             * 更新定时停止播放时间
+             */
+            @Override
+            public void onTimer(long remain) {
+                if (timerItem == null) {
+                    timerItem = navigationView.getMenu().findItem(R.id.action_timer);
+                }
+                String title = getString(R.string.menu_timer);
+                timerItem.setTitle(remain == 0 ? title : AppUtils.formatTime(title + "(mm:ss)", remain));
             }
         });
     }

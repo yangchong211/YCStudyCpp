@@ -213,6 +213,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         }
     }
 
+
     /**
      * 可以在服务中扫描本地音乐
      * @param playService           service

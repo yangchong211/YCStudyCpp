@@ -13,6 +13,7 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
@@ -102,9 +103,6 @@ public class LocalMusicAdapter extends RecyclerArrayAdapter<LocalMusic> {
     private OnMoreClickListener mListener;
     public void setOnMoreClickListener(OnMoreClickListener listener) {
         mListener = listener;
-    }
-    public interface OnMoreClickListener {
-        void onMoreClick(int position);
     }
 
 }

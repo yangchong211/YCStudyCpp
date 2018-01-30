@@ -49,6 +49,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.zhy:okhttputils:2.6.2'
 
     //注解
     compile 'com.jakewharton:butterknife:7.0.1'                     //黄牛刀

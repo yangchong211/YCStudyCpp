@@ -1,6 +1,7 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.LinearLayout;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.SizeUtils;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
+import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnLineMusicAdapter;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
 
 /**
  * Created by yc on 2018/1/19.
@@ -56,7 +59,17 @@ public class OnLineMusicFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if(adapter.getAllData().size()>position && position>-1){
+                    OnLineSongListInfo onLineSongListInfo = adapter.getAllData().get(position);
+                    Intent intent = new Intent(getContext(), OnlineMusicActivity.class);
+                    intent.putExtra("music_list_type", onLineSongListInfo);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 

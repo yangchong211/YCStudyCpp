@@ -28,6 +28,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.LocalMusicAdapter;
@@ -73,7 +74,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initListener() {
-        adapter.setOnMoreClickListener(new LocalMusicAdapter.OnMoreClickListener() {
+        adapter.setOnMoreClickListener(new OnMoreClickListener() {
             @Override
             public void onMoreClick(int position) {
                 if (music.size() >= position) {
@@ -113,7 +114,6 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onItemClick(int position) {
                 getPlayService().play(position);
-                //adapter.updatePlayingPosition(getPlayService());
             }
         });
     }

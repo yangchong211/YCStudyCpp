@@ -23,6 +23,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
 import cn.ycbjie.ycaudioplayer.util.InterceptorUtils;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -58,6 +59,7 @@ public class RetrofitWrapper {
         builder = new OkHttpClient.Builder();
 
         //拦截日志，依赖
+        builder.addInterceptor(new HttpInterceptor());
         builder.addInterceptor(InterceptorUtils.getHttpLoggingInterceptor(true));
         OkHttpClient build = builder.build();
 

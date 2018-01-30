@@ -8,8 +8,10 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,9 +25,11 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+import com.yc.wave.FileUtils;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,6 +37,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.executor.SearchLrc;
 import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
@@ -40,6 +45,7 @@ import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
 
 /**
@@ -200,6 +206,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                         int progress = seekBar.getProgress();
                         //直接移动进度
                         getPlayService().seekTo(progress);
+                        lrcView.updateTime(progress);
                     } else {
                         //其他情况，直接设置进度为0
                         seekBar.setProgress(0);
@@ -400,7 +407,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         tvCurrentTime.setText("00:00");
         tvTotalTime.setText(AppUtils.formatTime("mm:ss", playingMusic.getDuration()));
         setCoverAndBg(playingMusic);
-        //setLrc(playingMusic);
+        setLrc(playingMusic);
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
             ivPlay.setSelected(true);
             //mAlbumCoverView.start();
@@ -413,6 +420,54 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     private void setCoverAndBg(LocalMusic music) {
         //mAlbumCoverView.setCoverBitmap(CoverLoader.getInstance().loadRound(music));
         ivPlayPageBg.setImageBitmap(CoverLoader.getInstance().loadBlur(music));
+    }
+
+
+    /**
+     * 设置歌词
+     * @param playingMusic          正在播放的音乐
+     */
+    private void setLrc(final LocalMusic playingMusic) {
+        if (playingMusic.getType() == LocalMusic.Type.LOCAL) {
+            String lrcPath = FileMusicUtils.getLrcFilePath(playingMusic);
+            if (!TextUtils.isEmpty(lrcPath)) {
+                loadLrc(lrcPath);
+            } else {
+                new SearchLrc(playingMusic.getArtist(), playingMusic.getTitle()) {
+                    @Override
+                    public void onPrepare() {
+                        loadLrc("");
+                        setLrcLabel("正在搜索歌词");
+                    }
+
+                    @Override
+                    public void onExecuteSuccess(@NonNull String lrcPath) {
+                        loadLrc(lrcPath);
+                        setLrcLabel("暂时无歌词");
+                    }
+
+                    @Override
+                    public void onExecuteFail(Exception e) {
+                        setLrcLabel("加载歌词失败");
+                    }
+                }.execute();
+            }
+        } else {
+            String lrcPath = FileMusicUtils.getLrcDir() +
+                    FileMusicUtils.getLrcFileName(playingMusic.getArtist(), playingMusic.getTitle());
+            loadLrc(lrcPath);
+        }
+    }
+
+
+    private void loadLrc(String path) {
+        File file = new File(path);
+        lrcView.loadLrc(file);
+    }
+
+
+    private void setLrcLabel(String label) {
+        lrcView.setLabel(label);
     }
 
 
@@ -440,6 +495,12 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         if (!isDraggingProgress) {
             sbProgress.setProgress(progress);
         }
+        lrcView.updateTime(progress);
+    }
+
+    @Override
+    public void onTimer(long remain) {
+
     }
 
 

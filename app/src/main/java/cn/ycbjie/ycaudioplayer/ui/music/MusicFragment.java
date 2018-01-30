@@ -127,4 +127,6 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
             mLocalMusicFragment.onItemPlay();
         }
     }
+
+
 }

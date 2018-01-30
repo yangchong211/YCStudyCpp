@@ -26,6 +26,7 @@ import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
+import cn.ycbjie.ycaudioplayer.util.QuitTimer;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;
 
@@ -85,6 +86,7 @@ public class PlayService extends Service {
         return new PlayBinder();
     }
 
+
     /**
      * 通过通知栏点击按钮实现音乐切换
      * @param context       上下文
@@ -113,13 +115,26 @@ public class PlayService extends Service {
         super.onCreate();
         NotificationUtils.init(this);
         createMediaPlayer();
+        QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
+            @Override
+            public void onEvent(Long aLong) {
+                if (mListener != null) {
+                    mListener.onTimer(aLong);
+                }
+            }
+        });
     }
 
+
+    /**
+     * 创建MediaPlayer对象
+     */
     private void createMediaPlayer() {
         if(mPlayer==null){
             mPlayer = new MediaPlayer();
         }
     }
+
 
     /**
      * 服务在销毁时调用该方法
@@ -487,7 +502,16 @@ public class PlayService extends Service {
 
     /**------------------------------------------------------------------------------------------*/
 
-
+    /**
+     * 退出时候调用
+     */
+    public void quit() {
+        //先停止播放
+        stop();
+        //移除定时器
+        QuitTimer.getInstance().stop();
+        stopSelf();
+    }
 
     /**
      * 获取正在播放的本地歌曲的序号

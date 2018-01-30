@@ -7,8 +7,14 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.Utils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 
+import java.util.concurrent.TimeUnit;
+
+import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
+import okhttp3.OkHttpClient;
 
 /**
  * ================================================
@@ -55,6 +61,7 @@ public class BaseApplication extends Application {
         BaseConfig.INSTANCE.initConfig();
         BaseAppHelper.get().init(this);
         LogUtils.logDebug = true;
+        initOkHttpUtils();
     }
 
     /**
@@ -105,6 +112,17 @@ public class BaseApplication extends Application {
         Utils.init(this);
     }
 
+
+    private void initOkHttpUtils() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(new HttpInterceptor())
+                .addInterceptor(new LoggerInterceptor("TAG"))
+                .build();
+        OkHttpUtils.initClient(okHttpClient);
+    }
 
 
 }

@@ -123,7 +123,7 @@ public class AppManager {
         try {
             finishAllActivity();
             android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            //System.exit(0);
         } catch (Exception e) {
             //
         } finally {
