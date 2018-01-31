@@ -203,7 +203,8 @@ public class AudioWaveView extends View {
                 synchronized (mRecDataList) {
                     if (mRecDataList.size() != 0) {
                         try {
-                            dataList = (ArrayList<Short>) deepCopy(mRecDataList);// 保存  接收数据
+                            // 保存  接收数据
+                            dataList = (ArrayList<Short>) deepCopy(mRecDataList);
                         } catch (Exception e) {
                             e.printStackTrace();
                             continue;

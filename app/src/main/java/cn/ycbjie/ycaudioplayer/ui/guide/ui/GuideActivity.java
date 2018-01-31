@@ -89,7 +89,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
 
     @Override
     public int getContentView() {
-        return R.layout.activity_splash;
+        return R.layout.activity_guide;
     }
 
     @Override
@@ -128,13 +128,13 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
      * 欢迎star
      */
     private void startLoading() {
-        cdvTime.setTime(5);
+        cdvTime.setTime(2);
         cdvTime.start();
         cdvTime.setOnLoadingFinishListener(new CountDownView.OnLoadingFinishListener() {
             @Override
             public void finish() {
                 //跳转主页面
-                toMainActivity();
+                toAdActivity();
             }
         });
     }
@@ -191,7 +191,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     /**
      * 直接跳转主页面
      */
-    private void toMainActivity() {
+    private void toAdActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
@@ -317,7 +317,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             // Do something after user returned from app settings screen, like showing a Toast.
             // 当用户从应用设置界面返回的时候，可以做一些事情
-            toMainActivity();
+            toAdActivity();
         }
     }
 

@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
-import cn.ycbjie.ycaudioplayer.receiver.NotifiyStatusBarReceiver;
+import cn.ycbjie.ycaudioplayer.receiver.NotificationStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
@@ -152,8 +152,8 @@ public class NotificationUtils {
 
 
     private static PendingIntent getReceiverPendingIntent(PlayService context, String type , int code) {
-        Intent intent = new Intent(NotifiyStatusBarReceiver.ACTION_STATUS_BAR);
-        intent.putExtra(NotifiyStatusBarReceiver.EXTRA, type);
+        Intent intent = new Intent(NotificationStatusBarReceiver.ACTION_STATUS_BAR);
+        intent.putExtra(NotificationStatusBarReceiver.EXTRA, type);
         return PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

@@ -17,7 +17,7 @@ import cn.ycbjie.ycaudioplayer.util.LogUtils;
  * Created by yc on 2018/1/25.
  */
 
-public class NotifiyStatusBarReceiver extends BroadcastReceiver {
+public class NotificationStatusBarReceiver extends BroadcastReceiver {
 
     public static final String ACTION_STATUS_BAR = "YC_ACTION_STATUS_BAR";
     public static final String EXTRA = "extra";

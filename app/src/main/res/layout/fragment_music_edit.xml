@@ -50,27 +50,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:background="@drawable/shape_bg"
-            android:textSize="16sp"
-            android:textColor="@color/blackText"
-            android:text="添加配乐"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@drawable/shape_bg"
+                android:textSize="16sp"
+                android:textColor="@color/blackText"
+                android:text="添加配乐"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:background="@drawable/shape_bg"
-            android:textSize="16sp"
-            android:textColor="@color/blackText"
-            android:text="添加场景音效"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@drawable/shape_bg"
+                android:textSize="16sp"
+                android:textColor="@color/blackText"
+                android:text="添加场景音效"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 

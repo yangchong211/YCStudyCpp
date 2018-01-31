@@ -25,7 +25,10 @@ public class CoverLoader {
 
     private static final String KEY_NULL = "null";
 
-    // 封面缓存
+    /**
+     * 封面缓存
+     * 使用LruCache作为缓冲集合
+     */
     private LruCache<String, Bitmap> mCoverCache;
 
     private enum Type {
@@ -39,6 +42,10 @@ public class CoverLoader {
         }
     }
 
+    /**
+     * 使用单利模式获取对象
+     * @return              CoverLoader对象
+     */
     public static CoverLoader getInstance() {
         return SingletonHolder.instance;
     }
@@ -55,6 +62,7 @@ public class CoverLoader {
         mCoverCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
+                //API19
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     return bitmap.getAllocationByteCount() / 1024;
                 } else {
@@ -64,14 +72,29 @@ public class CoverLoader {
         };
     }
 
+    /**
+     * 获取小图标
+     * @param music             music
+     * @return                  bitmap对象
+     */
     public Bitmap loadThumbnail(LocalMusic music) {
         return loadCover(music, Type.THUMBNAIL);
     }
 
+    /**
+     * 获取蒙层透明背景bitmap
+     * @param music             music
+     * @return                  bitmap对象
+     */
     public Bitmap loadBlur(LocalMusic music) {
         return loadCover(music, Type.BLUR);
     }
 
+    /**
+     * 获取蒙层透明背景bitmap
+     * @param music             music
+     * @return                  bitmap对象
+     */
     public Bitmap loadRound(LocalMusic music) {
         return loadCover(music, Type.ROUND);
     }
@@ -117,6 +140,11 @@ public class CoverLoader {
     }
 
 
+    /**
+     * 获取默认的bitmap视图
+     * @param type          类型
+     * @return              bitmap对象
+     */
     private Bitmap getDefaultCover(Type type) {
         switch (type) {
             case BLUR:
@@ -163,7 +191,6 @@ public class CoverLoader {
         } catch (FileNotFoundException ignored) {
             return null;
         }
-
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         return BitmapFactory.decodeStream(is, null, options);

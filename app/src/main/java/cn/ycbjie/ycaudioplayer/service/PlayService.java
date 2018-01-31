@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Binder;
@@ -24,10 +26,13 @@ import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
+import cn.ycbjie.ycaudioplayer.receiver.AudioStreamReceiver;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.QuitTimer;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.AudioFocusManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.MediaSessionManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;
 
 
@@ -72,6 +77,20 @@ public class PlayService extends Service {
             }
         }
     };
+    /**
+     * 允许与媒体控制器、音量键、媒体按钮和传输控件交互
+     */
+    private MediaSessionManager mMediaSessionManager;
+    /**
+     * 捕获/丢弃音乐焦点处理
+     */
+    private AudioFocusManager mAudioFocusManager;
+    /**
+     * 来电/耳机拔出时暂停播放
+     * 在播放时调用，在暂停时注销
+     */
+    private final AudioStreamReceiver mNoisyReceiver = new AudioStreamReceiver();
+    private final IntentFilter mNoisyFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
 
     /**
@@ -115,6 +134,8 @@ public class PlayService extends Service {
         super.onCreate();
         NotificationUtils.init(this);
         createMediaPlayer();
+        initMediaSessionManager();
+        initAudioFocusManager();
         QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
             @Override
             public void onEvent(Long aLong) {
@@ -125,7 +146,6 @@ public class PlayService extends Service {
         });
     }
 
-
     /**
      * 创建MediaPlayer对象
      */
@@ -134,6 +154,23 @@ public class PlayService extends Service {
             mPlayer = new MediaPlayer();
         }
     }
+
+
+    /**
+     * 允许与媒体控制器、音量键、媒体按钮和传输控件交互。
+     * 播放器除了播放了音乐之外什么都没做，就可以分别在任务管理、锁屏、负一屏控制我的播放器
+     */
+    private void initMediaSessionManager() {
+        mMediaSessionManager = new MediaSessionManager(this);
+    }
+
+    /**
+     * 捕获/丢弃音乐焦点处理
+     */
+    private void initAudioFocusManager() {
+        mAudioFocusManager = new AudioFocusManager(this);
+    }
+
 
 
     /**
@@ -149,6 +186,8 @@ public class PlayService extends Service {
         mPlayer.reset();
         mPlayer.release();
         mPlayer = null;
+        mAudioFocusManager.abandonAudioFocus();
+        mMediaSessionManager.release();
         NotificationUtils.cancelAll();
         BaseAppHelper.get().setPlayService(null);
     }
@@ -301,16 +340,22 @@ public class PlayService extends Service {
         if (!isPreparing() && !isPausing()) {
             return;
         }
-        if(mPlayer!=null){
-            mPlayer.start();
-            mPlayState = MusicPlayAction.STATE_PLAYING;
-            //开始发送消息，执行进度条进度更新
-            handler.sendEmptyMessage(UPDATE_PLAY_PROGRESS_SHOW);
-            if (mListener != null) {
-                mListener.onPlayerStart();
+
+        if(mAudioFocusManager.requestAudioFocus()){
+            if(mPlayer!=null){
+                mPlayer.start();
+                mPlayState = MusicPlayAction.STATE_PLAYING;
+                //开始发送消息，执行进度条进度更新
+                handler.sendEmptyMessage(UPDATE_PLAY_PROGRESS_SHOW);
+                if (mListener != null) {
+                    mListener.onPlayerStart();
+                }
+                //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
+                NotificationUtils.showPlay(mPlayingMusic);
+                //注册监听来电/耳机拔出时暂停播放广播
+                registerReceiver(mNoisyReceiver, mNoisyFilter);
+                mMediaSessionManager.updatePlaybackState();
             }
-            //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
-            NotificationUtils.showPlay(mPlayingMusic);
         }
     }
 
@@ -318,7 +363,7 @@ public class PlayService extends Service {
     /**
      * 暂停
      */
-    private void pause() {
+    public void pause() {
         if(mPlayer!=null){
             //暂停
             mPlayer.pause();
@@ -332,6 +377,9 @@ public class PlayService extends Service {
             }
             //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
             NotificationUtils.showPause(mPlayingMusic);
+            //注销监听来电/耳机拔出时暂停播放广播
+            unregisterReceiver(mNoisyReceiver);
+            mMediaSessionManager.updatePlaybackState();
         }
     }
 
@@ -339,7 +387,7 @@ public class PlayService extends Service {
     /**
      * 停止播放
      */
-    private void stop() {
+    public void stop() {
         if (isDefault()) {
             return;
         }
@@ -385,6 +433,7 @@ public class PlayService extends Service {
             if(mListener!=null){
                 mListener.onUpdateProgress(progress);
             }
+            mMediaSessionManager.updatePlaybackState();
         }
     }
 
@@ -414,6 +463,10 @@ public class PlayService extends Service {
             }
             //更新通知栏
             NotificationUtils.showPlay(music);
+
+            //更新
+            mMediaSessionManager.updateMetaData(mPlayingMusic);
+            mMediaSessionManager.updatePlaybackState();
         } catch (IOException e) {
             e.printStackTrace();
         }

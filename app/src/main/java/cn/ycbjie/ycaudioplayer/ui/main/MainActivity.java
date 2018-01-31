@@ -335,6 +335,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    /**
+     * 从通知栏点击进入音频播放详情页面
+     */
     private void parseIntent() {
         Intent intent = getIntent();
         if (intent.hasExtra(Constant.EXTRA_NOTIFICATION)) {
@@ -344,6 +347,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    /**
+     * 展示页面
+     */
     private void showPlayingFragment() {
         if (isPlayFragmentShow) {
             return;
@@ -361,6 +367,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    /**
+     * 隐藏页面
+     */
     private void hidePlayingFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(0, R.anim.fragment_slide_down);
@@ -459,6 +468,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         tvPlayBarTitle.setText(music.getTitle());
         tvPlayBarArtist.setText(music.getArtist());
         ivPlayBarPlay.setSelected(getPlayService().isPlaying() || getPlayService().isPreparing());
+        //更新进度条
         pbPlayBar.setMax((int) music.getDuration());
         pbPlayBar.setProgress((int) getPlayService().getCurrentPosition());
 

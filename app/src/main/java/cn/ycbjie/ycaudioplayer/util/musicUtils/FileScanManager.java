@@ -81,7 +81,7 @@ public class FileScanManager {
         while (cursor.moveToNext()) {
             // 是否为音乐，魅族手机上始终为0
             int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.IS_MUSIC));
-            if (!isFlyme() && isMusic == 0) {
+            if (!isFly() && isMusic == 0) {
                 continue;
             }
 
@@ -116,6 +116,7 @@ public class FileScanManager {
         return musicList;
     }
 
+
     private long parseLong(String s) {
         try {
             return Long.parseLong(s);
@@ -124,10 +125,12 @@ public class FileScanManager {
         }
     }
 
-    private boolean isFlyme() {
-        String flymeFlag = getSystemProperty("ro.build.display.id");
-        return !TextUtils.isEmpty(flymeFlag) && flymeFlag.toLowerCase().contains("flyme");
+
+    private boolean isFly() {
+        String flyFlag = getSystemProperty("ro.build.display.id");
+        return !TextUtils.isEmpty(flyFlag) && flyFlag.toLowerCase().contains("fly");
     }
+
 
     private String getSystemProperty(String key) {
         try {
@@ -140,7 +143,6 @@ public class FileScanManager {
         }
         return null;
     }
-
 
 
 }
