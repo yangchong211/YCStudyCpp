@@ -253,7 +253,6 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         if (hasPermissions()) {
             //具备权限 直接进行操作
             startLoading();
-            startCheckService();
         } else {
             //权限拒绝 申请权限
             //第二个参数是被拒绝后再次申请该权限的解释
@@ -262,7 +261,9 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             EasyPermissions.requestPermissions(this,
                     getString(R.string.easy_permissions), RC_LOCATION_CONTACTS_PERM, LOCATION_AND_CONTACTS);
         }
+        startCheckService();
     }
+
 
     /**
      * 判断是否添加了权限

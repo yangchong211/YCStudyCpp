@@ -386,6 +386,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      * 同时还要同步播放详情页面mPlayFragment的视图
      */
     public void initPlayServiceListener() {
+        if(getPlayService()==null){
+            return;
+        }
         getPlayService().setOnPlayEventListener(new OnPlayerEventListener() {
 
             private MenuItem timerItem;

@@ -619,13 +619,13 @@ public class PlayService extends Service {
                     //获取正在播放的音乐
                     mPlayingMusic = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
                 }
-
                 if (callback != null) {
                     callback.onEvent(null);
                 }
             }
         }.execute();
     }
+
 
     /**
      * 删除或下载歌曲后刷新正在播放的本地歌曲的序号
