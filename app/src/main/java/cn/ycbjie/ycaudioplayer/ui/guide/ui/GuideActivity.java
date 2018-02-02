@@ -253,6 +253,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         if (hasPermissions()) {
             //具备权限 直接进行操作
             startLoading();
+            //startCheckService();
         } else {
             //权限拒绝 申请权限
             //第二个参数是被拒绝后再次申请该权限的解释
