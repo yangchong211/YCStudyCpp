@@ -57,6 +57,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                     mPlayService.playPause();
                 }
 
+                //获取音量
                 volume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                 if (mVolumeWhenFocusLossTransientCanDuck > 0 && volume ==
                         mVolumeWhenFocusLossTransientCanDuck / 2) {
@@ -74,7 +75,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                     forceStop();
                 }
                 break;
-            // 短暂丢失焦点，如来电
+            // 短暂丢失焦点，比如来了电话或者微信视频音频聊天等等
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (willPlay()) {
                     forceStop();
@@ -97,11 +98,15 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
         }
     }
 
+    /**
+     * 是否在播放或者准备播放
+     */
     private boolean willPlay() {
         return mPlayService.isPreparing() || mPlayService.isPlaying();
     }
 
     private void forceStop() {
+        //当准备播放时，则停止播放；当正在播放时，则暂停播放
         if (mPlayService.isPreparing()) {
             mPlayService.stop();
         } else if (mPlayService.isPlaying()) {

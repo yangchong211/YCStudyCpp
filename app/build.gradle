@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+// 注：需要配置符号表时，使用bugly插件，使APP Crash堆栈的可读性更高，建议您配置符号表文件
+apply plugin: 'bugly'
+bugly {
+    appId = '521262bdd7'
+    appKey = 'e2542a9f-9cd4-4d11-9f22-333e2ea5f4ec'
+    debug = true
+    execute = true
+    upload = true
+}
 
 android {
     compileSdkVersion 25
@@ -10,9 +19,25 @@ android {
         applicationId "cn.ycbjie.ycaudioplayer"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
+        // dex突破65535的限制
+        multiDexEnabled true
+
+        ndk {
+            // yc 设置支持的SO库架构，so库不要支持所有
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a' //'x86_64', 'arm64-v8a'
+        }
     }
+
+    //yc 过滤掉不支持的平台
+    packagingOptions {
+        exclude "lib/arm64-v8a/librealm-jni.so"
+        exclude "lib/mips/librealm-jni.so"
+        exclude "lib/x86/librealm-jni.so"
+        exclude "lib/x86_64/librealm-jni.so"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -23,8 +48,6 @@ android {
     android {
         lintOptions {
             checkReleaseBuilds false
-            // Or, if you prefer, you can continue to check for errors in release builds,
-            // but continue the build even when errors are found:
             abortOnError false
         }
     }
@@ -56,6 +79,11 @@ dependencies {
     compile 'com.google.dagger:dagger:2.13'                         //注解
     apt 'com.google.dagger:dagger-compiler:2.13'
 
+    //Bugly SDK
+    compile 'com.tencent.bugly:crashreport:2.6.6'
+    //Bugly NDK
+    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
+
     compile 'com.blankj:utilcode:1.7.1'                             //工具类
     compile 'com.squareup.picasso:picasso:2.5.2'                    //图片
     compile 'com.github.bumptech.glide:glide:3.7.0'                 //谷歌图片加载库
@@ -66,9 +94,10 @@ dependencies {
 
     compile 'org.yczbj:YCRefreshViewLib:2.1'                        //RecyclerView封装
     compile 'cn.yc:YCCountDownViewLib:1.0'                          //倒计时器
-    compile 'cn.yc:YCUtilsLib:1.5'                                  //公共类
-    compile 'cn.yc:YCDialogLib:3.4'                                 //弹窗
+    compile 'cn.yc:YCUtilsLib:1.6'                                  //公共类
+    compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗
     compile 'cn.yc:YCAudioWaveLib:1.1'                              //录音封装库
+    compile 'cn.yc:YCAudioPlayerLib:1.0'                              //歌词库
     //compile project(':YCAudioWaveLib')
     compile project(':YCAudioPlayerLib')
 

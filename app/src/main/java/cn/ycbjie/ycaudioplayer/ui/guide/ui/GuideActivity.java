@@ -189,10 +189,16 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     }
 
     /**
-     * 直接跳转主页面
+     * 直接跳转广告页
+     * 1.SplashAdFirstActivity，3d效果，沿中心x，y轴旋转，可以设置缩放效果，只需要设置z轴位移就可以
+     * 2.SplashAdSecondActivity，3d效果，借鉴与网络
+     * 3.SplashAdThirdActivity，2d效果。看上去像是旋转，实则是缩放效果。几乎看上去效果和1类似
+     * 由于产品需求，后来采用第三种方法
      */
     private void toAdActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        //Intent intent = new Intent(this, SplashAdFirstActivity.class);
+        Intent intent = new Intent(this, SplashAdSecondActivity.class);
+        //Intent intent = new Intent(this, SplashAdThirdActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

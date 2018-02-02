@@ -31,7 +31,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
@@ -330,7 +330,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     private void initNavigationView() {
-        View header = LayoutInflater.from(this).inflate(R.layout.navigation_header, navigationView, false);
+        View header = LayoutInflater.from(this).inflate(R.layout.navigation_header,
+                navigationView, false);
         navigationView.addHeaderView(header);
     }
 

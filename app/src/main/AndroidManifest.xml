@@ -50,10 +50,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"/>
-        <activity android:name=".ui.guide.ui.SplashAdActivity"/>
+        <activity android:name=".ui.guide.ui.SplashAdFirstActivity"/>
         <activity android:name=".ui.guide.ui.SplashAdSecondActivity"/>
+        <activity android:name=".ui.guide.ui.SplashAdThirdActivity"/>
         <activity android:name=".ui.music.local.view.MusicInfoActivity" />
-        <activity android:name=".test.TestLrcActivity"/>
         <activity android:name=".ui.music.onLine.view.OnlineMusicActivity"/>
 
         <service android:name=".service.PlayService" />
@@ -68,6 +68,9 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+
+
+        <activity android:name=".test.TestLrcActivity"/>
 
     </application>
 

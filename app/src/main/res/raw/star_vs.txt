@@ -1,0 +1,12 @@
+
+uniform mat4 uModelViewProjectionM;
+uniform vec3 uPosition;
+uniform float uSize;
+attribute vec2 aPosition;
+varying vec3 vPosition;
+
+void main() {
+	vec3 pos = uPosition + vec3(aPosition * uSize, 0.0);
+	gl_Position = uModelViewProjectionM * vec4(pos, 1.0);
+	vPosition = vec3(aPosition, sqrt(gl_Position.z / gl_Position.w));
+}

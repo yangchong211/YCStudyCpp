@@ -1,8 +1,10 @@
 package cn.ycbjie.ycaudioplayer.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.format.DateUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 /**
@@ -36,5 +38,44 @@ public class AppUtils {
         String ss = String.format(Locale.getDefault(), "%02d", s);
         return pattern.replace("mm", mm).replace("ss", ss);
     }
+
+
+    /**
+     * 判断某Activity是否挂掉，主要是用于弹窗
+     * @param activity
+     * @return
+     */
+    public static boolean isActivityLiving(Activity activity) {
+        if (activity == null) {
+            android.util.Log.d("wisely", "activity == null");
+            return false;
+        }
+        if (activity.isFinishing()) {
+            android.util.Log.d("wisely", "activity is finishing");
+            return false;
+        }
+        String name = activity.getClass().getName();
+        android.util.Log.d("wisely",name+"---");
+        android.util.Log.d("wisely", "activity is living");
+        return true;
+    }
+
+    /**
+     * 判断某Activity是否挂掉，主要是用于弹窗
+     */
+    private static boolean isActivityLiving(WeakReference<Activity> weakReference) {
+        if(weakReference != null){
+            Activity activity = weakReference.get();
+            if (activity == null) {
+                return false;
+            }
+            if (activity.isFinishing()) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
 
 }

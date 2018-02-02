@@ -6,13 +6,16 @@ import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
+import cn.ycbjie.ycaudioplayer.util.BuglyUtils;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import okhttp3.OkHttpClient;
 
@@ -20,7 +23,7 @@ import okhttp3.OkHttpClient;
  * ================================================
  * 作    者：杨充
  * 版    本：1.0
- * 创建日期：2017/8/18
+ * 创建日期：2016/8/18
  * 描    述：BaseApplication
  * 修订历史：
  * ================================================
@@ -36,7 +39,9 @@ public class BaseApplication extends Application {
         return instance;
     }
 
+
     public BaseApplication(){}
+
 
     /**
      * 这个最先执行
@@ -62,7 +67,9 @@ public class BaseApplication extends Application {
         BaseAppHelper.get().init(this);
         LogUtils.logDebug = true;
         initOkHttpUtils();
+        initBugly();
     }
+
 
     /**
      * 程序终止的时候执行
@@ -122,6 +129,33 @@ public class BaseApplication extends Application {
                 .addInterceptor(new LoggerInterceptor("TAG"))
                 .build();
         OkHttpUtils.initClient(okHttpClient);
+    }
+
+
+    /**
+     * 初始化腾讯bug管理平台
+     */
+    private void initBugly() {
+        /* Bugly SDK初始化
+        * 参数1：上下文对象
+        * 参数2：APPID，平台注册时得到,注意替换成你的appId
+        * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
+        * 注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
+        */
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+        // 设置版本号
+        strategy.setAppVersion(AppUtils.getAppVersionName());
+        // 设置版本名称
+        String appPackageName = AppUtils.getAppPackageName();
+        strategy.setAppPackageName(appPackageName);
+        // 获取当前进程名
+        String processName = BuglyUtils.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        strategy.setUploadProcess(processName == null || processName.equals(appPackageName));
+        //Bugly会在启动20s后联网同步数据
+        strategy.setAppReportDelay(20000);
+        //正式版
+        CrashReport.initCrashReport(getApplicationContext(), "521262bdd7", false, strategy);
     }
 
 

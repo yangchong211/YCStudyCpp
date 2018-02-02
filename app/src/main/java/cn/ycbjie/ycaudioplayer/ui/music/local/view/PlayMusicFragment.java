@@ -24,7 +24,7 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.wave.FileUtils;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;

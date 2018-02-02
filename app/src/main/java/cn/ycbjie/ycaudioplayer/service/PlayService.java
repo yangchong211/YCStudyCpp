@@ -62,21 +62,6 @@ public class PlayService extends Service {
      * 更新播放进度的显示，时间的显示
      */
     private static final int UPDATE_PLAY_PROGRESS_SHOW = 0;
-
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case UPDATE_PLAY_PROGRESS_SHOW:
-                    updatePlayProgressShow();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     /**
      * 允许与媒体控制器、音量键、媒体按钮和传输控件交互
      */
@@ -92,6 +77,21 @@ public class PlayService extends Service {
     private final AudioStreamReceiver mNoisyReceiver = new AudioStreamReceiver();
     private final IntentFilter mNoisyFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case UPDATE_PLAY_PROGRESS_SHOW:
+                    updatePlayProgressShow();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     /**
      * 绑定服务时才会调用

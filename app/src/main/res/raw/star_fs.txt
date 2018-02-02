@@ -1,0 +1,13 @@
+
+precision mediump float;
+varying vec3 vPosition;
+
+void main() {
+	float dist = length(vPosition.xy);
+	if (dist > 1.0) {
+		discard;
+	} else {
+		gl_FragColor.rgb = vec3(1.0 - vPosition.z);
+		gl_FragColor.a = 1.0 - smoothstep(0.8, 1.0, dist);
+	}
+}

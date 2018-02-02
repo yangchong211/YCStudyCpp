@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.AppManager;
@@ -17,6 +16,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseConfig;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.me.MeAboutActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.MeSettingActivity;
+import cn.ycbjie.ycaudioplayer.util.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.QuitTimer;
 
 /**
@@ -25,6 +25,7 @@ import cn.ycbjie.ycaudioplayer.util.QuitTimer;
  */
 
 class NavigationExecutor {
+
 
     static boolean onNavigationItemSelected(MenuItem item, Activity activity) {
         switch (item.getItemId()) {
@@ -58,6 +59,7 @@ class NavigationExecutor {
         context.startActivity(intent);
     }
 
+
     /**
      * 设置夜间模式
      * @param activity              activity上下文
@@ -67,21 +69,25 @@ class NavigationExecutor {
         activity.recreate();
     }
 
+
     /**
      * 弹出定时停止播放对话框
      * @param activity              activity上下文
      */
     private static void timerDialog(final Activity activity) {
-        new AlertDialog.Builder(activity)
-                .setTitle("定时停止播放")
-                .setItems(activity.getResources().getStringArray(R.array.timer_text), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int[] times = activity.getResources().getIntArray(R.array.timer_int);
-                        startTimer(activity, times[which]);
-                    }
-                })
-                .show();
+        if(AppUtils.isActivityLiving(activity)){
+            String[] stringArray = activity.getResources().getStringArray(R.array.timer_text);
+            new AlertDialog.Builder(activity)
+                    .setTitle("定时停止播放")
+                    .setItems(stringArray, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int[] times = activity.getResources().getIntArray(R.array.timer_int);
+                            startTimer(activity, times[which]);
+                        }
+                    })
+                    .show();
+        }
     }
 
 

@@ -1,5 +1,13 @@
 package cn.ycbjie.ycaudioplayer.ui.me;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 
@@ -8,9 +16,13 @@ import cn.ycbjie.ycaudioplayer.base.BaseFragment;
  */
 
 public class MeFragment extends BaseFragment {
+
+    @Bind(R.id.tv_1)
+    TextView tv1;
+
     @Override
     public int getContentView() {
-        return R.layout.base_easy_recycle;
+        return R.layout.fragment_me;
     }
 
     @Override
@@ -27,4 +39,5 @@ public class MeFragment extends BaseFragment {
     public void initData() {
 
     }
+
 }

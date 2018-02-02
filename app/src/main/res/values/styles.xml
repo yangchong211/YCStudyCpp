@@ -36,4 +36,17 @@
     </style>
 
 
+    <!--关于activity跳转动画之设置style方式-->
+    <!--<style name="AnimActivityTheme"  parent="@android:style/Animation.Activity">
+        <item name="android:windowAnimationStyle">@style/MyWindowAnimTheme</item>
+    </style>
+    <style name="MyWindowAnimTheme">
+        <item name="android:activityOpenEnterAnimation">@anim/top_to_bottom_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/top_to_bottom_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/bottom_to_top_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/bottom_to_top_out</item>
+    </style>-->
+
+
+
 </resources>

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.pedaily.yc.ycdialoglib.toast.ToastUtil;
 
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;

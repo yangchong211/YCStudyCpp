@@ -1,18 +1,17 @@
 package cn.ycbjie.ycaudioplayer.ui.guide.ui;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.opengl.GLSurfaceView;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.weight.animView.ViewStars;
 
 /**
  * Created by yc on 2018/1/30.
@@ -20,13 +19,13 @@ import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 
 public class SplashAdSecondActivity extends BaseActivity {
 
-    @Bind(R.id.iv_ad)
-    ImageView ivAd;
-    @Bind(R.id.tv_time)
-    TextView tvTime;
+
     @Bind(R.id.fl_ad)
     FrameLayout flAd;
+    @Bind(R.id.tv_time)
+    TextView tvTime;
     private TimeCount timeCount;
+    private GLSurfaceView mGLSurfaceView;
 
     @Override
     protected void onDestroy() {
@@ -37,14 +36,32 @@ public class SplashAdSecondActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mGLSurfaceView != null) {
+            mGLSurfaceView.onPause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mGLSurfaceView != null) {
+            mGLSurfaceView.onResume();
+        }
+    }
+
     @Override
     public int getContentView() {
-        return R.layout.activity_splash_ad;
+        return R.layout.activity_splash;
     }
 
     @Override
     public void initView() {
         initTimer();
+        initFlView();
     }
 
     private void initTimer() {
@@ -52,9 +69,15 @@ public class SplashAdSecondActivity extends BaseActivity {
         timeCount.start();
     }
 
+
+    private void initFlView() {
+        mGLSurfaceView = new ViewStars(this);
+        flAd.addView(mGLSurfaceView);
+    }
+
     @Override
     public void initListener() {
-        ivAd.setOnClickListener(new View.OnClickListener() {
+        tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转主页面
@@ -67,7 +90,6 @@ public class SplashAdSecondActivity extends BaseActivity {
     public void initData() {
 
     }
-
 
     private class TimeCount extends CountDownTimer {
 
@@ -98,10 +120,11 @@ public class SplashAdSecondActivity extends BaseActivity {
         }
     }
 
+
     private void toMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.screen_revolve_zoom_in, R.anim.screen_revolve_zoom_out);
+        overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();
     }
 
