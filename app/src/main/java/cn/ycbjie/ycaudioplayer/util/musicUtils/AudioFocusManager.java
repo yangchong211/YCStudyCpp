@@ -24,6 +24,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
         mAudioManager = (AudioManager) playService.getSystemService(AUDIO_SERVICE);
     }
 
+
     /**
      * 请求音频焦点，开始播放时候调用
      * @return
@@ -113,4 +114,5 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
             mPlayService.pause();
         }
     }
+
 }
