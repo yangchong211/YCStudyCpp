@@ -3,6 +3,7 @@ package cn.ycbjie.ycaudioplayer.service;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -26,7 +27,9 @@ import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
-import cn.ycbjie.ycaudioplayer.receiver.AudioStreamReceiver;
+import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
+import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
+import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.QuitTimer;
@@ -71,11 +74,22 @@ public class PlayService extends Service {
      */
     private AudioFocusManager mAudioFocusManager;
     /**
+     * 是否锁屏了，默认是false
+     */
+    private boolean mIsLocked = false;
+    /**
      * 来电/耳机拔出时暂停播放
      * 在播放时调用，在暂停时注销
      */
-    private final AudioStreamReceiver mNoisyReceiver = new AudioStreamReceiver();
-    private final IntentFilter mNoisyFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+    private final AudioEarPhoneReceiver mNoisyReceiver = new AudioEarPhoneReceiver();
+    private final IntentFilter mFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+    /**
+     * 其他广播
+     * 比如：屏幕灭了后再次亮了，会显示锁屏页面
+     * 这个在onCreate中创建，在onDestroy中销毁
+     */
+    private final AudioBroadcastReceiver mAudioReceiver = new AudioBroadcastReceiver();
+
 
 
     @SuppressLint("HandlerLeak")
@@ -136,15 +150,10 @@ public class PlayService extends Service {
         createMediaPlayer();
         initMediaSessionManager();
         initAudioFocusManager();
-        QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
-            @Override
-            public void onEvent(Long aLong) {
-                if (mListener != null) {
-                    mListener.onTimer(aLong);
-                }
-            }
-        });
+        initAudioBroadcastReceiver();
+        initQuitTimer();
     }
+
 
     /**
      * 创建MediaPlayer对象
@@ -172,6 +181,37 @@ public class PlayService extends Service {
     }
 
 
+    /**
+     * 初始化IntentFilter添加action意图
+     */
+    private void initAudioBroadcastReceiver() {
+        final IntentFilter filter = new IntentFilter();
+        //来电/耳机
+        filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        //锁屏
+        filter.addAction(Constant.LOCK_SCREEN);
+        //当屏幕灭了
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        //当屏幕亮了
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(mAudioReceiver, filter);
+    }
+
+
+    /**
+     * 初始化计时器
+     */
+    private void initQuitTimer() {
+        QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
+            @Override
+            public void onEvent(Long aLong) {
+                if (mListener != null) {
+                    mListener.onTimer(aLong);
+                }
+            }
+        });
+    }
+
 
     /**
      * 服务在销毁时调用该方法
@@ -188,6 +228,7 @@ public class PlayService extends Service {
         mPlayer = null;
         mAudioFocusManager.abandonAudioFocus();
         mMediaSessionManager.release();
+        unregisterReceiver(mAudioReceiver);
         NotificationUtils.cancelAll();
         BaseAppHelper.get().setPlayService(null);
     }
@@ -221,12 +262,21 @@ public class PlayService extends Service {
                 case MusicPlayAction.TYPE_START_PAUSE:
                     playPause();
                     break;
+                //添加锁屏界面
+                case Constant.LOCK_SCREEN:
+                    mIsLocked = intent.getBooleanExtra(Constant.IS_SCREEN_LOCK,true);
+                    break;
+                //当屏幕灭了，添加锁屏页面
+                case Intent.ACTION_SCREEN_OFF:
+                    startLockAudioActivity();
+                    break;
                 default:
                     break;
             }
         }
         return START_NOT_STICKY;
     }
+
 
 
     /**---------------------播放或暂停，上一首，下一首-----------------------------------------*/
@@ -329,7 +379,6 @@ public class PlayService extends Service {
         }
     }
 
-
     /**---------------------开始播放，暂停播放，停止播放等-----------------------------------------*/
 
 
@@ -353,7 +402,7 @@ public class PlayService extends Service {
                 //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
                 NotificationUtils.showPlay(mPlayingMusic);
                 //注册监听来电/耳机拔出时暂停播放广播
-                registerReceiver(mNoisyReceiver, mNoisyFilter);
+                registerReceiver(mNoisyReceiver, mFilter);
                 mMediaSessionManager.updatePlaybackState();
             }
         }
@@ -658,6 +707,23 @@ public class PlayService extends Service {
      */
     public void setOnPlayEventListener(OnPlayerEventListener listener) {
         mListener = listener;
+    }
+
+
+    /**-------------------------------------添加锁屏界面----------------------------------------*/
+
+
+    /**
+     * 打开锁屏页面，这块伤透了脑筋
+     * 不管是播放状态是哪一个，只要屏幕灭了到亮了，就展现这个锁屏页面
+     * 有些APP限制了状态，比如只有播放时才走这个逻辑
+     */
+    private void startLockAudioActivity() {
+        if(!mIsLocked){
+            Intent lockScreen = new Intent(this, LockAudioActivity.class);
+            lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            startActivity(lockScreen);
+        }
     }
 
 }

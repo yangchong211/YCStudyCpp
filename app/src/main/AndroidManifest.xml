@@ -31,6 +31,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+
 
     <application
         android:name=".base.BaseApplication"
@@ -56,7 +58,22 @@
         <activity android:name=".ui.music.local.view.MusicInfoActivity" />
         <activity android:name=".ui.music.onLine.view.OnlineMusicActivity"/>
 
+        <activity android:name=".ui.lock.LockAudioActivity"
+            android:noHistory="false"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:exported="false"
+            android:theme="@style/LockScreenTheme"/>
+        <activity android:name=".ui.lock.LockTestActivity"
+            android:noHistory="false"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:theme="@style/LockScreenTheme"/>
+
         <service android:name=".service.PlayService" />
+
 
         <receiver android:name=".receiver.NotificationStatusBarReceiver">
             <intent-filter>

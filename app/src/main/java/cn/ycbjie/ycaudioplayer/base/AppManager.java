@@ -119,7 +119,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
-    public void AppExit(Boolean isBackground) {
+    public void appExit(Boolean isBackground) {
         try {
             finishAllActivity();
             android.os.Process.killProcess(android.os.Process.myPid());

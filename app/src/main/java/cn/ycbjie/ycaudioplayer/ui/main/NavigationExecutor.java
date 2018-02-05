@@ -99,7 +99,7 @@ class NavigationExecutor {
         if (service != null) {
             service.quit();
         }
-        AppManager.getAppManager().AppExit(false);
+        AppManager.getAppManager().appExit(false);
     }
 
 

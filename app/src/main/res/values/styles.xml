@@ -21,6 +21,18 @@
     <style name="AppTheme.Text" parent="TextAppearance.AppCompat" />
 
 
+
+    <style name="LockScreenTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
     <!-- 深色下划线 -->
     <style name="DeepUnderLine">
         <item name="android:layout_width">match_parent</item>
