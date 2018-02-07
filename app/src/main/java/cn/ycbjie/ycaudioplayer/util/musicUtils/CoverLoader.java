@@ -99,6 +99,7 @@ public class CoverLoader {
         return loadCover(music, Type.ROUND);
     }
 
+
     private Bitmap loadCover(LocalMusic music, Type type) {
         Bitmap bitmap;
         String key = getKey(music, type);
@@ -111,20 +112,18 @@ public class CoverLoader {
             mCoverCache.put(KEY_NULL.concat(type.value), bitmap);
             return bitmap;
         }
-
         bitmap = mCoverCache.get(key);
         if (bitmap != null) {
             return bitmap;
         }
-
         bitmap = loadCoverByType(music, type);
         if (bitmap != null) {
             mCoverCache.put(key, bitmap);
             return bitmap;
         }
-
         return loadCover(null, type);
     }
+
 
     private String getKey(LocalMusic music, Type type) {
         if (music == null) {

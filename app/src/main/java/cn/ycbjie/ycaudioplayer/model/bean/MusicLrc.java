@@ -2,10 +2,7 @@ package cn.ycbjie.ycaudioplayer.model.bean;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * JavaBean
- */
-public class Lrc {
+public class MusicLrc {
 
     @SerializedName("lrcContent")
     private String lrcContent;

@@ -43,6 +43,7 @@ public class FileScanManager {
     private static final String SELECTION = MediaStore.Audio.AudioColumns.SIZE + " >= ? AND " +
             MediaStore.Audio.AudioColumns.DURATION + " >= ?";
 
+
     /**
      * 扫描歌曲
      */
@@ -70,9 +71,9 @@ public class FileScanManager {
                         MediaStore.Audio.AudioColumns.DURATION
                 },
                 SELECTION,
-                new String[]{String.valueOf(filterSize), String.valueOf(filterTime)
-                },
+                new String[]{String.valueOf(filterSize), String.valueOf(filterTime)},
                 MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+
         if (cursor == null) {
             return musicList;
         }

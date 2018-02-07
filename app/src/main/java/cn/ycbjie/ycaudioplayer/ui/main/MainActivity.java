@@ -54,7 +54,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.StudyFragment;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
 import cn.ycbjie.ycaudioplayer.util.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 
@@ -80,8 +80,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     TextView tvBarTitle;
     @Bind(R.id.ll_other)
     LinearLayout llOther;
-    @Bind(R.id.iv_search)
-    TextView ivSearch;
+    @Bind(R.id.tv_search)
+    TextView tvSearch;
     @Bind(R.id.appbar)
     AppBarLayout appbar;
     @Bind(R.id.vp_home)
@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         parseIntent();
     }
 
+
     /**
      * 这个方法的作用是？？？
      * @param intent        intent
@@ -167,7 +168,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void initListener() {
         ivMenu.setOnClickListener(this);
-        ivSearch.setOnClickListener(this);
+        tvSearch.setOnClickListener(this);
         tvLocalMusic.setOnClickListener(this);
         tvOnlineMusic.setOnClickListener(this);
         tvCutMusic.setOnClickListener(this);
@@ -204,8 +205,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.iv_menu:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.iv_search:
-                ToastUtil.showToast(this, "搜索");
+            case R.id.tv_search:
+                startActivity(SearchMusicActivity.class);
                 break;
             case R.id.tv_local_music:
                 if(musicFragment!=null){

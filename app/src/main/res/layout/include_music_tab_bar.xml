@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="我的音乐"
             android:textColor="@drawable/music_tab_bar_text_color_selector"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/tv_online_music"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="在线音乐"
             android:textColor="@drawable/music_tab_bar_text_color_selector"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/tv_cut_music"
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:gravity="center"
             android:text="录音剪辑"
             android:textColor="@drawable/music_tab_bar_text_color_selector"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,11 +64,11 @@
             android:gravity="center"
             android:text="指示器部分"
             android:textColor="@drawable/music_tab_bar_text_color_selector"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/iv_search"
+        android:id="@+id/tv_search"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:paddingEnd="10dp"
@@ -80,7 +80,7 @@
         android:textSize="14sp"
         android:textColor="@drawable/music_tab_bar_text_color_selector"
         android:drawableEnd="@drawable/ic_menu_search"
-        android:drawablePadding="3dp"
+        android:drawablePadding="0dp"
         android:scaleType="centerInside"/>
 
 </FrameLayout>

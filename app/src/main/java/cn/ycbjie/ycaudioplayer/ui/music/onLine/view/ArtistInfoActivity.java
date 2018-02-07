@@ -1,0 +1,195 @@
+package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.util.ImageUtil;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+/**
+ * Created by yc on 2018/2/7.
+ */
+
+public class ArtistInfoActivity extends BaseActivity {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.ll_artist_info)
+    LinearLayout llArtistInfo;
+    @Bind(R.id.sv_artist_info)
+    ScrollView svArtistInfo;
+    private String tingUid;
+
+    @Override
+    public int getContentView() {
+        return R.layout.activity_artist_info;
+    }
+
+    @Override
+    public void initView() {
+        initIntentData();
+        initToolBar();
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void initData() {
+        getArtistInfo(tingUid);
+    }
+
+
+    private void initIntentData() {
+        Intent intent = getIntent();
+        if(intent!=null){
+            tingUid = getIntent().getStringExtra("artist_id");
+        }
+    }
+
+    private void initToolBar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void getArtistInfo(String tingUid) {
+        OnLineMusicModel model = OnLineMusicModel.getInstance();
+        model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO,tingUid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ArtistInfo>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArtistInfo artistInfo) {
+                        if(artistInfo!=null){
+                            setData(artistInfo);
+                        }
+                    }
+                });
+    }
+
+    private void setData(ArtistInfo artistInfo) {
+        String name = artistInfo.getName();
+        toolbar.setTitle(name);
+        String avatarUri = artistInfo.getAvatar_s1000();
+        String country = artistInfo.getCountry();
+        String constellation = artistInfo.getConstellation();
+        float stature = artistInfo.getStature();
+        float weight = artistInfo.getWeight();
+        String birth = artistInfo.getBirth();
+        String intro = artistInfo.getIntro();
+        String url = artistInfo.getUrl();
+        if (!TextUtils.isEmpty(avatarUri)) {
+            ImageView ivAvatar = new ImageView(this);
+            ivAvatar.setScaleType(ImageView.ScaleType.FIT_START);
+            ImageUtil.loadImgByPicasso(this,avatarUri,R.drawable.image_default,ivAvatar);
+            llArtistInfo.addView(ivAvatar);
+        }
+        if (!TextUtils.isEmpty(name)) {
+            setTitle(name);
+            TextView tvName = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvName.setText(getString(R.string.artist_info_name, name));
+            llArtistInfo.addView(tvName);
+        }
+        if (!TextUtils.isEmpty(country)) {
+            TextView tvCountry = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvCountry.setText(getString(R.string.artist_info_country, country));
+            llArtistInfo.addView(tvCountry);
+        }
+        if (!TextUtils.isEmpty(constellation) && !TextUtils.equals(constellation, "未知")) {
+            TextView tvConstellation = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvConstellation.setText(getString(R.string.artist_info_constellation, constellation));
+            llArtistInfo.addView(tvConstellation);
+        }
+        if (stature != 0f) {
+            TextView tvStature = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvStature.setText(getString(R.string.artist_info_stature, String.valueOf(stature)));
+            llArtistInfo.addView(tvStature);
+        }
+        if (weight != 0f) {
+            TextView tvWeight = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvWeight.setText(getString(R.string.artist_info_weight, String.valueOf(weight)));
+            llArtistInfo.addView(tvWeight);
+        }
+        if (!TextUtils.isEmpty(birth) && !TextUtils.equals(birth, "0000-00-00")) {
+            TextView tvBirth = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvBirth.setText(getString(R.string.artist_info_birth, birth));
+            llArtistInfo.addView(tvBirth);
+        }
+        if (!TextUtils.isEmpty(intro)) {
+            TextView tvIntro = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvIntro.setText(getString(R.string.artist_info_intro, intro));
+            llArtistInfo.addView(tvIntro);
+        }
+        if (!TextUtils.isEmpty(url)) {
+            TextView tvUrl = (TextView) LayoutInflater.from(this).inflate(R.layout.item_artist_info, llArtistInfo, false);
+            tvUrl.setLinkTextColor(ContextCompat.getColor(this, R.color.redTab));
+            tvUrl.setMovementMethod(LinkMovementMethod.getInstance());
+            SpannableString spannableString = new SpannableString("查看更多信息");
+            spannableString.setSpan(new URLSpan(url), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tvUrl.setText(spannableString);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+            tvUrl.setLayoutParams(layoutParams);
+            llArtistInfo.addView(tvUrl);
+        }
+
+        /*if (llArtistInfo.getChildCount() == 0) {
+            ViewUtils.changeViewState(svArtistInfo, llLoading, llLoadFail, LoadStateEnum.LOAD_FAIL);
+            ((TextView) llLoadFail.findViewById(R.id.tv_load_fail_text)).setText(R.string.artist_info_empty);
+        }*/
+    }
+
+
+}

@@ -10,18 +10,22 @@ import static android.content.Context.AUDIO_SERVICE;
 
 public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListener {
 
+
     private PlayService mPlayService;
     private AudioManager mAudioManager;
+    /**
+     * 是否因聚焦丢失瞬变而暂停
+     */
     private boolean isPausedByFocusLossTransient;
     private int mVolumeWhenFocusLossTransientCanDuck;
 
     /**
      * 初始化操作
-     * @param playService           playService对象
+     * @param content           playService对象
      */
-    public AudioFocusManager(@NonNull PlayService playService) {
-        mPlayService = playService;
-        mAudioManager = (AudioManager) playService.getSystemService(AUDIO_SERVICE);
+    public AudioFocusManager(@NonNull PlayService content) {
+        mPlayService = content;
+        mAudioManager = (AudioManager) content.getSystemService(AUDIO_SERVICE);
     }
 
 
@@ -34,12 +38,14 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                 AudioManager.AUDIOFOCUS_GAIN) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
     }
 
+
     /**
      * 放弃音频焦点，销毁播放时候调用
      */
     public void abandonAudioFocus() {
         mAudioManager.abandonAudioFocus(this);
     }
+
 
     /**
      * 当音频焦点发生变化的时候调用这个方法，在这里可以处理逻辑
@@ -57,7 +63,6 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                     // 通话结束，恢复播放
                     mPlayService.playPause();
                 }
-
                 //获取音量
                 volume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                 if (mVolumeWhenFocusLossTransientCanDuck > 0 && volume ==
@@ -98,6 +103,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                 break;
         }
     }
+
 
     /**
      * 是否在播放或者准备播放

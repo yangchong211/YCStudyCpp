@@ -204,6 +204,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         finish();
     }
 
+
     private class PlayServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {

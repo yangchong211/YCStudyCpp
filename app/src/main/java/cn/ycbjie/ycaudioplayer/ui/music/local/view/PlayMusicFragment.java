@@ -7,13 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -25,7 +28,6 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-import com.yc.wave.FileUtils;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
@@ -33,6 +35,7 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
@@ -96,6 +99,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     YCLrcCustomView lrcView;
     @Bind(R.id.sb_volume)
     SeekBar sbVolume;
+    @Bind(R.id.iv_playing_velocity)
+    ImageView ivPlayingVelocity;
     private MainActivity activity;
     private int mLastProgress;
     /**
@@ -150,6 +155,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         return R.layout.fragment_play_music;
     }
 
+
     @Override
     public void initView() {
         initSystemBar();
@@ -165,6 +171,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         ivOther.setOnClickListener(this);
+        ivPlayingVelocity.setOnClickListener(this);
         initSeekBarListener();
     }
 
@@ -211,7 +218,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                         //其他情况，直接设置进度为0
                         seekBar.setProgress(0);
                     }
-                }else if (seekBar == sbVolume) {
+                } else if (seekBar == sbVolume) {
                     mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, seekBar.getProgress(),
                             AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                 }
@@ -244,6 +251,9 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.iv_other:
                 showListDialog();
+                break;
+            case R.id.iv_playing_velocity:
+                setPlayingVelocity();
                 break;
             default:
                 break;
@@ -352,6 +362,13 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         dialog.show();
     }
 
+    /**
+     * 设置播放速度
+     */
+    private void setPlayingVelocity() {
+
+    }
+
 
     /**
      * 沉浸式状态栏
@@ -425,7 +442,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
 
     /**
      * 设置歌词
-     * @param playingMusic          正在播放的音乐
+     *
+     * @param playingMusic 正在播放的音乐
      */
     private void setLrc(final LocalMusic playingMusic) {
         if (playingMusic.getType() == LocalMusic.Type.LOCAL) {
@@ -504,4 +522,17 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

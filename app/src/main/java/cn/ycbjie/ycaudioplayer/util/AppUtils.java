@@ -14,7 +14,6 @@ import java.util.Locale;
 public class AppUtils {
 
 
-
     /**
      * 获取状态栏高度
      */
@@ -27,6 +26,7 @@ public class AppUtils {
         }
         return result;
     }
+
 
     /**
      * 格式化时间
@@ -59,6 +59,7 @@ public class AppUtils {
         android.util.Log.d("wisely", "activity is living");
         return true;
     }
+
 
     /**
      * 判断某Activity是否挂掉，主要是用于弹窗

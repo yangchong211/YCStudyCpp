@@ -19,7 +19,8 @@ public class MP3Recorder extends BaseRecorder {
     /**
      * 以下三项为默认配置参数。Google Android文档明确表明只有以下3个参数是可以在所有设备上保证支持的。
      */
-    private static final int DEFAULT_SAMPLING_RATE = 44100;//模拟器仅支持从麦克风输入8kHz采样率
+    //模拟器仅支持从麦克风输入8kHz采样率
+    private static final int DEFAULT_SAMPLING_RATE = 44100;
     private static final int DEFAULT_CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
     /**
      * 下面是对此的封装

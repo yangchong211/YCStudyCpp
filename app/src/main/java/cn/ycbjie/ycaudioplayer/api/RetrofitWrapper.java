@@ -55,7 +55,8 @@ public class RetrofitWrapper {
         return instance;
     }
 
-    public RetrofitWrapper(String url) {
+
+    private RetrofitWrapper(String url) {
         builder = new OkHttpClient.Builder();
 
         //拦截日志，依赖

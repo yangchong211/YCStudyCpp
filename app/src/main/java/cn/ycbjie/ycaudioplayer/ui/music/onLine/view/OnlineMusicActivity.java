@@ -1,11 +1,12 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,14 +24,16 @@ import java.io.File;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.http.AppApiService;
-import cn.ycbjie.ycaudioplayer.api.http.HttpCallback;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.ImageUtils;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by yc on 2018/1/29.
@@ -55,10 +58,12 @@ public class OnlineMusicActivity extends BaseActivity {
     private int mOffset = 0;
     private static final int MUSIC_LIST_SIZE = 20;
 
+
     @Override
     public int getContentView() {
         return R.layout.base_bar_easy_recycle;
     }
+
 
     @Override
     public void initView() {
@@ -78,10 +83,21 @@ public class OnlineMusicActivity extends BaseActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     private void initIntentData() {
         mListInfo = (OnLineSongListInfo) getIntent().getSerializableExtra("music_list_type");
         setTitle(mListInfo.getTitle());
     }
+
 
     @Override
     public void initListener() {
@@ -105,12 +121,14 @@ public class OnlineMusicActivity extends BaseActivity {
         getData(mOffset);
     }
 
+
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LineMusicAdapter(this);
         recyclerView.setAdapter(adapter);
         addHeader();
     }
+
 
     private void addHeader() {
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
@@ -133,38 +151,47 @@ public class OnlineMusicActivity extends BaseActivity {
 
 
     private void getData(final int offset) {
-        AppApiService.getSongListInfo(mListInfo.getType(), MUSIC_LIST_SIZE, offset, new HttpCallback<OnlineMusicList>() {
-            @Override
-            public void onSuccess(OnlineMusicList response) {
-                if (offset == 0 && response == null) {
-                    recyclerView.showEmpty();
-                    return;
-                } else if (offset == 0) {
-                    initHeader(response);
-                    recyclerView.showRecycler();
-                }
-                if (response == null || response.getSong_list() == null || response.getSong_list().size() == 0) {
-                    return;
-                }
-                mOffset += MUSIC_LIST_SIZE;
-                adapter.addAll(response.getSong_list());
-                adapter.notifyDataSetChanged();
-            }
+        OnLineMusicModel model = OnLineMusicModel.getInstance();
+        model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST,mListInfo.getType(),"20",String.valueOf(offset))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OnlineMusicList>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFail(Exception e) {
-                if (e instanceof RuntimeException) {
-                    // 歌曲全部加载完成
-                    recyclerView.showError();
-                    return;
-                }
-                if (offset == 0) {
-                    recyclerView.showError();
-                } else {
-                    ToastUtils.showShort(R.string.load_fail);
-                }
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof RuntimeException) {
+                            // 歌曲全部加载完成
+                            recyclerView.showError();
+                            return;
+                        }
+                        if (offset == 0) {
+                            recyclerView.showError();
+                        } else {
+                            ToastUtils.showShort(R.string.load_fail);
+                        }
+                    }
+
+                    @Override
+                    public void onNext(OnlineMusicList onlineMusicList) {
+                        if (offset == 0 && onlineMusicList == null) {
+                            recyclerView.showEmpty();
+                            return;
+                        } else if (offset == 0) {
+                            initHeader(onlineMusicList);
+                            recyclerView.showRecycler();
+                        }
+                        if (onlineMusicList == null || onlineMusicList.getSong_list() == null || onlineMusicList.getSong_list().size() == 0) {
+                            return;
+                        }
+                        mOffset += MUSIC_LIST_SIZE;
+                        adapter.addAll(onlineMusicList.getSong_list());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 
@@ -208,7 +235,7 @@ public class OnlineMusicActivity extends BaseActivity {
                         break;
                     // 查看歌手信息
                     case 1:
-                        //artistInfo(onlineMusic);
+                        lookArtistInfo(onlineMusic);
                         break;
                     // 下载
                     case 2:
@@ -220,6 +247,13 @@ public class OnlineMusicActivity extends BaseActivity {
             }
         });
         dialog.show();
+    }
+
+
+    private void lookArtistInfo(OnlineMusicList.OnlineMusic onlineMusic) {
+        Intent intent = new Intent(this, ArtistInfoActivity.class);
+        intent.putExtra("artist_id", onlineMusic.getTing_uid());
+        startActivity(intent);
     }
 
 

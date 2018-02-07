@@ -26,6 +26,8 @@ public class SplashAdSecondActivity extends BaseActivity {
     TextView tvTime;
     private TimeCount timeCount;
     private GLSurfaceView mGLSurfaceView;
+    private boolean isClick = false;
+
 
     @Override
     protected void onDestroy() {
@@ -80,6 +82,7 @@ public class SplashAdSecondActivity extends BaseActivity {
         tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClick = true;
                 //跳转主页面
                 toMainActivity();
             }
@@ -105,8 +108,10 @@ public class SplashAdSecondActivity extends BaseActivity {
         @Override
         public void onFinish() {
             //如果是点击了翻转，那么就不执行这里面的代码
-            //跳转主页面
-            toMainActivity();
+            if(!isClick){
+                //跳转主页面
+                toMainActivity();
+            }
         }
 
         @Override

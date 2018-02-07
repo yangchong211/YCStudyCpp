@@ -16,6 +16,7 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
  */
 public class AudioEarPhoneReceiver extends BroadcastReceiver {
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
@@ -30,5 +31,6 @@ public class AudioEarPhoneReceiver extends BroadcastReceiver {
             }
         }
     }
+
 
 }

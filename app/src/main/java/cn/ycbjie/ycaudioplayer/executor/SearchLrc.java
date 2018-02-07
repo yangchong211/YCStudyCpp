@@ -2,11 +2,13 @@ package cn.ycbjie.ycaudioplayer.executor;
 
 import android.text.TextUtils;
 
-import cn.ycbjie.ycaudioplayer.api.http.AppApiService;
-import cn.ycbjie.ycaudioplayer.api.http.HttpCallback;
-import cn.ycbjie.ycaudioplayer.model.bean.Lrc;
+import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -29,42 +31,59 @@ public abstract class SearchLrc implements IExecutor<String> {
     }
 
     private void searchLrc() {
-        AppApiService.searchMusic(title + "-" + artist, new HttpCallback<SearchMusic>() {
-            @Override
-            public void onSuccess(SearchMusic response) {
-                if (response == null || response.getSong() == null || response.getSong().isEmpty()) {
-                    onFail(null);
-                    return;
-                }
-                downloadLrc(response.getSong().get(0).getSongid());
-            }
+        OnLineMusicModel model = OnLineMusicModel.getInstance();
+        model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,title + "-" + artist)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SearchMusic>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFail(Exception e) {
-                onExecuteFail(e);
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(SearchMusic searchMusic) {
+                        if (searchMusic == null || searchMusic.getSong() == null || searchMusic.getSong().isEmpty()) {
+                            return;
+                        }
+                        downloadLrc(searchMusic.getSong().get(0).getSongid());
+                    }
+                });
+
     }
 
 
     private void downloadLrc(String songId) {
-        AppApiService.getLrc(songId, new HttpCallback<Lrc>() {
-            @Override
-            public void onSuccess(Lrc response) {
-                if (response == null || TextUtils.isEmpty(response.getLrcContent())) {
-                    onFail(null);
-                    return;
-                }
-                String filePath = FileMusicUtils.getLrcDir() + FileMusicUtils.getLrcFileName(artist, title);
-                FileMusicUtils.saveLrcFile(filePath, response.getLrcContent());
-                onExecuteSuccess(filePath);
-            }
+        OnLineMusicModel model = OnLineMusicModel.getInstance();
+        model.getLrc(OnLineMusicModel.METHOD_LRC,songId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MusicLrc>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFail(Exception e) {
-                onExecuteFail(e);
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MusicLrc lrc) {
+                        if (lrc == null || TextUtils.isEmpty(lrc.getLrcContent())) {
+                            return;
+                        }
+                        String filePath = FileMusicUtils.getLrcDir() + FileMusicUtils.getLrcFileName(artist, title);
+                        FileMusicUtils.saveLrcFile(filePath, lrc.getLrcContent());
+                        onExecuteSuccess(filePath);
+                    }
+                });
     }
 
 

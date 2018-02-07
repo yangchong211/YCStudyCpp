@@ -3,7 +3,6 @@ package cn.ycbjie.ycaudioplayer.service;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -107,6 +106,7 @@ public class PlayService extends Service {
         }
     };
 
+
     /**
      * 绑定服务时才会调用
      * 必须要实现的方法
@@ -150,6 +150,7 @@ public class PlayService extends Service {
         createMediaPlayer();
         initMediaSessionManager();
         initAudioFocusManager();
+        initEarPhoneBroadcastReceiver();
         initAudioBroadcastReceiver();
         initQuitTimer();
     }
@@ -182,7 +183,16 @@ public class PlayService extends Service {
 
 
     /**
+     * 初始化耳机插入和拔出监听
+     */
+    private void initEarPhoneBroadcastReceiver() {
+
+    }
+
+
+    /**
      * 初始化IntentFilter添加action意图
+     * 主要是监听屏幕亮了与灭了
      */
     private void initAudioBroadcastReceiver() {
         final IntentFilter filter = new IntentFilter();
@@ -219,17 +229,23 @@ public class PlayService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //销毁handler
         if(handler!=null){
             handler.removeCallbacksAndMessages(null);
             handler = null;
         }
+        //销毁MediaPlayer
         mPlayer.reset();
         mPlayer.release();
         mPlayer = null;
+        //放弃音频焦点
         mAudioFocusManager.abandonAudioFocus();
         mMediaSessionManager.release();
+        //注销广播接收者
         unregisterReceiver(mAudioReceiver);
+        //结束notification通知
         NotificationUtils.cancelAll();
+        //设置service为null
         BaseAppHelper.get().setPlayService(null);
     }
 
@@ -506,6 +522,7 @@ public class PlayService extends Service {
             mPlayer.setOnPreparedListener(mOnPreparedListener);
             mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
             mPlayer.setOnCompletionListener(mOnCompletionListener);
+            mPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
             //当播放的时候，需要刷新界面信息
             if (mListener != null) {
                 mListener.onChange(music);
@@ -567,6 +584,15 @@ public class PlayService extends Service {
     };
 
 
+    /** 跳转完成时的监听 */
+    private MediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener = new MediaPlayer.OnSeekCompleteListener() {
+        @Override
+        public void onSeekComplete(MediaPlayer mp) {
+
+        }
+    };
+
+
     /**
      * 是否正在播放
      * @return          true表示正在播放
@@ -608,12 +634,16 @@ public class PlayService extends Service {
      * 退出时候调用
      */
     public void quit() {
-        //先停止播放
+        // 先停止播放
         stop();
-        //移除定时器
+        // 移除定时器
         QuitTimer.getInstance().stop();
+        // 当另一个组件（如 Activity）通过调用 startService() 请求启动服务时，系统将调用onStartCommand。
+        // 一旦执行此方法，服务即会启动并可在后台无限期运行。 如果自己实现此方法，则需要在服务工作完成后，
+        // 通过调用 stopSelf() 或 stopService() 来停止服务。
         stopSelf();
     }
+
 
     /**
      * 获取正在播放的本地歌曲的序号
@@ -621,6 +651,7 @@ public class PlayService extends Service {
     public int getPlayingPosition() {
         return mPlayingPosition;
     }
+
 
     /**
      * 获取正在播放的歌曲[本地|网络]
@@ -693,6 +724,7 @@ public class PlayService extends Service {
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
     }
 
+
     /**
      * 获取播放进度监听器对象
      * @return                  OnPlayerEventListener对象
@@ -725,5 +757,6 @@ public class PlayService extends Service {
             startActivity(lockScreen);
         }
     }
+
 
 }
