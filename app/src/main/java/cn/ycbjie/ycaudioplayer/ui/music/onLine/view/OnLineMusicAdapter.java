@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import rx.Subscriber;
@@ -91,7 +91,7 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                 tvMusic3.setText("3.加载中…");
                 //开始请求网络
                 OnLineMusicModel model = OnLineMusicModel.getInstance();
-                model.getList(OnLineMusicModel.lineMusic , data.getType(), 0 ,3)
+                model.getList(OnLineMusicModel.METHOD_LINE_MUSIC , data.getType(), 0 ,3)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<OnlineMusicList>() {

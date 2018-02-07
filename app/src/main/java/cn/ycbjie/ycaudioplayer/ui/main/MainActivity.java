@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         parseIntent();
     }
 
+
     @Override
     public void initListener() {
         ivMenu.setOnClickListener(this);
@@ -193,12 +194,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ivPlayBarNext.setOnClickListener(this);
     }
 
+
     @Override
     public void initData() {
         //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
         onChangeImpl(getPlayService().getPlayingMusic());
     }
 
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

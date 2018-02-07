@@ -1,8 +1,5 @@
 package cn.ycbjie.ycaudioplayer.ui.main;
 
-import android.graphics.Color;
-import android.nfc.Tag;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-
-import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -28,7 +19,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.SearchMusicAdapter;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.util.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

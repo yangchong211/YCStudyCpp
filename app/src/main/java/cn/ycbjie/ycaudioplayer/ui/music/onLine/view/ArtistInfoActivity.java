@@ -1,7 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -18,15 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.ImageUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

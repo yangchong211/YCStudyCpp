@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api;
+package cn.ycbjie.ycaudioplayer.api.http;
 
 
 import cn.ycbjie.ycaudioplayer.api.RetrofitWrapper;
@@ -15,13 +15,12 @@ import rx.Observable;
 
 public class OnLineMusicModel {
 
-    private static final String baseUrl = "http://tingapi.ting.baidu.com/";
-    public static final String lineMusic = "baidu.ting.billboard.billList";
+    private static final String BASE_URL = "http://tingapi.ting.baidu.com/";
+    public static final String METHOD_LINE_MUSIC = "baidu.ting.billboard.billList";
     public static final String METHOD_ARTIST_INFO = "baidu.ting.artist.getInfo";
     public static final String METHOD_SEARCH_MUSIC = "baidu.ting.search.catalogSug";
     public static final String METHOD_LRC = "baidu.ting.song.lry";
     public static final String METHOD_GET_MUSIC_LIST = "baidu.ting.billboard.billList";
-
 
 
     private static OnLineMusicModel model;
@@ -29,9 +28,10 @@ public class OnLineMusicModel {
 
     private OnLineMusicModel() {
         mApiService = RetrofitWrapper
-                .getInstance(baseUrl)
+                .getInstance(BASE_URL)
                 .create(OnLineMusicApi.class);
     }
+
 
     public static OnLineMusicModel getInstance(){
         if(model == null) {

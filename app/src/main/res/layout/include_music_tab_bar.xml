@@ -63,7 +63,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="指示器部分"
-            android:textColor="@drawable/music_tab_bar_text_color_selector"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp" />
     </LinearLayout>
 

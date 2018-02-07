@@ -26,7 +26,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;

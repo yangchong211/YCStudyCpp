@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.ui.music.onLine.model.api;
+package cn.ycbjie.ycaudioplayer.api.http;
 
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
