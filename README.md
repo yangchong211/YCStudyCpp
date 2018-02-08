@@ -302,6 +302,7 @@
 
 
 #### 6.2 参考的博客
+- 博客链接如下所示：
 - FFmpeg的库函数源代码分析文章列表：http://blog.csdn.net/leixiaohua1020/article/details/12677129
 - 多媒体编解码基础知识：http://zzqhost.github.io/hostwiki/%E5%A4%9A%E5%AA%92%E4%BD%93%E7%9B%B8%E5%85%B3_%E5%A4%9A%E5%AA%92%E4%BD%93%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#toc_1.1.2
 - Android 注册媒体按键监听：https://www.jianshu.com/p/b52754c50f89
@@ -311,6 +312,7 @@
 - [译]Android音频: 如何使用AudioTrack播放一个WAV格式文件?：http://blog.csdn.net/langwang2/article/details/50189977
 - 利用MediaExtractor和MediaCodec实现音频编解码和混音：http://yedaxia.me/Android-MediaExtractor-And-MediaCodec/
 - Android中播放音频的几种方式：http://blog.csdn.net/u013366008/article/details/76577372/
+
 
 - **6.2.3 关于锁屏页面的博客**
 - 直接参考锁屏页面这篇博客
@@ -336,3 +338,10 @@
 - 泡在网上的日子：[http://www.jcodecraeer.com/member/content_list.php?channelid=1](http://www.jcodecraeer.com/member/content_list.php?channelid=1)
 - 邮箱：yangchong211@163.com
 - 阿里云博客：[https://yq.aliyun.com/users/article?spm=5176.100239.headeruserinfo.3.dT4bcV](https://yq.aliyun.com/users/article?spm=5176.100239.headeruserinfo.3.dT4bcV)
+
+
+
+
+
+
+
