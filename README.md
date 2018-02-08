@@ -304,7 +304,6 @@
 #### 6.2 参考的博客
 - 博客链接如下所示：
 - FFmpeg的库函数源代码分析文章列表：http://blog.csdn.net/leixiaohua1020/article/details/12677129
-- 多媒体编解码基础知识：http://zzqhost.github.io/hostwiki/%E5%A4%9A%E5%AA%92%E4%BD%93%E7%9B%B8%E5%85%B3_%E5%A4%9A%E5%AA%92%E4%BD%93%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#toc_1.1.2
 - Android 注册媒体按键监听：https://www.jianshu.com/p/b52754c50f89
 - Android 多媒体控制 来电监听-耳机插拔监听-耳机按钮监听：http://blog.csdn.net/ocwvar/article/details/53107005
 - Android音频焦点详解：https://www.jianshu.com/p/e5785dcba952
