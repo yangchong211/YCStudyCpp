@@ -1,8 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.lock;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
-import cn.ycbjie.ycaudioplayer.weight.other.SlideFinishLayout;
+import cn.ycbjie.ycaudioplayer.weight.layout.SlideFinishLayout;
 
 /**
  * Created by yc on 2018/2/2.

@@ -89,7 +89,7 @@
         </receiver>
 
 
-        <activity android:name=".test.TestLrcActivity"/>
+        <activity android:name=".ui.test.TestLrcActivity"/>
 
     </application>
 

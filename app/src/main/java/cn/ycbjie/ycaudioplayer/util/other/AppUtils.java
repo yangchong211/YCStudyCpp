@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.util;
+package cn.ycbjie.ycaudioplayer.util.other;
 
 import android.app.Activity;
 import android.content.Context;

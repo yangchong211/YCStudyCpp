@@ -15,8 +15,8 @@ import com.zhy.http.okhttp.log.LoggerInterceptor;
 import java.util.concurrent.TimeUnit;
 
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
-import cn.ycbjie.ycaudioplayer.util.BuglyUtils;
-import cn.ycbjie.ycaudioplayer.util.LogUtils;
+import cn.ycbjie.ycaudioplayer.util.other.BuglyUtils;
+import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import okhttp3.OkHttpClient;
 
 /**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.ycbjie.ycaudioplayer.weight.other.SlideFinishLayout
+<cn.ycbjie.ycaudioplayer.weight.layout.SlideFinishLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/slide_layout"
     android:layout_width="match_parent"
@@ -160,4 +160,4 @@
 
     </LinearLayout>
 
-</cn.ycbjie.ycaudioplayer.weight.other.SlideFinishLayout>
+</cn.ycbjie.ycaudioplayer.weight.layout.SlideFinishLayout>

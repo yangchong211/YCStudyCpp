@@ -1,11 +1,9 @@
-package cn.ycbjie.ycaudioplayer.test;
+package cn.ycbjie.ycaudioplayer.ui.test;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -15,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;

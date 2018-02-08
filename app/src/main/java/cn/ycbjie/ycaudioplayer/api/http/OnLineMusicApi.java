@@ -61,7 +61,7 @@ public interface OnLineMusicApi {
 
 
     /**
-     * 搜索音乐歌词
+     *
      */
     @GET("v1/restserver/ting")
     Observable<OnlineMusicList> getSongListInfo(@Query("method") String method,

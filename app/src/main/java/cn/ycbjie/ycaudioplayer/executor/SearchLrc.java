@@ -30,6 +30,7 @@ public abstract class SearchLrc implements IExecutor<String> {
         searchLrc();
     }
 
+
     private void searchLrc() {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,title + "-" + artist)

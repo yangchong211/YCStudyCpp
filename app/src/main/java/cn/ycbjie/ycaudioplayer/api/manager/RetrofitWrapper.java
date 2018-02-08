@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.api;
+package cn.ycbjie.ycaudioplayer.api.manager;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
@@ -24,7 +24,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
-import cn.ycbjie.ycaudioplayer.util.InterceptorUtils;
+import cn.ycbjie.ycaudioplayer.util.other.InterceptorUtils;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

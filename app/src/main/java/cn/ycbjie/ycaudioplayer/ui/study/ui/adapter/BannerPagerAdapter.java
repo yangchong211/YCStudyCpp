@@ -12,7 +12,7 @@ import com.yc.cn.ycbannerlib.first.adapter.StaticPagerAdapter;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.util.ImageUtil;
+import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
 
 /**
  * ================================================

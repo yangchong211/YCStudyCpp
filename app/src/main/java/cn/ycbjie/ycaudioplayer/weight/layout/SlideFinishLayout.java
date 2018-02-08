@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.weight.other;
+package cn.ycbjie.ycaudioplayer.weight.layout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

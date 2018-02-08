@@ -55,7 +55,7 @@ import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
-import cn.ycbjie.ycaudioplayer.util.AppUtils;
+import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 
 /**
@@ -201,7 +201,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         onChangeImpl(getPlayService().getPlayingMusic());
     }
 
-    
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

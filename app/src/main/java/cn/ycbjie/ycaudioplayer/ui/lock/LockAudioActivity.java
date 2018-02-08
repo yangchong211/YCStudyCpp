@@ -24,8 +24,8 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.util.HandlerUtils;
-import cn.ycbjie.ycaudioplayer.weight.other.SlitherFinishLayout;
+import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;
+import cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout;
 
 /**
  * Created by yc on 2018/2/2.

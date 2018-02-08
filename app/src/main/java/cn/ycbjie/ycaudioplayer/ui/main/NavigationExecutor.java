@@ -16,8 +16,8 @@ import cn.ycbjie.ycaudioplayer.base.BaseConfig;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.me.MeAboutActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.MeSettingActivity;
-import cn.ycbjie.ycaudioplayer.util.AppUtils;
-import cn.ycbjie.ycaudioplayer.util.QuitTimer;
+import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
+import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 
 /**
  * Created by yc on 2018/1/20.
