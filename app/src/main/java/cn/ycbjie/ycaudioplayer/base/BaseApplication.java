@@ -9,15 +9,8 @@ import android.util.Log;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.log.LoggerInterceptor;
-
-import java.util.concurrent.TimeUnit;
-
-import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
 import cn.ycbjie.ycaudioplayer.util.other.BuglyUtils;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
-import okhttp3.OkHttpClient;
 
 /**
  * ================================================
@@ -66,7 +59,6 @@ public class BaseApplication extends Application {
         BaseConfig.INSTANCE.initConfig();
         BaseAppHelper.get().init(this);
         LogUtils.logDebug = true;
-        initOkHttpUtils();
         initBugly();
     }
 
@@ -117,18 +109,13 @@ public class BaseApplication extends Application {
      */
     private void initUtils() {
         Utils.init(this);
-    }
-
-
-    private void initOkHttpUtils() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .addInterceptor(new HttpInterceptor())
-                .addInterceptor(new LoggerInterceptor("TAG"))
-                .build();
-        OkHttpUtils.initClient(okHttpClient);
+        com.blankj.utilcode.util.LogUtils.Config config = com.blankj.utilcode.util.LogUtils.getConfig();
+        //边框开关，设置打开
+        config.setBorderSwitch(true);
+        //logcat 是否打印，设置打印
+        config.setConsoleSwitch(true);
+        //设置打印日志总开关，线上时关闭
+        config.setLogSwitch(true);
     }
 
 

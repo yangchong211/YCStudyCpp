@@ -12,6 +12,7 @@ import rx.Observable;
 
 public interface OnLineMusicApi {
 
+
     /**
      * 最新音乐
      * http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=2&size=3&offset=0
