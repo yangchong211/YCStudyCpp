@@ -19,17 +19,20 @@
             android:id="@+id/iv_ad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/icon_bg_ad"/>
+            android:background="@drawable/splash_ad"/>
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="20dp"
-            android:padding="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:text="倒计时2秒"
-            android:textSize="14sp"
-            android:textColor="@color/blackText"
+            android:textSize="12sp"
+            android:textColor="@color/white_96p"
             android:background="@drawable/shape_bg"/>
     </FrameLayout>
 

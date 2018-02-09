@@ -99,9 +99,12 @@ public class RetrofitWrapper {
         //gson = new GsonBuilder().setLenient().create();
         //获取实例
         mRetrofit = new Retrofit
-                .Builder()                                                  //设置OKHttpClient,如果不设置会提供一个默认的
-                .baseUrl(url)                                               //设置baseUrl
-                .addConverterFactory(GsonConverterFactory.create(gson))     //添加Gson转换器
+                //设置OKHttpClient,如果不设置会提供一个默认的
+                .Builder()
+                //设置baseUrl
+                .baseUrl(url)
+                //添加Gson转换器
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(build)
                 .build();

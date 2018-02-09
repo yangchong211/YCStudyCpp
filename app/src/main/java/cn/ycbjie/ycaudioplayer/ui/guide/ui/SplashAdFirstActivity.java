@@ -1,5 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.guide.ui;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.util.rotate.Rotate3D;
 
 /**
@@ -135,7 +137,7 @@ public class SplashAdFirstActivity extends BaseActivity {
         // 根据参数创建一个新的三维动画,并且监听触发下一个动画
         final Rotate3D rotation = new Rotate3D(start, end, centerX, centerY, depthZ, true);
         //设置动画持续时间
-        rotation.setDuration(2500);
+        rotation.setDuration(800);
         //设置动画变化速度
         //rotation.setInterpolator(new AccelerateInterpolator());
         //设置第一阶段动画监听器
@@ -213,13 +215,19 @@ public class SplashAdFirstActivity extends BaseActivity {
             centerY = showView.getMeasuredHeight() / 2.0f;
         }
         hiddenView.setVisibility(View.GONE);
-        showView.setVisibility(View.VISIBLE);
+        //showView.setVisibility(View.VISIBLE);
+        showView.setVisibility(View.GONE);
         Rotate3D rotation = new Rotate3D(startDegree, endDegree, centerX, centerY, centerZ, true);
         //设置动画持续时间
-        rotation.setDuration(2500);
+        rotation.setDuration(800);
         //设置动画变化速度
         //rotation.setInterpolator(new DecelerateInterpolator());
         fl.startAnimation(rotation);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        //overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
+        finish();
     }
 
 

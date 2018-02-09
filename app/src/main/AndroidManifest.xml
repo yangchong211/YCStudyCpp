@@ -59,6 +59,8 @@
         <activity android:name=".ui.music.onLine.view.OnlineMusicActivity"/>
         <activity android:name=".ui.music.onLine.view.ArtistInfoActivity"/>
         <activity android:name=".ui.main.SearchMusicActivity"/>
+        <activity android:name=".ui.advert.AdvertActivity"/>
+        <activity android:name=".ui.advert.AdvertDetailActivity" />
 
         <activity android:name=".ui.lock.LockAudioActivity"
             android:noHistory="false"
@@ -90,6 +92,7 @@
 
 
         <activity android:name=".ui.test.TestLrcActivity"/>
+
 
     </application>
 

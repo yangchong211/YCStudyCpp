@@ -14,6 +14,7 @@ public interface OnLineMusicApi {
 
 
     /**
+     * 参考百度音乐接口：https://www.jianshu.com/p/a6718b11fdf1
      * 最新音乐
      * http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=2&size=3&offset=0
      */

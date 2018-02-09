@@ -57,7 +57,7 @@ public class SplashAdSecondActivity extends BaseActivity {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_splash;
+        return R.layout.activity_splash_anim;
     }
 
     @Override

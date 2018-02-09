@@ -113,10 +113,10 @@ public class FileMusicUtils {
         artist = stringFilter(artist);
         title = stringFilter(title);
         if (TextUtils.isEmpty(artist)) {
-            artist = Utils.getContext().getString(R.string.unknown);
+            artist = Utils.getApp().getString(R.string.unknown);
         }
         if (TextUtils.isEmpty(title)) {
-            title = Utils.getContext().getString(R.string.unknown);
+            title = Utils.getApp().getString(R.string.unknown);
         }
         return artist + " - " + title;
     }

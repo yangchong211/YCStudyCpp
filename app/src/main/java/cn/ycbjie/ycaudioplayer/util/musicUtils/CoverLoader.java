@@ -147,13 +147,13 @@ public class CoverLoader {
     private Bitmap getDefaultCover(Type type) {
         switch (type) {
             case BLUR:
-                return BitmapFactory.decodeResource(Utils.getContext().getResources(), R.drawable.default_cover);
+                return BitmapFactory.decodeResource(Utils.getApp().getResources(), R.drawable.default_cover);
             case ROUND:
-                Bitmap bitmap = BitmapFactory.decodeResource(Utils.getContext().getResources(), R.drawable.default_cover);
+                Bitmap bitmap = BitmapFactory.decodeResource(Utils.getApp().getResources(), R.drawable.default_cover);
                 bitmap = ImageUtils.resizeImage(bitmap, ScreenUtils.getScreenWidth() / 2, ScreenUtils.getScreenWidth() / 2);
                 return bitmap;
             default:
-                return BitmapFactory.decodeResource(Utils.getContext().getResources(), R.drawable.default_cover);
+                return BitmapFactory.decodeResource(Utils.getApp().getResources(), R.drawable.default_cover);
         }
     }
 
@@ -182,7 +182,7 @@ public class CoverLoader {
      * 本地音乐
      */
     private Bitmap loadCoverFromMediaStore(long albumId) {
-        ContentResolver resolver = Utils.getContext().getContentResolver();
+        ContentResolver resolver = Utils.getApp().getContentResolver();
         Uri uri = FileMusicUtils.getMediaStoreAlbumCoverUri(albumId);
         InputStream is;
         try {

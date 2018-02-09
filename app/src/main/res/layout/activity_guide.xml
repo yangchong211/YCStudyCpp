@@ -15,6 +15,7 @@
 
     <com.ns.yc.yccountdownviewlib.CountDownView
         android:id="@+id/cdv_time"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -32,12 +33,15 @@
         app:cd_text_size="9sp" />
 
     <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:layout_marginBottom="30dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/colorAccent"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
 </RelativeLayout>

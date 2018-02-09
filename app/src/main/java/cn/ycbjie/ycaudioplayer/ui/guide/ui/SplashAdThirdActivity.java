@@ -1,5 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.guide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -14,6 +15,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 
 /**
  * Created by yc on 2018/2/1.
@@ -144,9 +147,14 @@ public class SplashAdThirdActivity extends BaseActivity {
         flMain.setVisibility(View.GONE);
     }
 
+
     private void showView2(){
         flAd.setVisibility(View.GONE);
-        flMain.setVisibility(View.VISIBLE);
+        flMain.setVisibility(View.GONE);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
+        finish();
     }
 
 

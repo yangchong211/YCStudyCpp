@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ns.yc.yccountdownviewlib.CountDownView;
 
@@ -25,9 +26,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.api.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
@@ -91,6 +94,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         return R.layout.activity_guide;
     }
 
+
     @Override
     public void initView() {
         setTimeText();
@@ -98,6 +102,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         startUpdateSplash();
         initPermissions();
     }
+
 
     @Override
     public void initListener() {
@@ -121,6 +126,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         tvTime.setText(getString(R.string.guideTime, year));
     }
 
+
     /**
      * 开始启动倒计时
      * 关于倒计时自定义控件：https://github.com/yangchong211/YCCountDownView
@@ -137,6 +143,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             }
         });
     }
+
 
     /**
      * 检测服务
@@ -195,12 +202,23 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
      * 由于产品需求，后来采用第三种方法
      */
     private void toAdActivity() {
-        //Intent intent = new Intent(this, SplashAdFirstActivity.class);
-        Intent intent = new Intent(this, SplashAdSecondActivity.class);
-        //Intent intent = new Intent(this, SplashAdThirdActivity.class);
+        int openCount = SPUtils.getInstance(Constant.SP_NAME).getInt(Constant.APP_OPEN_COUNT, 1);
+        Intent intent ;
+        if(openCount%4==1){
+            intent = new Intent(this, AdvertActivity.class);
+        }else if(openCount%4==2){
+            intent = new Intent(this, SplashAdFirstActivity.class);
+        }else if(openCount%4==3){
+            intent = new Intent(this, SplashAdSecondActivity.class);
+        }else if(openCount%4==0){
+            intent = new Intent(this, SplashAdThirdActivity.class);
+        }else {
+            intent = new Intent(this, SplashAdSecondActivity.class);
+        }
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();
+        SPUtils.getInstance(Constant.SP_NAME).put(Constant.APP_OPEN_COUNT,openCount+1);
     }
 
 
@@ -275,6 +293,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         return EasyPermissions.hasPermissions(this, LOCATION_AND_CONTACTS);
     }
 
+
     /**
      * 将结果转发到EasyPermissions
      */
@@ -304,7 +323,6 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
         // This will display a dialog directing them to enable the permission in app settings.
         if (EasyPermissions.somePermissionPermanentlyDenied(GuideActivity.this, perms)) {
-            //new AppSettingsDialog.Builder(MainActivity.this).build().show();
             AppSettingsDialog.Builder builder = new AppSettingsDialog.Builder(GuideActivity.this);
             builder.setTitle("允许权限")
                     .setRationale("没有该权限，此应用程序部分功能可能无法正常工作。打开应用设置界面以修改应用权限")
@@ -318,6 +336,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             finish();
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

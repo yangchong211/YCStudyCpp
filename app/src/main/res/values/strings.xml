@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YCAudioPlayer</string>
+    <string name="app_name">叮咚播放器</string>
 
     <string name="guideTime">Time © 2017&#045;%d 潇湘剑雨</string>
     <string name="menu_home">音乐中心</string>
