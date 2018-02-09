@@ -145,6 +145,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     }
 
 
+
     /**
      * 检测服务
      */
