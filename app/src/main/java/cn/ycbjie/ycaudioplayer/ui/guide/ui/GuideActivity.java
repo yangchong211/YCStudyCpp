@@ -187,12 +187,14 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         ivSplash.setImageResource(R.drawable.bg_page_background);
     }
 
+
     /**
      * 从网络获取图片
      */
     private void startUpdateSplash() {
 
     }
+
 
     /**
      * 直接跳转广告页
