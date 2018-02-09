@@ -60,7 +60,7 @@ import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 
 /**
  * 关于bug整理
- * 1.当定时结束后，程序崩溃
+ * 主页面
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
