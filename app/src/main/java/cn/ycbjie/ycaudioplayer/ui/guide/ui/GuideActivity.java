@@ -161,6 +161,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         }
     }
 
+
     /**
      * 开启服务
      */
@@ -168,6 +169,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         Intent intent = new Intent(this, PlayService.class);
         startService(intent);
     }
+
 
     /**
      * 绑定服务
