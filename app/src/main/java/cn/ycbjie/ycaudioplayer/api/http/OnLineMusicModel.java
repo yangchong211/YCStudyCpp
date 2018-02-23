@@ -15,6 +15,7 @@ import rx.Observable;
 
 public class OnLineMusicModel {
 
+
     private static final String BASE_URL = "http://tingapi.ting.baidu.com/";
     public static final String METHOD_LINE_MUSIC = "baidu.ting.billboard.billList";
     public static final String METHOD_ARTIST_INFO = "baidu.ting.artist.getInfo";
@@ -70,7 +71,7 @@ public class OnLineMusicModel {
     }
 
     /**
-     *
+     * 获取歌词信息
      */
     public Observable<OnlineMusicList> getSongListInfo(String method , String type , String size , String offset) {
         return mApiService.getSongListInfo(method, type, size,offset);

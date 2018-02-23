@@ -1,10 +1,13 @@
 package cn.ycbjie.ycaudioplayer.api.http;
 
+import android.os.Build;
+
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -12,6 +15,10 @@ import rx.Observable;
 
 public interface OnLineMusicApi {
 
+
+    /*String UA = "User-Agent";
+    String makeUA = Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE;
+    String header = UA+":"+makeUA;*/
 
     /**
      * 参考百度音乐接口：https://www.jianshu.com/p/a6718b11fdf1
@@ -63,7 +70,7 @@ public interface OnLineMusicApi {
 
 
     /**
-     *
+     * 获取歌词信息
      */
     @GET("v1/restserver/ting")
     Observable<OnlineMusicList> getSongListInfo(@Query("method") String method,
