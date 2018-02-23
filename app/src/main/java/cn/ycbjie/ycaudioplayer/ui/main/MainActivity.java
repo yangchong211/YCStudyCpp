@@ -40,9 +40,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
+import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
 import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
@@ -249,15 +250,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
-        StudyFragment studyFragment = new StudyFragment();
-        PractiseFragment practiseFragment = new PractiseFragment();
-        musicFragment = new MusicFragment();
-        MeFragment meFragment = new MeFragment();
-        fragments.add(studyFragment);
-        fragments.add(practiseFragment);
-        fragments.add(musicFragment);
-        fragments.add(meFragment);
-
+        fragments.add(BaseFragmentFactory.getInstance().getStudyFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getPractiseFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getMusicFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getMeFragment());
+        musicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
         BasePagerAdapter adapter = new BasePagerAdapter(getSupportFragmentManager(), fragments);
         vpHome.setAdapter(adapter);
         vpHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

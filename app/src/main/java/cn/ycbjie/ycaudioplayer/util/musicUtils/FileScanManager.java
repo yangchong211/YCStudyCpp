@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 
 /**

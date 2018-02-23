@@ -12,6 +12,7 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.cut.CutEditMusicFragment;
@@ -110,12 +111,10 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
-        mLocalMusicFragment = new LocalMusicFragment();
-        OnLineMusicFragment onLineMusicFragment = new OnLineMusicFragment();
-        CutEditMusicFragment cutEditMusicFragment = new CutEditMusicFragment();
+        mLocalMusicFragment = BaseFragmentFactory.getInstance().getLocalMusicFragment();
         fragments.add(mLocalMusicFragment);
-        fragments.add(onLineMusicFragment);
-        fragments.add(cutEditMusicFragment);
+        fragments.add(BaseFragmentFactory.getInstance().getOnLineMusicFragment());
+        fragments.add(BaseFragmentFactory.getInstance().getCutEditMusicFragment());
         BasePagerAdapter adapter = new BasePagerAdapter(getChildFragmentManager(), fragments);
         vpMusic.setAdapter(adapter);
         vpMusic.setCurrentItem(0);

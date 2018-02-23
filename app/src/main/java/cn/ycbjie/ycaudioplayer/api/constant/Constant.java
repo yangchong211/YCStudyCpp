@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.api;
+package cn.ycbjie.ycaudioplayer.api.constant;
 
 import com.blankj.utilcode.util.Utils;
 

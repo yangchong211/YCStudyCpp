@@ -3,7 +3,7 @@ package cn.ycbjie.ycaudioplayer.base;
 
 import com.blankj.utilcode.util.SPUtils;
 
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 
 /**
  * ================================================

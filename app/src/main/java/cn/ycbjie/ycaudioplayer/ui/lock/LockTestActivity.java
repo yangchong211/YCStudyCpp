@@ -17,7 +17,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.weight.layout.SlideFinishLayout;
 
 /**

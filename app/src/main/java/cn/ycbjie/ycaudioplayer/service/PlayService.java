@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;

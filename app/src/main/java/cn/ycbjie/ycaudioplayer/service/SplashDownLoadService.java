@@ -1,10 +1,7 @@
 package cn.ycbjie.ycaudioplayer.service;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,15 +11,13 @@ import com.blankj.utilcode.util.LogUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.api.AdvertModel;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.advert.utils.DownLoadUtils;
 import cn.ycbjie.ycaudioplayer.util.other.SerializableUtils;
 import rx.Observer;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

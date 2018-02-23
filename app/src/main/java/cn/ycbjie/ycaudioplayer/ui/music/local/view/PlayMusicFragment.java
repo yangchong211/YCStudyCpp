@@ -37,7 +37,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.executor.SearchLrc;

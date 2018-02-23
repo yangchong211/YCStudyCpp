@@ -21,7 +21,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;

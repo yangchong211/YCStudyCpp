@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.Constant;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.receiver.NotificationStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
