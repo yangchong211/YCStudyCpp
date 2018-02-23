@@ -121,7 +121,8 @@ public class InterceptorUtils {
                             .header("Cache-Control", "public, max-age=" + maxAge)
                             .removeHeader("Pragma") .build();
                 } else { //无网络
-                    int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
+                    // tolerate 4-weeks stale
+                    int maxStale = 60 * 60 * 24 * 28;
                     return response.newBuilder()
                             .header("Cache-Control", "public,only-if-cached,max-stale=360000")
                             .header("Cache-Control", "public,only-if-cached,max-stale=" + maxStale)

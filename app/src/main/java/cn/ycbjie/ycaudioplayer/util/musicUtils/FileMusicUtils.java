@@ -50,6 +50,11 @@ public class FileMusicUtils {
         return mkdirs(dir);
     }
 
+    public static String getRelativeMusicDir() {
+        String dir = "YCAudioPlayer/Music/";
+        return mkdirs(dir);
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static String mkdirs(String dir) {
         File file = new File(dir);
@@ -109,7 +114,11 @@ public class FileMusicUtils {
         return getFileName(artist, title) + LRC;
     }
 
-    private static String getFileName(String artist, String title) {
+    public static String getAlbumFileName(String artist, String title) {
+        return getFileName(artist, title);
+    }
+
+    public static String getFileName(String artist, String title) {
         artist = stringFilter(artist);
         title = stringFilter(title);
         if (TextUtils.isEmpty(artist)) {

@@ -2,14 +2,18 @@ package cn.ycbjie.ycaudioplayer.api.http;
 
 import android.os.Build;
 
+import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 
 
@@ -77,5 +81,14 @@ public interface OnLineMusicApi {
                                                 @Query("type") String type,
                                                 @Query("size") String size,
                                                 @Query("offset") String offset);
+
+
+
+    /**
+     * 获取下载链接
+     */
+    @GET("v1/restserver/ting")
+    Observable<DownloadInfo> getMusicDownloadInfo(@Query("method") String method,
+                                                  @Query("songid") String songid);
 
 }

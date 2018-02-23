@@ -89,6 +89,7 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'pub.devrel:easypermissions:1.0.1'                      //权限管理
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'      //导航栏
+    compile 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
 
 
     compile 'org.yczbj:YCRefreshViewLib:2.2'                        //RecyclerView封装

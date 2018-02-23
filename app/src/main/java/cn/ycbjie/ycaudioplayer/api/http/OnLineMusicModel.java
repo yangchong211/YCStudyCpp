@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.api.http;
 
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper;
+import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
@@ -22,6 +23,8 @@ public class OnLineMusicModel {
     public static final String METHOD_SEARCH_MUSIC = "baidu.ting.search.catalogSug";
     public static final String METHOD_LRC = "baidu.ting.song.lry";
     public static final String METHOD_GET_MUSIC_LIST = "baidu.ting.billboard.billList";
+    public static final String METHOD_DOWNLOAD_MUSIC = "baidu.ting.song.play";
+
 
 
     private static OnLineMusicModel model;
@@ -75,6 +78,13 @@ public class OnLineMusicModel {
      */
     public Observable<OnlineMusicList> getSongListInfo(String method , String type , String size , String offset) {
         return mApiService.getSongListInfo(method, type, size,offset);
+    }
+
+    /**
+     * 获取下载链接
+     */
+    public Observable<DownloadInfo> getMusicDownloadInfo(String method , String songid) {
+        return mApiService.getMusicDownloadInfo(method, songid);
     }
 
 

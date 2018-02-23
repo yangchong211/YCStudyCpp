@@ -266,7 +266,8 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO
+            Manifest.permission.RECORD_AUDIO,
+            //Manifest.permission.WRITE_SETTINGS
     };
 
     @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)

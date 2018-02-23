@@ -6,7 +6,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 
-public class Rotate3D extends Animation {
+public class Rotate3DUtils extends Animation {
 
     // 开始角度
     private final float mFromDegrees;
@@ -23,7 +23,7 @@ public class Rotate3D extends Animation {
     //摄像头
     private Camera mCamera;
 
-    public Rotate3D(float fromDegrees, float toDegrees, float centerX,float centerY, float depthZ, boolean reverse) {
+    public Rotate3DUtils(float fromDegrees, float toDegrees, float centerX, float centerY, float depthZ, boolean reverse) {
         mFromDegrees = fromDegrees;
         mToDegrees = toDegrees;
         mCenterX = centerX;

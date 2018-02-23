@@ -53,4 +53,10 @@
     <string name="state_start">播放</string>
     <string name="state_pause">暂停</string>
 
+    <string name="tips">温馨提示</string>
+    <string name="download_tips">当前处于移动网络，下载将消耗较多流量，是否继续下载？</string>
+    <string name="download_tips_sure">继续下载</string>
+    <string name="share_music">我用%1$s分享了歌曲《%2$s》%3$s</string>
+
+
 </resources>

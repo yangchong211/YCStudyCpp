@@ -13,7 +13,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
-import cn.ycbjie.ycaudioplayer.util.rotate.Rotate3D;
+import cn.ycbjie.ycaudioplayer.util.rotate.Rotate3DUtils;
 
 /**
  * Created by yc on 2018/1/30.
@@ -135,7 +135,7 @@ public class SplashAdFirstActivity extends BaseActivity {
         //Z轴中心点
         final float depthZ = z;
         // 根据参数创建一个新的三维动画,并且监听触发下一个动画
-        final Rotate3D rotation = new Rotate3D(start, end, centerX, centerY, depthZ, true);
+        final Rotate3DUtils rotation = new Rotate3DUtils(start, end, centerX, centerY, depthZ, true);
         //设置动画持续时间
         rotation.setDuration(800);
         //设置动画变化速度
@@ -217,7 +217,7 @@ public class SplashAdFirstActivity extends BaseActivity {
         hiddenView.setVisibility(View.GONE);
         //showView.setVisibility(View.VISIBLE);
         showView.setVisibility(View.GONE);
-        Rotate3D rotation = new Rotate3D(startDegree, endDegree, centerX, centerY, centerZ, true);
+        Rotate3DUtils rotation = new Rotate3DUtils(startDegree, endDegree, centerX, centerY, centerZ, true);
         //设置动画持续时间
         rotation.setDuration(800);
         //设置动画变化速度

@@ -8,7 +8,12 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import java.net.Proxy;
+
 import cn.ycbjie.ycaudioplayer.util.other.BuglyUtils;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
@@ -60,6 +65,7 @@ public class BaseApplication extends Application {
         BaseAppHelper.get().init(this);
         LogUtils.logDebug = true;
         initBugly();
+        initDownLoadLib();
     }
 
 
@@ -143,6 +149,24 @@ public class BaseApplication extends Application {
         strategy.setAppReportDelay(20000);
         //正式版
         CrashReport.initCrashReport(getApplicationContext(), "521262bdd7", false, strategy);
+    }
+
+
+    /**
+     * 初始化下载库
+     */
+    private void initDownLoadLib() {
+        FileDownloader.setupOnApplicationOnCreate(this)
+                .connectionCreator(new FileDownloadUrlConnection
+                        .Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000)
+                        .readTimeout(15_000)
+                        .proxy(Proxy.NO_PROXY)
+                ))
+                .commit();
+
+        //最简单的初始化
+        //FileDownloader.setup(instance);
     }
 
 

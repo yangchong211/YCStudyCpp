@@ -118,7 +118,8 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
         fragments.add(cutEditMusicFragment);
         BasePagerAdapter adapter = new BasePagerAdapter(getChildFragmentManager(), fragments);
         vpMusic.setAdapter(adapter);
-        vpMusic.setCurrentItem(fragments.size());
+        vpMusic.setCurrentItem(0);
+        vpMusic.setOffscreenPageLimit(fragments.size());
         activity.tvLocalMusic.setSelected(true);
     }
 

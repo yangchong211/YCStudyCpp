@@ -16,6 +16,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -25,10 +27,12 @@ import java.io.File;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.ImageUtils;
 import rx.Subscriber;
@@ -104,13 +108,14 @@ public class OnlineMusicActivity extends BaseActivity {
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                //播放音乐
             }
         });
         adapter.setOnMoreClickListener(new OnMoreClickListener() {
             @Override
             public void onMoreClick(int position) {
-                showMoreDialog(position);
+                //这个地方需要+1
+                showMoreDialog(position+1);
             }
         });
     }
@@ -231,7 +236,7 @@ public class OnlineMusicActivity extends BaseActivity {
                 switch (which) {
                     // 分享
                     case 0:
-                        //share(onlineMusic);
+                        share(onlineMusic);
                         break;
                     // 查看歌手信息
                     case 1:
@@ -239,7 +244,7 @@ public class OnlineMusicActivity extends BaseActivity {
                         break;
                     // 下载
                     case 2:
-                        //download(onlineMusic);
+                        download(onlineMusic);
                         break;
                     default:
                         break;
@@ -250,10 +255,64 @@ public class OnlineMusicActivity extends BaseActivity {
     }
 
 
+    /**
+     * 分享音乐
+     * @param onlineMusic           实体类
+     */
+    private void share(OnlineMusicList.OnlineMusic onlineMusic) {
+        new AbsShareOnlineMusic(this, onlineMusic.getTitle(), onlineMusic.getSong_id()) {
+            @Override
+            public void onPrepare() {
+                LoadDialog.show(OnlineMusicActivity.this,"下载中……");
+            }
+
+            @Override
+            public void onExecuteSuccess(Void aVoid) {
+                LoadDialog.dismiss(OnlineMusicActivity.this);
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+                LoadDialog.dismiss(OnlineMusicActivity.this);
+            }
+        }.execute();
+    }
+
+
+    /**
+     * 查看歌手信息
+     * @param onlineMusic           实体类
+     */
     private void lookArtistInfo(OnlineMusicList.OnlineMusic onlineMusic) {
         Intent intent = new Intent(this, ArtistInfoActivity.class);
         intent.putExtra("artist_id", onlineMusic.getTing_uid());
         startActivity(intent);
+    }
+
+
+    /**
+     * 下载音乐
+     * @param onlineMusic           实体类
+     */
+    private void download(final OnlineMusicList.OnlineMusic onlineMusic) {
+        new AbsDownloadOnlineMusic(this, onlineMusic) {
+            @Override
+            public void onPrepare() {
+                LoadDialog.show(OnlineMusicActivity.this,"下载中……");
+            }
+
+            @Override
+            public void onExecuteSuccess(Void aVoid) {
+                LoadDialog.dismiss(OnlineMusicActivity.this);
+                ToastUtil.showToast(OnlineMusicActivity.this,"下载成功"+onlineMusic.getTitle());
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+                LoadDialog.dismiss(OnlineMusicActivity.this);
+                ToastUtil.showToast(OnlineMusicActivity.this,"下载失败");
+            }
+        }.execute();
     }
 
 
