@@ -1,12 +1,17 @@
 package cn.ycbjie.ycaudioplayer.ui.lock;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.TimeUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -23,7 +31,11 @@ import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
+import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;
 import cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout;
 
@@ -63,8 +75,15 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
     LinearLayout llContent;
     @Bind(R.id.slide_layout)
     SlitherFinishLayout slideLayout;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
     private Handler mHandler;
-
+    private PlayService playService;
+    private int mLastProgress;
+    /**
+     * 是否拖进度，默认是false
+     */
+    private boolean isDraggingProgress;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +94,8 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
         initWindow();
         setContentView(R.layout.activity_audio_lock);
         ButterKnife.bind(this);
+        playService = BaseAppHelper.get().getPlayService();
+        initPlayServiceListener();
         initView();
         initListener();
         initLockData();
@@ -100,15 +121,15 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
                 window.getDecorView().setSystemUiVisibility(
                         // SYSTEM_UI_FLAG_LAYOUT_STABLE保持整个View稳定，使View不会因为SystemUI的变化而做layout
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                        // SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION，开发者容易被其中的HIDE_NAVIGATION所迷惑，
-                        // 其实这个Flag没有隐藏导航栏的功能，只是控制导航栏浮在屏幕上层，不占据屏幕布局空间；
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                        // SYSTEM_UI_FLAG_HIDE_NAVIGATION，才是能够隐藏导航栏的Flag；
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        // SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN，由上面可知，也不能隐藏状态栏，只是使状态栏浮在屏幕上层。
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_IMMERSIVE);
+                                // SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION，开发者容易被其中的HIDE_NAVIGATION所迷惑，
+                                // 其实这个Flag没有隐藏导航栏的功能，只是控制导航栏浮在屏幕上层，不占据屏幕布局空间；
+                                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                                // SYSTEM_UI_FLAG_HIDE_NAVIGATION，才是能够隐藏导航栏的Flag；
+                                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                                // SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN，由上面可知，也不能隐藏状态栏，只是使状态栏浮在屏幕上层。
+                                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                                View.SYSTEM_UI_FLAG_IMMERSIVE);
             }
         }
     }
@@ -117,7 +138,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus && getWindow()!=null){
+        if (hasFocus && getWindow() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 getWindow().getDecorView().setSystemUiVisibility(
                         // SYSTEM_UI_FLAG_LAYOUT_STABLE保持整个View稳定，使View不会因为SystemUI的变化而做layout
@@ -148,7 +169,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
             case KeyEvent.KEYCODE_BACK: {
                 return true;
             }
-            case KeyEvent.KEYCODE_MENU:{
+            case KeyEvent.KEYCODE_MENU: {
                 return true;
             }
             default:
@@ -165,10 +186,13 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra(Constant.IS_SCREEN_LOCK, false);
         sendBroadcast(intent);
         super.onDestroy();
-        if(mHandler!=null){
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
+        /*if(playService!=null){
+            playService.setOnPlayEventListener(null);
+        }*/
     }
 
 
@@ -198,34 +222,138 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         ivPlay.setOnClickListener(this);
+        initSeekBarListener();
     }
 
 
     @Override
     public void onClick(View v) {
-        PlayService playService = BaseAppHelper.get().getPlayService();
         switch (v.getId()) {
             case R.id.iv_prev:
                 playService.prev();
-                //ToastUtil.showToast(this,"上一首");
                 break;
             case R.id.iv_next:
                 playService.next();
-                //ToastUtil.showToast(this,"下一首");
                 break;
             case R.id.iv_play:
                 playService.playPause();
-                if(playService.isPlaying()){
-                    //ToastUtil.showToast(this,"暂停");
+                if (playService.isPlaying()) {
                     ivPlay.setImageResource(R.drawable.ic_play_btn_pause);
-                }else {
-                    //ToastUtil.showToast(this,"播放");
+                } else {
                     ivPlay.setImageResource(R.drawable.ic_play_btn_play);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 初始化服务播放音频播放进度监听器
+     * 这个是要是通过监听即时更新主页面的底部控制器视图
+     * 同时还要同步播放详情页面mPlayFragment的视图
+     */
+    public void initPlayServiceListener() {
+        if(playService==null){
+            return;
+        }
+        playService.setOnPlayEventListener(new OnPlayerEventListener() {
+            /**
+             * 切换歌曲
+             * 主要是切换歌曲的时候需要及时刷新界面信息
+             */
+            @Override
+            public void onChange(LocalMusic music) {
+                onChangeImpl(music);
+            }
+
+            /**
+             * 继续播放
+             * 主要是切换歌曲的时候需要及时刷新界面信息，比如播放暂停按钮
+             */
+            @Override
+            public void onPlayerStart() {
+                //ivPlay.setImageResource(R.drawable.ic_play_btn_pause);
+            }
+
+            /**
+             * 暂停播放
+             * 主要是切换歌曲的时候需要及时刷新界面信息，比如播放暂停按钮
+             */
+            @Override
+            public void onPlayerPause() {
+                //ivPlay.setImageResource(R.drawable.ic_play_btn_play);
+            }
+
+            /**
+             * 更新进度
+             * 主要是播放音乐或者拖动进度条时，需要更新进度
+             */
+            @Override
+            public void onUpdateProgress(int progress) {
+                /*sbProgress.setProgress(progress);*/
+                //如果没有拖动进度，则开始更新进度条进度
+                if (!isDraggingProgress) {
+                    sbProgress.setProgress(progress);
+                }
+            }
+
+            /**
+             * 更新定时停止播放时间
+             */
+            @Override
+            public void onTimer(long remain) {
+
+            }
+        });
+    }
+
+
+    private void initSeekBarListener() {
+        sbProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (seekBar == sbProgress) {
+                    if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
+                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss", progress));
+                        mLastProgress = progress;
+                    }
+                }
+            }
+
+            /**
+             * 通知用户已启动触摸手势,开始触摸时调用
+             * @param seekBar               seekBar
+             */
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                if (seekBar == sbProgress) {
+                    isDraggingProgress = true;
+                }
+            }
+
+
+            /**
+             * 通知用户已结束触摸手势,触摸结束时调用
+             * @param seekBar               seekBar
+             */
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (seekBar == sbProgress) {
+                    isDraggingProgress = false;
+                    //如果是正在播放，或者暂停，那么直接拖动进度
+                    if (playService.isPlaying() || playService.isPausing()) {
+                        //获取进度
+                        int progress = seekBar.getProgress();
+                        //直接移动进度
+                        playService.seekTo(progress);
+                    } else {
+                        //其他情况，直接设置进度为0
+                        seekBar.setProgress(0);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -241,15 +369,45 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
 
     private void initHandler() {
-        if(mHandler==null){
+        if (mHandler == null) {
             mHandler = HandlerUtils.getInstance(this);
         }
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    initMusicData();
+                }
 
             }
         });
+    }
+
+    private void initMusicData() {
+        //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
+        onChangeImpl(playService.getPlayingMusic());
+    }
+
+
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+    private void onChangeImpl(LocalMusic music) {
+        if (music == null) {
+            return;
+        }
+        tvTime.setText(TimeUtils.date2String(new Date(),new SimpleDateFormat("mm:ss")));
+        Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);
+        ivImage.setImageBitmap(cover);
+        tvTitle.setText(music.getTitle()+ " / " + music.getArtist());
+        mLastProgress = 0;
+        //更新进度条
+        sbProgress.setMax((int) music.getDuration());
+        sbProgress.setProgress((int) playService.getCurrentPosition());
+        tvCurrentTime.setText("00:00");
+        tvTotalTime.setText(AppUtils.formatTime("mm:ss", music.getDuration()));
     }
 
 

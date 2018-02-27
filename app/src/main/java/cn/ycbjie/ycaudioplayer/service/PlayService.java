@@ -205,6 +205,12 @@ public class PlayService extends Service {
         //当屏幕亮了
         filter.addAction(Intent.ACTION_SCREEN_ON);
         registerReceiver(mAudioReceiver, filter);
+        /* 注册屏幕唤醒时的广播 *//*
+        IntentFilter mScreenOnFilter = new IntentFilter("android.intent.action.SCREEN_ON");
+        registerReceiver(mAudioReceiver, mScreenOnFilter);
+        *//* 注册机器锁屏时的广播 *//*
+        IntentFilter mScreenOffFilter = new IntentFilter("android.intent.action.SCREEN_OFF");
+        registerReceiver(mAudioReceiver, mScreenOffFilter);*/
     }
 
 

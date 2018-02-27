@@ -163,6 +163,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         initVolume();
     }
 
+
     @Override
     public void initListener() {
         ivBack.setOnClickListener(this);
@@ -522,17 +523,4 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

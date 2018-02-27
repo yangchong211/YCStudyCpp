@@ -68,17 +68,28 @@
 
 
             <!--中间暂时放着-->
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:text="歌曲名称，演唱者"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"/>
                 <ImageView
                     android:id="@+id/iv_image"
+                    android:layout_marginTop="10dp"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
                     android:background="@drawable/default_cover"/>
-            </FrameLayout>
+            </LinearLayout>
 
 
             <!--时间进度条-->

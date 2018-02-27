@@ -182,6 +182,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         bindService(intent, mPlayServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
+
     /**
      * 展示图片，从网络获取
      */
@@ -309,6 +310,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+
     /**
      * 某些权限已被授予
      */
@@ -317,6 +319,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         //某些权限已被授予
         Log.d("权限", "onPermissionsGranted:" + requestCode + ":" + perms.size());
     }
+
 
     /**
      * 某些权限已被拒绝
