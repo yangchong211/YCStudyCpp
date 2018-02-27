@@ -190,9 +190,6 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
-        /*if(playService!=null){
-            playService.setOnPlayEventListener(null);
-        }*/
     }
 
 

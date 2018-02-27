@@ -85,10 +85,14 @@
                 <action android:name="YC_ACTION_STATUS_BAR" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.AudioBroadcastReceiver"/>
         <receiver android:name=".receiver.EarphoneControlReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.AudioBroadcastReceiver">
+            <intent-filter>
+                <action android:name="lock_screen" />
             </intent-filter>
         </receiver>
 

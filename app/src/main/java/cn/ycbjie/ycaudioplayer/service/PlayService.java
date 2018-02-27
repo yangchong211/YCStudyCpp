@@ -205,12 +205,6 @@ public class PlayService extends Service {
         //当屏幕亮了
         filter.addAction(Intent.ACTION_SCREEN_ON);
         registerReceiver(mAudioReceiver, filter);
-        /* 注册屏幕唤醒时的广播 *//*
-        IntentFilter mScreenOnFilter = new IntentFilter("android.intent.action.SCREEN_ON");
-        registerReceiver(mAudioReceiver, mScreenOnFilter);
-        *//* 注册机器锁屏时的广播 *//*
-        IntentFilter mScreenOffFilter = new IntentFilter("android.intent.action.SCREEN_OFF");
-        registerReceiver(mAudioReceiver, mScreenOffFilter);*/
     }
 
 
@@ -287,10 +281,15 @@ public class PlayService extends Service {
                 //添加锁屏界面
                 case Constant.LOCK_SCREEN:
                     mIsLocked = intent.getBooleanExtra(Constant.IS_SCREEN_LOCK,true);
+                    LogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
                     break;
                 //当屏幕灭了，添加锁屏页面
                 case Intent.ACTION_SCREEN_OFF:
                     startLockAudioActivity();
+                    LogUtils.e("PlayService"+"---当屏幕灭了");
+                    break;
+                case Intent.ACTION_SCREEN_ON:
+                    LogUtils.e("PlayService"+"---当屏幕亮了");
                     break;
                 default:
                     break;
@@ -757,9 +756,9 @@ public class PlayService extends Service {
      * 有些APP限制了状态，比如只有播放时才走这个逻辑
      */
     private void startLockAudioActivity() {
-        if(!mIsLocked){
+        if(!mIsLocked && isPlaying()){
             Intent lockScreen = new Intent(this, LockAudioActivity.class);
-            lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(lockScreen);
         }
     }
