@@ -60,7 +60,7 @@ public class LockTestActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         sendBroadcast(intent);
         super.onCreate(savedInstanceState);
         initWindow();
@@ -116,7 +116,7 @@ public class LockTestActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         intent.putExtra(Constant.IS_SCREEN_LOCK, false);
         sendBroadcast(intent);
         super.onDestroy();
@@ -127,7 +127,7 @@ public class LockTestActivity extends AppCompatActivity implements View.OnClickL
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
         Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         intent.putExtra(Constant.IS_SCREEN_LOCK, false);
         sendBroadcast(intent);
         finish();

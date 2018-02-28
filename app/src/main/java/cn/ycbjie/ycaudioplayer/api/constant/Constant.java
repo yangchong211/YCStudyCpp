@@ -25,6 +25,7 @@ public class Constant {
     /**--------------------------------------action----------------------------------------------**/
     public static final String EXTRA_NOTIFICATION = "extra_notification";
     public static final String LOCK_SCREEN = "lock_screen";
+    public static final String LOCK_SCREEN_ACTION = "cn.ycbjie.lock";
 
     /**--------------------------------------键--------------------------------------------------**/
     public static final String KEY_IS_LOGIN = "is_login";

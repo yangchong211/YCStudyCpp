@@ -202,6 +202,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         onChangeImpl(getPlayService().getPlayingMusic());
     }
 
+    /**
+     * 当关闭锁屏页面(锁屏页面为栈顶页面)的时候，会返回该MainActivity
+     * 那么则需要刷新页面数据
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        /*initPlayServiceListener();
+        onChangeImpl(getPlayService().getPlayingMusic());*/
+    }
 
     @Override
     public void onClick(View v) {

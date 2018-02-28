@@ -92,7 +92,7 @@
         </receiver>
         <receiver android:name=".receiver.AudioBroadcastReceiver">
             <intent-filter>
-                <action android:name="lock_screen" />
+                <action android:name="cn.ycbjie.lock" />
             </intent-filter>
         </receiver>
 

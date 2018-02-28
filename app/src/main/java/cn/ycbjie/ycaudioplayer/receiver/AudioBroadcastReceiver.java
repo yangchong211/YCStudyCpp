@@ -21,8 +21,8 @@ public class AudioBroadcastReceiver extends BroadcastReceiver {
         if(action!=null && action.length()>0){
             switch (action){
                 //锁屏时处理的逻辑
-                case Constant.LOCK_SCREEN:
-                    PlayService.startCommand(context,Constant.LOCK_SCREEN);
+                case Constant.LOCK_SCREEN_ACTION:
+                    PlayService.startCommand(context,Constant.LOCK_SCREEN_ACTION);
                     LogUtils.e("AudioBroadcastReceiver"+"---LOCK_SCREEN");
                     break;
                 //当屏幕灭了

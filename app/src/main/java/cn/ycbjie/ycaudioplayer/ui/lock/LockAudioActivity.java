@@ -32,6 +32,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
+import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
@@ -87,8 +88,8 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         sendBroadcast(intent);
         super.onCreate(savedInstanceState);
         initWindow();
@@ -181,8 +182,8 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onDestroy() {
-        Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         intent.putExtra(Constant.IS_SCREEN_LOCK, false);
         sendBroadcast(intent);
         super.onDestroy();
@@ -196,8 +197,8 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        Intent intent = new Intent();
-        intent.setAction(Constant.LOCK_SCREEN);
+        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        intent.setAction(Constant.LOCK_SCREEN_ACTION);
         intent.putExtra(Constant.IS_SCREEN_LOCK, false);
         sendBroadcast(intent);
         finish();

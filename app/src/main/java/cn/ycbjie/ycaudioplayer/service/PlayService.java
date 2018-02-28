@@ -199,7 +199,7 @@ public class PlayService extends Service {
         //来电/耳机
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         //锁屏
-        filter.addAction(Constant.LOCK_SCREEN);
+        filter.addAction(Constant.LOCK_SCREEN_ACTION);
         //当屏幕灭了
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         //当屏幕亮了
@@ -279,7 +279,7 @@ public class PlayService extends Service {
                     playPause();
                     break;
                 //添加锁屏界面
-                case Constant.LOCK_SCREEN:
+                case Constant.LOCK_SCREEN_ACTION:
                     mIsLocked = intent.getBooleanExtra(Constant.IS_SCREEN_LOCK,true);
                     LogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
                     break;
