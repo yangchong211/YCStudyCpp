@@ -96,6 +96,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+
     private void initFragment() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         InnovationFragment innovationFragment = BaseFragmentFactory.getInstance().getInnovationFragment();
