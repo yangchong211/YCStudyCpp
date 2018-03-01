@@ -6,6 +6,10 @@ import cn.ycbjie.ycaudioplayer.ui.music.cut.CutEditMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseAfterFragment;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseBeforeFragment;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.InnovationFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
 
 
@@ -22,8 +26,12 @@ import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
 public class BaseFragmentFactory {
 
     private static BaseFragmentFactory mInstance;
+    private HomeFragment mHomeFragment;
     private StudyFragment mStudyFragment;
+    private InnovationFragment mInnovationFragment;
     private PractiseFragment mPractiseFragment;
+    private PractiseBeforeFragment mPractiseBeforeFragment;
+    private PractiseAfterFragment mPractiseAfterFragment;
     private MusicFragment mMusicFragment;
     private MeFragment mMeFragment;
     private LocalMusicFragment mLocalMusicFragment;
@@ -43,6 +51,17 @@ public class BaseFragmentFactory {
         return mInstance;
     }
 
+    public HomeFragment getHomeFragment() {
+        if (mHomeFragment == null) {
+            synchronized (BaseFragmentFactory.class) {
+                if (mHomeFragment == null) {
+                    mHomeFragment = new HomeFragment();
+                }
+            }
+        }
+        return mHomeFragment;
+    }
+
 
     public StudyFragment getStudyFragment() {
         if (mStudyFragment == null) {
@@ -55,6 +74,17 @@ public class BaseFragmentFactory {
         return mStudyFragment;
     }
 
+    public InnovationFragment getInnovationFragment() {
+        if (mInnovationFragment == null) {
+            synchronized (BaseFragmentFactory.class) {
+                if (mInnovationFragment == null) {
+                    mInnovationFragment = new InnovationFragment();
+                }
+            }
+        }
+        return mInnovationFragment;
+    }
+
 
     public PractiseFragment getPractiseFragment() {
         if (mPractiseFragment == null) {
@@ -65,6 +95,34 @@ public class BaseFragmentFactory {
             }
         }
         return mPractiseFragment;
+    }
+
+
+
+
+    public PractiseBeforeFragment getPractiseBeforeFragment() {
+        if (mPractiseBeforeFragment == null) {
+            synchronized (BaseFragmentFactory.class) {
+                if (mPractiseBeforeFragment == null) {
+                    mPractiseBeforeFragment = new PractiseBeforeFragment();
+                }
+            }
+        }
+        return mPractiseBeforeFragment;
+    }
+
+
+
+
+    public PractiseAfterFragment getPractiseAfterFragment() {
+        if (mPractiseAfterFragment == null) {
+            synchronized (BaseFragmentFactory.class) {
+                if (mPractiseAfterFragment == null) {
+                    mPractiseAfterFragment = new PractiseAfterFragment();
+                }
+            }
+        }
+        return mPractiseAfterFragment;
     }
 
 

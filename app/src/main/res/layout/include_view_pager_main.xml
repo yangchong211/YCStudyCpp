@@ -6,10 +6,11 @@
     android:layout_weight="1"
     android:orientation="vertical" >
 
-    <com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager
-        android:id="@+id/vp_home"
+    <FrameLayout
+        android:id="@+id/fl_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/whiteBg"/>
 
     <include
         layout="@layout/include_play_bar"

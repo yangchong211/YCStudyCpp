@@ -1,22 +1,25 @@
 package cn.ycbjie.ycaudioplayer.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,9 +30,10 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.ns.yc.ycutilslib.viewPager.NoSlidingViewPager;
+import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
@@ -44,49 +48,44 @@ import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
-import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
 import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.TabEntity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
-import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
+import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
 /**
  * 关于bug整理
  * 主页面
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
+
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.iv_menu)
     ImageView ivMenu;
-    @Bind(R.id.tv_local_music)
-    public TextView tvLocalMusic;
-    @Bind(R.id.tv_online_music)
-    public TextView tvOnlineMusic;
-    @Bind(R.id.tv_cut_music)
-    public TextView tvCutMusic;
     @Bind(R.id.ll_music)
     LinearLayout llMusic;
-    @Bind(R.id.tv_bar_title)
-    TextView tvBarTitle;
+    @Bind(R.id.stl_layout)
+    public SegmentTabLayout stlLayout;
     @Bind(R.id.ll_other)
     LinearLayout llOther;
     @Bind(R.id.tv_search)
     TextView tvSearch;
     @Bind(R.id.appbar)
     AppBarLayout appbar;
-    @Bind(R.id.vp_home)
-    NoSlidingViewPager vpHome;
+    @Bind(R.id.fl_main)
+    FrameLayout flMain;
     @Bind(R.id.ctl_table)
     CommonTabLayout ctlTable;
     @Bind(R.id.navigation_view)
@@ -112,10 +111,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Bind(R.id.ll_main)
     LinearLayout llMain;
 
-    private MusicFragment musicFragment;
-    private boolean isPlayFragmentShow = false;
+    private Bundle bundle;
+    private HomeFragment mHomeFragment;
+    private PractiseFragment mPractiseFragment;
+    private MusicFragment mMusicFragment;
+    private MeFragment mMeFragment;
     private PlayMusicFragment mPlayFragment;
 
+    private static final int FRAGMENT_HOME = 0;
+    private static final int FRAGMENT_PRACTISE = 1;
+    private static final int FRAGMENT_MUSIC = 2;
+    private static final int FRAGMENT_ME = 3;
+    private static final String POSITION = "position";
+    private static final String SELECT_ITEM = "selectItem";
+    private int positionIndex;
+    private boolean isPlayFragmentShow = false;
+    private long firstClickTime = 0;
+
+
+    private String[] mStudyTitles = {"研习社", "创新院"};
+    private String[] mPractiseTitles = {"课前预习", "课后练习"};
+    private String[] mMusicTitles = {"我的音乐","在线音乐"};
 
     @Override
     public void onBackPressed() {
@@ -137,6 +153,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             service.setOnPlayEventListener(null);
         }
         super.onDestroy();
+        InputMethodManagerLeakUtils.fixInputMethodManagerLeak(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // recreate 时记录当前位置 (在 Manifest 已禁止 Activity 旋转,所以旋转屏幕并不会执行以下代码)
+        // 程序意外崩溃时保存状态信息
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, positionIndex);
+        outState.putInt(SELECT_ITEM, ctlTable.getCurrentTab());
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bundle = savedInstanceState;
     }
 
 
@@ -155,10 +187,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         parseIntent();
     }
 
-
     /**
      * 这个方法的作用是？？？
-     * @param intent        intent
+     *
+     * @param intent intent
      */
     @Override
     protected void onNewIntent(Intent intent) {
@@ -171,9 +203,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void initListener() {
         ivMenu.setOnClickListener(this);
         tvSearch.setOnClickListener(this);
-        tvLocalMusic.setOnClickListener(this);
-        tvOnlineMusic.setOnClickListener(this);
-        tvCutMusic.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
@@ -222,24 +251,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.tv_search:
                 startActivity(SearchMusicActivity.class);
                 break;
-            case R.id.tv_local_music:
-                if(musicFragment!=null){
-                    musicFragment.vpMusic.setCurrentItem(0);
-                    flPlayBar.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.tv_online_music:
-                if(musicFragment!=null){
-                    musicFragment.vpMusic.setCurrentItem(1);
-                    flPlayBar.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.tv_cut_music:
-                if(musicFragment!=null){
-                    musicFragment.vpMusic.setCurrentItem(2);
-                    flPlayBar.setVisibility(View.GONE);
-                }
-                break;
             case R.id.fl_play_bar:
                 showPlayingFragment();
                 break;
@@ -259,31 +270,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     private void initFragment() {
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(BaseFragmentFactory.getInstance().getStudyFragment());
-        fragments.add(BaseFragmentFactory.getInstance().getPractiseFragment());
-        fragments.add(BaseFragmentFactory.getInstance().getMusicFragment());
-        fragments.add(BaseFragmentFactory.getInstance().getMeFragment());
-        musicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
-        BasePagerAdapter adapter = new BasePagerAdapter(getSupportFragmentManager(), fragments);
-        vpHome.setAdapter(adapter);
-        vpHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                ctlTable.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-        vpHome.setOffscreenPageLimit(4);
-        vpHome.setCurrentItem(0);
-        tvBarTitle.setText("上课");
+        if (bundle != null) {
+            mHomeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
+            mPractiseFragment = BaseFragmentFactory.getInstance().getPractiseFragment();
+            mMusicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
+            mMeFragment = BaseFragmentFactory.getInstance().getMeFragment();
+            int index = bundle.getInt(POSITION);
+            showFragment(index);
+            ctlTable.setCurrentTab(bundle.getInt(SELECT_ITEM));
+        } else {
+            showFragment(FRAGMENT_HOME);
+        }
     }
 
 
@@ -300,32 +297,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mIconUnSelectIds.recycle();
         mIconSelectIds.recycle();
         ctlTable.setTabData(mTabEntities);
+        stlLayout.setTabData(mStudyTitles);
         llMusic.setVisibility(View.GONE);
         llOther.setVisibility(View.VISIBLE);
         ctlTable.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                vpHome.setCurrentItem(position);
                 flPlayBar.setVisibility(View.VISIBLE);
                 switch (position) {
                     case 0:
+                        stlLayout.setTabData(mStudyTitles);
+                        showFragment(FRAGMENT_HOME);
                         llMusic.setVisibility(View.GONE);
                         llOther.setVisibility(View.VISIBLE);
-                        tvBarTitle.setText("上课");
                         break;
                     case 1:
+                        stlLayout.setTabData(mPractiseTitles);
+                        showFragment(FRAGMENT_PRACTISE);
                         llMusic.setVisibility(View.GONE);
                         llOther.setVisibility(View.VISIBLE);
-                        tvBarTitle.setText("练习");
                         break;
                     case 2:
-                        llMusic.setVisibility(View.VISIBLE);
-                        llOther.setVisibility(View.GONE);
-                        break;
-                    case 3:
+                        stlLayout.setTabData(mMusicTitles);
+                        showFragment(FRAGMENT_MUSIC);
+                        doubleClick(FRAGMENT_MUSIC);
                         llMusic.setVisibility(View.GONE);
                         llOther.setVisibility(View.VISIBLE);
-                        tvBarTitle.setText("我的");
+                        break;
+                    case 3:
+                        showFragment(FRAGMENT_ME);
+                        llMusic.setVisibility(View.GONE);
+                        llOther.setVisibility(View.GONE);
                         break;
                     default:
                         break;
@@ -337,6 +339,94 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
             }
         });
+    }
+
+
+    private void showFragment(int index) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        hideFragment(ft);
+        positionIndex = index;
+        switch (index) {
+            case FRAGMENT_HOME:
+                /**
+                 * 如果Fragment为空，就新建一个实例
+                 * 如果不为空，就将它从栈中显示出来
+                 */
+                if (mHomeFragment == null) {
+                    mHomeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
+                    ft.add(R.id.fl_main, mHomeFragment, HomeFragment.class.getName());
+                } else {
+                    ft.show(mHomeFragment);
+                }
+                break;
+            case FRAGMENT_PRACTISE:
+                if (mPractiseFragment == null) {
+                    mPractiseFragment = BaseFragmentFactory.getInstance().getPractiseFragment();
+                    ft.add(R.id.fl_main, mPractiseFragment, PractiseFragment.class.getName());
+                } else {
+                    ft.show(mPractiseFragment);
+                }
+                break;
+            case FRAGMENT_MUSIC:
+                if (mMusicFragment == null) {
+                    mMusicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
+                    ft.add(R.id.fl_main, mMusicFragment, MusicFragment.class.getName());
+                } else {
+                    ft.show(mMusicFragment);
+                }
+                break;
+            case FRAGMENT_ME:
+                if (mMeFragment == null) {
+                    mMeFragment = BaseFragmentFactory.getInstance().getMeFragment();
+                    ft.add(R.id.fl_main, mMeFragment, MeFragment.class.getName());
+                } else {
+                    ft.show(mMeFragment);
+                }
+                break;
+            default:
+                break;
+        }
+        ft.commit();
+    }
+
+
+    private void hideFragment(FragmentTransaction ft) {
+        // 如果不为空，就先隐藏起来
+        if (mHomeFragment != null) {
+            setHide(ft, mHomeFragment);
+        }
+        if (mPractiseFragment != null) {
+            setHide(ft, mPractiseFragment);
+        }
+        if (mMusicFragment != null) {
+            setHide(ft, mMusicFragment);
+        }
+        if (mMeFragment != null) {
+            setHide(ft, mMeFragment);
+        }
+    }
+
+
+    private void setHide(FragmentTransaction ft, Fragment fragment) {
+        if (fragment.isAdded()) {
+            ft.hide(fragment);
+        }
+    }
+
+
+    private void doubleClick(int index) {
+        long secondClickTime = System.currentTimeMillis();
+        if ((secondClickTime - firstClickTime < Constant.CLICK_TIME)) {
+            switch (index) {
+                case FRAGMENT_MUSIC:
+                    mMusicFragment.onDoubleClick();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            firstClickTime = secondClickTime;
+        }
     }
 
 
@@ -397,7 +487,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      * 同时还要同步播放详情页面mPlayFragment的视图
      */
     public void initPlayServiceListener() {
-        if(getPlayService()==null){
+        if (getPlayService() == null) {
             return;
         }
         getPlayService().setOnPlayEventListener(new OnPlayerEventListener() {
@@ -472,7 +562,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      * 之前关于activity，Fragment，service之间用EventBus通信
      * 案例：https://github.com/yangchong211/LifeHelper
      * 本项目中直接通过定义接口来实现功能，尝试中……
-     * @param music             LocalMusic
+     *
+     * @param music LocalMusic
      */
     private void onChangeImpl(LocalMusic music) {
         if (music == null) {
@@ -489,8 +580,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
         /**点击MainActivity中的控制器，如何更新musicFragment中的mLocalMusicFragment呢？*/
-        if (musicFragment != null && musicFragment.isAdded()) {
-            musicFragment.onItemPlay();
+        if (mMusicFragment != null && mMusicFragment.isAdded()) {
+            mMusicFragment.onItemPlay();
         }
     }
 
@@ -516,7 +607,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 recyclerView.addItemDecoration(line);
                 mAdapter.setOnItemClickListener(new OnListItemClickListener() {
                     @Override
-                    public void onItemClick(View view , int position) {
+                    public void onItemClick(View view, int position) {
                         getPlayService().play(position);
                         mAdapter.updatePlayingPosition(getPlayService());
                         mAdapter.notifyDataSetChanged();
@@ -525,12 +616,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 View.OnClickListener listener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (v.getId()){
+                        switch (v.getId()) {
                             case R.id.tv_play_type:
 
                                 break;
                             case R.id.tv_collect:
-                                ToastUtil.showToast(MainActivity.this,"收藏，后期在做");
+                                ToastUtil.showToast(MainActivity.this, "收藏，后期在做");
                                 break;
                             case R.id.iv_close:
                                 dialog.dismissDialogFragment();
@@ -550,10 +641,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         dialog.setTag("BottomDialogFragment");
         dialog.setCancelOutside(true);
         //这个高度可以自己设置，十分灵活
-        dialog.setHeight(ScreenUtils.getScreenHeight()*6/10);
+        dialog.setHeight(ScreenUtils.getScreenHeight() * 6 / 10);
         dialog.show();
     }
-
 
 
 }

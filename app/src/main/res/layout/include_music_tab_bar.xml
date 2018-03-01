@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
@@ -20,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_local_music"
@@ -34,18 +35,9 @@
             android:id="@+id/tv_online_music"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:gravity="center"
             android:text="在线音乐"
-            android:textColor="@drawable/music_tab_bar_text_color_selector"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/tv_cut_music"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="录音剪辑"
             android:textColor="@drawable/music_tab_bar_text_color_selector"
             android:textSize="18sp" />
     </LinearLayout>
@@ -55,16 +47,17 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_bar_title"
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/stl_layout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="指示器部分"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            app:tl_bar_color="@color/whiteBg"
+            app:tl_indicator_color="@color/color_10"
+            app:tl_indicator_corner_radius="8dp"
+            app:tl_tab_padding="10dp"/>
     </LinearLayout>
 
     <TextView

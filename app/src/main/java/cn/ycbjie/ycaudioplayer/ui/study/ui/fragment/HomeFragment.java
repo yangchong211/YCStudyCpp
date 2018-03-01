@@ -1,33 +1,34 @@
-package cn.ycbjie.ycaudioplayer.ui.practise;
+package cn.ycbjie.ycaudioplayer.ui.study.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.widget.FrameLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseAfterFragment;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseBeforeFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.InnovationFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
 
 /**
- * Created by yc on 2018/1/24.
+ * Created by yc on 2018/3/1.
  */
 
-public class PractiseFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
+
 
     @Bind(R.id.vp_content)
-    ViewPager vpContent;
+    public ViewPager vpContent;
     private MainActivity activity;
 
     @Override
@@ -43,10 +44,12 @@ public class PractiseFragment extends BaseFragment {
         activity = null;
     }
 
+
     @Override
     public int getContentView() {
         return R.layout.base_view_pager;
     }
+
 
     @Override
     public void initView() {
@@ -74,7 +77,6 @@ public class PractiseFragment extends BaseFragment {
     }
 
 
-
     private void initViewPager() {
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -94,18 +96,16 @@ public class PractiseFragment extends BaseFragment {
         });
     }
 
-    
     private void initFragment() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        PractiseBeforeFragment practiseBeforeFragment = BaseFragmentFactory.getInstance().getPractiseBeforeFragment();
-        PractiseAfterFragment practiseAfterFragment = BaseFragmentFactory.getInstance().getPractiseAfterFragment();
-        fragments.add(practiseBeforeFragment);
-        fragments.add(practiseAfterFragment);
+        InnovationFragment innovationFragment = BaseFragmentFactory.getInstance().getInnovationFragment();
+        StudyFragment studyFragment = BaseFragmentFactory.getInstance().getStudyFragment();
+        fragments.add(innovationFragment);
+        fragments.add(studyFragment);
         BasePagerAdapter adapter = new BasePagerAdapter(getChildFragmentManager(), fragments);
         vpContent.setAdapter(adapter);
         vpContent.setCurrentItem(0);
         vpContent.setOffscreenPageLimit(fragments.size());
     }
-    
 
 }

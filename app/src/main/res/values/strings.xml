@@ -12,6 +12,10 @@
     <string name="easy_permissions">该APP需要您允许打开电话，拍摄照片，允许使用录音设备，访问设备上的文件的权限</string>
     <string name="timer_set">设置成功，将于%s分钟后关闭</string>
     <string name="timer_cancel">定时停止播放已取消</string>
+    <string name="audio_head_title">杨充，现在加入，你将获取沙丘大学2018年全年在线课程和学习服务</string>
+    <string name="join_us">加入商学院</string>
+    <string name="study_announce">课程预告</string>
+
 
     <string name="sure">确定</string>
     <string name="cancel">取消</string>

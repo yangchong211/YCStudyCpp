@@ -20,8 +20,8 @@
 
     <!--首页底部导航栏文字-->
     <string-array name="main_title">
-        <item>新闻</item>
-        <item>视频</item>
+        <item>上课</item>
+        <item>练习</item>
         <item>音乐</item>
         <item>我的</item>
     </string-array>

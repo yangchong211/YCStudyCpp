@@ -3,10 +3,15 @@ package cn.ycbjie.ycaudioplayer.ui.music.onLine;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -17,6 +22,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnLineMusicAdapter;
@@ -24,9 +30,9 @@ import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
 
 /**
  * Created by yc on 2018/1/19.
+ *
  */
-
-public class OnLineMusicFragment extends BaseFragment {
+public class OnLineMusicFragment extends BaseLazyFragment {
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
@@ -75,9 +81,15 @@ public class OnLineMusicFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        getData();
+
     }
 
+
+    @Override
+    public void onLazyLoad() {
+        recyclerView.showProgress();
+        getData();
+    }
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -86,6 +98,16 @@ public class OnLineMusicFragment extends BaseFragment {
         recyclerView.addItemDecoration(line);
         adapter = new OnLineMusicAdapter(activity);
         recyclerView.setAdapter(adapter);
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(NetworkUtils.isConnected()){
+                    onLazyLoad();
+                }else {
+                    ToastUtil.showToast(activity,"没有网络");
+                }
+            }
+        });
     }
 
 
@@ -101,6 +123,20 @@ public class OnLineMusicFragment extends BaseFragment {
         }
         adapter.addAll(mSongLists);
         adapter.notifyDataSetChanged();
+        recyclerView.showRecycler();
+    }
+
+
+    public void onRefresh() {
+        RecyclerView mRecyclerView = this.recyclerView.getRecyclerView();
+        int firstVisibleItemPosition = ((LinearLayoutManager)
+                mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        if (firstVisibleItemPosition == 0) {
+            onLazyLoad();
+            return;
+        }
+        mRecyclerView.scrollToPosition(5);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
 

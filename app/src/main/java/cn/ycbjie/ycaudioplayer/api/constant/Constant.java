@@ -10,7 +10,7 @@ public class Constant {
 
     //sp的名称
     public static String SP_NAME = "yc";
-
+    public static final long CLICK_TIME = 500;
 
     /**
      * 广告页

@@ -9,14 +9,19 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -28,6 +33,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
@@ -38,7 +44,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.view.MusicInfoActivity;
  * Created by yc on 2018/1/19.
  */
 
-public class LocalMusicFragment extends BaseFragment implements View.OnClickListener {
+public class LocalMusicFragment extends BaseLazyFragment implements View.OnClickListener {
 
 
     @Bind(R.id.recyclerView)
@@ -121,10 +127,14 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initData() {
+
+    }
+
+    @Override
+    public void onLazyLoad() {
         recyclerView.showProgress();
         getMusicData();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -139,6 +149,16 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new LocalMusicAdapter(activity);
         recyclerView.setAdapter(adapter);
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(NetworkUtils.isConnected()){
+                    onLazyLoad();
+                }else {
+                    ToastUtil.showToast(activity,"没有网络");
+                }
+            }
+        });
     }
 
 
@@ -151,8 +171,8 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
             adapter.clear();
             adapter.addAll(music);
             adapter.notifyDataSetChanged();
-            recyclerView.showRecycler();
             adapter.updatePlayingPosition(getPlayService());
+            recyclerView.showRecycler();
         } else {
             recyclerView.showEmpty();
         }
@@ -222,5 +242,17 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         }
         adapter.updatePlayingPosition(getPlayService());
         adapter.notifyDataSetChanged();
+    }
+
+    public void onRefresh() {
+        RecyclerView mRecyclerView = recyclerView.getRecyclerView();
+        int firstVisibleItemPosition = ((LinearLayoutManager)
+                mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        if (firstVisibleItemPosition == 0) {
+            onLazyLoad();
+            return;
+        }
+        mRecyclerView.scrollToPosition(5);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 }
