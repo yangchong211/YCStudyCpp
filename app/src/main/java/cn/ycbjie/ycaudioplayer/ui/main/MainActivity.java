@@ -1,6 +1,5 @@
 package cn.ycbjie.ycaudioplayer.ui.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -19,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -61,7 +59,6 @@ import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
 /**
  * 关于bug整理
@@ -80,8 +77,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public SegmentTabLayout stlLayout;
     @Bind(R.id.ll_other)
     LinearLayout llOther;
-    @Bind(R.id.tv_search)
-    TextView tvSearch;
+    @Bind(R.id.fl_search)
+    FrameLayout flSearch;
     @Bind(R.id.appbar)
     AppBarLayout appbar;
     @Bind(R.id.fl_main)
@@ -202,7 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initListener() {
         ivMenu.setOnClickListener(this);
-        tvSearch.setOnClickListener(this);
+        flSearch.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
@@ -248,7 +245,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.iv_menu:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.tv_search:
+            case R.id.fl_search:
                 startActivity(SearchMusicActivity.class);
                 break;
             case R.id.fl_play_bar:
@@ -348,7 +345,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         positionIndex = index;
         switch (index) {
             case FRAGMENT_HOME:
-                /**
+                /*
                  * 如果Fragment为空，就新建一个实例
                  * 如果不为空，就将它从栈中显示出来
                  */
@@ -579,7 +576,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         pbPlayBar.setProgress((int) getPlayService().getCurrentPosition());
 
 
-        /**点击MainActivity中的控制器，如何更新musicFragment中的mLocalMusicFragment呢？*/
+        /*点击MainActivity中的控制器，如何更新musicFragment中的mLocalMusicFragment呢？*/
         if (mMusicFragment != null && mMusicFragment.isAdded()) {
             mMusicFragment.onItemPlay();
         }
@@ -594,9 +591,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void bindView(View v) {
                 RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-                TextView tv_play_type = (TextView) v.findViewById(R.id.tv_play_type);
-                TextView tv_collect = (TextView) v.findViewById(R.id.tv_collect);
-                ImageView iv_close = (ImageView) v.findViewById(R.id.iv_close);
+                TextView tvPlayType = (TextView) v.findViewById(R.id.tv_play_type);
+                TextView tvCollect = (TextView) v.findViewById(R.id.tv_collect);
+                ImageView ivClose = (ImageView) v.findViewById(R.id.iv_close);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(MainActivity.this, musicList);
@@ -631,9 +628,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         }
                     }
                 };
-                tv_play_type.setOnClickListener(listener);
-                tv_collect.setOnClickListener(listener);
-                iv_close.setOnClickListener(listener);
+                tvPlayType.setOnClickListener(listener);
+                tvCollect.setOnClickListener(listener);
+                ivClose.setOnClickListener(listener);
             }
         });
         dialog.setLayoutRes(R.layout.dialog_bottom_list_view);

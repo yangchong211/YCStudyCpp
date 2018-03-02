@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YCAudioPlayer.iml" filepath="$PROJECT_DIR$/YCAudioPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/YCAudioPlayerLib/YCAudioPlayerLib.iml" filepath="$PROJECT_DIR$/YCAudioPlayerLib/YCAudioPlayerLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/YCAudioWaveLib/YCAudioWaveLib.iml" filepath="$PROJECT_DIR$/YCAudioWaveLib/YCAudioWaveLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
