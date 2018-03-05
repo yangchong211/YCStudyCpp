@@ -1,7 +1,9 @@
 package cn.ycbjie.ycaudioplayer.ui.main;
 
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -10,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +23,16 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
+import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadSearchMusic;
+import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
+import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.SearchMusicAdapter;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
+import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -65,7 +78,35 @@ public class SearchMusicActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
+        adapter.setOnMoreClickListener(new OnMoreClickListener() {
+            @Override
+            public void onMoreClick(int position) {
+                final SearchMusic.Song song = mSearchMusicList.get(position);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(SearchMusicActivity.this);
+                dialog.setTitle(song.getSongname());
+                String path = FileMusicUtils.getMusicDir() + FileMusicUtils.getMp3FileName(song.getArtistname(), song.getSongname());
+                File file = new File(path);
+                int itemsId = file.exists() ? R.array.search_music_dialog_no_download : R.array.search_music_dialog;
+                dialog.setItems(itemsId, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            // 分享
+                            case 0:
+                                share(song);
+                                break;
+                            // 下载
+                            case 1:
+                                download(song);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
 
@@ -135,6 +176,59 @@ public class SearchMusicActivity extends BaseActivity {
                 SizeUtils.dp2px(1), Color.parseColor("#f5f5f7"));
         recyclerView.addItemDecoration(line);*/
     }
+
+
+    /**
+     * 分享音乐
+     * @param song           实体类
+     */
+    private void share(SearchMusic.Song song) {
+        new AbsShareOnlineMusic(this, song.getSongname(), song.getSongid()) {
+            @Override
+            public void onPrepare() {
+                LoadDialog.show(SearchMusicActivity.this,"下载中……");
+            }
+
+            @Override
+            public void onExecuteSuccess(Void aVoid) {
+                LoadDialog.dismiss(SearchMusicActivity.this);
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+                LoadDialog.dismiss(SearchMusicActivity.this);
+            }
+        }.execute();
+    }
+
+
+
+    /**
+     * 下载音乐
+     * @param song           实体类
+     */
+    private void download(final SearchMusic.Song song) {
+        new AbsDownloadSearchMusic(this, song) {
+            @Override
+            public void onPrepare() {
+                LoadDialog.show(SearchMusicActivity.this,"下载中……");
+            }
+
+            @Override
+            public void onExecuteSuccess(Void aVoid) {
+                LoadDialog.dismiss(SearchMusicActivity.this);
+                ToastUtil.showToast(SearchMusicActivity.this,"下载成功"+song.getSongname());
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+                LoadDialog.dismiss(SearchMusicActivity.this);
+                ToastUtil.showToast(SearchMusicActivity.this,"下载失败");
+            }
+        }.execute();
+    }
+
+
 
 
 

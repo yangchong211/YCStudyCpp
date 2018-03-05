@@ -73,6 +73,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
         activity.stlLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
+                //activity.stlLayout.setCurrentTab(position);
                 vpContent.setCurrentItem(position);
             }
 

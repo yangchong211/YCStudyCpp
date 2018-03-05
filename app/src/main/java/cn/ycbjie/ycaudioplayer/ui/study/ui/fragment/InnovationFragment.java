@@ -53,7 +53,6 @@ public class InnovationFragment extends BaseLazyFragment {
     }
 
 
-
     @Override
     public int getContentView() {
         return R.layout.base_easy_recycle;

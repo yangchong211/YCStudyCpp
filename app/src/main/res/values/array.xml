@@ -103,4 +103,13 @@
         <item>下载</item>
     </string-array>
 
+    <string-array name="search_music_dialog">
+        <item>分享</item>
+        <item>下载</item>
+    </string-array>
+
+    <string-array name="search_music_dialog_no_download">
+        <item>分享</item>
+    </string-array>
+
 </resources>
