@@ -12,6 +12,7 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.util.binding.ViewBinder;
 
 
 public class InnovationAdapter extends RecyclerArrayAdapter<String> {
@@ -51,6 +52,7 @@ public class InnovationAdapter extends RecyclerArrayAdapter<String> {
 
         VideoPlayerViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_innovation_news);
+            //ViewBinder.bind(this, itemView);
             ButterKnife.bind(this, itemView);
         }
 
