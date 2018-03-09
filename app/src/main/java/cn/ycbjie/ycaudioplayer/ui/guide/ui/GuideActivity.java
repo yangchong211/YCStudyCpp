@@ -59,6 +59,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.subscribe();
+        setSystemBarTransparent();
     }
 
     @Override

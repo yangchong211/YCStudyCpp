@@ -27,6 +27,7 @@ public class OnLineMusicModel {
 
 
 
+
     private static OnLineMusicModel model;
     private OnLineMusicApi mApiService;
 

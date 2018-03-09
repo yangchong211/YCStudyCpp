@@ -19,6 +19,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
     private boolean isPausedByFocusLossTransient;
     private int mVolumeWhenFocusLossTransientCanDuck;
 
+
     /**
      * 初始化操作
      * @param content           playService对象
@@ -31,7 +32,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
 
     /**
      * 请求音频焦点，开始播放时候调用
-     * @return
+     * @return                  是否抢占焦点
      */
     public boolean requestAudioFocus() {
         return mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
@@ -77,12 +78,14 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                 break;
             // 永久丢失焦点，如被其他播放器抢占
             case AudioManager.AUDIOFOCUS_LOSS:
+                // 失去audio focus很长一段时间，必须停止所有的audio播放，清理资源
                 if (willPlay()) {
                     forceStop();
                 }
                 break;
             // 短暂丢失焦点，比如来了电话或者微信视频音频聊天等等
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                // 暂时失去audio focus，但是很快就会重新获得，在此状态应该暂停所有音频播放，但是不能清除资源
                 if (willPlay()) {
                     forceStop();
                     isPausedByFocusLossTransient = true;
@@ -90,6 +93,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
                 break;
             // 瞬间丢失焦点，如通知
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                // 暂时失去 audio focus，但是允许持续播放音频(以很小的声音)，不需要完全停止播放。
                 // 音量减小为一半
                 volume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                 if (willPlay() && volume > 0) {
@@ -106,19 +110,23 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
 
 
     /**
-     * 是否在播放或者准备播放
+     * 判断是否在播放或者准备播放
      */
     private boolean willPlay() {
+        //当正在准备播放或者播放，则返回为true
         return mPlayService.isPreparing() || mPlayService.isPlaying();
     }
 
+
     private void forceStop() {
-        //当准备播放时，则停止播放；当正在播放时，则暂停播放
+        //当准备播放时，则停止播放
         if (mPlayService.isPreparing()) {
             mPlayService.stop();
+            //当正在播放时，则暂停播放
         } else if (mPlayService.isPlaying()) {
             mPlayService.pause();
         }
     }
+
 
 }

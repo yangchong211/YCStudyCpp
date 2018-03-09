@@ -4,20 +4,12 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,10 +19,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
@@ -43,6 +36,7 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.base.AppManager;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
@@ -52,43 +46,22 @@ import cn.ycbjie.ycaudioplayer.model.TabEntity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 
 /**
  * 关于bug整理
  * 主页面
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainHomeActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.iv_menu)
-    ImageView ivMenu;
-    @Bind(R.id.ll_music)
-    LinearLayout llMusic;
-    @Bind(R.id.stl_layout)
-    public SegmentTabLayout stlLayout;
-    @Bind(R.id.ll_other)
-    LinearLayout llOther;
-    @Bind(R.id.fl_search)
-    FrameLayout flSearch;
-    @Bind(R.id.appbar)
-    AppBarLayout appbar;
     @Bind(R.id.fl_main)
     FrameLayout flMain;
-    @Bind(R.id.ctl_table)
-    CommonTabLayout ctlTable;
-    @Bind(R.id.navigation_view)
-    NavigationView navigationView;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
     @Bind(R.id.iv_play_bar_cover)
     ImageView ivPlayBarCover;
     @Bind(R.id.tv_play_bar_title)
@@ -104,7 +77,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.pb_play_bar)
     ProgressBar pbPlayBar;
     @Bind(R.id.fl_play_bar)
-    public FrameLayout flPlayBar;
+    FrameLayout flPlayBar;
+    @Bind(R.id.ctl_table)
+    CommonTabLayout ctlTable;
     @Bind(R.id.ll_main)
     LinearLayout llMain;
 
@@ -124,11 +99,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int positionIndex;
     private boolean isPlayFragmentShow = false;
     private long firstClickTime = 0;
+    private long exitTime;
 
-
-    private String[] mStudyTitles = {"研习社", "创新院"};
-    private String[] mPractiseTitles = {"课前预习", "课后练习"};
-    private String[] mMusicTitles = {"我的音乐","在线音乐"};
 
     @Override
     public void onBackPressed() {
@@ -136,12 +108,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             hidePlayingFragment();
             return;
         }
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawers();
-            return;
-        }
         super.onBackPressed();
     }
+
+
+    /**
+     * 监听back键处理DrawerLayout和SearchView
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                ToastUtils.showShort("再按一次退出");
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                AppManager.getAppManager().appExit(false);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -153,6 +141,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         InputMethodManagerLeakUtils.fixInputMethodManagerLeak(this);
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // recreate 时记录当前位置 (在 Manifest 已禁止 Activity 旋转,所以旋转屏幕并不会执行以下代码)
@@ -161,6 +150,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         outState.putInt(POSITION, positionIndex);
         outState.putInt(SELECT_ITEM, ctlTable.getCurrentTab());
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,22 +161,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_main;
+        return R.layout.activity_home_main;
     }
 
 
     @Override
     public void initView() {
+        //音频播放器需要让服务长期存在
+        if (!checkServiceAlive()) {
+            return;
+        }
         initFragment();
         initTabLayout();
-        initNavigationView();
         initPlayServiceListener();
         parseIntent();
     }
 
     /**
-     * 这个方法的作用是？？？
-     *
+     * 处理onNewIntent()，以通知碎片管理器 状态未保存。
+     * 如果您正在处理新的意图，并且可能是 对碎片状态进行更改时，要确保调用先到这里。
+     * 否则，如果你的状态保存，但活动未停止，则可以获得 onNewIntent()调用，发生在onResume()之前，
+     * 并试图 此时执行片段操作将引发IllegalStateException。 因为碎片管理器认为状态仍然保存。
      * @param intent intent
      */
     @Override
@@ -198,22 +193,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initListener() {
-        ivMenu.setOnClickListener(this);
-        flSearch.setOnClickListener(this);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-                drawerLayout.closeDrawers();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        item.setChecked(false);
-                    }
-                }, 500);
-                return NavigationExecutor.onNavigationItemSelected(item, MainActivity.this);
-            }
-        });
-
         //音乐播放
         flPlayBar.setOnClickListener(this);
         ivPlayBarList.setOnClickListener(this);
@@ -235,16 +214,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
-        /*initPlayServiceListener();
-        onChangeImpl(getPlayService().getPlayingMusic());*/
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_menu:
-                drawerLayout.openDrawer(GravityCompat.START);
-                break;
             case R.id.fl_search:
                 startActivity(SearchMusicActivity.class);
                 break;
@@ -294,37 +268,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mIconUnSelectIds.recycle();
         mIconSelectIds.recycle();
         ctlTable.setTabData(mTabEntities);
-        stlLayout.setTabData(mStudyTitles);
-        llMusic.setVisibility(View.GONE);
-        llOther.setVisibility(View.VISIBLE);
         ctlTable.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
                 flPlayBar.setVisibility(View.VISIBLE);
                 switch (position) {
                     case 0:
-                        stlLayout.setTabData(mStudyTitles);
                         showFragment(FRAGMENT_HOME);
-                        llMusic.setVisibility(View.GONE);
-                        llOther.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        stlLayout.setTabData(mPractiseTitles);
                         showFragment(FRAGMENT_PRACTISE);
-                        llMusic.setVisibility(View.GONE);
-                        llOther.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        stlLayout.setTabData(mMusicTitles);
                         showFragment(FRAGMENT_MUSIC);
                         doubleClick(FRAGMENT_MUSIC);
-                        llMusic.setVisibility(View.GONE);
-                        llOther.setVisibility(View.VISIBLE);
                         break;
                     case 3:
                         showFragment(FRAGMENT_ME);
-                        llMusic.setVisibility(View.GONE);
-                        llOther.setVisibility(View.GONE);
                         break;
                     default:
                         break;
@@ -427,13 +387,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private void initNavigationView() {
-        View header = LayoutInflater.from(this).inflate(R.layout.navigation_header,
-                navigationView, false);
-        navigationView.addHeaderView(header);
-    }
-
-
     /**
      * 从通知栏点击进入音频播放详情页面
      */
@@ -488,15 +441,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
         getPlayService().setOnPlayEventListener(new OnPlayerEventListener() {
-
-            private MenuItem timerItem;
-
             /**
              * 切换歌曲
              * 主要是切换歌曲的时候需要及时刷新界面信息
              */
             @Override
-            public void onChange(LocalMusic music) {
+            public void onChange(AudioMusic music) {
                 onChangeImpl(music);
                 if (mPlayFragment != null && mPlayFragment.isAdded()) {
                     mPlayFragment.onChange(music);
@@ -539,16 +489,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
 
+            @Override
+            public void onBufferingUpdate(int percent) {
+                if (mPlayFragment != null && mPlayFragment.isAdded()) {
+                    mPlayFragment.onBufferingUpdate(percent);
+                }
+            }
+
             /**
              * 更新定时停止播放时间
              */
             @Override
             public void onTimer(long remain) {
-                if (timerItem == null) {
-                    timerItem = navigationView.getMenu().findItem(R.id.action_timer);
-                }
-                String title = getString(R.string.menu_timer);
-                timerItem.setTitle(remain == 0 ? title : AppUtils.formatTime(title + "(mm:ss)", remain));
+
             }
         });
     }
@@ -562,7 +515,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      *
      * @param music LocalMusic
      */
-    private void onChangeImpl(LocalMusic music) {
+    private void onChangeImpl(AudioMusic music) {
         if (music == null) {
             return;
         }
@@ -584,7 +537,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     public void showListDialog() {
-        final List<LocalMusic> musicList = BaseAppHelper.get().getMusicList();
+        final List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
         final BottomDialogFragment dialog = new BottomDialogFragment();
         dialog.setFragmentManager(getSupportFragmentManager());
         dialog.setViewListener(new BottomDialogFragment.ViewListener() {
@@ -595,17 +548,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 TextView tvCollect = (TextView) v.findViewById(R.id.tv_collect);
                 ImageView ivClose = (ImageView) v.findViewById(R.id.iv_close);
 
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(MainActivity.this, musicList);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainHomeActivity.this));
+                final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(MainHomeActivity.this, musicList);
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.updatePlayingPosition(getPlayService());
-                final RecycleViewItemLine line = new RecycleViewItemLine(MainActivity.this, LinearLayout.HORIZONTAL,
-                        SizeUtils.dp2px(1), MainActivity.this.getResources().getColor(R.color.grayLine));
+                final RecycleViewItemLine line = new RecycleViewItemLine(MainHomeActivity.this, LinearLayout.HORIZONTAL,
+                        SizeUtils.dp2px(1), MainHomeActivity.this.getResources().getColor(R.color.grayLine));
                 recyclerView.addItemDecoration(line);
                 mAdapter.setOnItemClickListener(new OnListItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        getPlayService().play(position);
+                        List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                        getPlayService().play(musicList,position);
                         mAdapter.updatePlayingPosition(getPlayService());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -618,7 +572,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                                 break;
                             case R.id.tv_collect:
-                                ToastUtil.showToast(MainActivity.this, "收藏，后期在做");
+                                ToastUtil.showToast(MainHomeActivity.this, "收藏，后期在做");
                                 break;
                             case R.id.iv_close:
                                 dialog.dismissDialogFragment();

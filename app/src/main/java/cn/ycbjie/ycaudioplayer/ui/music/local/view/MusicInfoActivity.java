@@ -20,7 +20,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 
 /**
@@ -62,11 +62,11 @@ public class MusicInfoActivity extends BaseActivity {
     EditText tvMusicInfoFilePath;
     @Bind(R.id.label_music_info_file_path)
     TextInputLayout labelMusicInfoFilePath;
-    private LocalMusic mMusic;
+    private AudioMusic mMusic;
     private File mMusicFile;
     private Bitmap mCoverBitmap;
 
-    public static void start(Context context, LocalMusic music) {
+    public static void start(Context context, AudioMusic music) {
         Intent intent = new Intent(context, MusicInfoActivity.class);
         intent.putExtra("music", music);
         context.startActivity(intent);
@@ -124,8 +124,8 @@ public class MusicInfoActivity extends BaseActivity {
 
 
     private void initIntentData() {
-        mMusic = (LocalMusic) getIntent().getSerializableExtra("music");
-        if (mMusic == null || mMusic.getType() != LocalMusic.Type.LOCAL) {
+        mMusic = (AudioMusic) getIntent().getSerializableExtra("music");
+        if (mMusic == null || mMusic.getType() != AudioMusic.Type.LOCAL) {
             finish();
         }
         mMusicFile = new File(mMusic.getPath());

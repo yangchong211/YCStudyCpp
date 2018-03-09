@@ -1,11 +1,16 @@
 package cn.ycbjie.ycaudioplayer.ui.music;
 
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -16,7 +21,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 
@@ -27,18 +32,30 @@ import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 public class MusicFragment extends BaseFragment implements View.OnClickListener {
 
 
+    @Bind(R.id.iv_menu)
+    ImageView ivMenu;
+    @Bind(R.id.stl_layout)
+    SegmentTabLayout stlLayout;
+    @Bind(R.id.ll_other)
+    LinearLayout llOther;
+    @Bind(R.id.fl_search)
+    FrameLayout flSearch;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Bind(R.id.vp_content)
-    public ViewPager vpContent;
-    private MainActivity activity;
+    ViewPager vpContent;
+
+
+    private MainHomeActivity activity;
     private LocalMusicFragment mLocalMusicFragment;
     private List<Fragment> fragments;
-
+    private String[] mMusicTitles = {"我的音乐", "在线音乐"};
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
 
@@ -51,7 +68,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public int getContentView() {
-        return R.layout.base_view_pager;
+        return R.layout.base_bar_view_pager;
     }
 
 
@@ -70,10 +87,9 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void initData() {
-        activity.stlLayout.setOnTabSelectListener(new OnTabSelectListener() {
+        stlLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                //activity.stlLayout.setCurrentTab(position);
                 vpContent.setCurrentItem(position);
             }
 
@@ -91,6 +107,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
 
     private void initViewPager() {
+        stlLayout.setTabData(mMusicTitles);
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -99,7 +116,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onPageSelected(int position) {
-                activity.stlLayout.setCurrentTab(position);
+                stlLayout.setCurrentTab(position);
             }
 
             @Override

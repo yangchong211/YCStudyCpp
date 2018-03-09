@@ -52,7 +52,6 @@ public class InnovationAdapter extends RecyclerArrayAdapter<String> {
 
         VideoPlayerViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_innovation_news);
-            //ViewBinder.bind(this, itemView);
             ButterKnife.bind(this, itemView);
         }
 

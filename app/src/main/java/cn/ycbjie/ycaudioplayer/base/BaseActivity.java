@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,6 +18,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
+import cn.ycbjie.ycaudioplayer.util.bar.AppBar;
 
 /**
  * ================================================
@@ -35,11 +38,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (BaseConfig.INSTANCE.isNight()) {
             setTheme(getDarkTheme());
         }
-
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.bind(this);
-        setSystemBarTransparent();
+        //setSystemBarTransparent();
         //避免切换横竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //将当前Activity添加到容器
@@ -51,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             ToastUtils.showShort("请检查网络是否连接");
         }
     }
+
 
     @Override
     protected void onDestroy() {
@@ -97,12 +100,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    private void setSystemBarTransparent() {
+    protected void setSystemBarTransparent() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // LOLLIPOP解决方案
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorTransparent));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // KITKAT解决方案
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -166,6 +169,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new NullPointerException("play service is null");
         }
         return playService;
+    }
+
+    protected boolean checkServiceAlive() {
+        if (BaseAppHelper.get().getPlayService() == null) {
+            startActivity(new Intent(this, GuideActivity.class));
+            AppManager.getAppManager().finishAllActivity();
+            return false;
+        }
+        return true;
     }
 
 

@@ -5,8 +5,17 @@ package cn.ycbjie.ycaudioplayer.model.enums;
  */
 public enum PlayModeEnum {
 
+    /**
+     * 顺序播放，默认的播放模式
+     */
     LOOP(0),
+    /**
+     * 随机播放
+     */
     SHUFFLE(1),
+    /**
+     * 单曲循环
+     */
     SINGLE(2);
 
     private int value;

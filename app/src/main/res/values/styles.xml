@@ -14,6 +14,21 @@
     </style>
     <attr name="playBarBackground" format="reference" />
 
+
+    <!--设置ToolBar样式-->
+    <style name="AppTheme.ActionBar" parent="AppTheme">
+        <!--设置字体为白色-->
+        <item name="actionMenuTextColor">@color/colorWhite</item>
+        <!--设置那三个点的图标为白色-->
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+        <!--设置不覆盖锚点-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+    </style>
+
+
     <!--白天模式-->
     <style name="AppTheme" parent="AppBaseTheme" />
     <!--夜间模式-->
@@ -39,6 +54,7 @@
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/alpha_05_black</item>
     </style>
+
 
     <!-- 深色下划线 -->
     <style name="DeepUnderLineDp">

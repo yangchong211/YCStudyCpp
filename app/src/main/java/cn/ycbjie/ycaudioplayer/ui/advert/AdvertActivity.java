@@ -17,7 +17,7 @@ import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.service.SplashDownLoadService;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
 import cn.ycbjie.ycaudioplayer.util.other.SerializableUtils;
 
@@ -45,6 +45,7 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
+        setSystemBarTransparent();
         cdvTime.setVisibility(View.VISIBLE);
         llBottom.setVisibility(View.GONE);
         startLoading();
@@ -146,7 +147,7 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
 
 
     private void toMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainHomeActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

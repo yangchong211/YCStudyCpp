@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -32,11 +30,10 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.LocalMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.MusicInfoActivity;
 
@@ -49,17 +46,15 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
-    @Bind(R.id.fl_music)
-    FrameLayout flMusic;
 
-    private MainActivity activity;
+    private MainHomeActivity activity;
     private LocalMusicAdapter adapter;
-    private List<LocalMusic> music;
+    private List<AudioMusic> music;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
     @Override
@@ -70,7 +65,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_music_local;
+        return R.layout.base_easy_recycle;
     }
 
     @Override
@@ -84,7 +79,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
             @Override
             public void onMoreClick(int position) {
                 if (music.size() >= position) {
-                    final LocalMusic localMusic = music.get(position);
+                    final AudioMusic localMusic = music.get(position);
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     dialog.setTitle(localMusic.getTitle());
                     dialog.setItems(R.array.local_music_dialog, new DialogInterface.OnClickListener() {
@@ -119,7 +114,8 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                getPlayService().play(position);
+                List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                getPlayService().play(musicList,position);
             }
         });
     }
@@ -182,7 +178,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 分享
      */
-    private void shareMusic(LocalMusic localMusic) {
+    private void shareMusic(AudioMusic localMusic) {
         File file = new File(localMusic.getPath());
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("audio/*");
@@ -193,7 +189,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 设置为铃声
      */
-    private void requestSetRingtone(LocalMusic localMusic) {
+    private void requestSetRingtone(AudioMusic localMusic) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(getContext())) {
             ToastUtils.showShort(R.string.no_permission_setting);
             Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
@@ -207,7 +203,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 设置铃声
      */
-    private void setRingtone(LocalMusic localMusic) {
+    private void setRingtone(AudioMusic localMusic) {
         Uri uri = MediaStore.Audio.Media.getContentUriForPath(localMusic.getPath());
         // 查询音乐文件在媒体库是否存在
         Cursor cursor = getContext().getContentResolver().query(uri, null,
@@ -237,7 +233,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
      * 点击MainActivity中的控制器，更新musicFragment中的mLocalMusicFragment
      */
     public void onItemPlay() {
-        if (getPlayService().getPlayingMusic().getType() == LocalMusic.Type.LOCAL) {
+        if (getPlayService().getPlayingMusic().getType() == AudioMusic.Type.LOCAL) {
             recyclerView.scrollToPosition(getPlayService().getPlayingPosition());
         }
         adapter.updatePlayingPosition(getPlayService());

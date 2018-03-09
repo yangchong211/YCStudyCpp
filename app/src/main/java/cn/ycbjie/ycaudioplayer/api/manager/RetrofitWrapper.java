@@ -1,5 +1,7 @@
 package cn.ycbjie.ycaudioplayer.api.manager;
 
+import android.annotation.SuppressLint;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
@@ -129,11 +131,13 @@ public class RetrofitWrapper {
     private void initSSL() {
         try {
             final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                @SuppressLint("TrustAllX509TrustManager")
                 @Override
                 public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 
                 }
 
+                @SuppressLint("TrustAllX509TrustManager")
                 @Override
                 public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 

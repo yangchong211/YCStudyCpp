@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.weight.animView.ViewStars;
 
 /**
@@ -62,6 +62,7 @@ public class SplashAdSecondActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setSystemBarTransparent();
         initTimer();
         initFlView();
     }
@@ -104,7 +105,9 @@ public class SplashAdSecondActivity extends BaseActivity {
             this.tv = tv;
         }
 
-        //计时完毕时触发
+        /**
+         * 计时完毕时触发
+         */
         @Override
         public void onFinish() {
             //如果是点击了翻转，那么就不执行这里面的代码
@@ -127,7 +130,7 @@ public class SplashAdSecondActivity extends BaseActivity {
 
 
     private void toMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainHomeActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

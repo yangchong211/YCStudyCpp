@@ -1,5 +1,6 @@
 package cn.ycbjie.ycaudioplayer.base;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.support.v4.util.LongSparseArray;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
@@ -24,7 +25,7 @@ public class BaseAppHelper {
     /**
      * 本地歌曲列表
      */
-    private final List<LocalMusic> mMusicList = new ArrayList<>();
+    private final List<AudioMusic> mMusicList = new ArrayList<>();
     /**
      * 歌单列表
      */
@@ -35,11 +36,12 @@ public class BaseAppHelper {
     private BaseAppHelper() {}
 
     private static class SingletonHolder {
-        private final static BaseAppHelper instance = new BaseAppHelper();
+        @SuppressLint("StaticFieldLeak")
+        private final static BaseAppHelper INSTANCE = new BaseAppHelper();
     }
 
     public static BaseAppHelper get() {
-        return SingletonHolder.instance;
+        return SingletonHolder.INSTANCE;
     }
 
     void init(Application application) {
@@ -70,7 +72,7 @@ public class BaseAppHelper {
      * 获取扫描到的音乐数据集合
      * @return              返回list集合
      */
-    public List<LocalMusic> getMusicList() {
+    public List<AudioMusic> getMusicList() {
         return mMusicList;
     }
 

@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.SPUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.AudioFocusManager;
@@ -37,17 +38,23 @@ import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.MediaSessionManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;
 
-
+/**
+ * Service就是用来在后台完成一些不需要和用户交互的动作
+ */
 public class PlayService extends Service {
 
     /**
-     * 正在播放的本地歌曲的序号
+     * 正在播放的歌曲的序号
      */
     private int mPlayingPosition = -1;
     /**
      * 正在播放的歌曲[本地|网络]
      */
-    private LocalMusic mPlayingMusic;
+    private AudioMusic mPlayingMusic;
+    /**
+     * 在线音频的集合
+     */
+    private List<AudioMusic> audioMusics;
     /**
      * 播放状态
      */
@@ -121,7 +128,7 @@ public class PlayService extends Service {
 
 
     /**
-     * 通过通知栏点击按钮实现音乐切换
+     * 比如，广播，耳机声控，通知栏广播，来电或者拔下耳机广播开启服务
      * @param context       上下文
      * @param type          类型
      */
@@ -146,6 +153,7 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        audioMusics = new ArrayList<>();
         NotificationUtils.init(this);
         createMediaPlayer();
         initMediaSessionManager();
@@ -161,6 +169,7 @@ public class PlayService extends Service {
      */
     private void createMediaPlayer() {
         if(mPlayer==null){
+            //MediaCodec codec = new MediaCodec();
             mPlayer = new MediaPlayer();
         }
     }
@@ -186,7 +195,7 @@ public class PlayService extends Service {
      * 初始化耳机插入和拔出监听
      */
     private void initEarPhoneBroadcastReceiver() {
-
+        //这块直接在清单文件注册
     }
 
 
@@ -330,11 +339,11 @@ public class PlayService extends Service {
      */
     public void prev() {
         //建议都添加这个判断
-        if (BaseAppHelper.get().getMusicList().isEmpty()) {
+        if (audioMusics.isEmpty()) {
             return;
         }
         int playMode = SPUtils.getInstance(Constant.SP_NAME).getInt(Constant.PLAY_MODE, 0);
-        int size = BaseAppHelper.get().getMusicList().size();
+        int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             //随机
@@ -369,11 +378,11 @@ public class PlayService extends Service {
      */
     public void next() {
         //建议都添加这个判断
-        if (BaseAppHelper.get().getMusicList().isEmpty()) {
+        if (audioMusics.isEmpty()) {
             return;
         }
         int playMode = SPUtils.getInstance(Constant.SP_NAME).getInt(Constant.PLAY_MODE, 0);
-        int size = BaseAppHelper.get().getMusicList().size();
+        int size = audioMusics.size();
         PlayModeEnum mode = PlayModeEnum.valueOf(playMode);
         switch (mode) {
             //随机
@@ -410,7 +419,9 @@ public class PlayService extends Service {
         if (!isPreparing() && !isPausing()) {
             return;
         }
-
+        if(mPlayingMusic==null){
+            return;
+        }
         if(mAudioFocusManager.requestAudioFocus()){
             if(mPlayer!=null){
                 mPlayer.start();
@@ -434,6 +445,9 @@ public class PlayService extends Service {
      * 暂停
      */
     public void pause() {
+        if(mPlayingMusic==null){
+            return;
+        }
         if(mPlayer!=null){
             //暂停
             mPlayer.pause();
@@ -473,20 +487,20 @@ public class PlayService extends Service {
      * 播放索引为position的音乐
      * @param position              索引
      */
-    public void play(int position) {
-        if (BaseAppHelper.get().getMusicList().isEmpty()) {
+    private void play(int position) {
+        if (audioMusics.isEmpty()) {
             return;
         }
 
         if (position < 0) {
-            position = BaseAppHelper.get().getMusicList().size() - 1;
-        } else if (position >= BaseAppHelper.get().getMusicList().size()) {
+            position = audioMusics.size() - 1;
+        } else if (position >= audioMusics.size()) {
             //如果是最后一首音乐，则播放时直接播放第一首音乐
             position = 0;
         }
 
         mPlayingPosition = position;
-        LocalMusic music = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
+        AudioMusic music = audioMusics.get(mPlayingPosition);
         //保存当前播放的musicId，下次进来可以记录状态
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,music.getId());
         play(music);
@@ -498,6 +512,7 @@ public class PlayService extends Service {
      * @param progress          进度
      */
     public void seekTo(int progress) {
+        //只有当播放或者暂停的时候才允许拖动bar
         if (isPlaying() || isPausing()) {
             mPlayer.seekTo(progress);
             if(mListener!=null){
@@ -507,18 +522,18 @@ public class PlayService extends Service {
         }
     }
 
-
     /**
-     * 播放
+     * 播放，这种是直接传音频实体类
+     * 有两种，一种是播放本地播放，另一种是在线播放
      * @param music         music
      */
-    public void play(LocalMusic music) {
+    public void play(AudioMusic music) {
         mPlayingMusic = music;
         createMediaPlayer();
         try {
             mPlayer.reset();
             //把音频路径传给播放器
-            mPlayer.setDataSource(music.getPath());
+            mPlayer.setDataSource(mPlayingMusic.getPath());
             //准备
             mPlayer.prepareAsync();
             //设置状态为准备中
@@ -528,13 +543,66 @@ public class PlayService extends Service {
             mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
             mPlayer.setOnCompletionListener(mOnCompletionListener);
             mPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
+            mPlayer.setOnErrorListener(mOnErrorListener);
+            mPlayer.setOnInfoListener(mOnInfoListener);
             //当播放的时候，需要刷新界面信息
             if (mListener != null) {
-                mListener.onChange(music);
+                mListener.onChange(mPlayingMusic);
             }
             //更新通知栏
-            NotificationUtils.showPlay(music);
+            NotificationUtils.showPlay(mPlayingMusic);
 
+            //更新
+            mMediaSessionManager.updateMetaData(mPlayingMusic);
+            mMediaSessionManager.updatePlaybackState();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * 播放，这种是传音频实体类集合
+     * 有两种，一种是播放本地播放，另一种是在线播放
+     * @param music         music
+     */
+    public void play(List<AudioMusic> music , int position) {
+        if(music==null || music.size()==0 || position<0){
+            return;
+        }
+        if(audioMusics==null){
+            audioMusics = new ArrayList<>();
+        }
+        if(!audioMusics.isEmpty()){
+            audioMusics.clear();
+        }
+        audioMusics.addAll(music);
+        mPlayingPosition = position;
+        //赋值
+        mPlayingMusic = music.get(mPlayingPosition);
+        createMediaPlayer();
+        try {
+            mPlayer.reset();
+            //把音频路径传给播放器
+            mPlayer.setDataSource(mPlayingMusic.getPath());
+            //准备
+            mPlayer.prepareAsync();
+            //设置状态为准备中
+            mPlayState = MusicPlayAction.STATE_PREPARING;
+            //监听
+            mPlayer.setOnPreparedListener(mOnPreparedListener);
+            mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
+            mPlayer.setOnCompletionListener(mOnCompletionListener);
+            mPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
+            mPlayer.setOnErrorListener(mOnErrorListener);
+            mPlayer.setOnInfoListener(mOnInfoListener);
+            //当播放的时候，需要刷新界面信息
+            if (mListener != null) {
+                mListener.onChange(mPlayingMusic);
+            }
+            //更新通知栏
+            NotificationUtils.showPlay(mPlayingMusic);
             //更新
             mMediaSessionManager.updateMetaData(mPlayingMusic);
             mMediaSessionManager.updatePlaybackState();
@@ -553,7 +621,8 @@ public class PlayService extends Service {
             mListener.onUpdateProgress(currentPosition);
         }
         LogUtils.e("updatePlayProgressShow");
-        // 每30毫秒更新一下显示的内容
+        // 每30毫秒更新一下显示的内容，注意这里时间不要太短，因为这个是一个循环
+        // 经过测试，60毫秒更新一次有点卡，30毫秒最为顺畅
         handler.sendEmptyMessageDelayed(UPDATE_PLAY_PROGRESS_SHOW, 300);
     }
 
@@ -570,7 +639,7 @@ public class PlayService extends Service {
     };
 
 
-    /** 当音频播放结果的时候的监听器 */
+    /** 当音频播放结束的时候的监听器 */
     private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
         /** 当音频播放结果的时候这个方法会被调用 */
         @Override
@@ -584,7 +653,10 @@ public class PlayService extends Service {
     private MediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new MediaPlayer.OnBufferingUpdateListener() {
         @Override
         public void onBufferingUpdate(MediaPlayer mp, int percent) {
-
+            if (mListener != null) {
+                // 缓冲百分比
+                mListener.onBufferingUpdate(percent);
+            }
         }
     };
 
@@ -597,6 +669,25 @@ public class PlayService extends Service {
         }
     };
 
+    /**
+     * 播放错误的监听
+     */
+    private MediaPlayer.OnErrorListener mOnErrorListener = new MediaPlayer.OnErrorListener() {
+        @Override
+        public boolean onError(MediaPlayer mp, int what, int extra) {
+            return false;
+        }
+    };
+
+    /**
+     * 设置音频信息监听器
+     */
+    private MediaPlayer.OnInfoListener mOnInfoListener = new MediaPlayer.OnInfoListener() {
+        @Override
+        public boolean onInfo(MediaPlayer mp, int what, int extra) {
+            return false;
+        }
+    };
 
     /**
      * 是否正在播放
@@ -661,7 +752,7 @@ public class PlayService extends Service {
     /**
      * 获取正在播放的歌曲[本地|网络]
      */
-    public LocalMusic getPlayingMusic() {
+    public AudioMusic getPlayingMusic() {
         return mPlayingMusic;
     }
 
@@ -684,14 +775,14 @@ public class PlayService extends Service {
      */
     @SuppressLint("StaticFieldLeak")
     public void updateMusicList(final EventCallback<Void> callback) {
-        new AsyncTask<Void, Void, List<LocalMusic>>() {
+        new AsyncTask<Void, Void, List<AudioMusic>>() {
             @Override
-            protected List<LocalMusic> doInBackground(Void... params) {
+            protected List<AudioMusic> doInBackground(Void... params) {
                 return FileScanManager.getInstance().scanMusic(PlayService.this);
             }
 
             @Override
-            protected void onPostExecute(List<LocalMusic> musicList) {
+            protected void onPostExecute(List<AudioMusic> musicList) {
                 //首先先清空
                 BaseAppHelper.get().getMusicList().clear();
                 //然后添加所有扫描到的音乐
@@ -702,7 +793,12 @@ public class PlayService extends Service {
                     //刷新正在播放的本地歌曲的序号
                     updatePlayingPosition();
                     //获取正在播放的音乐
-                    mPlayingMusic = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
+                    if(mPlayingPosition>=0){
+                        mPlayingMusic = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
+                    }
+                    //每次扫描先清除之前的集合
+                    audioMusics.clear();
+                    audioMusics.addAll(BaseAppHelper.get().getMusicList());
                 }
                 if (callback != null) {
                     callback.onEvent(null);
@@ -718,14 +814,17 @@ public class PlayService extends Service {
     public void updatePlayingPosition() {
         int position = 0;
         long id = SPUtils.getInstance(Constant.SP_NAME).getLong(Constant.MUSIC_ID,-1);
-        for (int i = 0; i < BaseAppHelper.get().getMusicList().size(); i++) {
-            if (BaseAppHelper.get().getMusicList().get(i).getId() == id) {
+        if(audioMusics.isEmpty()){
+            return;
+        }
+        for (int i = 0; i < audioMusics.size(); i++) {
+            if (audioMusics.get(i).getId() == id) {
                 position = i;
                 break;
             }
         }
         mPlayingPosition = position;
-        long musicId = BaseAppHelper.get().getMusicList().get(mPlayingPosition).getId();
+        long musicId = audioMusics.get(mPlayingPosition).getId();
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
     }
 

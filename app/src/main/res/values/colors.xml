@@ -6,7 +6,7 @@
 
 
     <!--主题颜色-->
-    <color name="colorTheme">#252525</color>
+    <color name="colorTheme">@color/redTab</color>
     <!--字体的颜色，纯黑色-->
     <color name="blackText">#000000</color>
     <!--字体的颜色 黑色1 -->

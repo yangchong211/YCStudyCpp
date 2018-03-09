@@ -1,7 +1,7 @@
 package cn.ycbjie.ycaudioplayer.inter;
 
 
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 
 /**
  * 播放进度监听器
@@ -12,7 +12,7 @@ public interface OnPlayerEventListener {
      * 切换歌曲
      * 主要是切换歌曲的时候需要及时刷新界面信息
      */
-    void onChange(LocalMusic music);
+    void onChange(AudioMusic music);
 
 
     /**
@@ -32,6 +32,11 @@ public interface OnPlayerEventListener {
      * 主要是播放音乐或者拖动进度条时，需要更新进度
      */
     void onUpdateProgress(int progress);
+
+    /**
+     * 缓冲百分比
+     */
+    void onBufferingUpdate(int percent);
 
     /**
      * 更新定时停止播放时间

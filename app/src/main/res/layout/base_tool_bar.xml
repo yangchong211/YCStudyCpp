@@ -1,17 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout
+<android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:layout_height="55dp"
+    android:background="@color/colorTheme"
+    app:contentInsetStart="0.0dp"
+    android:visibility="visible">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-</android.support.design.widget.AppBarLayout>
+    <ImageView
+        android:id="@+id/iv_menu"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="start|bottom"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_menu" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_other"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center|bottom"
+        android:visibility="visible"
+        android:orientation="horizontal">
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/stl_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            app:tl_bar_color="@color/whiteBg"
+            app:tl_indicator_color="@color/color_10"
+            app:tl_indicator_corner_radius="8dp"
+            app:tl_tab_padding="10dp"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_search"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="end|bottom">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_menu_search"/>
+    </FrameLayout>
+
+
+</android.support.v7.widget.Toolbar>

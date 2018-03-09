@@ -26,14 +26,13 @@ import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.study.model.VideoPlayerFavorite;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.NarrowImageAdapter;
@@ -47,14 +46,14 @@ public class StudyFragment extends BaseFragment {
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
-    private MainActivity activity;
+    private MainHomeActivity activity;
     private StudyAdapter adapter;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
 

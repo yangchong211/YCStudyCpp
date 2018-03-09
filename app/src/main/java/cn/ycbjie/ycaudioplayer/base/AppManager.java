@@ -121,7 +121,9 @@ public class AppManager {
      */
     public void appExit(Boolean isBackground) {
         try {
+            //finish所有activity
             finishAllActivity();
+            //杀死进程
             android.os.Process.killProcess(android.os.Process.myPid());
             //System.exit(0);
         } catch (Exception e) {

@@ -3,7 +3,6 @@ package cn.ycbjie.ycaudioplayer.ui.music.onLine;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +20,8 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnLineMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
@@ -36,7 +34,8 @@ public class OnLineMusicFragment extends BaseLazyFragment {
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
-    private MainActivity activity;
+
+    private MainHomeActivity activity;
     private ArrayList<OnLineSongListInfo> mSongLists;
     private OnLineMusicAdapter adapter;
 
@@ -44,7 +43,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_music_local;
+        return R.layout.base_easy_recycle;
     }
 
     @Override

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.util.rotate.Rotate3DUtils;
 
 /**
@@ -61,6 +61,7 @@ public class SplashAdFirstActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setSystemBarTransparent();
         initTimer();
     }
 
@@ -224,7 +225,7 @@ public class SplashAdFirstActivity extends BaseActivity {
         //rotation.setInterpolator(new DecelerateInterpolator());
         fl.startAnimation(rotation);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainHomeActivity.class);
         startActivity(intent);
         //overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

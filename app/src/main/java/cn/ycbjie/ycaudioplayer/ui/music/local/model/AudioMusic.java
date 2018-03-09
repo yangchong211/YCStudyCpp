@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 单曲信息
  */
-public class LocalMusic implements Serializable {
+public class AudioMusic implements Serializable {
 
     // 歌曲类型:本地/网络
     private Type type;
@@ -128,6 +128,6 @@ public class LocalMusic implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        return o instanceof LocalMusic && this.getId() == ((LocalMusic) o).getId();
+        return o instanceof AudioMusic && this.getId() == ((AudioMusic) o).getId();
     }
 }

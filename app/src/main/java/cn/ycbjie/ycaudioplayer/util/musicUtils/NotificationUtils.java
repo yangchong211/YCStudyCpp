@@ -13,8 +13,8 @@ import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.receiver.NotificationStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 
 /**
  * Created by yc on 2018/1/25.
@@ -39,11 +39,39 @@ public class NotificationUtils {
     }
 
     /**
+     * 开始播放
+     * @param music             music
+     */
+    public static void showPlay(AudioMusic music) {
+        //这个方法是启动Notification到前台
+        playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
+    }
+
+
+    /**
+     * 暂停
+     * @param music             music
+     */
+    public static void showPause(AudioMusic music) {
+        //这个方法是停止Notification
+        playService.stopForeground(false);
+        notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
+    }
+
+
+    /**
+     * 结束所有的
+     */
+    public static void cancelAll() {
+        notificationManager.cancelAll();
+    }
+
+    /**
      * 2.创建Notification对象，定义Notification的各种属性
      * @return                      Notification对象
      */
-    private static Notification buildNotification(PlayService context , LocalMusic music , boolean isPlaying){
-        Intent intent = new Intent(context, MainActivity.class);
+    private static Notification buildNotification(PlayService context , AudioMusic music , boolean isPlaying){
+        Intent intent = new Intent(context, MainHomeActivity.class);
         intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -88,39 +116,12 @@ public class NotificationUtils {
 
 
     /**
-     * 开始播放
-     * @param music             music
-     */
-    public static void showPlay(LocalMusic music) {
-        playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
-    }
-
-
-    /**
-     * 暂停
-     * @param music             music
-     */
-    public static void showPause(LocalMusic music) {
-        playService.stopForeground(false);
-        notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
-    }
-
-
-    /**
-     * 结束所有的
-     */
-    public static void cancelAll() {
-        notificationManager.cancelAll();
-    }
-
-
-    /**
      * 设置自定义通知栏布局
      * @param context                   上下文
      * @param music
      * @return                          RemoteViews
      */
-    private static RemoteViews getCustomViews(PlayService context, LocalMusic music, boolean isPlaying) {
+    private static RemoteViews getCustomViews(PlayService context, AudioMusic music, boolean isPlaying) {
         String title = music.getTitle();
         String subtitle = FileMusicUtils.getArtistAndAlbum(music.getArtist(), music.getAlbum());
         Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);
@@ -146,8 +147,20 @@ public class NotificationUtils {
         // 设置 点击通知栏的播放暂停按钮时要执行的意图
         remoteViews.setOnClickPendingIntent(R.id.btn_start, getReceiverPendingIntent(context, MusicPlayAction.TYPE_START_PAUSE,3));
         // 设置 点击通知栏的根容器时要执行的意图
-        //remoteViews.setOnClickPendingIntent(R.id.ll_root, getActivityPendingIntent(context, MusicPlayAction.TYPE_START_PAUSE));
+        //remoteViews.setOnClickPendingIntent(R.id.ll_root, getActivityPendingIntent(context));
         return remoteViews;
+    }
+
+
+    private static PendingIntent getActivityPendingIntent(PlayService context) {
+        Intent intent = new Intent(context, MainHomeActivity.class);
+        intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return PendingIntent.getActivity(context, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 

@@ -7,16 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -35,7 +32,6 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
@@ -44,8 +40,8 @@ import cn.ycbjie.ycaudioplayer.executor.SearchLrc;
 import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
@@ -101,7 +97,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     SeekBar sbVolume;
     @Bind(R.id.iv_playing_velocity)
     ImageView ivPlayingVelocity;
-    private MainActivity activity;
+    private MainHomeActivity activity;
     private int mLastProgress;
     /**
      * 是否拖进度，默认是false
@@ -113,7 +109,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
     @Override
@@ -176,8 +172,9 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         initSeekBarListener();
     }
 
+
     private void initSeekBarListener() {
-        sbProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (seekBar == sbProgress) {
@@ -224,7 +221,9 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                             AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                 }
             }
-        });
+        };
+        sbProgress.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        sbVolume.setOnSeekBarChangeListener(onSeekBarChangeListener);
     }
 
     @Override
@@ -305,7 +304,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
     public void showListDialog() {
-        final List<LocalMusic> musicList = BaseAppHelper.get().getMusicList();
+        final List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
         final BottomDialogFragment dialog = new BottomDialogFragment();
         dialog.setFragmentManager(getChildFragmentManager());
         dialog.setViewListener(new BottomDialogFragment.ViewListener() {
@@ -326,7 +325,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                 mAdapter.setOnItemClickListener(new OnListItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        getPlayService().play(position);
+                        List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                        getPlayService().play(musicList,position);
                         mAdapter.updatePlayingPosition(getPlayService());
                         mAdapter.notifyDataSetChanged();
                     }
@@ -412,7 +412,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      * @param playingMusic 正在播放的音乐
      */
     @SuppressLint("SetTextI18n")
-    private void setViewData(LocalMusic playingMusic) {
+    private void setViewData(AudioMusic playingMusic) {
         if (playingMusic == null) {
             return;
         }
@@ -435,7 +435,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private void setCoverAndBg(LocalMusic music) {
+    private void setCoverAndBg(AudioMusic music) {
         //mAlbumCoverView.setCoverBitmap(CoverLoader.getInstance().loadRound(music));
         ivPlayPageBg.setImageBitmap(CoverLoader.getInstance().loadBlur(music));
     }
@@ -446,8 +446,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      *
      * @param playingMusic 正在播放的音乐
      */
-    private void setLrc(final LocalMusic playingMusic) {
-        if (playingMusic.getType() == LocalMusic.Type.LOCAL) {
+    private void setLrc(final AudioMusic playingMusic) {
+        if (playingMusic.getType() == AudioMusic.Type.LOCAL) {
             String lrcPath = FileMusicUtils.getLrcFilePath(playingMusic);
             if (!TextUtils.isEmpty(lrcPath)) {
                 loadLrc(lrcPath);
@@ -494,7 +494,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      * ---------------通过MainActivity进行调用-----------------------------
      **/
     @Override
-    public void onChange(LocalMusic music) {
+    public void onChange(AudioMusic music) {
         setViewData(music);
     }
 
@@ -515,6 +515,11 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             sbProgress.setProgress(progress);
         }
         lrcView.updateTime(progress);
+    }
+
+    @Override
+    public void onBufferingUpdate(int percent) {
+        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
     }
 
     @Override

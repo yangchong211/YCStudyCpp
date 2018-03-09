@@ -23,10 +23,9 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.InnovationAdapter;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.StudyAdapter;
 
 /**
  * Created by yc on 2018/3/1.
@@ -36,13 +35,13 @@ public class InnovationFragment extends BaseLazyFragment {
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
-    private MainActivity activity;
+    private MainHomeActivity activity;
     private InnovationAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
 

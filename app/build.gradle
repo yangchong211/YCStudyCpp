@@ -92,7 +92,7 @@ dependencies {
     compile 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
 
 
-    compile 'org.yczbj:YCRefreshViewLib:2.2'                        //RecyclerView封装
+    compile 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
     compile 'cn.yc:YCCountDownViewLib:1.0'                          //倒计时器
     compile 'cn.yc:YCUtilsLib:1.6'                                  //公共类
     compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗
@@ -100,6 +100,7 @@ dependencies {
     compile 'cn.yc:YCAudioPlayerLib:1.0'                              //歌词库
     compile project(':YCAudioPlayerLib')
     compile 'cn.yc:YCBannerLib:1.2'                                 //轮播图
-
+    compile 'cn.yc:YCVideoPlayerLib:2.3'                            //播放器
+    compile 'cn.yc:YCBaseAdapterLib:1.3'                            //adapter封装
 
 }

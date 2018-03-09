@@ -1,38 +1,75 @@
 package cn.ycbjie.ycaudioplayer.ui.me;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.flyco.tablayout.SegmentTabLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.base.AppManager;
+import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
-import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
-import cn.ycbjie.ycaudioplayer.ui.lock.LockTestActivity;
-import cn.ycbjie.ycaudioplayer.ui.main.MainActivity;
+import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
+import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 
 /**
  * Created by yc on 2018/1/24.
+ *
  */
 
-public class MeFragment extends BaseFragment {
+public class MeFragment extends BaseFragment implements View.OnClickListener {
 
-    @Bind(R.id.tv_1)
-    TextView tv1;
-    @Bind(R.id.tv_2)
-    TextView tv2;
-    private MainActivity activity;
+    @Bind(R.id.iv_menu)
+    ImageView ivMenu;
+    @Bind(R.id.stl_layout)
+    SegmentTabLayout stlLayout;
+    @Bind(R.id.ll_other)
+    LinearLayout llOther;
+    @Bind(R.id.fl_search)
+    FrameLayout flSearch;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.rl_me_collect)
+    RelativeLayout rlMeCollect;
+    @Bind(R.id.rl_me_question)
+    RelativeLayout rlMeQuestion;
+    @Bind(R.id.rl_me_setting)
+    RelativeLayout rlMeSetting;
+    @Bind(R.id.rl_me_feed_back)
+    RelativeLayout rlMeFeedBack;
+    @Bind(R.id.ll_timer)
+    LinearLayout llTimer;
 
+    @Bind(R.id.tv_me_phone_number)
+    TextView tvMePhoneNumber;
+    @Bind(R.id.rl_me_phone)
+    LinearLayout rlMePhone;
+    @Bind(R.id.btn_exit)
+    Button btnExit;
+    private MainHomeActivity activity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (MainHomeActivity) context;
     }
 
     @Override
@@ -54,27 +91,101 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-        tv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent lockScreen = new Intent(activity, LockAudioActivity.class);
-                lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                startActivity(lockScreen);
-            }
-        });
-        tv2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent lockScreen = new Intent(activity, LockTestActivity.class);
-                lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                startActivity(lockScreen);
-            }
-        });
+        rlMeCollect.setOnClickListener(this);
+        rlMeQuestion.setOnClickListener(this);
+        rlMeSetting.setOnClickListener(this);
+        llTimer.setOnClickListener(this);
+        rlMeFeedBack.setOnClickListener(this);
+        rlMePhone.setOnClickListener(this);
+        btnExit.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
 
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_me_collect:
+
+                break;
+            case R.id.rl_me_question:
+
+                break;
+            case R.id.rl_me_setting:
+                startActivity(MeSettingActivity.class);
+                break;
+            case R.id.ll_timer:
+                timerDialog(activity);
+                break;
+            case R.id.rl_me_feed_back:
+
+                break;
+            case R.id.rl_me_phone:
+
+                break;
+            case R.id.btn_exit:
+                exit();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 退出程序
+     */
+    private static void exit() {
+        //先销毁service
+        PlayService service = BaseAppHelper.get().getPlayService();
+        if (service != null) {
+            service.quit();
+        }
+        //然后退出应用程序
+        AppManager.getAppManager().appExit(false);
+    }
+
+
+    /**
+     * 弹出定时停止播放对话框
+     * @param activity              activity上下文
+     */
+    private static void timerDialog(final Activity activity) {
+        if(AppUtils.isActivityLiving(activity)){
+            String[] stringArray = activity.getResources().getStringArray(R.array.timer_text);
+            new AlertDialog.Builder(activity)
+                    .setTitle("定时停止播放")
+                    .setItems(stringArray, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int[] times = activity.getResources().getIntArray(R.array.timer_int);
+                            startTimer(activity, times[which]);
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
+    /**
+     * 开启倒计时器
+     * @param activity              activity上下文
+     * @param time                  time时间
+     */
+    private static void startTimer(Activity activity, int time) {
+        QuitTimer.getInstance().start(time * 60 * 1000);
+        if (time > 0) {
+            ToastUtils.showShort(activity.getString(R.string.timer_set, String.valueOf(time)));
+        } else {
+            ToastUtils.showShort(R.string.timer_cancel);
+        }
+    }
+
+
+
 
 }

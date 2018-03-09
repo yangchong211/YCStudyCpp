@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 
 
 /**
@@ -77,7 +77,7 @@ public class CoverLoader {
      * @param music             music
      * @return                  bitmap对象
      */
-    public Bitmap loadThumbnail(LocalMusic music) {
+    public Bitmap loadThumbnail(AudioMusic music) {
         return loadCover(music, Type.THUMBNAIL);
     }
 
@@ -86,7 +86,7 @@ public class CoverLoader {
      * @param music             music
      * @return                  bitmap对象
      */
-    public Bitmap loadBlur(LocalMusic music) {
+    public Bitmap loadBlur(AudioMusic music) {
         return loadCover(music, Type.BLUR);
     }
 
@@ -95,12 +95,12 @@ public class CoverLoader {
      * @param music             music
      * @return                  bitmap对象
      */
-    public Bitmap loadRound(LocalMusic music) {
+    public Bitmap loadRound(AudioMusic music) {
         return loadCover(music, Type.ROUND);
     }
 
 
-    private Bitmap loadCover(LocalMusic music, Type type) {
+    private Bitmap loadCover(AudioMusic music, Type type) {
         Bitmap bitmap;
         String key = getKey(music, type);
         if (TextUtils.isEmpty(key)) {
@@ -125,13 +125,13 @@ public class CoverLoader {
     }
 
 
-    private String getKey(LocalMusic music, Type type) {
+    private String getKey(AudioMusic music, Type type) {
         if (music == null) {
             return null;
         }
-        if (music.getType() == LocalMusic.Type.LOCAL && music.getAlbumId() > 0) {
+        if (music.getType() == AudioMusic.Type.LOCAL && music.getAlbumId() > 0) {
             return String.valueOf(music.getAlbumId()).concat(type.value);
-        } else if (music.getType() == LocalMusic.Type.ONLINE && !TextUtils.isEmpty(music.getCoverPath())) {
+        } else if (music.getType() == AudioMusic.Type.ONLINE && !TextUtils.isEmpty(music.getCoverPath())) {
             return music.getCoverPath().concat(type.value);
         } else {
             return null;
@@ -158,9 +158,9 @@ public class CoverLoader {
     }
 
 
-    private Bitmap loadCoverByType(LocalMusic music, Type type) {
+    private Bitmap loadCoverByType(AudioMusic music, Type type) {
         Bitmap bitmap;
-        if (music.getType() == LocalMusic.Type.LOCAL) {
+        if (music.getType() == AudioMusic.Type.LOCAL) {
             bitmap = loadCoverFromMediaStore(music.getAlbumId());
         } else {
             bitmap = loadCoverFromFile(music.getCoverPath());

@@ -52,7 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.main.MainHomeActivity"/>
         <activity android:name=".ui.guide.ui.SplashAdFirstActivity"/>
         <activity android:name=".ui.guide.ui.SplashAdSecondActivity"/>
         <activity android:name=".ui.guide.ui.SplashAdThirdActivity"/>
@@ -62,6 +62,7 @@
         <activity android:name=".ui.main.SearchMusicActivity"/>
         <activity android:name=".ui.advert.AdvertActivity"/>
         <activity android:name=".ui.advert.AdvertDetailActivity" />
+        <activity android:name=".ui.me.MeSettingActivity"/>
 
         <activity android:name=".ui.lock.LockAudioActivity"
             android:noHistory="false"

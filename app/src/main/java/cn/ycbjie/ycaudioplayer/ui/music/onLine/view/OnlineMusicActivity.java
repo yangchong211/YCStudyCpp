@@ -1,14 +1,17 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,14 +28,19 @@ import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import java.io.File;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
+import cn.ycbjie.ycaudioplayer.executor.online.PlayOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.ImageUtils;
 import rx.Subscriber;
@@ -43,13 +51,17 @@ import rx.schedulers.Schedulers;
  * Created by yc on 2018/1/29.
  */
 
-public class OnlineMusicActivity extends BaseActivity {
+public class OnlineMusicActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.ll_title_menu)
+    FrameLayout llTitleMenu;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     private View view;
     private TextView tv_comment;
     private TextView tv_update_date;
@@ -71,18 +83,15 @@ public class OnlineMusicActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        initToolBar();
         initIntentData();
+        initToolBar();
         initRecyclerView();
     }
 
 
     private void initToolBar() {
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("音乐热播榜");
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+        if(mListInfo!=null){
+            toolbarTitle.setText(mListInfo.getTitle());
         }
     }
 
@@ -99,26 +108,31 @@ public class OnlineMusicActivity extends BaseActivity {
 
     private void initIntentData() {
         mListInfo = (OnLineSongListInfo) getIntent().getSerializableExtra("music_list_type");
-        setTitle(mListInfo.getTitle());
     }
 
 
     @Override
     public void initListener() {
+        llTitleMenu.setOnClickListener(this);
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                //播放音乐
+                if(adapter.getAllData().size()>position && position>-1){
+                    OnlineMusicList.OnlineMusic onlineMusic = adapter.getAllData().get(position);
+                    playMusic(onlineMusic);
+                    ToastUtils.showShort(onlineMusic.getTitle()+"点击呢！！！");
+                }
             }
         });
         adapter.setOnMoreClickListener(new OnMoreClickListener() {
             @Override
             public void onMoreClick(int position) {
                 //这个地方需要+1
-                showMoreDialog(position+1);
+                showMoreDialog(position + 1);
             }
         });
     }
+
 
     @Override
     public void initData() {
@@ -126,6 +140,17 @@ public class OnlineMusicActivity extends BaseActivity {
         getData(mOffset);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_title_menu:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -157,7 +182,7 @@ public class OnlineMusicActivity extends BaseActivity {
 
     private void getData(final int offset) {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
-        model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST,mListInfo.getType(),"20",String.valueOf(offset))
+        model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST, mListInfo.getType(), "20", String.valueOf(offset))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<OnlineMusicList>() {
@@ -255,15 +280,38 @@ public class OnlineMusicActivity extends BaseActivity {
     }
 
 
+    private void playMusic(OnlineMusicList.OnlineMusic onlineMusic) {
+        new PlayOnlineMusic(this, onlineMusic) {
+            @Override
+            public void onPrepare() {
+
+            }
+
+            @Override
+            public void onExecuteSuccess(AudioMusic music) {
+                getPlayService().play(music);
+                ToastUtils.showShort("正在播放" + music.getTitle());
+
+            }
+
+            @Override
+            public void onExecuteFail(Exception e) {
+                ToastUtils.showShort(R.string.unable_to_play);
+            }
+        }.execute();
+    }
+
+
     /**
      * 分享音乐
-     * @param onlineMusic           实体类
+     *
+     * @param onlineMusic 实体类
      */
     private void share(OnlineMusicList.OnlineMusic onlineMusic) {
         new AbsShareOnlineMusic(this, onlineMusic.getTitle(), onlineMusic.getSong_id()) {
             @Override
             public void onPrepare() {
-                LoadDialog.show(OnlineMusicActivity.this,"下载中……");
+                LoadDialog.show(OnlineMusicActivity.this, "下载中……");
             }
 
             @Override
@@ -281,7 +329,8 @@ public class OnlineMusicActivity extends BaseActivity {
 
     /**
      * 查看歌手信息
-     * @param onlineMusic           实体类
+     *
+     * @param onlineMusic 实体类
      */
     private void lookArtistInfo(OnlineMusicList.OnlineMusic onlineMusic) {
         Intent intent = new Intent(this, ArtistInfoActivity.class);
@@ -292,25 +341,26 @@ public class OnlineMusicActivity extends BaseActivity {
 
     /**
      * 下载音乐
-     * @param onlineMusic           实体类
+     *
+     * @param onlineMusic 实体类
      */
     private void download(final OnlineMusicList.OnlineMusic onlineMusic) {
         new AbsDownloadOnlineMusic(this, onlineMusic) {
             @Override
             public void onPrepare() {
-                LoadDialog.show(OnlineMusicActivity.this,"下载中……");
+                LoadDialog.show(OnlineMusicActivity.this, "下载中……");
             }
 
             @Override
             public void onExecuteSuccess(Void aVoid) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                ToastUtil.showToast(OnlineMusicActivity.this,"下载成功"+onlineMusic.getTitle());
+                ToastUtil.showToast(OnlineMusicActivity.this, "下载成功" + onlineMusic.getTitle());
             }
 
             @Override
             public void onExecuteFail(Exception e) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                ToastUtil.showToast(OnlineMusicActivity.this,"下载失败");
+                ToastUtil.showToast(OnlineMusicActivity.this, "下载失败");
             }
         }.execute();
     }

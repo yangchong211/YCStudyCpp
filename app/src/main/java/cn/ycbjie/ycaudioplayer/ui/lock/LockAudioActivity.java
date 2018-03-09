@@ -3,7 +3,6 @@ package cn.ycbjie.ycaudioplayer.ui.lock;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,7 +32,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.LocalMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;
@@ -261,7 +259,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
              * 主要是切换歌曲的时候需要及时刷新界面信息
              */
             @Override
-            public void onChange(LocalMusic music) {
+            public void onChange(AudioMusic music) {
                 onChangeImpl(music);
             }
 
@@ -294,6 +292,11 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
                 if (!isDraggingProgress) {
                     sbProgress.setProgress(progress);
                 }
+            }
+
+            @Override
+            public void onBufferingUpdate(int percent) {
+                sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
             }
 
             /**
@@ -392,7 +395,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
-    private void onChangeImpl(LocalMusic music) {
+    private void onChangeImpl(AudioMusic music) {
         if (music == null) {
             return;
         }
