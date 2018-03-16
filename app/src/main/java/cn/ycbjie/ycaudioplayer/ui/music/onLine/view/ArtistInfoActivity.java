@@ -1,6 +1,7 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -11,16 +12,19 @@ import android.text.style.URLSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
 import rx.Subscriber;
@@ -31,7 +35,7 @@ import rx.schedulers.Schedulers;
  * Created by yc on 2018/2/7.
  */
 
-public class ArtistInfoActivity extends BaseActivity {
+public class ArtistInfoActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -39,6 +43,10 @@ public class ArtistInfoActivity extends BaseActivity {
     LinearLayout llArtistInfo;
     @Bind(R.id.sv_artist_info)
     ScrollView svArtistInfo;
+    @Bind(R.id.ll_title_menu)
+    FrameLayout llTitleMenu;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     private String tingUid;
 
     @Override
@@ -49,12 +57,11 @@ public class ArtistInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         initIntentData();
-        initToolBar();
     }
 
     @Override
     public void initListener() {
-
+        llTitleMenu.setOnClickListener(this);
     }
 
     @Override
@@ -62,19 +69,22 @@ public class ArtistInfoActivity extends BaseActivity {
         getArtistInfo(tingUid);
     }
 
-
-    private void initIntentData() {
-        Intent intent = getIntent();
-        if(intent!=null){
-            tingUid = getIntent().getStringExtra("artist_id");
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_title_menu:
+                finish();
+                break;
+            default:
+                break;
         }
     }
 
-    private void initToolBar() {
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+
+    private void initIntentData() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            tingUid = getIntent().getStringExtra("artist_id");
         }
     }
 
@@ -91,7 +101,7 @@ public class ArtistInfoActivity extends BaseActivity {
 
     private void getArtistInfo(String tingUid) {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
-        model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO,tingUid)
+        model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO, tingUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ArtistInfo>() {
@@ -107,7 +117,7 @@ public class ArtistInfoActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ArtistInfo artistInfo) {
-                        if(artistInfo!=null){
+                        if (artistInfo != null) {
                             setData(artistInfo);
                         }
                     }
@@ -116,7 +126,7 @@ public class ArtistInfoActivity extends BaseActivity {
 
     private void setData(ArtistInfo artistInfo) {
         String name = artistInfo.getName();
-        toolbar.setTitle(name);
+        toolbarTitle.setText(name);
         String avatarUri = artistInfo.getAvatar_s1000();
         String country = artistInfo.getCountry();
         String constellation = artistInfo.getConstellation();
@@ -128,7 +138,7 @@ public class ArtistInfoActivity extends BaseActivity {
         if (!TextUtils.isEmpty(avatarUri)) {
             ImageView ivAvatar = new ImageView(this);
             ivAvatar.setScaleType(ImageView.ScaleType.FIT_START);
-            ImageUtil.loadImgByPicasso(this,avatarUri,R.drawable.image_default,ivAvatar);
+            ImageUtil.loadImgByPicasso(this, avatarUri, R.drawable.image_default, ivAvatar);
             llArtistInfo.addView(ivAvatar);
         }
         if (!TextUtils.isEmpty(name)) {

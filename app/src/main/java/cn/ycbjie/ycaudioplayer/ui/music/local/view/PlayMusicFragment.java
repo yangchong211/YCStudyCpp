@@ -46,6 +46,7 @@ import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/1/24.

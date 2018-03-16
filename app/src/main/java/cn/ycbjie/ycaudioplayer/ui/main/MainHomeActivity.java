@@ -101,7 +101,6 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
     private int positionIndex;
     private boolean isPlayFragmentShow = false;
     private long firstClickTime = 0;
-    private long exitTime;
 
 
     @Override
@@ -111,25 +110,6 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
             return;
         }
         super.onBackPressed();
-    }
-
-
-    /**
-     * 监听back键处理DrawerLayout和SearchView
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                ToastUtils.showShort("再按一次退出");
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                AppManager.getAppManager().appExit(false);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -173,7 +153,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
         if (!checkServiceAlive()) {
             return;
         }
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorTheme));
+        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initFragment();
         initTabLayout();
         initPlayServiceListener();

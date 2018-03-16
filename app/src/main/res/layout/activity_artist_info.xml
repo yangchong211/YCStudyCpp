@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/base_tool_bar" />
+    <include layout="@layout/base_title_bar" />
 
     <ScrollView
         android:id="@+id/sv_artist_info"
