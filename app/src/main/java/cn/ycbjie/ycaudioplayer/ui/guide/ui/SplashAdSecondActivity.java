@@ -12,6 +12,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.weight.animView.ViewStars;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/1/30.
@@ -62,7 +63,7 @@ public class SplashAdSecondActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setSystemBarTransparent();
+        YCAppBar.translucentStatusBar(this, true);
         initTimer();
         initFlView();
     }

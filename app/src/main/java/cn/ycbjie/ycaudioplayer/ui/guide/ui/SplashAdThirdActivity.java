@@ -14,6 +14,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/2/1.
@@ -58,7 +59,7 @@ public class SplashAdThirdActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setSystemBarTransparent();
+        YCAppBar.translucentStatusBar(this, true);
         initTimer();
     }
 

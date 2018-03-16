@@ -235,7 +235,7 @@ public class StudyFragment extends BaseFragment {
             @Override
             public View onCreateView(ViewGroup parent) {
                 RecyclerView recyclerView = new RecyclerView(parent.getContext()){
-                    //为了不打扰横向RecyclerView的滑动操作，可以这样处理
+                    //为了不打扰RecyclerView的滑动操作，可以这样处理
                     @SuppressLint("ClickableViewAccessibility")
                     @Override
                     public boolean onTouchEvent(MotionEvent event) {

@@ -20,6 +20,7 @@ import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
 import cn.ycbjie.ycaudioplayer.util.other.SerializableUtils;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/2/8.
@@ -45,7 +46,7 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
-        setSystemBarTransparent();
+        YCAppBar.translucentStatusBar(this, true);
         cdvTime.setVisibility(View.VISIBLE);
         llBottom.setVisibility(View.GONE);
         startLoading();

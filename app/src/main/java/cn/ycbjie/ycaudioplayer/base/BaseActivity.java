@@ -20,6 +20,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
 import cn.ycbjie.ycaudioplayer.util.bar.AppBar;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * ================================================
@@ -41,7 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.bind(this);
-        //setSystemBarTransparent();
         //避免切换横竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //将当前Activity添加到容器
@@ -98,20 +98,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int getDarkTheme() {
         return R.style.AppThemeDark;
     }
-
-
-    protected void setSystemBarTransparent() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // LOLLIPOP解决方案
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorTransparent));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // KITKAT解决方案
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
-
 
     /**
      * 通过Class跳转界面

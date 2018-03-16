@@ -34,6 +34,7 @@ import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
 import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -59,7 +60,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.subscribe();
-        setSystemBarTransparent();
+        YCAppBar.translucentStatusBar(this, true);
     }
 
     @Override

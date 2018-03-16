@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -52,6 +53,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * 关于bug整理
@@ -171,6 +173,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
         if (!checkServiceAlive()) {
             return;
         }
+        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorTheme));
         initFragment();
         initTabLayout();
         initPlayServiceListener();
