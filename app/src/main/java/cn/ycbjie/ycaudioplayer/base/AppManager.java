@@ -55,7 +55,7 @@ public class AppManager {
      * 获取当前Activity（堆栈中最后一个压入的）
      */
     public Activity currentActivity() {
-        if(activityStack.size()==0){
+        if(activityStack==null || activityStack.size()==0){
             return null;
         }
         Activity activity = activityStack.lastElement();
@@ -76,6 +76,9 @@ public class AppManager {
      * 结束指定的Activity
      */
     void finishActivity(Activity activity) {
+        if(activityStack==null){
+            return;
+        }
         if (activity != null && !activity.isFinishing()) {
             activityStack.remove(activity);
             activity.finish();
@@ -88,6 +91,9 @@ public class AppManager {
      * @param activity
      */
     void removeActivity(Activity activity) {
+        if(activityStack==null){
+            return;
+        }
         if (activity != null) {
             activityStack.remove(activity);
         }
@@ -97,6 +103,9 @@ public class AppManager {
      * 结束指定类名的Activity
      */
     public void finishActivity(Class<?> cls) {
+        if(activityStack==null){
+            return;
+        }
         for (Activity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
@@ -108,6 +117,9 @@ public class AppManager {
      * 结束所有Activity
      */
     public void finishAllActivity() {
+        if(activityStack==null){
+            return;
+        }
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
@@ -125,11 +137,8 @@ public class AppManager {
             finishAllActivity();
             //杀死进程
             android.os.Process.killProcess(android.os.Process.myPid());
-            //System.exit(0);
-        } catch (Exception e) {
-            //
+        } catch (Exception ignored) {
         } finally {
-            // 注意，如果您有后台程序运行，请不要支持此句子
             if (!isBackground) {
                 System.exit(0);
             }

@@ -56,8 +56,8 @@ import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
- * 关于bug整理
- * 主页面
+ * 关于bug整理，主页面
+ *
  */
 public class MainHomeActivity extends BaseActivity implements View.OnClickListener {
 
@@ -85,12 +85,14 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
     @Bind(R.id.ll_main)
     LinearLayout llMain;
 
+
     private Bundle bundle;
     private HomeFragment mHomeFragment;
     private PractiseFragment mPractiseFragment;
     private MusicFragment mMusicFragment;
     private MeFragment mMeFragment;
     private PlayMusicFragment mPlayFragment;
+
 
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_PRACTISE = 1;

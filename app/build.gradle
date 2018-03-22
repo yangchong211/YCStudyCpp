@@ -90,9 +90,11 @@ dependencies {
     compile 'pub.devrel:easypermissions:1.0.1'                      //权限管理
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'      //导航栏
     compile 'com.liulishuo.filedownloader:library:1.6.9'            //下载框架
+    compile('com.alibaba.android:vlayout:1.2.2@aar') {              //阿里巴巴UI
+        transitive = true
+    }
 
-
-    compile 'org.yczbj:YCRefreshViewLib:2.4'                        //RecyclerView封装
+    compile 'org.yczbj:YCRefreshViewLib:2.5'                        //RecyclerView封装
     compile 'cn.yc:YCCountDownViewLib:1.0'                          //倒计时器
     compile 'cn.yc:YCUtilsLib:1.6'                                  //公共类
     compile 'cn.yc:YCDialogLib:3.5'                                 //弹窗

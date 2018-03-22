@@ -81,7 +81,6 @@ public class StudyFragment extends BaseFragment {
 
     }
 
-
     @Override
     public void initData() {
         List<String> data = new ArrayList<>();

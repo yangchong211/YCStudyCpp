@@ -26,6 +26,24 @@
         <item>我的</item>
     </string-array>
 
+    <!--首页底部导航栏的标题，选中时-->
+    <integer-array name="button_view">
+        <item name="btn1">@drawable/ic_home_first</item>
+        <item name="btn2">@drawable/ic_home_second</item>
+        <item name="btn3">@drawable/ic_home_third</item>
+        <item name="btn4">@drawable/ic_home_four</item>
+        <item name="btn5">@drawable/ic_home_first</item>
+    </integer-array>
+
+    <!--首页底部导航栏文字-->
+    <string-array name="button_view_title">
+        <item>饺子播放器</item>
+        <item>封装播放器</item>
+        <item>仿优酷[Vp]</item>
+        <item>仿优酷[Jz]</item>
+        <item>图片裁剪</item>
+    </string-array>
+
     <string-array name="local_music_dialog">
         <item>分享音乐</item>
         <item>设为铃声</item>

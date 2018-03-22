@@ -45,6 +45,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
@@ -422,6 +423,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         sbProgress.setProgress((int) getPlayService().getCurrentPosition());
         sbProgress.setSecondaryProgress(0);
         sbProgress.setMax((int) playingMusic.getDuration());
+        LogUtils.e("-----------------------"+(int) playingMusic.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
         tvTotalTime.setText(AppUtils.formatTime("mm:ss", playingMusic.getDuration()));
