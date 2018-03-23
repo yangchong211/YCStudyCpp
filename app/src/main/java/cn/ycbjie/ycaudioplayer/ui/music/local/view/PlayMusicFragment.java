@@ -393,8 +393,10 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      */
     private void initVolume() {
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        sbVolume.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        sbVolume.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        if (mAudioManager != null) {
+            sbVolume.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+            sbVolume.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        }
     }
 
     /**
@@ -513,16 +515,21 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onUpdateProgress(int progress) {
-        //如果没有拖动进度，则开始更新进度条进度
-        if (!isDraggingProgress) {
-            sbProgress.setProgress(progress);
+        if(progress>0){
+            //如果没有拖动进度，则开始更新进度条进度
+            if (!isDraggingProgress) {
+                sbProgress.setProgress(progress);
+            }
+            lrcView.updateTime(progress);
         }
-        lrcView.updateTime(progress);
     }
 
     @Override
     public void onBufferingUpdate(int percent) {
-        sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        if(sbProgress.getMax()>0 && percent>0){
+            com.blankj.utilcode.util.LogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
+            sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
+        }
     }
 
     @Override

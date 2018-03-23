@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.ns.yc.ycutilslib.activityManager.AppManager;
 
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;

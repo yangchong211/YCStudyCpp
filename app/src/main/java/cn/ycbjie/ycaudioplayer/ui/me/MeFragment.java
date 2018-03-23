@@ -3,12 +3,9 @@ package cn.ycbjie.ycaudioplayer.ui.me;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,11 +15,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SegmentTabLayout;
+import com.ns.yc.ycutilslib.activityManager.AppManager;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.AppManager;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
@@ -143,6 +139,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         //先销毁service
         PlayService service = BaseAppHelper.get().getPlayService();
         if (service != null) {
+            service.setOnPlayEventListener(null);
             service.quit();
         }
         //然后退出应用程序

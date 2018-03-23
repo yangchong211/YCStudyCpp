@@ -95,8 +95,10 @@ public class PlayService extends Service {
      * 这个在onCreate中创建，在onDestroy中销毁
      */
     private final AudioBroadcastReceiver mAudioReceiver = new AudioBroadcastReceiver();
-
-
+    /**
+     * 广播接受者标识，避免多次注册广播
+     */
+    private boolean mReceiverTag = false;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -434,7 +436,10 @@ public class PlayService extends Service {
                 //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
                 NotificationUtils.showPlay(mPlayingMusic);
                 //注册监听来电/耳机拔出时暂停播放广播
-                registerReceiver(mNoisyReceiver, mFilter);
+                if(!mReceiverTag){
+                    mReceiverTag = true;
+                    registerReceiver(mNoisyReceiver, mFilter);
+                }
                 mMediaSessionManager.updatePlaybackState();
             }
         }
@@ -462,7 +467,13 @@ public class PlayService extends Service {
             //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
             NotificationUtils.showPause(mPlayingMusic);
             //注销监听来电/耳机拔出时暂停播放广播
-            unregisterReceiver(mNoisyReceiver);
+            //判断广播是否注册
+            if (mReceiverTag) {
+                //Tag值 赋值为false 表示该广播已被注销
+                mReceiverTag = false;
+                unregisterReceiver(mNoisyReceiver);
+            }
+
             mMediaSessionManager.updatePlaybackState();
         }
     }
