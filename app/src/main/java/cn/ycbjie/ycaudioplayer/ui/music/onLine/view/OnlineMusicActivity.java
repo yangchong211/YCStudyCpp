@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,7 @@ import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
@@ -73,6 +75,17 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
     private LineMusicAdapter adapter;
     private int mOffset = 0;
     private static final int MUSIC_LIST_SIZE = 20;
+    private boolean isPlayFragmentShow = false;
+    private PlayMusicFragment mPlayFragment;
+
+    @Override
+    public void onBackPressed() {
+        if (mPlayFragment != null && isPlayFragmentShow) {
+            hidePlayingFragment();
+            return;
+        }
+        super.onBackPressed();
+    }
 
 
     @Override
@@ -279,6 +292,37 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         dialog.show();
     }
 
+    /**
+     * 展示页面
+     */
+    private void showPlayingFragment() {
+        if (isPlayFragmentShow) {
+            return;
+        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
+        if (mPlayFragment == null) {
+            mPlayFragment = PlayMusicFragment.newInstance("OnLine");
+            ft.replace(android.R.id.content, mPlayFragment);
+        } else {
+            ft.show(mPlayFragment);
+        }
+        ft.commitAllowingStateLoss();
+        isPlayFragmentShow = true;
+    }
+
+
+    /**
+     * 隐藏页面
+     */
+    private void hidePlayingFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(0, R.anim.fragment_slide_down);
+        ft.hide(mPlayFragment);
+        ft.commitAllowingStateLoss();
+        isPlayFragmentShow = false;
+    }
+
 
     private void playMusic(OnlineMusicList.OnlineMusic onlineMusic) {
         new PlayOnlineMusic(this, onlineMusic) {
@@ -290,6 +334,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onExecuteSuccess(AudioMusic music) {
                 getPlayService().play(music);
+                showPlayingFragment();
                 ToastUtils.showShort("正在播放" + music.getTitle());
 
             }

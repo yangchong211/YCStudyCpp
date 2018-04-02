@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -27,6 +30,7 @@ import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
+import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 
 import java.io.File;
 import java.util.List;
@@ -42,12 +46,9 @@ import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
-import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
  * Created by yc on 2018/1/24.
@@ -120,6 +121,18 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         activity = null;
     }
 
+    private static final String TAG = "DetailAudioFragment";
+    private String type;
+
+    public static PlayMusicFragment newInstance(String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG, type);
+        PlayMusicFragment fragment = new PlayMusicFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+
     /**
      * 返回监听
      */
@@ -156,6 +169,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void initView() {
+        type = getArguments().getString(TAG);
         initSystemBar();
         initPlayMode();
         initVolume();
@@ -181,7 +195,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (seekBar == sbProgress) {
                     if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
-                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss", progress));
+                        tvCurrentTime.setText(VideoPlayerUtils.formatTime(progress));
                         mLastProgress = progress;
                     }
                 }
@@ -378,7 +392,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      */
     private void initSystemBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int top = AppUtils.getStatusBarHeight(activity);
+            int top = BarUtils.getStatusBarHeight();
             llContent.setPadding(0, top, 0, 0);
         }
     }
@@ -428,7 +442,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         LogUtils.e("-----------------------"+(int) playingMusic.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
-        tvTotalTime.setText(AppUtils.formatTime("mm:ss", playingMusic.getDuration()));
+        tvTotalTime.setText(VideoPlayerUtils.formatTime(playingMusic.getDuration()));
         setCoverAndBg(playingMusic);
         setLrc(playingMusic);
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {

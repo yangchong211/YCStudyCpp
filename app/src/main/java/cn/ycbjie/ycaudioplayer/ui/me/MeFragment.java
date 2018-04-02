@@ -17,13 +17,14 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
 
+import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
+
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 
 /**
@@ -152,7 +153,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
      * @param activity              activity上下文
      */
     private static void timerDialog(final Activity activity) {
-        if(AppUtils.isActivityLiving(activity)){
+        if(VideoPlayerUtils.isActivityLiving(activity)){
             String[] stringArray = activity.getResources().getStringArray(R.array.timer_text);
             new AlertDialog.Builder(activity)
                     .setTitle("定时停止播放")

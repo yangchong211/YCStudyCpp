@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.TimeUtils;
 
+import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,7 +36,6 @@ import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-import cn.ycbjie.ycaudioplayer.util.other.AppUtils;
 import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;
 import cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout;
 
@@ -316,7 +317,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (seekBar == sbProgress) {
                     if (Math.abs(progress - mLastProgress) >= DateUtils.SECOND_IN_MILLIS) {
-                        tvCurrentTime.setText(AppUtils.formatTime("mm:ss", progress));
+                        tvCurrentTime.setText(VideoPlayerUtils.formatTime(progress));
                         mLastProgress = progress;
                     }
                 }
@@ -408,7 +409,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
         sbProgress.setMax((int) music.getDuration());
         sbProgress.setProgress((int) playService.getCurrentPosition());
         tvCurrentTime.setText("00:00");
-        tvTotalTime.setText(AppUtils.formatTime("mm:ss", music.getDuration()));
+        tvTotalTime.setText(VideoPlayerUtils.formatTime(music.getDuration()));
     }
 
 

@@ -1,12 +1,12 @@
 package cn.ycbjie.ycaudioplayer.util.encryption;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
 /**
  * Created by yc on 2018/2/7.

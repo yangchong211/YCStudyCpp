@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 
+import com.blankj.utilcode.util.LogUtils;
+
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
 /**
  * Created by yc on 2018/1/25.

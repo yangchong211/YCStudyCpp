@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -15,7 +16,6 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.net.Proxy;
 
 import cn.ycbjie.ycaudioplayer.util.other.BuglyUtils;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 
 /**
  * ================================================
@@ -62,8 +62,8 @@ public class BaseApplication extends Application {
         initUtils();
         //初始化配置信息
         BaseConfig.INSTANCE.initConfig();
+        BaseLifecycleCallback.getInstance().init(this);
         BaseAppHelper.get().init(this);
-        LogUtils.logDebug = true;
         initBugly();
         initDownLoadLib();
     }
@@ -115,7 +115,7 @@ public class BaseApplication extends Application {
      */
     private void initUtils() {
         Utils.init(this);
-        com.blankj.utilcode.util.LogUtils.Config config = com.blankj.utilcode.util.LogUtils.getConfig();
+        LogUtils.Config config = LogUtils.getConfig();
         //边框开关，设置打开
         config.setBorderSwitch(true);
         //logcat 是否打印，设置打印

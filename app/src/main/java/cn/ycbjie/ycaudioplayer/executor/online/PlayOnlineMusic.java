@@ -3,7 +3,7 @@ package cn.ycbjie.ycaudioplayer.executor.online;
 import android.app.Activity;
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
@@ -16,7 +16,6 @@ import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

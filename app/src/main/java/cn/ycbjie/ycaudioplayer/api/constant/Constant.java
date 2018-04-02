@@ -2,9 +2,6 @@ package cn.ycbjie.ycaudioplayer.api.constant;
 
 import com.blankj.utilcode.util.Utils;
 
-/**
- * Created by yc on 2018/1/19.
- */
 
 public class Constant {
 

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ns.yc.yccountdownviewlib.CountDownView;
@@ -33,14 +34,19 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * Created by yc on 2018/1/19.
+ * <pre>
+ *     @author yangchong
+ *     blog  : www.pedaily.cn
+ *     time  : 2018/03/22
+ *     desc  : 启动页，注意音频播放服务需要一直在后台运行，需要保活
+ *     revise:
+ * </pre>
  */
 
 public class GuideActivity extends BaseActivity implements GuideContract.View ,EasyPermissions.PermissionCallbacks {

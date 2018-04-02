@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 
 import java.io.IOException;
@@ -31,7 +32,6 @@ import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.AudioFocusManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;

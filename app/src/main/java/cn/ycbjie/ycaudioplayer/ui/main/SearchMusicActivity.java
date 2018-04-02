@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
@@ -23,17 +24,13 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadSearchMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
 import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.SearchMusicAdapter;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayer.util.other.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

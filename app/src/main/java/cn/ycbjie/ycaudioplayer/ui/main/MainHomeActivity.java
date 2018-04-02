@@ -385,7 +385,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.fragment_slide_up, 0);
         if (mPlayFragment == null) {
-            mPlayFragment = new PlayMusicFragment();
+            mPlayFragment = PlayMusicFragment.newInstance("Main");
             ft.replace(android.R.id.content, mPlayFragment);
         } else {
             ft.show(mPlayFragment);

@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
-import cn.ycbjie.ycaudioplayer.util.bar.AppBar;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
@@ -32,8 +31,12 @@ import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
  * 修订历史：
  * ================================================
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
+    /**
+     * 将代理类通用行为抽出来
+     */
+    protected T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +48,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //避免切换横竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //将当前Activity添加到容器
-        AppManager.getAppManager().addActivity(this);
+        YCAppBar.setStatusBarColor(this,R.color.redTab);
+        if (mPresenter != null){
+            mPresenter.subscribe();
+        }
         initView();
         initListener();
         initData();
@@ -59,27 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mPresenter != null){
+            mPresenter.unSubscribe();
+        }
         //测试内存泄漏，正式一定要隐藏
         initLeakCanary();
-        //将当前Activity移除到容器
-        AppManager.getAppManager().removeActivity(this);
-        //AppManager.getAppManager().finishActivity(this);
-    }
-
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
 
