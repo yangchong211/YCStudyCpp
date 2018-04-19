@@ -16,8 +16,8 @@ import java.net.Proxy;
 
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
 import cn.ycbjie.ycaudioplayer.service.InitializeService;
-import cn.ycbjie.ycaudioplayer.thread.PoolThread;
 import cn.ycbjie.ycaudioplayer.util.other.AppToolUtils;
+import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 /**
  * ================================================
@@ -160,7 +160,7 @@ public class BaseApplication extends Application {
      */
     private void initThreadPool() {
         // 创建一个独立的实例进行使用
-        executor = PoolThread.Builder
+        executor = PoolThread.ThreadBuilder
                 .createFixed(4)
                 .setPriority(Thread.MAX_PRIORITY)
                 .setCallback(new LogCallback())
@@ -173,7 +173,7 @@ public class BaseApplication extends Application {
      */
     public PoolThread getExecutor(){
         if(executor ==null){
-            executor = PoolThread.Builder
+            executor = PoolThread.ThreadBuilder
                     .createFixed(4)
                     .setPriority(Thread.MAX_PRIORITY)
                     .setCallback(new LogCallback())

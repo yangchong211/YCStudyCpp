@@ -2,7 +2,7 @@ package cn.ycbjie.ycaudioplayer.inter.callback;
 
 import com.blankj.utilcode.util.LogUtils;
 
-import cn.ycbjie.ycaudioplayer.thread.ThreadCallback;
+import cn.ycbjie.ycthreadpoollib.callback.ThreadCallback;
 
 
 /**

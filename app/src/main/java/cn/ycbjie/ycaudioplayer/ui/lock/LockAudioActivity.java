@@ -37,8 +37,8 @@ import cn.ycbjie.ycaudioplayer.base.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.thread.PoolThread;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 /**
  * Created by yc on 2018/2/2.

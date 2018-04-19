@@ -25,7 +25,6 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
-
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
@@ -50,7 +49,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseApplication;
 import cn.ycbjie.ycaudioplayer.base.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
-import cn.ycbjie.ycaudioplayer.thread.PoolThread;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.detail.contract.DetailVideoContract;
 import cn.ycbjie.ycaudioplayer.ui.detail.model.DialogListBean;
 import cn.ycbjie.ycaudioplayer.ui.detail.presenter.DetailVideoPresenter;
@@ -58,8 +57,8 @@ import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DetailVideoAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DialogListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.MovieCatalogueAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.fragment.DetailAudioFragment;
-import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.util.other.SDUtils;
+import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 
 /**
