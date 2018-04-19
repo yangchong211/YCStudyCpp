@@ -5,9 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.yc.cn.ycbannerlib.first.adapter.StaticPagerAdapter;
-
-
+import com.yc.cn.ycbannerlib.adapter.AbsStaticPagerAdapter;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
  * 修订历史：
  * ================================================
  */
-public class BannerPagerAdapter extends StaticPagerAdapter {
+public class BannerPagerAdapter extends AbsStaticPagerAdapter {
 
     private Context ctx;
     private List<String> list;

@@ -7,7 +7,6 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -15,7 +14,10 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.net.Proxy;
 
-import cn.ycbjie.ycaudioplayer.util.other.BuglyUtils;
+import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
+import cn.ycbjie.ycaudioplayer.service.InitializeService;
+import cn.ycbjie.ycaudioplayer.thread.PoolThread;
+import cn.ycbjie.ycaudioplayer.util.other.AppToolUtils;
 
 /**
  * ================================================
@@ -30,6 +32,8 @@ public class BaseApplication extends Application {
 
 
     private static BaseApplication instance;
+    private PoolThread executor;
+
     public static synchronized BaseApplication getInstance() {
         if (null == instance) {
             instance = new BaseApplication();
@@ -59,13 +63,13 @@ public class BaseApplication extends Application {
         Log.d("Application", "onCreate");
         super.onCreate();
         instance = this;
-        initUtils();
-        //初始化配置信息
-        BaseConfig.INSTANCE.initConfig();
+        Utils.init(this);
         BaseLifecycleCallback.getInstance().init(this);
         BaseAppHelper.get().init(this);
         initBugly();
         initDownLoadLib();
+        initThreadPool();
+        InitializeService.start(this);
     }
 
 
@@ -109,22 +113,6 @@ public class BaseApplication extends Application {
         super.onConfigurationChanged(newConfig);
     }
 
-
-    /**
-     * 初始化utils工具类
-     */
-    private void initUtils() {
-        Utils.init(this);
-        LogUtils.Config config = LogUtils.getConfig();
-        //边框开关，设置打开
-        config.setBorderSwitch(true);
-        //logcat 是否打印，设置打印
-        config.setConsoleSwitch(true);
-        //设置打印日志总开关，线上时关闭
-        config.setLogSwitch(true);
-    }
-
-
     /**
      * 初始化腾讯bug管理平台
      */
@@ -142,7 +130,7 @@ public class BaseApplication extends Application {
         String appPackageName = AppUtils.getAppPackageName();
         strategy.setAppPackageName(appPackageName);
         // 获取当前进程名
-        String processName = BuglyUtils.getProcessName(android.os.Process.myPid());
+        String processName = AppToolUtils.getProcessName(android.os.Process.myPid());
         // 设置是否为上报进程
         strategy.setUploadProcess(processName == null || processName.equals(appPackageName));
         //Bugly会在启动20s后联网同步数据
@@ -164,9 +152,34 @@ public class BaseApplication extends Application {
                         .proxy(Proxy.NO_PROXY)
                 ))
                 .commit();
+    }
 
-        //最简单的初始化
-        //FileDownloader.setup(instance);
+
+    /**
+     * 初始化线程池管理器
+     */
+    private void initThreadPool() {
+        // 创建一个独立的实例进行使用
+        executor = PoolThread.Builder
+                .createFixed(4)
+                .setPriority(Thread.MAX_PRIORITY)
+                .setCallback(new LogCallback())
+                .build();
+    }
+
+    /**
+     * 获取线程池管理器对象，统一的管理器维护所有的线程池
+     * @return                      executor对象
+     */
+    public PoolThread getExecutor(){
+        if(executor ==null){
+            executor = PoolThread.Builder
+                    .createFixed(4)
+                    .setPriority(Thread.MAX_PRIORITY)
+                    .setCallback(new LogCallback())
+                    .build();
+        }
+        return executor;
     }
 
 

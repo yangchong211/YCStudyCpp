@@ -1,46 +1,28 @@
 package cn.ycbjie.ycaudioplayer.ui.practise.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.flyco.tablayout.listener.CustomTabEntity;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-import com.yc.cn.ycbannerlib.first.util.SizeUtil;
-import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseDelegateAdapter;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
-import cn.ycbjie.ycaudioplayer.model.TabEntity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.ui.practise.model.PractiseAfterBean;
 
-/**
- * Created by yc on 2018/3/1.
- */
 
 public class PractiseAfterFragment extends BaseLazyFragment {
 
@@ -176,7 +158,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         //banner
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         bannerAdapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_banner, 1, Constant.viewType.typeBanner);
+                linearLayoutHelper, R.layout.view_vlayout_banner, 1, Constant.ViewType.TYPE_BANNER);
         mAdapters.add(bannerAdapter);
     }
 
@@ -184,7 +166,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         //5个按钮
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         buttonAdapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_button, 1, Constant.viewType.typeView);
+                linearLayoutHelper, R.layout.view_vlayout_button, 1, Constant.ViewType.TYPE_VIEW);
         mAdapters.add(buttonAdapter);
     }
 
@@ -201,8 +183,8 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         gridLayoutHelper.setSpanSizeLookup(new GridLayoutHelper.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (delegateAdapter.getItemViewType(position) == Constant.viewType.typeTitle
-                        || delegateAdapter.getItemViewType(position) == Constant.viewType.typeMore) {
+                if (delegateAdapter.getItemViewType(position) == Constant.ViewType.TYPE_TITLE
+                        || delegateAdapter.getItemViewType(position) == Constant.ViewType.TYPE_MORE) {
                     return gridLayoutHelper.getSpanCount();
                 }else{
                     return 1;
@@ -210,7 +192,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
             }
         });
         hotAdapter = new BaseDelegateAdapter(activity, gridLayoutHelper,
-                R.layout.view_vlayout_grid, 4, Constant.viewType.typeGv);
+                R.layout.view_vlayout_grid, 4, Constant.ViewType.TYPE_GV);
         mAdapters.add(hotAdapter);
         initMoreView(1);
     }
@@ -218,7 +200,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
 
     private void initFirstAdView() {
         adAdapter = new BaseDelegateAdapter(activity, new LinearLayoutHelper(),
-                R.layout.view_vlayout_ad, 1, Constant.viewType.typeAd);
+                R.layout.view_vlayout_ad, 1, Constant.ViewType.TYPE_AD);
         mAdapters.add(adAdapter);
     }
 
@@ -231,7 +213,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         linearLayoutHelper.setMargin(0, 0, 0, 0);
         linearLayoutHelper.setPadding(0, 0, 0, 10);
         popularizeAdapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.viewType.typeList2);
+                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.ViewType.TYPE_LIST2);
         mAdapters.add(popularizeAdapter);
         initMoreView(2);
     }
@@ -241,7 +223,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
     private void initSecondAdView() {
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         BaseDelegateAdapter adAdapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_ad, 1, Constant.viewType.typeAd2) ;
+                linearLayoutHelper, R.layout.view_vlayout_ad, 1, Constant.ViewType.TYPE_AD2) ;
         mAdapters.add(adAdapter);
     }
 
@@ -256,7 +238,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         gridLayoutHelper.setHGap(0);
         gridLayoutHelper.setBgColor(Color.WHITE);
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity,
-                gridLayoutHelper, R.layout.view_vlayout_grid, 2, Constant.viewType.typeGv3) ;
+                gridLayoutHelper, R.layout.view_vlayout_grid, 2, Constant.ViewType.TYPE_GV2) ;
         mAdapters.add(adapter);
         initMoreView(3);
     }
@@ -270,7 +252,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         linearLayoutHelper.setMargin(0, 0, 0, 0);
         linearLayoutHelper.setPadding(0, 0, 0, 10);
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.viewType.typeList4) ;
+                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.ViewType.TYPE_LIST3) ;
         mAdapters.add(adapter);
         initMoreView(4);
     }
@@ -286,7 +268,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         gridLayoutHelper.setHGap(0);
         gridLayoutHelper.setBgColor(Color.WHITE);
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity,
-                gridLayoutHelper, R.layout.view_vlayout_grid, 6, Constant.viewType.typeGvBottom) ;
+                gridLayoutHelper, R.layout.view_vlayout_grid, 6, Constant.ViewType.TYPE_GV_BOTTOM) ;
         mAdapters.add(adapter);
         initMoreView(5);
     }
@@ -300,7 +282,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         linearLayoutHelper.setMargin(0, 0, 0, 0);
         linearLayoutHelper.setPadding(0, 0, 0, 10);
         BaseDelegateAdapter adapter = new BaseDelegateAdapter(activity,
-                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.viewType.typeList5);
+                linearLayoutHelper, R.layout.view_vlayout_news, 3, Constant.ViewType.TYPE_LIST4);
         mAdapters.add(adapter);
         initMoreView(6);
     }
@@ -308,14 +290,14 @@ public class PractiseAfterFragment extends BaseLazyFragment {
 
     private void initTitleView(final int type) {
         titleAdapter = new BaseDelegateAdapter(activity,
-                new LinearLayoutHelper(), R.layout.view_vlayout_title, 1, Constant.viewType.typeTitle);
+                new LinearLayoutHelper(), R.layout.view_vlayout_title, 1, Constant.ViewType.TYPE_TITLE);
         mAdapters.add(titleAdapter);
     }
 
 
     private void initMoreView(final int type) {
         BaseDelegateAdapter moreAdapter = new BaseDelegateAdapter(activity,
-                new LinearLayoutHelper(), R.layout.view_vlayout_more, 1, Constant.viewType.typeMore);
+                new LinearLayoutHelper(), R.layout.view_vlayout_more, 1, Constant.ViewType.TYPE_MORE);
         mAdapters.add(moreAdapter);
     }
 
@@ -331,10 +313,7 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         TypedArray mButtonView = this.getResources().obtainTypedArray(R.array.button_view);
         String[] mButtonTitle = this.getResources().getStringArray(R.array.button_view_title);
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < mButtonTitle.length; i++) {
-            int button = mButtonView.getResourceId(i, R.drawable.ic_home_first);
-            list.add(mButtonTitle[i]);
-        }
+        list.addAll(Arrays.asList(mButtonTitle));
         mButtonView.recycle();
         buttonAdapter.setButtonData(list);
 
@@ -344,25 +323,9 @@ public class PractiseAfterFragment extends BaseLazyFragment {
         hotList.add("1");
         hotList.add("1");
         hotAdapter.setData(hotList);
-
-        /*List<String> title = new ArrayList<>();
-        title.add("为你精选");
-        title.add("推广专区");
-        title.add("行业动态");
-        title.add("趋势分析");
-        title.add("大牛分享");
-        title.add("潇湘剑雨");
-        List<PractiseAfterBean.DataBean.NavigationListBean> titleList = new ArrayList<>();
-        for(int a=0 ; a<title.size() ; a++){
-            PractiseAfterBean.DataBean.NavigationListBean listBean = new PractiseAfterBean.DataBean.NavigationListBean();
-            listBean.setModelName(title.get(a));
-            titleList.add(listBean);
-        }*/
-
         //设置适配器
         delegateAdapter.setAdapters(mAdapters);
         recyclerView.requestLayout();
-        //delegateAdapter.notifyDataSetChanged();
     }
 
 

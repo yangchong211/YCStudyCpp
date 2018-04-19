@@ -13,7 +13,7 @@ import java.io.File;
 
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 import rx.Subscriber;
@@ -40,8 +40,8 @@ public abstract class PlayOnlineMusic extends PlayMusic {
         String artist = mOnlineMusic.getArtist_name();
         String title = mOnlineMusic.getTitle();
 
-        music = new AudioMusic();
-        music.setType(AudioMusic.Type.ONLINE);
+        music = new AudioBean();
+        music.setType(AudioBean.Type.ONLINE);
         music.setTitle(title);
         music.setArtist(artist);
         music.setAlbum(mOnlineMusic.getAlbum_title());

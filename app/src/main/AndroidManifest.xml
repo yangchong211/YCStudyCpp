@@ -45,17 +45,17 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".ui.guide.ui.GuideActivity">
+        <activity android:name=".ui.guide.ui.SplashPagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.guide.ui.GuideActivity"/>
         <activity android:name=".ui.main.MainHomeActivity"/>
-        <activity android:name=".ui.guide.ui.SplashAdFirstActivity"/>
-        <activity android:name=".ui.guide.ui.SplashAdSecondActivity"/>
-        <activity android:name=".ui.guide.ui.SplashAdThirdActivity"/>
+        <activity android:name=".ui.guide.ui.SplashAdActivity"/>
+        <activity android:name=".ui.guide.ui.SplashMvActivity"/>
         <activity android:name=".ui.music.local.view.MusicInfoActivity" />
         <activity android:name=".ui.music.onLine.view.OnlineMusicActivity"/>
         <activity android:name=".ui.music.onLine.view.ArtistInfoActivity"/>
@@ -63,19 +63,14 @@
         <activity android:name=".ui.advert.AdvertActivity"/>
         <activity android:name=".ui.advert.AdvertDetailActivity" />
         <activity android:name=".ui.me.MeSettingActivity"/>
-
+        <activity android:name=".ui.detail.view.activity.DetailVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.lock.LockAudioActivity"
             android:noHistory="false"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:exported="false"
-            android:theme="@style/LockScreenTheme"/>
-        <activity android:name=".ui.lock.LockTestActivity"
-            android:noHistory="false"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
-            android:exported="false"
-            android:launchMode="singleInstance"
             android:theme="@style/LockScreenTheme"/>
 
         <service android:name=".service.PlayService" />
@@ -96,10 +91,6 @@
                 <action android:name="cn.ycbjie.lock" />
             </intent-filter>
         </receiver>
-
-
-        <activity android:name=".ui.test.TestLrcActivity"/>
-
 
     </application>
 

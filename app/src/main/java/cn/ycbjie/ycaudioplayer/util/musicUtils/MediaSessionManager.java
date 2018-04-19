@@ -7,7 +7,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 
 public class MediaSessionManager {
@@ -45,7 +45,7 @@ public class MediaSessionManager {
                         .build());
     }
 
-    public void updateMetaData(AudioMusic music) {
+    public void updateMetaData(AudioBean music) {
         if (music == null) {
             mMediaSession.setMetadata(null);
             return;

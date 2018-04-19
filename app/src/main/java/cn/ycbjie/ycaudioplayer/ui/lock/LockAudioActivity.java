@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
@@ -19,25 +18,27 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.ns.yc.ycutilslib.slideLayout.SlitherFinishLayout;
 
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
-import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
+import cn.ycbjie.ycaudioplayer.base.BaseApplication;
+import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.thread.PoolThread;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-import cn.ycbjie.ycaudioplayer.util.other.HandlerUtils;
-import cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout;
 
 /**
  * Created by yc on 2018/2/2.
@@ -77,7 +78,6 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
     SlitherFinishLayout slideLayout;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-    private Handler mHandler;
     private PlayService playService;
     private int mLastProgress;
     /**
@@ -87,7 +87,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        Intent intent = new Intent();
         intent.setAction(Constant.LOCK_SCREEN_ACTION);
         sendBroadcast(intent);
         super.onCreate(savedInstanceState);
@@ -181,24 +181,20 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onDestroy() {
-        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        Intent intent = new Intent();
         intent.setAction(Constant.LOCK_SCREEN_ACTION);
-        intent.putExtra(Constant.IS_SCREEN_LOCK, false);
+        BaseConfig.INSTANCE.setLocked(false);
         sendBroadcast(intent);
         super.onDestroy();
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler = null;
-        }
     }
 
 
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-        Intent intent = new Intent(this, AudioBroadcastReceiver.class);
+        Intent intent = new Intent();
         intent.setAction(Constant.LOCK_SCREEN_ACTION);
-        intent.putExtra(Constant.IS_SCREEN_LOCK, false);
+        BaseConfig.INSTANCE.setLocked(false);
         sendBroadcast(intent);
         finish();
     }
@@ -234,11 +230,6 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.iv_play:
                 playService.playPause();
-                if (playService.isPlaying()) {
-                    ivPlay.setImageResource(R.drawable.ic_play_btn_pause);
-                } else {
-                    ivPlay.setImageResource(R.drawable.ic_play_btn_play);
-                }
                 break;
             default:
                 break;
@@ -260,7 +251,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
              * 主要是切换歌曲的时候需要及时刷新界面信息
              */
             @Override
-            public void onChange(AudioMusic music) {
+            public void onChange(AudioBean music) {
                 onChangeImpl(music);
             }
 
@@ -270,7 +261,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
              */
             @Override
             public void onPlayerStart() {
-                //ivPlay.setImageResource(R.drawable.ic_play_btn_pause);
+                ivPlay.setSelected(true);
             }
 
             /**
@@ -279,7 +270,7 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
              */
             @Override
             public void onPlayerPause() {
-                //ivPlay.setImageResource(R.drawable.ic_play_btn_play);
+                ivPlay.setSelected(false);
             }
 
             /**
@@ -371,20 +362,12 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
 
     private void initHandler() {
-        if (mHandler == null) {
-            mHandler = HandlerUtils.getInstance(this);
-        }
-        mHandler.post(new Runnable() {
+        PoolThread executor = BaseApplication.getInstance().getExecutor();
+        executor.setDelay(1, TimeUnit.MILLISECONDS);
+        executor.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    initMusicData();
-                }
-
+                initMusicData();
             }
         });
     }
@@ -396,11 +379,12 @@ public class LockAudioActivity extends AppCompatActivity implements View.OnClick
 
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
-    private void onChangeImpl(AudioMusic music) {
+    private void onChangeImpl(AudioBean music) {
         if (music == null) {
             return;
         }
-        tvTime.setText(TimeUtils.date2String(new Date(),new SimpleDateFormat("mm:ss")));
+        String nowString = TimeUtils.getNowString(new SimpleDateFormat("hh:mm", Locale.CHINESE));
+        tvTime.setText(nowString);
         Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);
         ivImage.setImageBitmap(cover);
         tvTitle.setText(music.getTitle()+ " / " + music.getArtist());

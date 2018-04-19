@@ -2,6 +2,16 @@ package cn.ycbjie.ycaudioplayer.util.other;
 
 import android.os.AsyncTask;
 
+/**
+ * <pre>
+ *     @author: yangchong
+ *     blog  : www.ycbjie.cn
+ *     time  : 2018/01/22
+ *     desc  : AsyncTask工具类
+ *     revise:
+ * </pre>
+ */
+
 public class AsyncTaskUtil extends AsyncTask<String, Integer, Void> {
 
     private AsyncTaskListener mAsyncTaskListener;
@@ -14,7 +24,6 @@ public class AsyncTaskUtil extends AsyncTask<String, Integer, Void> {
             mAsyncTaskListener.onPostExecute();
         }
     }
-
 
     @Override
     protected Void doInBackground(String... strings) {

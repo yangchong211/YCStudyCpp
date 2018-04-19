@@ -15,10 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+
+
 
 /**
- * Created by yc on 2018/1/23.
+ * <pre>
+ *     @author: yangchong
+ *     blog  : www.ycbjie.cn
+ *     time  : 2018/01/22
+ *     desc  :
+ *     revise:
+ * </pre>
  */
 
 public class FileScanManager {
@@ -48,8 +56,8 @@ public class FileScanManager {
      * 扫描歌曲
      */
     @NonNull
-    public List<AudioMusic> scanMusic(Context context) {
-        List<AudioMusic> musicList = new ArrayList<>();
+    public List<AudioBean> scanMusic(Context context) {
+        List<AudioBean> musicList = new ArrayList<>();
         String mFilterSize = SPUtils.getInstance(Constant.SP_NAME).getString(Constant.FILTER_SIZE,"0");
         String mFilterTime = SPUtils.getInstance(Constant.SP_NAME).getString(Constant.FILTER_TIME,"0");
 
@@ -96,9 +104,9 @@ public class FileScanManager {
             String fileName = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DISPLAY_NAME)));
             long fileSize = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE));
 
-            AudioMusic music = new AudioMusic();
+            AudioBean music = new AudioBean();
             music.setId(id);
-            music.setType(AudioMusic.Type.LOCAL);
+            music.setType(AudioBean.Type.LOCAL);
             music.setTitle(title);
             music.setArtist(artist);
             music.setAlbum(album);

@@ -17,11 +17,13 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="16sp"
         android:textColor="@color/blackText"
         android:text="歌曲名称"/>
@@ -33,6 +35,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:maxLength="15"
+        android:ellipsize="end"
         android:textSize="14sp"
         android:textColor="@color/blackText2"
         android:text="曲歌作者"/>

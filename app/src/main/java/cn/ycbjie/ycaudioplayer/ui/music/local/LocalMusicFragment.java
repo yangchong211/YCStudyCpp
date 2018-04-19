@@ -31,9 +31,9 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
-import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.LocalMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.MusicInfoActivity;
 
@@ -49,7 +49,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
 
     private MainHomeActivity activity;
     private LocalMusicAdapter adapter;
-    private List<AudioMusic> music;
+    private List<AudioBean> music;
 
     @Override
     public void onAttach(Context context) {
@@ -79,7 +79,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
             @Override
             public void onMoreClick(int position) {
                 if (music.size() >= position) {
-                    final AudioMusic localMusic = music.get(position);
+                    final AudioBean localMusic = music.get(position);
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                     dialog.setTitle(localMusic.getTitle());
                     dialog.setItems(R.array.local_music_dialog, new DialogInterface.OnClickListener() {
@@ -114,7 +114,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
                 getPlayService().play(musicList,position);
             }
         });
@@ -178,7 +178,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 分享
      */
-    private void shareMusic(AudioMusic localMusic) {
+    private void shareMusic(AudioBean localMusic) {
         File file = new File(localMusic.getPath());
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("audio/*");
@@ -189,7 +189,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 设置为铃声
      */
-    private void requestSetRingtone(AudioMusic localMusic) {
+    private void requestSetRingtone(AudioBean localMusic) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(getContext())) {
             ToastUtils.showShort(R.string.no_permission_setting);
             Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
@@ -203,7 +203,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     /**
      * 设置铃声
      */
-    private void setRingtone(AudioMusic localMusic) {
+    private void setRingtone(AudioBean localMusic) {
         Uri uri = MediaStore.Audio.Media.getContentUriForPath(localMusic.getPath());
         // 查询音乐文件在媒体库是否存在
         Cursor cursor = getContext().getContentResolver().query(uri, null,
@@ -233,7 +233,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
      * 点击MainActivity中的控制器，更新musicFragment中的mLocalMusicFragment
      */
     public void onItemPlay() {
-        if (getPlayService().getPlayingMusic().getType() == AudioMusic.Type.LOCAL) {
+        if (getPlayService().getPlayingMusic().getType() == AudioBean.Type.LOCAL) {
             recyclerView.scrollToPosition(getPlayService().getPlayingPosition());
         }
         adapter.updatePlayingPosition(getPlayService());

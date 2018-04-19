@@ -28,6 +28,7 @@ public class DownLoadUtils {
     }
 
     private static class DownLoadTask extends AsyncTask<String, Integer, ArrayList<String>> {
+
         private String mSavePath;
         private DownLoadInterFace mDownLoadInterFace;
 

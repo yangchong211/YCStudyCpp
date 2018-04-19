@@ -14,9 +14,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 /**
  * Created by yc on 2018/1/26.
@@ -26,13 +26,13 @@ public class DialogMusicListAdapter extends RecyclerView.Adapter<DialogMusicList
 
     private final LayoutInflater inflater;
     private Context context;
-    private List<AudioMusic> localMusics;
+    private List<AudioBean> localMusics;
     /**
      * 正在播放音乐的索引位置
      */
     private int mPlayingPosition;
 
-    public DialogMusicListAdapter(Context context, List<AudioMusic> musicList) {
+    public DialogMusicListAdapter(Context context, List<AudioBean> musicList) {
         this.localMusics = musicList;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -105,7 +105,7 @@ public class DialogMusicListAdapter extends RecyclerView.Adapter<DialogMusicList
      */
     public void updatePlayingPosition(PlayService playService) {
         if (playService.getPlayingMusic() != null &&
-                playService.getPlayingMusic().getType() == AudioMusic.Type.LOCAL) {
+                playService.getPlayingMusic().getType() == AudioBean.Type.LOCAL) {
             mPlayingPosition = playService.getPlayingPosition();
         } else {
             mPlayingPosition = -1;

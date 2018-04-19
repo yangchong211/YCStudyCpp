@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <integer-array name="splash_image">
+        <item name="first">@drawable/splash_ad</item>
+        <item name="second">@drawable/bg_small_tree_min</item>
+        <item name="third">@drawable/bg_small_solda_min</item>
+        <item name="four">@drawable/bg_small_kites_min</item>
+    </integer-array>
 
     <!--首页底部导航栏的标题，未选中时-->
     <integer-array name="main_tab_un_select">
@@ -129,5 +135,23 @@
     <string-array name="search_music_dialog_no_download">
         <item>分享</item>
     </string-array>
+
+
+
+    <string-array name="five_button_title">
+        <item>分享音乐</item>
+        <item>设为铃声</item>
+        <item>歌曲信息</item>
+        <item>删除音乐</item>
+        <item>音视频</item>
+    </string-array>
+
+    <integer-array name="five_button_image">
+        <item name="btn1">@drawable/ic_home_first</item>
+        <item name="btn2">@drawable/ic_home_second</item>
+        <item name="btn3">@drawable/ic_home_third</item>
+        <item name="btn4">@drawable/ic_home_four</item>
+        <item name="btn5">@drawable/ic_home_first</item>
+    </integer-array>
 
 </resources>

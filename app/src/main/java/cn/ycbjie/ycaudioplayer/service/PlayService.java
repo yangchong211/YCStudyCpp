@@ -24,14 +24,15 @@ import java.util.Random;
 
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
-import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;
+import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
+import cn.ycbjie.ycaudioplayer.inter.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.AudioFocusManager;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
@@ -50,11 +51,11 @@ public class PlayService extends Service {
     /**
      * 正在播放的歌曲[本地|网络]
      */
-    private AudioMusic mPlayingMusic;
+    private AudioBean mPlayingMusic;
     /**
      * 在线音频的集合
      */
-    private List<AudioMusic> audioMusics;
+    private List<AudioBean> audioMusics;
     /**
      * 播放状态
      */
@@ -291,7 +292,7 @@ public class PlayService extends Service {
                     break;
                 //添加锁屏界面
                 case Constant.LOCK_SCREEN_ACTION:
-                    mIsLocked = intent.getBooleanExtra(Constant.IS_SCREEN_LOCK,true);
+                    mIsLocked = BaseConfig.INSTANCE.isLocked();
                     LogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
                     break;
                 //当屏幕灭了，添加锁屏页面
@@ -511,7 +512,7 @@ public class PlayService extends Service {
         }
 
         mPlayingPosition = position;
-        AudioMusic music = audioMusics.get(mPlayingPosition);
+        AudioBean music = audioMusics.get(mPlayingPosition);
         //保存当前播放的musicId，下次进来可以记录状态
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,music.getId());
         play(music);
@@ -538,7 +539,7 @@ public class PlayService extends Service {
      * 有两种，一种是播放本地播放，另一种是在线播放
      * @param music         music
      */
-    public void play(AudioMusic music) {
+    public void play(AudioBean music) {
         mPlayingMusic = music;
         createMediaPlayer();
         try {
@@ -578,7 +579,7 @@ public class PlayService extends Service {
      * 有两种，一种是播放本地播放，另一种是在线播放
      * @param music         music
      */
-    public void play(List<AudioMusic> music , int position) {
+    public void play(List<AudioBean> music , int position) {
         if(music==null || music.size()==0 || position<0){
             return;
         }
@@ -763,7 +764,7 @@ public class PlayService extends Service {
     /**
      * 获取正在播放的歌曲[本地|网络]
      */
-    public AudioMusic getPlayingMusic() {
+    public AudioBean getPlayingMusic() {
         return mPlayingMusic;
     }
 
@@ -780,20 +781,56 @@ public class PlayService extends Service {
         }
     }
 
+    /**
+     * 判斷是否有上一首音頻
+     * @return          true表示有
+     */
+    public boolean isHavePre() {
+        if(audioMusics!=null && audioMusics.size()>0){
+            if(mPlayingPosition != 0){
+                // 如果不是第一首，则还有上一首
+                return true;
+            } else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     * 判斷是否有下一首音頻
+     * @return          true表示有
+     */
+    public boolean isHaveNext() {
+        if(audioMusics!=null && audioMusics.size()>0){
+            if (mPlayingPosition != audioMusics.size() - 1) {
+                // 如果不是最后一首，则还有下一首
+                return true;
+            } else {
+                // 如果是最后一首，则切换回第一首
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
+
 
     /**
      * 扫描音乐
      */
     @SuppressLint("StaticFieldLeak")
     public void updateMusicList(final EventCallback<Void> callback) {
-        new AsyncTask<Void, Void, List<AudioMusic>>() {
+        new AsyncTask<Void, Void, List<AudioBean>>() {
             @Override
-            protected List<AudioMusic> doInBackground(Void... params) {
+            protected List<AudioBean> doInBackground(Void... params) {
                 return FileScanManager.getInstance().scanMusic(PlayService.this);
             }
 
             @Override
-            protected void onPostExecute(List<AudioMusic> musicList) {
+            protected void onPostExecute(List<AudioBean> musicList) {
                 //首先先清空
                 BaseAppHelper.get().getMusicList().clear();
                 //然后添加所有扫描到的音乐
@@ -870,6 +907,7 @@ public class PlayService extends Service {
             Intent lockScreen = new Intent(this, LockAudioActivity.class);
             lockScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(lockScreen);
+            BaseConfig.INSTANCE.setLocked(true);
         }
     }
 

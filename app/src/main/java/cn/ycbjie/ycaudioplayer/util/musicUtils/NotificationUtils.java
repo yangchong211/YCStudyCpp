@@ -14,7 +14,7 @@ import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.receiver.NotificationStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 /**
  * Created by yc on 2018/1/25.
@@ -42,7 +42,7 @@ public class NotificationUtils {
      * 开始播放
      * @param music             music
      */
-    public static void showPlay(AudioMusic music) {
+    public static void showPlay(AudioBean music) {
         //这个方法是启动Notification到前台
         playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
     }
@@ -52,7 +52,7 @@ public class NotificationUtils {
      * 暂停
      * @param music             music
      */
-    public static void showPause(AudioMusic music) {
+    public static void showPause(AudioBean music) {
         //这个方法是停止Notification
         playService.stopForeground(false);
         notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
@@ -70,7 +70,7 @@ public class NotificationUtils {
      * 2.创建Notification对象，定义Notification的各种属性
      * @return                      Notification对象
      */
-    private static Notification buildNotification(PlayService context , AudioMusic music , boolean isPlaying){
+    private static Notification buildNotification(PlayService context , AudioBean music , boolean isPlaying){
         Intent intent = new Intent(context, MainHomeActivity.class);
         intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);
@@ -121,7 +121,7 @@ public class NotificationUtils {
      * @param music
      * @return                          RemoteViews
      */
-    private static RemoteViews getCustomViews(PlayService context, AudioMusic music, boolean isPlaying) {
+    private static RemoteViews getCustomViews(PlayService context, AudioBean music, boolean isPlaying) {
         String title = music.getTitle();
         String subtitle = FileMusicUtils.getArtistAndAlbum(music.getArtist(), music.getAlbum());
         Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);

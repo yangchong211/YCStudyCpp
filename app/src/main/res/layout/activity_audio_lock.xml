@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
 
-    <cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout
+    <com.ns.yc.ycutilslib.slideLayout.SlitherFinishLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/slide_layout"
         android:layout_width="match_parent"
@@ -178,7 +178,7 @@
 
         </LinearLayout>
 
-    </cn.ycbjie.ycaudioplayer.weight.layout.SlitherFinishLayout>
+    </com.ns.yc.ycutilslib.slideLayout.SlitherFinishLayout>
 
 
 </FrameLayout>

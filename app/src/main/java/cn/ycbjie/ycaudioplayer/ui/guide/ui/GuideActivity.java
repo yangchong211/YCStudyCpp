@@ -24,13 +24,16 @@ import com.ns.yc.yccountdownviewlib.CountDownView;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.base.BaseApplication;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.thread.PoolThread;
 import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
@@ -159,13 +162,16 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     private void startCheckService() {
         if (BaseAppHelper.get().getPlayService() == null) {
             startService();
-            mHandler.postDelayed(new Runnable() {
+            PoolThread executor = BaseApplication.getInstance().getExecutor();
+            executor.setName("startCheckService");
+            executor.setDelay(1, TimeUnit.SECONDS);
+            executor.execute(new Runnable() {
                 @Override
                 public void run() {
                     //绑定服务
                     bindService();
                 }
-            }, 1000);
+            });
         }
     }
 
@@ -220,13 +226,13 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
         if(openCount%4==1){
             intent = new Intent(this, AdvertActivity.class);
         }else if(openCount%4==2){
-            intent = new Intent(this, SplashAdFirstActivity.class);
+            intent = new Intent(this, SplashAdActivity.class);
         }else if(openCount%4==3){
-            intent = new Intent(this, SplashAdSecondActivity.class);
+            intent = new Intent(this, SplashAdActivity.class);
         }else if(openCount%4==0){
-            intent = new Intent(this, SplashAdThirdActivity.class);
+            intent = new Intent(this, SplashMvActivity.class);
         }else {
-            intent = new Intent(this, SplashAdSecondActivity.class);
+            intent = new Intent(this, SplashMvActivity.class);
         }
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);

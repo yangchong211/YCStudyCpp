@@ -8,7 +8,15 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  : www.pedaily.cn
+ *     time  : 2017/03/22
+ *     desc  : 拦截器
+ *     revise:
+ * </pre>
+ */
 public class HttpInterceptor implements Interceptor {
 
     private static final String UA = "User-Agent";
@@ -25,4 +33,5 @@ public class HttpInterceptor implements Interceptor {
     private String makeUA() {
         return Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE;
     }
+
 }

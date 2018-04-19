@@ -37,12 +37,12 @@ import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
-import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
-import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.TabEntity;
 import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
@@ -422,7 +422,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
              * 主要是切换歌曲的时候需要及时刷新界面信息
              */
             @Override
-            public void onChange(AudioMusic music) {
+            public void onChange(AudioBean music) {
                 onChangeImpl(music);
                 if (mPlayFragment != null && mPlayFragment.isAdded()) {
                     mPlayFragment.onChange(music);
@@ -491,7 +491,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
      *
      * @param music LocalMusic
      */
-    private void onChangeImpl(AudioMusic music) {
+    private void onChangeImpl(AudioBean music) {
         if (music == null) {
             return;
         }
@@ -513,7 +513,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
 
 
     public void showListDialog() {
-        final List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+        final List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
         final BottomDialogFragment dialog = new BottomDialogFragment();
         dialog.setFragmentManager(getSupportFragmentManager());
         dialog.setViewListener(new BottomDialogFragment.ViewListener() {
@@ -534,7 +534,7 @@ public class MainHomeActivity extends BaseActivity implements View.OnClickListen
                 mAdapter.setOnItemClickListener(new OnListItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                        List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
                         getPlayService().play(musicList,position);
                         mAdapter.updatePlayingPosition(getPlayService());
                         mAdapter.notifyDataSetChanged();

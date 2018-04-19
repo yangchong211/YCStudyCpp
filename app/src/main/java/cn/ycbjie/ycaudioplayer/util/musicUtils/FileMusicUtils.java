@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 /**
  * Created by yc on 2018/1/23.
@@ -87,7 +87,7 @@ public class FileMusicUtils {
      * 先从已下载文件夹中查找，如果不存在，则从歌曲文件所在文件夹查找。
      * @return 如果存在返回路径，否则返回null
      */
-    public static String getLrcFilePath(AudioMusic music) {
+    public static String getLrcFilePath(AudioBean music) {
         if (music == null) {
             return null;
         }

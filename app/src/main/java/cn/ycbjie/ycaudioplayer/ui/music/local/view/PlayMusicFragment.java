@@ -41,14 +41,14 @@ import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.BaseFragment;
 import cn.ycbjie.ycaudioplayer.executor.SearchLrc;
-import cn.ycbjie.ycaudioplayer.inter.OnListItemClickListener;
-import cn.ycbjie.ycaudioplayer.inter.OnPlayerEventListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayerlib.lrc.YCLrcCustomView;
+import cn.ycbjie.ycaudioplayer.weight.lrc.YCLrcCustomView;
 
 /**
  * Created by yc on 2018/1/24.
@@ -320,7 +320,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     }
 
     public void showListDialog() {
-        final List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+        final List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
         final BottomDialogFragment dialog = new BottomDialogFragment();
         dialog.setFragmentManager(getChildFragmentManager());
         dialog.setViewListener(new BottomDialogFragment.ViewListener() {
@@ -341,7 +341,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                 mAdapter.setOnItemClickListener(new OnListItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        List<AudioMusic> musicList = BaseAppHelper.get().getMusicList();
+                        List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
                         getPlayService().play(musicList,position);
                         mAdapter.updatePlayingPosition(getPlayService());
                         mAdapter.notifyDataSetChanged();
@@ -430,7 +430,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      * @param playingMusic 正在播放的音乐
      */
     @SuppressLint("SetTextI18n")
-    private void setViewData(AudioMusic playingMusic) {
+    private void setViewData(AudioBean playingMusic) {
         if (playingMusic == null) {
             return;
         }
@@ -454,7 +454,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private void setCoverAndBg(AudioMusic music) {
+    private void setCoverAndBg(AudioBean music) {
         //mAlbumCoverView.setCoverBitmap(CoverLoader.getInstance().loadRound(music));
         ivPlayPageBg.setImageBitmap(CoverLoader.getInstance().loadBlur(music));
     }
@@ -465,8 +465,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      *
      * @param playingMusic 正在播放的音乐
      */
-    private void setLrc(final AudioMusic playingMusic) {
-        if (playingMusic.getType() == AudioMusic.Type.LOCAL) {
+    private void setLrc(final AudioBean playingMusic) {
+        if (playingMusic.getType() == AudioBean.Type.LOCAL) {
             String lrcPath = FileMusicUtils.getLrcFilePath(playingMusic);
             if (!TextUtils.isEmpty(lrcPath)) {
                 loadLrc(lrcPath);
@@ -513,7 +513,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      * ---------------通过MainActivity进行调用-----------------------------
      **/
     @Override
-    public void onChange(AudioMusic music) {
+    public void onChange(AudioBean music) {
         setViewData(music);
     }
 

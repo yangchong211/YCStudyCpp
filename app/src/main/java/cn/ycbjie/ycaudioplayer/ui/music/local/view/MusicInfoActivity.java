@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-import com.yc.wave.FileUtils;
 
 import java.io.File;
 import java.util.Locale;
@@ -20,12 +19,8 @@ import java.util.Locale;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-
-/**
- * Created by yc on 2018/1/23.
- */
 
 public class MusicInfoActivity extends BaseActivity {
 
@@ -62,11 +57,11 @@ public class MusicInfoActivity extends BaseActivity {
     EditText tvMusicInfoFilePath;
     @Bind(R.id.label_music_info_file_path)
     TextInputLayout labelMusicInfoFilePath;
-    private AudioMusic mMusic;
+    private AudioBean mMusic;
     private File mMusicFile;
     private Bitmap mCoverBitmap;
 
-    public static void start(Context context, AudioMusic music) {
+    public static void start(Context context, AudioBean music) {
         Intent intent = new Intent(context, MusicInfoActivity.class);
         intent.putExtra("music", music);
         context.startActivity(intent);
@@ -124,8 +119,8 @@ public class MusicInfoActivity extends BaseActivity {
 
 
     private void initIntentData() {
-        mMusic = (AudioMusic) getIntent().getSerializableExtra("music");
-        if (mMusic == null || mMusic.getType() != AudioMusic.Type.LOCAL) {
+        mMusic = (AudioBean) getIntent().getSerializableExtra("music");
+        if (mMusic == null || mMusic.getType() != AudioBean.Type.LOCAL) {
             finish();
         }
         mMusicFile = new File(mMusic.getPath());
@@ -142,7 +137,6 @@ public class MusicInfoActivity extends BaseActivity {
         etMusicInfoAlbum.setSelection(etMusicInfoAlbum.length());
         tvMusicInfoDuration.setText(formatTime("mm:ss", mMusic.getDuration()));
         tvMusicInfoFileName.setText(mMusic.getFileName());
-        tvMusicInfoFileSize.setText(String.format(Locale.getDefault(), "%.2fMB", FileUtils.b2mb((int) mMusic.getFileSize())));
         tvMusicInfoFilePath.setText(mMusicFile.getParent());
     }
 

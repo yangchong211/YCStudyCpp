@@ -9,13 +9,13 @@ import com.blankj.utilcode.util.NetworkUtils;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.executor.IExecutor;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 
-public abstract class PlayMusic implements IExecutor<AudioMusic> {
+public abstract class PlayMusic implements IExecutor<AudioBean> {
 
     private Activity mActivity;
-    protected AudioMusic music;
+    protected AudioBean music;
     int mCounter = 0;
 
     PlayMusic(Activity activity) {

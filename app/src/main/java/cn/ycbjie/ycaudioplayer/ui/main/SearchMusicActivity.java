@@ -26,7 +26,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadSearchMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
-import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.SearchMusicAdapter;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;

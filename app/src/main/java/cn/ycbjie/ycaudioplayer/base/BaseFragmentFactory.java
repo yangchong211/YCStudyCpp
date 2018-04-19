@@ -2,7 +2,6 @@ package cn.ycbjie.ycaudioplayer.base;
 
 import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.cut.CutEditMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
@@ -36,7 +35,6 @@ public class BaseFragmentFactory {
     private MeFragment mMeFragment;
     private LocalMusicFragment mLocalMusicFragment;
     private OnLineMusicFragment mOnLineMusicFragment;
-    private CutEditMusicFragment mCutEditMusicFragment;
 
     private BaseFragmentFactory() {}
 
@@ -171,18 +169,5 @@ public class BaseFragmentFactory {
         }
         return mOnLineMusicFragment;
     }
-
-
-    public CutEditMusicFragment getCutEditMusicFragment() {
-        if (mCutEditMusicFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mCutEditMusicFragment == null) {
-                    mCutEditMusicFragment = new CutEditMusicFragment();
-                }
-            }
-        }
-        return mCutEditMusicFragment;
-    }
-
 
 }

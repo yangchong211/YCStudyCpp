@@ -6,7 +6,7 @@ import android.text.format.DateUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import cn.ycbjie.ycaudioplayer.model.callback.EventCallback;
+import cn.ycbjie.ycaudioplayer.inter.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 /**

@@ -3,8 +3,8 @@ package cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.yc.cn.ycbannerlib.first.BannerView;
-import com.yc.cn.ycbannerlib.first.util.SizeUtil;
+import com.yc.cn.ycbannerlib.BannerView;
+import com.yc.cn.ycbannerlib.util.SizeUtil;
 import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
 import java.util.ArrayList;

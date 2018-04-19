@@ -1,17 +1,23 @@
 package cn.ycbjie.ycaudioplayer.ui.study.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.yc.cn.ycbannerlib.first.BannerView;
-import com.yc.cn.ycbannerlib.first.util.SizeUtil;
+import com.yc.cn.ycbannerlib.BannerView;
+import com.yc.cn.ycbannerlib.util.SizeUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -23,9 +29,11 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
+import cn.ycbjie.ycaudioplayer.ui.detail.view.activity.DetailVideoActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.InnovationAdapter;
+import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
 
 /**
  * Created by yc on 2018/3/1.
@@ -109,9 +117,9 @@ public class InnovationFragment extends BaseLazyFragment {
     private void addHeader() {
         adapter.removeAllHeader();
         initTopHeaderView();
+        initButtonView();
         initContentView();
     }
-
 
     private void initTopHeaderView() {
         final ArrayList<String> arrayList = new ArrayList<>();
@@ -133,11 +141,30 @@ public class InnovationFragment extends BaseLazyFragment {
                 mBanner.setHintGravity(5);
                 mBanner.setAnimationDuration(1000);
                 mBanner.setPlayDelay(2000);
-                mBanner.setHintPadding(0,0,SizeUtil.dip2px(activity,10), SizeUtil.dip2px(activity,10));
+                mBanner.setHintPadding(0,0, SizeUtil.dip2px(activity,10), SizeUtil.dip2px(activity,10));
                 mBanner.setAdapter(new BannerPagerAdapter(activity, arrayList));
             }
         });
     }
+
+    private void initButtonView() {
+        final LinearLayout linearLayout = initFiveButtonView();
+        if (linearLayout == null) {
+            return;
+        }
+        adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                return linearLayout;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+
+            }
+        });
+    }
+
 
 
     private void initContentView() {
@@ -152,6 +179,73 @@ public class InnovationFragment extends BaseLazyFragment {
 
             }
         });
+    }
+
+    @SuppressLint("ResourceType")
+    private LinearLayout initFiveButtonView() {
+        //四个按钮
+        LinearLayout btnLinearLayout = new LinearLayout(activity);
+        LinearLayout.LayoutParams params = new
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        btnLinearLayout.setLayoutParams(params);
+        btnLinearLayout.setPadding(0, SizeUtils.dp2px(15), 0, SizeUtils.dp2px(15));
+        btnLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //重点：根据服务器返回数据动态创建按钮。如果返回5条数据，就创建5个按钮
+        for (int i = 0; i < 5; i++) {
+            LinearLayout llBtn = new LinearLayout(activity);
+            LinearLayout.LayoutParams llLayoutParams = new
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            llLayoutParams.width = 0;
+            llLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            llLayoutParams.weight = 1;
+            llLayoutParams.gravity = Gravity.CENTER;
+            llBtn.setLayoutParams(llLayoutParams);
+            llBtn.setOrientation(LinearLayout.VERTICAL);
+            llBtn.setId(1000 + i);
+            llBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LogUtils.e("onClick"+v.getId());
+                    switch (v.getId()) {
+                        case 1000:
+
+                            break;
+                        case 1001:
+
+                            break;
+                        case 1002:
+
+                            break;
+                        case 1003:
+                            ActivityUtils.startActivity(DetailVideoActivity.class);
+                            break;
+                        case 1004:
+                            ActivityUtils.startActivity(DetailVideoActivity.class);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+            ImageView imageView = new ImageView(activity);
+            LinearLayout.LayoutParams ivLayoutParams = new LinearLayout.LayoutParams(SizeUtils.dp2px(45), SizeUtils.dp2px(45));
+            ivLayoutParams.gravity = Gravity.CENTER;
+            imageView.setLayoutParams(ivLayoutParams);
+            ImageUtil.loadImgByPicasso(activity, R.drawable.ic_home_first, imageView);
+
+            TextView textView = new TextView(activity);
+            LinearLayout.LayoutParams tvLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            tvLayoutParams.topMargin = SizeUtils.dp2px(8);
+            tvLayoutParams.gravity = Gravity.CENTER;
+            textView.setLayoutParams(tvLayoutParams);
+            textView.setTextSize(14);
+            textView.setText("标题");
+            llBtn.addView(imageView);
+            llBtn.addView(textView);
+            btnLinearLayout.addView(llBtn);
+        }
+        return btnLinearLayout;
     }
 
 

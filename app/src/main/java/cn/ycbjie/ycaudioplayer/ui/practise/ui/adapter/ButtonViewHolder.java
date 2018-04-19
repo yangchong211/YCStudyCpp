@@ -4,18 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yc.cn.ycbannerlib.first.BannerView;
-import com.yc.cn.ycbannerlib.first.util.SizeUtil;
 import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 
 /**
  * Created by yc on 2018/3/20.

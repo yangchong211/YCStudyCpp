@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
@@ -25,7 +25,7 @@ public class BaseAppHelper {
     /**
      * 本地歌曲列表
      */
-    private final List<AudioMusic> mMusicList = new ArrayList<>();
+    private final List<AudioBean> mMusicList = new ArrayList<>();
     /**
      * 歌单列表
      */
@@ -72,7 +72,7 @@ public class BaseAppHelper {
      * 获取扫描到的音乐数据集合
      * @return              返回list集合
      */
-    public List<AudioMusic> getMusicList() {
+    public List<AudioBean> getMusicList() {
         return mMusicList;
     }
 
@@ -90,6 +90,25 @@ public class BaseAppHelper {
      */
     public LongSparseArray<DownloadMusicInfo> getDownloadList() {
         return mDownloadList;
+    }
+
+    /**
+     * 获取音频集合
+     * @return                  返回list集合
+     */
+    public List<AudioBean> getAudioList() {
+        return mMusicList;
+    }
+
+    /**
+     * 设置音频结合
+     * @param list              音频集合
+     */
+    public void setAudioList(List<AudioBean> list) {
+        if(mMusicList!=null){
+            mMusicList.clear();
+            mMusicList.addAll(list);
+        }
     }
 
 }

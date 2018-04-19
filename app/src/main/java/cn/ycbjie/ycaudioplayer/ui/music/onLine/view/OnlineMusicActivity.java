@@ -1,10 +1,8 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,17 +27,14 @@ import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import java.io.File;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.BaseActivity;
 import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.online.PlayOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
-import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
@@ -332,7 +327,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             }
 
             @Override
-            public void onExecuteSuccess(AudioMusic music) {
+            public void onExecuteSuccess(AudioBean music) {
                 getPlayService().play(music);
                 showPlayingFragment();
                 ToastUtils.showShort("正在播放" + music.getTitle());

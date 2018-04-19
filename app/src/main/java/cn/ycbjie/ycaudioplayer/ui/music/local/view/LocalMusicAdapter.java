@@ -13,13 +13,13 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.inter.OnMoreClickListener;
+import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.ui.music.local.model.AudioMusic;
+import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
 
-public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioMusic> {
+public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioBean> {
 
     /**
      * 正在播放音乐的索引位置
@@ -35,7 +35,7 @@ public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioMusic> {
         return new ViewHolder(parent);
     }
 
-    class ViewHolder extends BaseViewHolder<AudioMusic> {
+    class ViewHolder extends BaseViewHolder<AudioBean> {
 
         @Bind(R.id.v_playing)
         View vPlaying;
@@ -56,7 +56,7 @@ public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioMusic> {
         }
 
         @Override
-        public void setData(AudioMusic data) {
+        public void setData(AudioBean data) {
             super.setData(data);
             if(data!=null){
                 Bitmap cover = CoverLoader.getInstance().loadThumbnail(data);
@@ -92,7 +92,7 @@ public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioMusic> {
      */
     public void updatePlayingPosition(PlayService playService) {
         if (playService.getPlayingMusic() != null &&
-                playService.getPlayingMusic().getType() == AudioMusic.Type.LOCAL) {
+                playService.getPlayingMusic().getType() == AudioBean.Type.LOCAL) {
             mPlayingPosition = playService.getPlayingPosition();
         } else {
             mPlayingPosition = -1;

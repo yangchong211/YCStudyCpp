@@ -12,17 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.ui.practise.model.PractiseAfterBean;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.AdSecondViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.AdViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.BottomViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.FooterMoreViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.BannerViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.BottomViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.ButtonViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.FooterMoreViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.HeaderTitleViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.HotNewsHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.IndustryDynamicsViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.PopularizeNewsHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.HeaderTitleViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.ShareContentViewHolder;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.TrendAnalysisViewHolder;
 
@@ -62,6 +61,7 @@ public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder>
         this(context,layoutHelper,layoutId,count,viewTypeItem ,null);
     }
 
+
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         return mLayoutHelper;
@@ -71,29 +71,29 @@ public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder>
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         switch (viewType){
-            case Constant.viewType.typeBanner:
+            case Constant.ViewType.TYPE_BANNER:
                 return new BannerViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeView:
+            case Constant.ViewType.TYPE_VIEW:
                 return new ButtonViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeGv:
+            case Constant.ViewType.TYPE_GV:
                 return new HotNewsHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeAd:
+            case Constant.ViewType.TYPE_AD:
                 return new AdViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeList2:
+            case Constant.ViewType.TYPE_LIST2:
                 return new PopularizeNewsHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeAd2:
+            case Constant.ViewType.TYPE_AD2:
                 return new AdSecondViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeGv3:
+            case Constant.ViewType.TYPE_GV2:
                 return new IndustryDynamicsViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeList4:
+            case Constant.ViewType.TYPE_LIST3:
                 return new TrendAnalysisViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeGvBottom:
+            case Constant.ViewType.TYPE_GV_BOTTOM:
                 return new ShareContentViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeList5:
+            case Constant.ViewType.TYPE_LIST4:
                 return new BottomViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeTitle:
+            case Constant.ViewType.TYPE_TITLE:
                 return new HeaderTitleViewHolder(inflater.inflate(mLayoutId, parent, false));
-            case Constant.viewType.typeMore:
+            case Constant.ViewType.TYPE_MORE:
                 return new HeaderTitleViewHolder(inflater.inflate(mLayoutId, parent, false));
             default:
                 break;
@@ -148,9 +148,9 @@ public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder>
      */
     @Override
     public int getItemCount() {
-        if(mViewTypeItem == Constant.viewType.typeList2
-                || mViewTypeItem == Constant.viewType.typeList4
-                || mViewTypeItem == Constant.viewType.typeList5){
+        if(mViewTypeItem == Constant.ViewType.TYPE_LIST2
+                || mViewTypeItem == Constant.ViewType.TYPE_LIST3
+                || mViewTypeItem == Constant.ViewType.TYPE_LIST4){
             return mList==null ? mCount : mList.size();
         }
         return mCount;
