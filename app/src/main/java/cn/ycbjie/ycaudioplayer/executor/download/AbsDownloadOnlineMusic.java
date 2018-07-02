@@ -13,9 +13,9 @@ import java.io.File;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -75,7 +75,7 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getMusicDownloadInfo(OnLineMusicModel.METHOD_DOWNLOAD_MUSIC,songId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.computation())
                 .subscribe(new Subscriber<DownloadInfo>() {
                     @Override
                     public void onCompleted() {

@@ -7,7 +7,7 @@ import android.content.Intent;
 
 import com.blankj.utilcode.util.LogUtils;
 
-import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 
 /**
  * <pre>

@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import com.blankj.utilcode.util.LogUtils;
 
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 

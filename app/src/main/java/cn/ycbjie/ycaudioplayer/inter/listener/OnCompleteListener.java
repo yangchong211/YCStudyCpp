@@ -1,7 +1,7 @@
 package cn.ycbjie.ycaudioplayer.inter.listener;
 
 
-import cn.ycbjie.ycaudioplayer.db.download.TasksManagerModel;
+import cn.ycbjie.ycaudioplayer.db.dl.TasksManagerModel;
 
 /**
  * <pre>

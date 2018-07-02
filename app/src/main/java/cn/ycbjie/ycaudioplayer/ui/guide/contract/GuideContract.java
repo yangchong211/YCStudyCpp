@@ -1,8 +1,8 @@
 package cn.ycbjie.ycaudioplayer.ui.guide.contract;
 
 
-import cn.ycbjie.ycaudioplayer.base.BasePresenter;
-import cn.ycbjie.ycaudioplayer.base.BaseView;
+import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter;
+import cn.ycbjie.ycaudioplayer.base.mvp.BaseView;
 
 public interface GuideContract {
 

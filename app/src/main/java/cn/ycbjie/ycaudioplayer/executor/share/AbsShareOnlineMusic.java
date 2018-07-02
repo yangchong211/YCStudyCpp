@@ -7,8 +7,8 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.executor.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -44,7 +44,6 @@ public abstract class AbsShareOnlineMusic implements IExecutor<Void> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getMusicDownloadInfo(OnLineMusicModel.METHOD_DOWNLOAD_MUSIC,mSongId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DownloadInfo>() {
                     @Override
                     public void onCompleted() {

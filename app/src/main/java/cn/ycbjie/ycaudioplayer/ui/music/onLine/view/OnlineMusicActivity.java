@@ -29,7 +29,7 @@ import java.io.File;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.online.PlayOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
@@ -38,10 +38,9 @@ import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.ImageUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.ImageUtils;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -192,7 +191,6 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST, mListInfo.getType(), "20", String.valueOf(offset))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<OnlineMusicList>() {
                     @Override
                     public void onCompleted() {

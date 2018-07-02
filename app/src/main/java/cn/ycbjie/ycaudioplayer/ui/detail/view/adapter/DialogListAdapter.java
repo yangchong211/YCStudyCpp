@@ -25,9 +25,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.db.download.TaskViewHolderImp;
-import cn.ycbjie.ycaudioplayer.db.download.TasksManager;
-import cn.ycbjie.ycaudioplayer.db.download.TasksUtils;
+import cn.ycbjie.ycaudioplayer.db.dl.TaskViewHolderImp;
+import cn.ycbjie.ycaudioplayer.db.dl.TasksManager;
+import cn.ycbjie.ycaudioplayer.db.dl.TasksUtils;
 import cn.ycbjie.ycaudioplayer.ui.detail.model.DialogListBean;
 
 /**

@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
@@ -35,7 +35,6 @@ public abstract class SearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,title + "-" + artist)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SearchMusic>() {
                     @Override
                     public void onCompleted() {
@@ -63,7 +62,6 @@ public abstract class SearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getLrc(OnLineMusicModel.METHOD_LRC,songId)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MusicLrc>() {
                     @Override
                     public void onCompleted() {

@@ -17,7 +17,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.executor.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 
 
 /**

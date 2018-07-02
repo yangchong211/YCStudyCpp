@@ -22,8 +22,9 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import rx.Scheduler;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo> {
@@ -93,7 +94,6 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                 OnLineMusicModel model = OnLineMusicModel.getInstance();
                 model.getList(OnLineMusicModel.METHOD_LINE_MUSIC , data.getType(), 0 ,3)
                         .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<OnlineMusicList>() {
                             @Override
                             public void onCompleted() {

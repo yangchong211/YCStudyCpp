@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnLineMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.view.OnlineMusicActivity;
@@ -35,7 +35,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
 
-    private MainHomeActivity activity;
+    private MainActivity activity;
     private ArrayList<OnLineSongListInfo> mSongLists;
     private OnLineMusicAdapter adapter;
 
@@ -43,7 +43,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainHomeActivity) context;
+        activity = (MainActivity) context;
     }
 
     @Override

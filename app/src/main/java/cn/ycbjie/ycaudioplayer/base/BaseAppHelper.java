@@ -44,7 +44,7 @@ public class BaseAppHelper {
         return SingletonHolder.INSTANCE;
     }
 
-    void init(Application application) {
+    public void init(Application application) {
         mContext = application.getApplicationContext();
         //这里可以做一些初始化的逻辑
     }

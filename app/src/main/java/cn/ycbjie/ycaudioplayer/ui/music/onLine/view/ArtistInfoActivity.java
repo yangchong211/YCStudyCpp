@@ -1,7 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.music.onLine.view;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -21,14 +20,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
-import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -103,7 +100,6 @@ public class ArtistInfoActivity extends BaseActivity implements View.OnClickList
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO, tingUid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ArtistInfo>() {
                     @Override
                     public void onCompleted() {

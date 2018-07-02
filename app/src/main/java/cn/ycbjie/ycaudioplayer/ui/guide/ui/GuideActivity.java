@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseApplication;
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;

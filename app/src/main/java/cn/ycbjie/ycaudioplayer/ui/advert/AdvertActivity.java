@@ -13,13 +13,13 @@ import java.io.IOException;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.service.SplashDownLoadService;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
-import cn.ycbjie.ycaudioplayer.util.other.ImageUtil;
-import cn.ycbjie.ycaudioplayer.util.other.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
+import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
@@ -148,7 +148,7 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
 
 
     private void toMainActivity() {
-        Intent intent = new Intent(this, MainHomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

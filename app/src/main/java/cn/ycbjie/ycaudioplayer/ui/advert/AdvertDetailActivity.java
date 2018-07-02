@@ -1,7 +1,7 @@
 package cn.ycbjie.ycaudioplayer.ui.advert;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 
 /**
  * Created by yc on 2018/2/8.

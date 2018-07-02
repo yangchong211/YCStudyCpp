@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.weight.animView.ViewStars;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
@@ -131,7 +131,7 @@ public class SplashAdActivity extends BaseActivity {
 
 
     private void toMainActivity() {
-        Intent intent = new Intent(this, MainHomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

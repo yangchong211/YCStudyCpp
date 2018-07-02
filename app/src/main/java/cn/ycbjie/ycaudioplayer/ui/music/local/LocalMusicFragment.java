@@ -30,9 +30,9 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseLazyFragment;
+import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.LocalMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.MusicInfoActivity;
@@ -47,14 +47,14 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     @Bind(R.id.recyclerView)
     YCRefreshView recyclerView;
 
-    private MainHomeActivity activity;
+    private MainActivity activity;
     private LocalMusicAdapter adapter;
     private List<AudioBean> music;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainHomeActivity) context;
+        activity = (MainActivity) context;
     }
 
     @Override

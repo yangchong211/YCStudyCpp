@@ -30,14 +30,14 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseApplication;
-import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 /**

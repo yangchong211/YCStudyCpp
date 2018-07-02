@@ -1,12 +1,10 @@
 package cn.ycbjie.ycaudioplayer.base;
 
-import cn.ycbjie.ycaudioplayer.ui.me.MeFragment;
+import cn.ycbjie.ycaudioplayer.ui.me.view.fragment.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.practise.PractiseFragment;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseAfterFragment;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.PractiseBeforeFragment;
+import cn.ycbjie.ycaudioplayer.ui.practise.ui.fragment.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.InnovationFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
@@ -29,8 +27,6 @@ public class BaseFragmentFactory {
     private StudyFragment mStudyFragment;
     private InnovationFragment mInnovationFragment;
     private PractiseFragment mPractiseFragment;
-    private PractiseBeforeFragment mPractiseBeforeFragment;
-    private PractiseAfterFragment mPractiseAfterFragment;
     private MusicFragment mMusicFragment;
     private MeFragment mMeFragment;
     private LocalMusicFragment mLocalMusicFragment;
@@ -94,35 +90,6 @@ public class BaseFragmentFactory {
         }
         return mPractiseFragment;
     }
-
-
-
-
-    public PractiseBeforeFragment getPractiseBeforeFragment() {
-        if (mPractiseBeforeFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mPractiseBeforeFragment == null) {
-                    mPractiseBeforeFragment = new PractiseBeforeFragment();
-                }
-            }
-        }
-        return mPractiseBeforeFragment;
-    }
-
-
-
-
-    public PractiseAfterFragment getPractiseAfterFragment() {
-        if (mPractiseAfterFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mPractiseAfterFragment == null) {
-                    mPractiseAfterFragment = new PractiseAfterFragment();
-                }
-            }
-        }
-        return mPractiseAfterFragment;
-    }
-
 
     public MusicFragment getMusicFragment() {
         if (mMusicFragment == null) {

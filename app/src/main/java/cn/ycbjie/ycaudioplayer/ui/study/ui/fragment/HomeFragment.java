@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
-import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BasePagerAdapter;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 
 /**
  * Created by yc on 2018/3/1.
@@ -42,12 +42,12 @@ public class HomeFragment extends BaseFragment {
 
     private String[] mStudyTitles = {"研习社", "创新院"};
 
-    private MainHomeActivity activity;
+    private MainActivity activity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainHomeActivity) context;
+        activity = (MainActivity) context;
     }
 
 

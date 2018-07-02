@@ -1,7 +1,6 @@
 package cn.ycbjie.ycaudioplayer.ui.music;
 
 import android.content.Context;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +17,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
-import cn.ycbjie.ycaudioplayer.base.BasePagerAdapter;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BasePagerAdapter;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
 
@@ -46,7 +45,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
     ViewPager vpContent;
 
 
-    private MainHomeActivity activity;
+    private MainActivity activity;
     private LocalMusicFragment mLocalMusicFragment;
     private List<Fragment> fragments;
     private String[] mMusicTitles = {"我的音乐", "在线音乐"};
@@ -55,7 +54,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainHomeActivity) context;
+        activity = (MainActivity) context;
     }
 
 

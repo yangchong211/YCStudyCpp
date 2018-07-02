@@ -2,17 +2,8 @@ package cn.ycbjie.ycaudioplayer.api.manager;
 
 import android.annotation.SuppressLint;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -26,7 +17,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
-import cn.ycbjie.ycaudioplayer.util.other.InterceptorUtils;
+import cn.ycbjie.ycaudioplayer.utils.InterceptorUtils;
+import cn.ycbjie.ycaudioplayer.utils.JsonUtils;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -45,7 +37,6 @@ public class RetrofitWrapper {
 
     private static RetrofitWrapper instance;
     private Retrofit mRetrofit;
-    private Gson gson;
     private final OkHttpClient.Builder builder;
 
 
@@ -97,8 +88,7 @@ public class RetrofitWrapper {
         builder.retryOnConnectionFailure(true);
 
         //解析json
-        gson = getJson();
-        //gson = new GsonBuilder().setLenient().create();
+        Gson gson = JsonUtils.getJson();
         //获取实例
         mRetrofit = new Retrofit
                 //设置OKHttpClient,如果不设置会提供一个默认的
@@ -117,16 +107,6 @@ public class RetrofitWrapper {
         return mRetrofit.create(service);
     }
 
-    private Gson getJson() {
-        if (gson == null) {
-            GsonBuilder builder = new GsonBuilder();
-            builder.setLenient();
-            builder.setFieldNamingStrategy(new AnnotateNaming());
-            builder.serializeNulls();
-            gson = builder.create();
-        }
-        return gson;
-    }
 
     private void initSSL() {
         try {
@@ -171,21 +151,4 @@ public class RetrofitWrapper {
         builder.writeTimeout(20000, TimeUnit.SECONDS);
     }
 
-
-    private static class AnnotateNaming implements FieldNamingStrategy {
-        @Override
-        public String translateName(Field field) {
-            ParamNames a = field.getAnnotation(ParamNames.class);
-            return a != null ? a.value() : FieldNamingPolicy.IDENTITY.translateName(field);
-        }
-    }
-
-}
-
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-@interface ParamNames {
-    String value();
 }

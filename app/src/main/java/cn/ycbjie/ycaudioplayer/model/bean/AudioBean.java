@@ -16,7 +16,7 @@ public class AudioBean implements Serializable {
     // 歌曲类型:本地/网络
     private Type type;
     // [本地歌曲]歌曲id
-    private long id;
+    private String id;
     // 音乐标题
     private String title;
     // 艺术家
@@ -49,11 +49,11 @@ public class AudioBean implements Serializable {
         this.type = type;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -130,10 +130,21 @@ public class AudioBean implements Serializable {
     }
 
     /**
+     * 思考为什么要重写这两个方法
      * 对比本地歌曲是否相同
      */
     @Override
-    public boolean equals(Object o) {
-        return o instanceof AudioBean && this.getId() == ((AudioBean) o).getId();
+    public boolean equals(Object obj) {
+        if (obj instanceof AudioBean) {
+            AudioBean bean = (AudioBean) obj;
+            return this.id.equals(bean.getId());
+        }
+        return super.equals(obj);
     }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
 }

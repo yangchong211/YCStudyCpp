@@ -12,7 +12,6 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.util.binding.ViewBinder;
 
 
 public class InnovationAdapter extends RecyclerArrayAdapter<String> {

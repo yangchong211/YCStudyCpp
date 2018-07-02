@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.inter.callback.EventCallback;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
@@ -33,11 +33,11 @@ import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.util.other.QuitTimer;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.AudioFocusManager;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileScanManager;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.MediaSessionManager;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.NotificationUtils;
+import cn.ycbjie.ycaudioplayer.utils.QuitTimer;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.AudioFocusManager;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileScanManager;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.MediaSessionManager;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.NotificationUtils;
 
 /**
  * Service就是用来在后台完成一些不需要和用户交互的动作
@@ -514,7 +514,8 @@ public class PlayService extends Service {
         mPlayingPosition = position;
         AudioBean music = audioMusics.get(mPlayingPosition);
         //保存当前播放的musicId，下次进来可以记录状态
-        SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,music.getId());
+        long musicId = Long.getLong(music.getId());
+        SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
         play(music);
     }
 
@@ -866,13 +867,13 @@ public class PlayService extends Service {
             return;
         }
         for (int i = 0; i < audioMusics.size(); i++) {
-            if (audioMusics.get(i).getId() == id) {
+            if (Long.getLong(audioMusics.get(i).getId()) == id) {
                 position = i;
                 break;
             }
         }
         mPlayingPosition = position;
-        long musicId = audioMusics.get(mPlayingPosition).getId();
+        long musicId = Long.getLong(audioMusics.get(mPlayingPosition).getId());
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
     }
 

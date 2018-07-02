@@ -14,7 +14,7 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 
 
 public class LineMusicAdapter extends RecyclerArrayAdapter<OnlineMusicList.OnlineMusic> {

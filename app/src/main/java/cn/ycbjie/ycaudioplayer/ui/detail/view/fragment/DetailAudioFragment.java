@@ -36,12 +36,12 @@ import java.util.List;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseConfig;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
+import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.activity.DetailVideoActivity;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DetailAudioAdapter;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 
@@ -132,12 +132,12 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
                 //当该页面隐藏时
                 if(activity instanceof DetailVideoActivity){
                     LogUtils.e("视频播放"+"DetailVideoActivity-----------");
-                }else if(activity instanceof MainHomeActivity){
+                }else if(activity instanceof MainActivity){
                     LogUtils.e("视频播放"+"MainActivity------");
                 }
             }else {
                 //当页面展现时
-                if(activity instanceof MainHomeActivity){
+                if(activity instanceof MainActivity){
                     LogUtils.e("视频播放"+"MainActivity");
                 }else if(activity instanceof DetailVideoActivity){
                     LogUtils.e("视频播放"+"DetailVideoActivity");

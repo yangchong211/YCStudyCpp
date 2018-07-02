@@ -43,11 +43,11 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseApplication;
-import cn.ycbjie.ycaudioplayer.base.BaseConfig;
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.detail.contract.DetailVideoContract;
@@ -57,7 +57,7 @@ import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DetailVideoAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DialogListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.MovieCatalogueAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.fragment.DetailAudioFragment;
-import cn.ycbjie.ycaudioplayer.util.other.SDUtils;
+import cn.ycbjie.ycaudioplayer.utils.file.SDUtils;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 

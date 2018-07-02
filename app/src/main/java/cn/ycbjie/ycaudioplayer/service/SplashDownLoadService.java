@@ -12,13 +12,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.api.AdvertModel;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.advert.utils.DownLoadUtils;
-import cn.ycbjie.ycaudioplayer.util.other.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -51,7 +50,6 @@ public class SplashDownLoadService extends IntentService {
         AdvertModel model = AdvertModel.getInstance();
         model.getSplashImage(1)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<AdvertCommon>() {
                     @Override
                     public void onCompleted() {

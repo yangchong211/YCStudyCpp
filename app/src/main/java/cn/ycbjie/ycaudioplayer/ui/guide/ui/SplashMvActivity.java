@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
@@ -150,7 +150,7 @@ public class SplashMvActivity extends BaseActivity {
     private void showView2(){
         flAd.setVisibility(View.GONE);
         flMain.setVisibility(View.GONE);
-        Intent intent = new Intent(this, MainHomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
         finish();

@@ -21,8 +21,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 
@@ -120,7 +120,7 @@ public class SplashPagerActivity extends BaseActivity {
         banner.setOnPageListener(new OnPageListener() {
             @Override
             public void onPageChange(int position) {
-                if(position==imageId.size()-1){
+                if(position == imageId.size()-1){
                     btnGo.setVisibility(View.VISIBLE);
                 }else {
                     btnGo.setVisibility(View.GONE);

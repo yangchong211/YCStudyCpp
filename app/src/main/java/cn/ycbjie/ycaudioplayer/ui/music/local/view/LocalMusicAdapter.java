@@ -16,8 +16,8 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 
 public class LocalMusicAdapter extends RecyclerArrayAdapter<AudioBean> {
 

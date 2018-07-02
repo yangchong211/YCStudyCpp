@@ -18,9 +18,9 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.BaseActivity;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 
 public class MusicInfoActivity extends BaseActivity {
 

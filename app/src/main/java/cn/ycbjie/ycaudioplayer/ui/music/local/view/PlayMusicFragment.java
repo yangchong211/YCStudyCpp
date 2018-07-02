@@ -37,18 +37,18 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.api.constant.Constant;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.base.BaseFragment;
+import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.executor.SearchLrc;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
-import cn.ycbjie.ycaudioplayer.ui.main.MainHomeActivity;
+import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.CoverLoader;
-import cn.ycbjie.ycaudioplayer.util.musicUtils.FileMusicUtils;
-import cn.ycbjie.ycaudioplayer.weight.lrc.YCLrcCustomView;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
+import cn.ycbjie.ycaudioplayer.weight.lrcView.YCLrcCustomView;
 
 /**
  * Created by yc on 2018/1/24.
@@ -100,7 +100,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     SeekBar sbVolume;
     @Bind(R.id.iv_playing_velocity)
     ImageView ivPlayingVelocity;
-    private MainHomeActivity activity;
+    private MainActivity activity;
     private int mLastProgress;
     /**
      * 是否拖进度，默认是false
@@ -112,7 +112,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainHomeActivity) context;
+        activity = (MainActivity) context;
     }
 
     @Override

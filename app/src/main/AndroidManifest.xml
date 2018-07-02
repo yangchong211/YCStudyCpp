@@ -36,7 +36,7 @@
 
 
     <application
-        android:name=".base.BaseApplication"
+        android:name=".base.app.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -53,16 +53,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.guide.ui.GuideActivity"/>
-        <activity android:name=".ui.main.MainHomeActivity"/>
+        <activity android:name=".ui.main.ui.activity.MainActivity"/>
         <activity android:name=".ui.guide.ui.SplashAdActivity"/>
         <activity android:name=".ui.guide.ui.SplashMvActivity"/>
         <activity android:name=".ui.music.local.view.MusicInfoActivity" />
         <activity android:name=".ui.music.onLine.view.OnlineMusicActivity"/>
         <activity android:name=".ui.music.onLine.view.ArtistInfoActivity"/>
-        <activity android:name=".ui.main.SearchMusicActivity"/>
+        <activity android:name=".ui.main.ui.activity.SearchMusicActivity"/>
         <activity android:name=".ui.advert.AdvertActivity"/>
         <activity android:name=".ui.advert.AdvertDetailActivity" />
-        <activity android:name=".ui.me.MeSettingActivity"/>
+        <activity android:name=".ui.me.view.activity.MeSettingActivity"/>
         <activity android:name=".ui.detail.view.activity.DetailVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
@@ -72,8 +72,10 @@
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/LockScreenTheme"/>
+        <activity android:name=".DebugActivity"/>
 
         <service android:name=".service.PlayService" />
+        <service android:name=".service.KillSelfService"/>
 
 
         <receiver android:name=".receiver.NotificationStatusBarReceiver">
