@@ -23,7 +23,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.ArtistInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;

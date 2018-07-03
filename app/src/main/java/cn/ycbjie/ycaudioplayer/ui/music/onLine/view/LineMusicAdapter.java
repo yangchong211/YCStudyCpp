@@ -13,7 +13,7 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 
 

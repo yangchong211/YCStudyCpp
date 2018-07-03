@@ -47,11 +47,7 @@ public class BaseFragmentFactory {
 
     public HomeFragment getHomeFragment() {
         if (mHomeFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mHomeFragment == null) {
-                    mHomeFragment = new HomeFragment();
-                }
-            }
+            mHomeFragment = new HomeFragment();
         }
         return mHomeFragment;
     }
@@ -59,22 +55,14 @@ public class BaseFragmentFactory {
 
     public StudyFragment getStudyFragment() {
         if (mStudyFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mStudyFragment == null) {
-                    mStudyFragment = new StudyFragment();
-                }
-            }
+            mStudyFragment = new StudyFragment();
         }
         return mStudyFragment;
     }
 
     public InnovationFragment getInnovationFragment() {
         if (mInnovationFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mInnovationFragment == null) {
-                    mInnovationFragment = new InnovationFragment();
-                }
-            }
+            mInnovationFragment = new InnovationFragment();
         }
         return mInnovationFragment;
     }
@@ -82,22 +70,14 @@ public class BaseFragmentFactory {
 
     public PractiseFragment getPractiseFragment() {
         if (mPractiseFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mPractiseFragment == null) {
-                    mPractiseFragment = new PractiseFragment();
-                }
-            }
+            mPractiseFragment = new PractiseFragment();
         }
         return mPractiseFragment;
     }
 
     public MusicFragment getMusicFragment() {
         if (mMusicFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mMusicFragment == null) {
-                    mMusicFragment = new MusicFragment();
-                }
-            }
+            mMusicFragment = new MusicFragment();
         }
         return mMusicFragment;
     }
@@ -105,22 +85,14 @@ public class BaseFragmentFactory {
 
     public MeFragment getMeFragment() {
         if (mMeFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mMeFragment == null) {
-                    mMeFragment = new MeFragment();
-                }
-            }
+            mMeFragment = new MeFragment();
         }
         return mMeFragment;
     }
 
     public LocalMusicFragment getLocalMusicFragment() {
         if (mLocalMusicFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mLocalMusicFragment == null) {
-                    mLocalMusicFragment = new LocalMusicFragment();
-                }
-            }
+            mLocalMusicFragment = new LocalMusicFragment();
         }
         return mLocalMusicFragment;
     }
@@ -128,11 +100,7 @@ public class BaseFragmentFactory {
 
     public OnLineMusicFragment getOnLineMusicFragment() {
         if (mOnLineMusicFragment == null) {
-            synchronized (BaseFragmentFactory.class) {
-                if (mOnLineMusicFragment == null) {
-                    mOnLineMusicFragment = new OnLineMusicFragment();
-                }
-            }
+            mOnLineMusicFragment = new OnLineMusicFragment();
         }
         return mOnLineMusicFragment;
     }

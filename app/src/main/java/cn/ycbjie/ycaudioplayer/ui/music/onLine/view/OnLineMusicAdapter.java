@@ -20,10 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import rx.Scheduler;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnLineSongListInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 

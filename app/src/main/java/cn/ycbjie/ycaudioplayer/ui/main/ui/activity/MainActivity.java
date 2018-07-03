@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
@@ -198,7 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_search:
-                startActivity(SearchMusicActivity.class);
+                ActivityUtils.startActivity(SearchMusicActivity.class);
                 break;
             case R.id.fl_play_bar:
                 showPlayingFragment();
@@ -286,17 +287,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (mMusicFragment == null) {
                     mMusicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
                     ft.add(R.id.fl_main, mMusicFragment, MusicFragment.class.getName());
-                } else {
-                    ft.show(mMusicFragment);
                 }
+                ft.show(mMusicFragment);
                 break;
             case FRAGMENT_PRACTISE:
                 if (mPractiseFragment == null) {
                     mPractiseFragment = BaseFragmentFactory.getInstance().getPractiseFragment();
                     ft.add(R.id.fl_main, mPractiseFragment, PractiseFragment.class.getName());
-                } else {
-                    ft.show(mPractiseFragment);
                 }
+                ft.show(mPractiseFragment);
                 break;
             case FRAGMENT_HOME:
                 /*
@@ -306,17 +305,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (mHomeFragment == null) {
                     mHomeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
                     ft.add(R.id.fl_main, mHomeFragment, HomeFragment.class.getName());
-                } else {
-                    ft.show(mHomeFragment);
                 }
+                ft.show(mHomeFragment);
                 break;
             case FRAGMENT_ME:
                 if (mMeFragment == null) {
                     mMeFragment = BaseFragmentFactory.getInstance().getMeFragment();
                     ft.add(R.id.fl_main, mMeFragment, MeFragment.class.getName());
-                } else {
-                    ft.show(mMeFragment);
                 }
+                ft.show(mMeFragment);
                 break;
             default:
                 break;

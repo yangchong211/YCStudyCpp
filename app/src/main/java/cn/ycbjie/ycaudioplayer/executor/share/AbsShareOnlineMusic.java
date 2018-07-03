@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
 /**
  * <pre>
  *     author: yangchong
- *     blog  : www.pedaily.cn
+ *     blog  :
  *     time  : 2018/01/24
  *     desc  : 分享在线歌曲
  *     revise:

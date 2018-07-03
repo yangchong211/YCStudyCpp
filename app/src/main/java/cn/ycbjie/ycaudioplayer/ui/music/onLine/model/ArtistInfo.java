@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean;
+package cn.ycbjie.ycaudioplayer.ui.music.onLine.model;
 
 import com.google.gson.annotations.SerializedName;
 

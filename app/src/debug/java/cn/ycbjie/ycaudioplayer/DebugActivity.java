@@ -35,7 +35,7 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
     TextView tvRestartApp;
 
 
-    private static final String SELECT_STATUS = "select_status";
+    public static final String SELECT_STATUS = "select_status";
 
 
     @Override
@@ -69,23 +69,23 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
         switch (anInt){
             case 1001:
                 changeTest.setChecked(true);
-                changeTest.setChecked(false);
-                changeTest.setChecked(false);
+                changePreview.setChecked(false);
+                changeRelease.setChecked(false);
                 break;
             case 2001:
                 changeTest.setChecked(false);
-                changeTest.setChecked(true);
-                changeTest.setChecked(false);
+                changePreview.setChecked(true);
+                changeRelease.setChecked(false);
                 break;
             case 3001:
                 changeTest.setChecked(false);
-                changeTest.setChecked(false);
-                changeTest.setChecked(true);
+                changePreview.setChecked(false);
+                changeRelease.setChecked(true);
                 break;
             default:
                 changeTest.setChecked(true);
-                changeTest.setChecked(false);
-                changeTest.setChecked(false);
+                changePreview.setChecked(false);
+                changeRelease.setChecked(false);
                 break;
         }
     }

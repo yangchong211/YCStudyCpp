@@ -11,7 +11,7 @@ import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnLineSongListInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 
