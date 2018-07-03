@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**
  * Created by yc on 2018/1/25.
@@ -30,21 +31,21 @@ public class NotificationStatusBarReceiver extends BroadcastReceiver {
         String extra = intent.getStringExtra(EXTRA);
         if (TextUtils.equals(extra, MusicPlayAction.TYPE_NEXT)) {
             PlayService.startCommand(context, MusicPlayAction.TYPE_NEXT);
-            LogUtils.e("NotifiyStatusBarReceiver"+"下一首");
+            AppLogUtils.e("NotifiyStatusBarReceiver"+"下一首");
         } else if (TextUtils.equals(extra, MusicPlayAction.TYPE_START_PAUSE)) {
             if(BaseAppHelper.get().getPlayService()!=null){
                 boolean playing = BaseAppHelper.get().getPlayService().isPlaying();
                 if(playing){
-                    LogUtils.e("NotifiyStatusBarReceiver"+"暂停");
+                    AppLogUtils.e("NotifiyStatusBarReceiver"+"暂停");
                 }else {
-                    LogUtils.e("NotifiyStatusBarReceiver"+"播放");
+                    AppLogUtils.e("NotifiyStatusBarReceiver"+"播放");
                 }
                 PlayService.startCommand(context, MusicPlayAction.TYPE_START_PAUSE);
             }
 
         }else if(TextUtils.equals(extra, MusicPlayAction.TYPE_PRE)){
             PlayService.startCommand(context, MusicPlayAction.TYPE_PRE);
-            LogUtils.e("NotifiyStatusBarReceiver"+"上一首");
+            AppLogUtils.e("NotifiyStatusBarReceiver"+"上一首");
         }
     }
 }

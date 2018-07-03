@@ -17,6 +17,7 @@ import cn.ycbjie.ycaudioplayer.ui.advert.model.api.AdvertModel;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.advert.utils.DownLoadUtils;
 import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import rx.Observer;
 import rx.schedulers.Schedulers;
 
@@ -53,12 +54,12 @@ public class SplashDownLoadService extends IntentService {
                 .subscribe(new Observer<AdvertCommon>() {
                     @Override
                     public void onCompleted() {
-                        LogUtils.e("SplashDownLoadService"+ "onCompleted" );
+                        AppLogUtils.e("SplashDownLoadService"+ "onCompleted" );
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e("SplashDownLoadService"+ e.getLocalizedMessage());
+                        AppLogUtils.e("SplashDownLoadService"+ e.getLocalizedMessage());
                     }
 
                     @Override
@@ -68,10 +69,10 @@ public class SplashDownLoadService extends IntentService {
                             AdvertCommon.Splash splashLocal = getSplashLocal();
                             if (mScreen != null) {
                                 if (splashLocal == null) {
-                                    LogUtils.e("SplashDownLoadService"+ "splashLocal 为空导致下载");
+                                    AppLogUtils.e("SplashDownLoadService"+ "splashLocal 为空导致下载");
                                     startDownLoadSplash(Constant.SPLASH_PATH, mScreen.burl);
                                 } else if (isNeedDownLoad(splashLocal.savePath, mScreen.burl)) {
-                                    LogUtils.e("SplashDownLoadService"+ "isNeedDownLoad 导致下载");
+                                    AppLogUtils.e("SplashDownLoadService"+ "isNeedDownLoad 导致下载");
                                     startDownLoadSplash(Constant.SPLASH_PATH, mScreen.burl);
                                 }
                             } else {
@@ -87,7 +88,7 @@ public class SplashDownLoadService extends IntentService {
                                             //noinspection ResultOfMethodCallIgnored
                                             splashFile.delete();
                                         }
-                                        Log.d("SplashDemo","mScreen为空删除本地文件");
+                                        AppLogUtils.d("SplashDemo","mScreen为空删除本地文件");
                                     }
                                 }
                             }

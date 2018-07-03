@@ -44,10 +44,10 @@ public class SDUtils {
      * 获得SDCard 的路径,storage/sdcard
      * @return          路径
      */
-    private static String getSDCardPath() {
+    public static String getSDCardPath() {
         String path = null;
         if (isMounted()) {
-            path = Environment.getExternalStorageDirectory().getAbsolutePath();
+            path = Environment.getExternalStorageDirectory().getPath();
         }
         return path;
     }

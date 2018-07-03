@@ -15,6 +15,7 @@ import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.bean.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.Subscriber;
@@ -79,7 +80,7 @@ public abstract class PlayOnlineMusic extends PlayMusic {
                 .subscribe(new Subscriber<DownloadInfo>() {
                     @Override
                     public void onCompleted() {
-                        LogUtils.e("PlayOnlineMusic" + "完成");
+                        AppLogUtils.e("PlayOnlineMusic" + "完成");
                     }
 
                     @Override

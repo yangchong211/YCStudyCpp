@@ -52,7 +52,8 @@ public class FileCacheUtils {
      * @param context           context
      */
     public static void cleanDatabases(Context context) {
-        deleteFilesByDirectory(new File("/data/data/" + context.getPackageName() + "/databases"));
+        deleteFilesByDirectory(new File("/data/data/" +
+                context.getPackageName() + "/databases"));
     }
 
     /**
@@ -234,7 +235,6 @@ public class FileCacheUtils {
     /*-----------------------------------------------------------------------------------*/
     /**
      * 判断 SD 卡是否可用
-     *
      * @return true : 可用<br>false : 不可用
      */
     public static boolean isSDCardEnable(Context context) {

@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils.musicUtils;
+package cn.ycbjie.ycaudioplayer.manager;
 
 import android.os.Build;
 import android.support.v4.media.MediaMetadataCompat;
@@ -8,6 +8,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 
 
 public class MediaSessionManager {

@@ -20,6 +20,7 @@ import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
 import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 /**
@@ -138,10 +139,10 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
             File splashFile = SerializableUtils.getSerializableFile(
                     Constant.SPLASH_PATH, Constant.SPLASH_FILE_NAME);
             splash = (AdvertCommon.Splash) SerializableUtils.readObject(splashFile);
-            LogUtils.e("AdvertActivity" + "存储路径" + Constant.SPLASH_PATH);
+            AppLogUtils.e("AdvertActivity" + "存储路径" + Constant.SPLASH_PATH);
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtils.e("AdvertActivity" + "SplashActivity 获取本地序列化闪屏失败" + e.getMessage());
+            AppLogUtils.e("AdvertActivity" + "SplashActivity 获取本地序列化闪屏失败" + e.getMessage());
         }
         return splash;
     }

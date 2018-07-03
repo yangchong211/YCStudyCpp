@@ -36,6 +36,7 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.advert.AdvertActivity;
 import cn.ycbjie.ycaudioplayer.ui.guide.contract.GuideContract;
 import cn.ycbjie.ycaudioplayer.ui.guide.presenter.GuidePresenter;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -244,7 +245,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
     private class PlayServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            LogUtils.e("onServiceConnected"+name);
+            AppLogUtils.e("onServiceConnected"+name);
             final PlayService playService = ((PlayService.PlayBinder) service).getService();
             BaseAppHelper.get().setPlayService(playService);
             scanMusic(playService);
@@ -252,7 +253,7 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            LogUtils.e("onServiceDisconnected"+name);
+            AppLogUtils.e("onServiceDisconnected"+name);
         }
     }
 

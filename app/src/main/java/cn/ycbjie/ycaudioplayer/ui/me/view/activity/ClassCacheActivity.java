@@ -28,6 +28,7 @@ import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadedAdapter;
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadingAdapter;
 import cn.ycbjie.ycaudioplayer.utils.DialogUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**
  * <pre>
@@ -123,13 +124,13 @@ public class ClassCacheActivity extends BaseActivity implements View.OnClickList
         downloadingData = TasksManager.getImpl().getModelList();
         if(downloadingData!=null && downloadingData.size()>0){
             cacheDownloadingAdapter.addAllData(downloadingData);
-            LogUtils.e("initData------downloadingData-----"+downloadingData.size());
+            AppLogUtils.e("initData------downloadingData-----"+downloadingData.size());
         }
 
         downloadedData = TasksManager.getImpl().getDownloadedList();
         if(downloadedData!=null && downloadedData.size()>0){
             cacheDownloadedAdapter.addAllData(downloadedData);
-            LogUtils.e("initData-------downloadedData----"+downloadedData.size());
+            AppLogUtils.e("initData-------downloadedData----"+downloadedData.size());
         }
     }
 

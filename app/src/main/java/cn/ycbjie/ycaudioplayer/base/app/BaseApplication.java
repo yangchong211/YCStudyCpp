@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -19,6 +20,8 @@ import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
 import cn.ycbjie.ycaudioplayer.service.InitializeService;
 import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
+import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 /**
@@ -71,6 +74,7 @@ public class BaseApplication extends Application {
         initBugly();
         initDownLoadLib();
         initThreadPool();
+        initUtils();
         InitializeService.start(this);
     }
 
@@ -184,6 +188,28 @@ public class BaseApplication extends Application {
         return executor;
     }
 
+    /**
+     * 初始化utils工具类
+     */
+    private void initUtils() {
+        AppLogUtils.Config config = AppLogUtils.getConfig();
+        //边框开关，设置打开
+        config.setBorderSwitch(true);
+        //logcat 是否打印，设置打印
+        config.setConsoleSwitch(true);
+        //设置打印日志总开关，线上时关闭
+        config.setLogSwitch(true);
+        //设置可以写入文件。默认是false
+        config.setLog2FileSwitch(true);
+        //String property = System.getProperty("file.separator");
+        //String cacheDir = this.getCacheDir() + property + "yc" + property;
+        //设置log日志的文件路径
+        String logger = FileSaveUtils.getLocalRootSavePathDir("logger");
+        ///storage/emulated/0/yc/logger/
+        Log.e("日志存储地址" ,logger);
+        //设置存储的路径
+        config.setDir(logger);
+    }
 
 }
 

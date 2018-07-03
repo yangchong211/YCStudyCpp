@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils.musicUtils;
+package cn.ycbjie.ycaudioplayer.manager;
 
 import android.annotation.SuppressLint;
 import android.media.AudioManager;

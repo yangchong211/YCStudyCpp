@@ -34,6 +34,7 @@ import cn.ycbjie.ycaudioplayer.inter.listener.OnCompleteListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.utils.binding.Bind;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**
  * <pre>
@@ -78,7 +79,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             @Override
             public void run() {
                 notifyDataSetChanged();
-                LogUtils.e("postNotifyDataChanged----"+"刷新数据");
+                AppLogUtils.e("postNotifyDataChanged----"+"刷新数据");
             }
         });
     }
@@ -122,32 +123,32 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
                 final int status = TasksManager.getImpl().getStatus(id, path);
                 if (status == FileDownloadStatus.pending || status == FileDownloadStatus.started ||
                         status == FileDownloadStatus.connected) {
-                    LogUtils.e("onBindViewHolder----"+"updateDownloading--------");
+                    AppLogUtils.e("onBindViewHolder----"+"updateDownloading--------");
                     // start task, but file not created yet
                     holder.updateDownloading(status, TasksManager.getImpl().getSoFar(id)
                             , TasksManager.getImpl().getTotal(id));
                 } else if (!new File(path).exists() && !new File(FileDownloadUtils.getTempPath(path)).exists()) {
                     // not exist file
-                    LogUtils.e("onBindViewHolder----"+"updateNotDownloaded--------");
+                    AppLogUtils.e("onBindViewHolder----"+"updateNotDownloaded--------");
                     holder.updateNotDownloaded(status, 0, 0);
                 } else if (TasksManager.getImpl().isDownloaded(status)) {
                     // already downloaded and exist
-                    LogUtils.e("onBindViewHolder----"+"updateDownloaded--------");
+                    AppLogUtils.e("onBindViewHolder----"+"updateDownloaded--------");
                     holder.updateDownloaded();
                 } else if (status == FileDownloadStatus.progress) {
-                    LogUtils.e("onBindViewHolder----"+"updateDownloading--------");
+                    AppLogUtils.e("onBindViewHolder----"+"updateDownloading--------");
                     // downloading
                     holder.updateDownloading(status, TasksManager.getImpl().getSoFar(id)
                             , TasksManager.getImpl().getTotal(id));
                 } else {
                     // not start
-                    LogUtils.e("onBindViewHolder----"+"updateNotDownloaded--------");
+                    AppLogUtils.e("onBindViewHolder----"+"updateNotDownloaded--------");
                     holder.updateNotDownloaded(status, TasksManager.getImpl().getSoFar(id)
                             , TasksManager.getImpl().getTotal(id));
                 }
             } else {
                 //状态: 加载中...
-                LogUtils.e("onBindViewHolder----"+"状态: 加载中--------");
+                AppLogUtils.e("onBindViewHolder----"+"状态: 加载中--------");
             }
         }
     }
@@ -189,7 +190,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
 
         @Override
         public void updateDownloaded() {
-            LogUtils.e("ViewHolder----"+"updateDownloaded--------");
+            AppLogUtils.e("ViewHolder----"+"updateDownloaded--------");
             pb.setMax(1);
             pb.setProgress(1);
             tvState.setText("下载完成");
@@ -211,7 +212,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
 
         @Override
         public void updateNotDownloaded(int status, long sofar, long total) {
-            LogUtils.e("ViewHolder----"+"updateNotDownloaded--------"+status+"---"+sofar+"---"+total);
+            AppLogUtils.e("ViewHolder----"+"updateNotDownloaded--------"+status+"---"+sofar+"---"+total);
             if (sofar > 0 && total > 0) {
                 final float percent = sofar / (float) total;
                 pb.setProgress((int) (percent * 100));
@@ -238,7 +239,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
 
         @Override
         public void updateDownloading(int status, long sofar, long total) {
-            LogUtils.e("ViewHolder----"+"updateDownloading--------");
+            AppLogUtils.e("ViewHolder----"+"updateDownloading--------");
             final float percent = sofar / (float) total;
             pb.setProgress((int) (percent * 100));
             switch (status) {
@@ -246,35 +247,35 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
                 case FileDownloadStatus.pending:
                     ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
                     ivDownload.setTag(R.drawable.note_btn_play_white);
-                    LogUtils.e("ViewHolder----"+"排队中--------");
+                    AppLogUtils.e("ViewHolder----"+"排队中--------");
                     tvState.setText("排队中");
                     break;
                 //开始下载
                 case FileDownloadStatus.started:
                     ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
                     ivDownload.setTag(R.drawable.note_btn_play_white);
-                    LogUtils.e("ViewHolder----"+"开始下载--------");
+                    AppLogUtils.e("ViewHolder----"+"开始下载--------");
                     tvState.setText("开始下载");
                     break;
                 //链接中
                 case FileDownloadStatus.connected:
                     ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
                     ivDownload.setTag(R.drawable.note_btn_play_white);
-                    LogUtils.e("ViewHolder----"+"链接中--------");
+                    AppLogUtils.e("ViewHolder----"+"链接中--------");
                     tvState.setText("链接中");
                     break;
                 //下载中
                 case FileDownloadStatus.progress:
                     ivDownload.setBackgroundResource(R.drawable.note_btn_pause_white);
                     ivDownload.setTag(R.drawable.note_btn_pause_white);
-                    LogUtils.e("ViewHolder----"+"下载中--------");
+                    AppLogUtils.e("ViewHolder----"+"下载中--------");
                     tvState.setText("下载中");
                     break;
                 //默认
                 default:
                     ivDownload.setBackgroundResource(R.drawable.note_btn_pause_white);
                     ivDownload.setTag(R.drawable.note_btn_pause_white);
-                    LogUtils.e("ViewHolder----"+"默认--------");
+                    AppLogUtils.e("ViewHolder----"+"默认--------");
                     tvState.setText("默认");
                     break;
             }
@@ -287,15 +288,15 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             if (v.getTag() == null) {
                 return;
             }
-            LogUtils.e("listener----"+"--------");
+            AppLogUtils.e("listener----"+"--------");
             int imgResId = (int) holder.ivDownload.getTag();
             TasksManagerModel model = list.get(holder.position);
             String path = model.getPath();
             String url = model.getUrl();
-            LogUtils.e("listener----"+url+ "--------");
+            AppLogUtils.e("listener----"+url+ "--------");
             switch (imgResId) {
                 case R.drawable.note_btn_play_white:
-                    LogUtils.e("listener----"+"------开始下载--");
+                    AppLogUtils.e("listener----"+"------开始下载--");
                     // 开始下载
                     final BaseDownloadTask task = FileDownloader.getImpl().create(url)
                             .setPath(path)
@@ -306,7 +307,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
                     task.start();
                     break;
                 case R.drawable.note_btn_pause_white:
-                    LogUtils.e("listener----"+"------暂停下载--");
+                    AppLogUtils.e("listener----"+"------暂停下载--");
                     // 暂停下载
                     FileDownloader.getImpl().pause(holder.id);
                     holder.ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);

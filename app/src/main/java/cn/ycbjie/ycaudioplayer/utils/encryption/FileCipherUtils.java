@@ -8,6 +8,8 @@ import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
+
 /**
  * Created by yc on 2018/2/7.
  */
@@ -80,7 +82,7 @@ public class FileCipherUtils {
             //对加密后的文件重命名，增加.cipher后缀
             //noinspection ResultOfMethodCallIgnored
             f.renameTo(new File(f.getPath() + CIPHER_TEXT_SUFFIX));
-            LogUtils.e("加密用时："+(System.currentTimeMillis() - startTime) /1000 + "s");
+            AppLogUtils.e("加密用时："+(System.currentTimeMillis() - startTime) /1000 + "s");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +165,7 @@ public class FileCipherUtils {
             //对加密后的文件重命名，增加.cipher后缀
             //noinspection ResultOfMethodCallIgnored
             f.renameTo(new File(f.getPath().substring(f.getPath().toLowerCase().indexOf(CIPHER_TEXT_SUFFIX))));
-            LogUtils.e("解密用时："+(System.currentTimeMillis() - startTime) / 1000 + "s");
+            AppLogUtils.e("解密用时："+(System.currentTimeMillis() - startTime) / 1000 + "s");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -34,9 +34,10 @@ import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.utils.QuitTimer;
-import cn.ycbjie.ycaudioplayer.utils.musicUtils.AudioFocusManager;
+import cn.ycbjie.ycaudioplayer.manager.AudioFocusManager;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileScanManager;
-import cn.ycbjie.ycaudioplayer.utils.musicUtils.MediaSessionManager;
+import cn.ycbjie.ycaudioplayer.manager.MediaSessionManager;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.NotificationUtils;
 
 /**
@@ -293,15 +294,15 @@ public class PlayService extends Service {
                 //添加锁屏界面
                 case Constant.LOCK_SCREEN_ACTION:
                     mIsLocked = BaseConfig.INSTANCE.isLocked();
-                    LogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
+                    AppLogUtils.e("PlayService"+"---LOCK_SCREEN"+mIsLocked);
                     break;
                 //当屏幕灭了，添加锁屏页面
                 case Intent.ACTION_SCREEN_OFF:
                     startLockAudioActivity();
-                    LogUtils.e("PlayService"+"---当屏幕灭了");
+                    AppLogUtils.e("PlayService"+"---当屏幕灭了");
                     break;
                 case Intent.ACTION_SCREEN_ON:
-                    LogUtils.e("PlayService"+"---当屏幕亮了");
+                    AppLogUtils.e("PlayService"+"---当屏幕亮了");
                     break;
                 default:
                     break;
@@ -633,7 +634,7 @@ public class PlayService extends Service {
             int currentPosition =  mPlayer.getCurrentPosition();
             mListener.onUpdateProgress(currentPosition);
         }
-        LogUtils.e("updatePlayProgressShow");
+        AppLogUtils.e("updatePlayProgressShow");
         // 每30毫秒更新一下显示的内容，注意这里时间不要太短，因为这个是一个循环
         // 经过测试，60毫秒更新一次有点卡，30毫秒最为顺畅
         handler.sendEmptyMessageDelayed(UPDATE_PLAY_PROGRESS_SHOW, 300);

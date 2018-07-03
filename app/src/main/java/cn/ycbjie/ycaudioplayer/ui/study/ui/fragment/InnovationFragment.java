@@ -34,6 +34,7 @@ import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.InnovationAdapter;
 import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**
  * Created by yc on 2018/3/1.
@@ -205,7 +206,7 @@ public class InnovationFragment extends BaseLazyFragment {
             llBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LogUtils.e("onClick"+v.getId());
+                    AppLogUtils.e("onClick"+v.getId());
                     switch (v.getId()) {
                         case 1000:
 

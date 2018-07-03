@@ -47,6 +47,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.view.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.fragment.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
+import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
@@ -151,6 +152,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initTabLayout();
         initPlayServiceListener();
         parseIntent();
+        AppToolUtils.requestMsgPermission(this);
     }
 
     /**

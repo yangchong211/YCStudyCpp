@@ -30,6 +30,7 @@ import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.adapter.SearchMusicAdapter;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -244,7 +245,7 @@ public class SearchMusicActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e(TAG + e.getLocalizedMessage());
+                        AppLogUtils.e(TAG + e.getLocalizedMessage());
                     }
 
                     @Override
@@ -260,9 +261,9 @@ public class SearchMusicActivity extends BaseActivity {
                                     recyclerView.scrollToPosition(0);
                                 }
                             });
-                            LogUtils.e(TAG + "请求成功");
+                            AppLogUtils.e(TAG + "请求成功");
                         }else {
-                            LogUtils.e(TAG + "请求失败");
+                            AppLogUtils.e(TAG + "请求失败");
                         }
                     }
                 });

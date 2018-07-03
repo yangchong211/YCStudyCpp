@@ -8,6 +8,8 @@ import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.io.File;
 
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
+
 /**
  * <pre>
  *     @author yangchong
@@ -57,11 +59,11 @@ public class TasksUtils {
     public static void deleteAll(){
         File file = new File(FileDownloadUtils.getDefaultSaveRootPath());
         if (!file.exists()) {
-            LogUtils.e(String.format("check file files not exists %s", file.getAbsolutePath()));
+            AppLogUtils.e(String.format("check file files not exists %s", file.getAbsolutePath()));
             return;
         }
         if (!file.isDirectory()) {
-            LogUtils.e(String.format("check file files not directory %s", file.getAbsolutePath()));
+            AppLogUtils.e(String.format("check file files not directory %s", file.getAbsolutePath()));
             return;
         }
         File[] files = file.listFiles();

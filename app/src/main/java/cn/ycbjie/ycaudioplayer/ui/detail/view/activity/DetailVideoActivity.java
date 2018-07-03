@@ -58,6 +58,7 @@ import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DialogListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.MovieCatalogueAdapter;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.fragment.DetailAudioFragment;
 import cn.ycbjie.ycaudioplayer.utils.file.SDUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 
@@ -165,13 +166,13 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
                 super.onScrollStateChanged(recyclerView, newState);
                 switch(newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
-                        LogUtils.e("滑动距离"+"recyclerView已经停止滚动");
+                        AppLogUtils.e("滑动距离"+"recyclerView已经停止滚动");
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:
-                        LogUtils.e("滑动距离"+"recyclerView正在被拖拽");
+                        AppLogUtils.e("滑动距离"+"recyclerView正在被拖拽");
                         break;
                     case RecyclerView.SCROLL_STATE_SETTLING:
-                        LogUtils.e("滑动距离"+"recyclerView正在依靠惯性滚动");
+                        AppLogUtils.e("滑动距离"+"recyclerView正在依靠惯性滚动");
                         break;
                     default:
                         break;
@@ -183,14 +184,14 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
                 super.onScrolled(recyclerView, dx, dy);
                 float y = recyclerView.getY();
                 int scrollY = recyclerView.getScrollY();
-                LogUtils.e("滑动距离"+dy+"----"+y+"-------"+scrollY);
+                AppLogUtils.e("滑动距离"+dy+"----"+y+"-------"+scrollY);
                 //获取第一个可见的位置
                 int position = linearLayoutManager.findFirstVisibleItemPosition();
                 //int scrollYDistance = getScrollYDistance(position);
                 //LogUtils.e("滑动距离111----"+position+"====="+scrollYDistance);
                 //判断是否滑到了顶部
                 boolean isTopScroll = recyclerView.canScrollVertically(-1);
-                LogUtils.e("滑动距离、、、"+isTopScroll);
+                AppLogUtils.e("滑动距离、、、"+isTopScroll);
 
                 if(position<1){
                     setViewIndicator(true);
@@ -311,9 +312,9 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
         tvTitleRight.measure(spec,spec);
         int widthLeft = tvTitleLeft.getMeasuredWidth();
         int widthRight = tvTitleRight.getMeasuredWidth();
-        LogUtils.e("width"+tvTitleLeft.getWidth() + "---"+tvTitleRight.getWidth()
+        AppLogUtils.e("width"+tvTitleLeft.getWidth() + "---"+tvTitleRight.getWidth()
                 + "---"+tvTitleLeft.getMeasuredWidth());
-        LogUtils.e("width"+"----------"+widthLeft+"-----"+widthRight);
+        AppLogUtils.e("width"+"----------"+widthLeft+"-----"+widthRight);
         LinearLayout.LayoutParams paramsLeft = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, SizeUtils.dp2px(2));
         paramsLeft.width = widthLeft;
@@ -479,7 +480,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
         }
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = true;
-        LogUtils.e("fragment数量+DetailVideoActivity" + FragmentUtils.getAllFragments(getSupportFragmentManager()).size());
+        AppLogUtils.e("fragment数量+DetailVideoActivity" + FragmentUtils.getAllFragments(getSupportFragmentManager()).size());
 
         if (videoPlayer.isPlaying() || videoPlayer.isBufferingPlaying()) {
             videoPlayer.pause();
@@ -488,7 +489,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
         //当视频正在播放，准备播放时，点击音视频切换按钮，先暂停视频，然后记录视频播放位置，show音频播放页面
         //当视频已经暂停，播放错误，播放停止时，点击音视频切换按钮，直接记录视频播放位置，show音频播放页面
         BaseConfig.INSTANCE.setPosition(videoPlayer.getCurrentPosition());
-        LogUtils.e("播放位置----视频页开始显示音频--" + videoPlayer.getCurrentPosition());
+        AppLogUtils.e("播放位置----视频页开始显示音频--" + videoPlayer.getCurrentPosition());
 
         if (mDetailAudioFragment != null) {
             mDetailAudioFragment.setViewData(BaseAppHelper.get().getAudioList().get(0));

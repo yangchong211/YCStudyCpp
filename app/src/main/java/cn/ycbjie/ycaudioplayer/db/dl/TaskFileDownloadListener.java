@@ -7,6 +7,7 @@ import com.liulishuo.filedownloader.model.FileDownloadStatus;
 
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DialogListAdapter;
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadingAdapter;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 
 /**
@@ -45,13 +46,13 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"pending--------");
+        AppLogUtils.e("taskDownloadListener----"+"pending--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"pending--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"pending--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateDownloading(FileDownloadStatus.pending, soFarBytes, totalBytes);
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"pending--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"pending--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateDownloading(FileDownloadStatus.pending, soFarBytes, totalBytes);
         }
     }
@@ -66,7 +67,7 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"started--------");
+        AppLogUtils.e("taskDownloadListener----"+"started--------");
     }
 
     /**
@@ -79,13 +80,13 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"connected--------");
+        AppLogUtils.e("taskDownloadListener----"+"connected--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"connected--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"connected--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateDownloading(FileDownloadStatus.connected, soFarBytes, totalBytes);
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"connected--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"connected--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateDownloading(FileDownloadStatus.connected, soFarBytes, totalBytes);
 
         }
@@ -101,13 +102,13 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"progress--------");
+        AppLogUtils.e("taskDownloadListener----"+"progress--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"progress--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"progress--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateDownloading(FileDownloadStatus.progress, soFarBytes, totalBytes);
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"progress--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"progress--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateDownloading(FileDownloadStatus.progress, soFarBytes, totalBytes);
         }
     }
@@ -123,14 +124,14 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"error--------");
+        AppLogUtils.e("taskDownloadListener----"+"error--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"error--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"error--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateNotDownloaded(FileDownloadStatus.error, task.getLargeFileSoFarBytes()
                     , task.getLargeFileTotalBytes());
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"error--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"error--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateNotDownloaded(FileDownloadStatus.error, task.getLargeFileSoFarBytes()
                     , task.getLargeFileTotalBytes());
         }
@@ -147,13 +148,13 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"paused--------");
+        AppLogUtils.e("taskDownloadListener----"+"paused--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"paused--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"paused--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateNotDownloaded(FileDownloadStatus.paused, soFarBytes, totalBytes);
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"paused--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"paused--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateNotDownloaded(FileDownloadStatus.paused, soFarBytes, totalBytes);
 
         }
@@ -170,13 +171,13 @@ public class TaskFileDownloadListener extends FileDownloadSampleListener {
         if (tag == null) {
             return;
         }
-        LogUtils.e("taskDownloadListener----"+"completed--------");
+        AppLogUtils.e("taskDownloadListener----"+"completed--------");
         if(tag instanceof DialogListAdapter.ViewHolder){
-            LogUtils.e("taskDownloadListener----"+"completed--------DialogListAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"completed--------DialogListAdapter");
             ((DialogListAdapter.ViewHolder)tag).updateDownloaded();
         }
         if(tag instanceof CacheDownloadingAdapter.MyViewHolder){
-            LogUtils.e("taskDownloadListener----"+"completed--------CacheDownloadingAdapter");
+            AppLogUtils.e("taskDownloadListener----"+"completed--------CacheDownloadingAdapter");
             ((CacheDownloadingAdapter.MyViewHolder)tag).updateDownloaded();
         }
         TasksManager.getImpl().removeTaskForViewHolder(task.getId());

@@ -43,6 +43,7 @@ import cn.ycbjie.ycaudioplayer.ui.detail.view.activity.DetailVideoActivity;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.adapter.DetailAudioAdapter;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 
 /**
@@ -131,27 +132,27 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
             if(hidden){
                 //当该页面隐藏时
                 if(activity instanceof DetailVideoActivity){
-                    LogUtils.e("视频播放"+"DetailVideoActivity-----------");
+                    AppLogUtils.e("视频播放"+"DetailVideoActivity-----------");
                 }else if(activity instanceof MainActivity){
-                    LogUtils.e("视频播放"+"MainActivity------");
+                    AppLogUtils.e("视频播放"+"MainActivity------");
                 }
             }else {
                 //当页面展现时
                 if(activity instanceof MainActivity){
-                    LogUtils.e("视频播放"+"MainActivity");
+                    AppLogUtils.e("视频播放"+"MainActivity");
                 }else if(activity instanceof DetailVideoActivity){
-                    LogUtils.e("视频播放"+"DetailVideoActivity");
+                    AppLogUtils.e("视频播放"+"DetailVideoActivity");
                 }
             }
         }
-        LogUtils.e("DetailAudioFragment"+"-----onHiddenChanged-----"+hidden);
+        AppLogUtils.e("DetailAudioFragment"+"-----onHiddenChanged-----"+hidden);
     }
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LogUtils.e("DetailAudioFragment"+"-----onViewCreated-----");
+        AppLogUtils.e("DetailAudioFragment"+"-----onViewCreated-----");
     }
 
     @Override
@@ -388,7 +389,7 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
      */
     @Override
     public void onUpdateProgress(int progress) {
-        LogUtils.e("setOnPlayEventListener---progress---"+progress);
+        AppLogUtils.e("setOnPlayEventListener---progress---"+progress);
         if(progress>0){
             //如果没有拖动进度，则开始更新进度条进度
             if (!isDraggingProgress) {
@@ -400,9 +401,9 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onBufferingUpdate(int percent) {
-        LogUtils.e("setOnPlayEventListener---percent---"+percent);
+        AppLogUtils.e("setOnPlayEventListener---percent---"+percent);
         if(sbProgress.getMax()>0 && percent>0){
-            LogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
+            AppLogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
             sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
         }
     }

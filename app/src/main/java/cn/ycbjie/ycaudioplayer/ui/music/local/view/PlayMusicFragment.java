@@ -46,13 +46,11 @@ import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.weight.lrcView.YCLrcCustomView;
 
-/**
- * Created by yc on 2018/1/24.
- */
 
 public class PlayMusicFragment extends BaseFragment implements View.OnClickListener, OnPlayerEventListener {
 
@@ -439,7 +437,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         sbProgress.setProgress((int) getPlayService().getCurrentPosition());
         sbProgress.setSecondaryProgress(0);
         sbProgress.setMax((int) playingMusic.getDuration());
-        LogUtils.e("-----------------------"+(int) playingMusic.getDuration());
+        AppLogUtils.e("-----------------------"+(int) playingMusic.getDuration());
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
         tvTotalTime.setText(VideoPlayerUtils.formatTime(playingMusic.getDuration()));
@@ -541,7 +539,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onBufferingUpdate(int percent) {
         if(sbProgress.getMax()>0 && percent>0){
-            com.blankj.utilcode.util.LogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
+            AppLogUtils.e("setOnPlayEventListener---percent---"+ sbProgress.getMax() + "-----" +percent);
             sbProgress.setSecondaryProgress(sbProgress.getMax() * 100 / percent);
         }
     }

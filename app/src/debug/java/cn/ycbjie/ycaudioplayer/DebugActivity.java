@@ -1,7 +1,6 @@
 package cn.ycbjie.ycaudioplayer;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,6 +11,7 @@ import com.blankj.utilcode.util.SPUtils;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.utils.RestartAppUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
@@ -35,7 +35,7 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
     TextView tvRestartApp;
 
 
-    public static final String SELECT_STATUS = "select_status";
+    private static final String SELECT_STATUS = "select_status";
 
 
     @Override
@@ -47,7 +47,8 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        YCAppBar.setStatusBarColor(this,
+                ContextCompat.getColor(this, R.color.redTab));
         toolbarTitle.setText("设置Debug模式");
     }
 
@@ -64,7 +65,29 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initData() {
-
+        int anInt = SPUtils.getInstance(Constant.SP_NAME).getInt(SELECT_STATUS);
+        switch (anInt){
+            case 1001:
+                changeTest.setChecked(true);
+                changeTest.setChecked(false);
+                changeTest.setChecked(false);
+                break;
+            case 2001:
+                changeTest.setChecked(false);
+                changeTest.setChecked(true);
+                changeTest.setChecked(false);
+                break;
+            case 3001:
+                changeTest.setChecked(false);
+                changeTest.setChecked(false);
+                changeTest.setChecked(true);
+                break;
+            default:
+                changeTest.setChecked(true);
+                changeTest.setChecked(false);
+                changeTest.setChecked(false);
+                break;
+        }
     }
 
 
@@ -75,13 +98,13 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.change_test:
-                SPUtils.getInstance().put(SELECT_STATUS, 1001);
+                SPUtils.getInstance(Constant.SP_NAME).put(SELECT_STATUS, 1001);
                 break;
             case R.id.change_preview:
-                SPUtils.getInstance().put(SELECT_STATUS, 2001);
+                SPUtils.getInstance(Constant.SP_NAME).put(SELECT_STATUS, 2001);
                 break;
             case R.id.change_release:
-                SPUtils.getInstance().put(SELECT_STATUS, 3001);
+                SPUtils.getInstance(Constant.SP_NAME).put(SELECT_STATUS, 3001);
                 break;
             case R.id.tv_restart_app:
                 RestartAppUtils.restartAPP(this);

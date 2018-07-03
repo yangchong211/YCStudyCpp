@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.LogUtils;
 
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 
 /**
@@ -24,17 +25,17 @@ public class AudioBroadcastReceiver extends BroadcastReceiver {
                 //锁屏时处理的逻辑
                 case Constant.LOCK_SCREEN_ACTION:
                     PlayService.startCommand(context,Constant.LOCK_SCREEN_ACTION);
-                    LogUtils.e("AudioBroadcastReceiver"+"---LOCK_SCREEN");
+                    AppLogUtils.e("AudioBroadcastReceiver"+"---LOCK_SCREEN");
                     break;
                 //当屏幕灭了
                 case Intent.ACTION_SCREEN_OFF:
                     PlayService.startCommand(context,Intent.ACTION_SCREEN_OFF);
-                    LogUtils.e("AudioBroadcastReceiver"+"---当屏幕灭了");
+                    AppLogUtils.e("AudioBroadcastReceiver"+"---当屏幕灭了");
                     break;
                 //当屏幕亮了
                 case Intent.ACTION_SCREEN_ON:
                     PlayService.startCommand(context,Intent.ACTION_SCREEN_ON);
-                    LogUtils.e("AudioBroadcastReceiver"+"---当屏幕亮了");
+                    AppLogUtils.e("AudioBroadcastReceiver"+"---当屏幕亮了");
                     break;
                 default:
                     break;

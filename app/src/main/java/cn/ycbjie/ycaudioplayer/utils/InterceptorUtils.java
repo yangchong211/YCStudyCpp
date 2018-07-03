@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import okhttp3.CacheControl;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -35,7 +36,8 @@ public class InterceptorUtils {
             @Override
             public void log(String message) {
                 Log.e("OkHttp", "log = " + message);
-                JsonUtils.printJson("printJson",message);
+                //JsonUtils.printJson("printJson",message);
+                AppLogUtils.json("printJson",message);
             }
         });
         if (debug) {
