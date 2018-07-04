@@ -1,9 +1,6 @@
 package cn.ycbjie.ycaudioplayer.utils.logger;
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
@@ -14,23 +11,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.SoftReference;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -45,7 +36,7 @@ import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
  * <pre>
  *     @author yangchong
  *     blog  :
- *     time  : 2017/07/2
+ *     time  : 2018/07/2
  *     desc  : Log 相关工具类
  *     revise:
  * </pre>
@@ -122,7 +113,6 @@ public final class AppLogUtils {
     private static final String ARGS           = "args";
     private static final Config CONFIG         = new Config();
 
-    private static ExecutorService sExecutor;
     private static String sDefaultDir;// log 默认存储目录
     private static String sDir;       // log 存储目录
     private static String sFilePrefix        = "hwmcLog";// log 文件前缀
@@ -254,6 +244,7 @@ public final class AppLogUtils {
             print2File(type_low, tagHead.tag, tagHead.fileHead + body);
         }
     }
+
 
     private static TagHead processTagAndHead(String tag) {
         if (!sTagIsSpace && !sLogHeadSwitch) {
@@ -461,7 +452,9 @@ public final class AppLogUtils {
                 .append(msg)
                 .append(LINE_SEP);
         final String content = sb.toString();
-        if (input2File(content, fullPath)) {
+
+        //一边打印日志一边写入文件
+        if (PrintToFileUtil.input2File(content, fullPath)) {
             Log.d(tag, "log to " + fullPath + " success!");
         } else {
             Log.e(tag, "log to " + fullPath + " failed!");
@@ -474,7 +467,10 @@ public final class AppLogUtils {
         if (!createOrExistsDir(file.getParentFile())) return false;
         try {
             boolean isCreate = file.createNewFile();
-            if (isCreate) printDeviceInfo(filePath);
+            if (isCreate) {
+                String head = PrintToFileUtil.printDeviceInfo();
+                PrintToFileUtil.input2File(head, filePath);
+            }
             return isCreate;
         } catch (IOException e) {
             e.printStackTrace();
@@ -482,30 +478,6 @@ public final class AppLogUtils {
         }
     }
 
-    private static void printDeviceInfo(final String filePath) {
-        String versionName = "";
-        int versionCode = 0;
-        try {
-            PackageInfo pi = BaseApplication.getInstance()
-                    .getPackageManager()
-                    .getPackageInfo(BaseApplication.getInstance().getPackageName(), 0);
-            if (pi != null) {
-                versionName = pi.versionName;
-                versionCode = pi.versionCode;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        final String head = "************* Log Head ****************" +
-                "\nDevice Manufacturer: " + Build.MANUFACTURER +// 设备厂商
-                "\nDevice Model       : " + Build.MODEL +// 设备型号
-                "\nAndroid Version    : " + Build.VERSION.RELEASE +// 系统版本
-                "\nAndroid SDK        : " + Build.VERSION.SDK_INT +// SDK 版本
-                "\nApp VersionName    : " + versionName +
-                "\nApp VersionCode    : " + versionCode +
-                "\n************* Log Head ****************\n\n";
-        input2File(head, filePath);
-    }
 
     private static boolean createOrExistsDir(final File file) {
         return file != null && (file.exists() ? file.isDirectory() : file.mkdirs());
@@ -525,51 +497,6 @@ public final class AppLogUtils {
         }
         return true;
     }
-
-    /**
-     * 将内容直接写过文件中，自己设置路径
-     * 不建议直接new一个子线程做写入逻辑，建议开启线程池，避免到处开启线程损耗性能
-     * @param input                     写入内容
-     * @param filePath                  路径
-     * @return
-     */
-    private static boolean input2File(final String input, final String filePath) {
-        if (sExecutor == null) {
-            sExecutor = Executors.newSingleThreadExecutor();
-        }
-        Future<Boolean> submit = sExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                BufferedWriter bw = null;
-                try {
-                    FileWriter fileWriter = new FileWriter(filePath, true);
-                    bw = new BufferedWriter(fileWriter);
-                    bw.write(input);
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                } finally {
-                    try {
-                        if (bw != null) {
-                            bw.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        try {
-            return submit.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 
     /**
      * config 采用builder模式

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -41,6 +42,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.TabEntity;
+import cn.ycbjie.ycaudioplayer.service.AppLogService;
 import cn.ycbjie.ycaudioplayer.ui.me.view.fragment.MeFragment;
 import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
@@ -154,6 +156,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initPlayServiceListener();
         parseIntent();
         AppToolUtils.requestMsgPermission(this);
+        ServiceUtils.startService(AppLogService.class);
     }
 
     /**
