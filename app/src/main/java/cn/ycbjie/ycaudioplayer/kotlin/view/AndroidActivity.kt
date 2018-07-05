@@ -3,12 +3,12 @@ package cn.ycbjie.ycaudioplayer.kotlin.view
 import android.widget.FrameLayout
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
-import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPersenter
+import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPresenter
 import com.flyco.tablayout.CommonTabLayout
 
-class AndroidActivity : BaseActivity<AndroidPersenter>(){
+class AndroidActivity : BaseActivity<AndroidPresenter>(){
 
-    var presenter: AndroidPersenter? = null
+    var presenter: AndroidPresenter? = null
     private var mFlMain : FrameLayout?=null
     private var mCtlTable : CommonTabLayout?=null
 

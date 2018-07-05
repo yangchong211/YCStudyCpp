@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
 
 /**
  * Created by yc on 2018/1/23.
@@ -27,7 +28,8 @@ public class FileMusicUtils {
     private static final String LRC = ".lrc";
 
     private static String getAppDir() {
-        return Environment.getExternalStorageDirectory() + "/YCAudioPlayer";
+        //注意这个地方需要保存到指定的文件夹中
+        return FileSaveUtils.getLocalRootSavePathDir("music");
     }
 
     public static String getMusicDir() {
@@ -45,13 +47,8 @@ public class FileMusicUtils {
         return mkdirs(dir);
     }
 
-    public static String getLogDir() {
-        String dir = getAppDir() + "/Log/";
-        return mkdirs(dir);
-    }
-
     public static String getRelativeMusicDir() {
-        String dir = "YCAudioPlayer/Music/";
+        String dir = "ycPlayer/Music/";
         return mkdirs(dir);
     }
 

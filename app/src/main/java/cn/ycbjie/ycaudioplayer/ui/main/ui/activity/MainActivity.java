@@ -223,12 +223,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private void initFragment() {
-        mMusicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
-        mHomeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
-        mPractiseFragment = BaseFragmentFactory.getInstance().getPractiseFragment();
-        mMeFragment = BaseFragmentFactory.getInstance().getMeFragment();
         if (bundle != null) {
             int index = bundle.getInt(POSITION);
+            mMusicFragment = BaseFragmentFactory.getInstance().getMusicFragment();
+            mHomeFragment = BaseFragmentFactory.getInstance().getHomeFragment();
+            mPractiseFragment = BaseFragmentFactory.getInstance().getPractiseFragment();
+            mMeFragment = BaseFragmentFactory.getInstance().getMeFragment();
             showFragment(index);
             ctlTable.setCurrentTab(bundle.getInt(SELECT_ITEM));
         } else {
