@@ -21,7 +21,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -166,7 +165,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
 
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         type = getArguments().getString(TAG);
         initSystemBar();
         initPlayMode();

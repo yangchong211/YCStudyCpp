@@ -139,11 +139,16 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="50dp"/>
 
-    <Button
+
+
+    <!--在Android中实现阴影效果 背景阴影:https://blog.csdn.net/qq_29147849/article/details/52355795-->
+    <TextView
         android:id="@+id/btn_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:background="@drawable/elevation_layer_list"
+        android:padding="15dp"
+        android:gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:textSize="16sp"

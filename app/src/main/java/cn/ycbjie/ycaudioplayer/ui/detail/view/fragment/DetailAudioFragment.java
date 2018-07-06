@@ -162,7 +162,7 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
 
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         type = getArguments().getString(TAG);
         initToolBar();
         initYCRefreshView();

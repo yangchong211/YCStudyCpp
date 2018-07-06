@@ -45,7 +45,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         if (mPresenter != null){
             mPresenter.subscribe();
         }
-        initView();
+        initView(view);
         initListener();
         initData();
     }
@@ -74,8 +74,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     /** 返回一个用于显示界面的布局id */
     public abstract int getContentView();
 
-    /** 初始化View的代码写在这个方法中 */
-    public abstract void initView();
+    /** 初始化View的代码写在这个方法中
+     * @param view*/
+    public abstract void initView(View view);
 
     /** 初始化监听器的代码写在这个方法中 */
     public abstract void initListener();

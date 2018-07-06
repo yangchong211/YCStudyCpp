@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
  *             3.如果之前日志记录在内存卡中，后期有sd卡，那么会将之前内存中的文件拷贝到SDCard中
  *             4.可以监听sd卡装载和卸载广播，从而切换保存日志的保存路径
  *             5.sd卡中可以设置日志保存的最长周期，目前设置为7天
- *             6.当写入日志的文件大于自定义最大值(目前是10M)，可以自动切换到下一个文件夹
+ *             6.当写入日志的文件大于自定义最大值(目前是2M)，可以自动切换到下一个文件夹
  *             7.支持清除日志缓存，每次记录日志之前先清除日志的缓存, 不然会在两个日志文件中记录重复的日志
  *             8.收集的日志包括：d，v，e，w，c
  *             9.支持超出最长保存日期后自动删除文件逻辑，删除逻辑是：取以日期命名的文件名称与当前时间比较
@@ -63,6 +64,11 @@ import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
  *             2.Android将Log写入文件：https://blog.csdn.net/u011326979/article/details/50887541
  *             3.优化Android Log类，并保存日志内容至文件：https://blog.csdn.net/flueky/article/details/77164172
  *             4.代码中获取Logcat打印日志并存放于文件中：https://blog.csdn.net/w71451000/article/details/52355522
+ *
+ *    出现bug：
+ *             1.出现因为权限问题导致崩溃……               解决办法：添加权限判断
+ *             2.打印的文件内容汉字部分出现乱码            解决办法：设置编码为utf-8
+ *             3.写满文件切换下一个文件接着写日志崩溃       解决办法：休眠1秒，创建文件，然后处理文件
  * </pre>
  */
 
@@ -72,8 +78,10 @@ public class AppLogService extends Service {
     //日志
     private static final String TAG = "LogService";
 
-    //内存中日志文件最大值，10M
-    private static final int MEMORY_LOG_FILE_MAX_SIZE = 10 * 1024 * 1024;
+    //为了避免乱码，注意需要将编码设置成utf-8
+    private static final String UNICODE = "utf-8";
+    //内存中日志文件最大值，2M
+    private static final int MEMORY_LOG_FILE_MAX_SIZE = 2 * 1024 * 1024;
     //内存中的日志文件大小监控时间间隔，10分钟
     private static final int MEMORY_LOG_FILE_MONITOR_INTERVAL = 10 * 60 * 1000;
     //sd卡中日志文件的最多保存天数
@@ -177,8 +185,12 @@ public class AppLogService extends Service {
 
         try {
             FileOutputStream fos = new FileOutputStream(LOG_SERVICE_LOG_PATH, true);
-            writer = new OutputStreamWriter(fos);
+            writer = new OutputStreamWriter(fos,UNICODE);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);
         }
 
@@ -658,7 +670,8 @@ public class AppLogService extends Service {
         if (file.isDirectory()) {
             File[] allFiles = file.listFiles();
             Arrays.sort(allFiles, new FileComparator());
-            for (int i=0;i<allFiles.length-2;i++) {  //"-2"保存最近的两个日志文件
+            //"-2"保存最近的两个日志文件
+            for (int i=0;i<allFiles.length-2;i++) {
                 File _file =  allFiles[i];
                 if (logServiceLogName.equals(_file.getName()) ||  _file.getName().equals(CURR_INSTALL_LOG_NAME)) {
                     continue;
@@ -778,7 +791,7 @@ public class AppLogService extends Service {
 
         public void run() {
             try {
-                InputStreamReader isr = new InputStreamReader(is);
+                InputStreamReader isr = new InputStreamReader(is,UNICODE);
                 BufferedReader br = new BufferedReader(isr);
                 String line ;
                 while ((line = br.readLine()) != null) {

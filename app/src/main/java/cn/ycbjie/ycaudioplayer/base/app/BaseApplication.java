@@ -15,6 +15,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.net.Proxy;
 
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
@@ -193,22 +194,40 @@ public class BaseApplication extends Application {
      */
     private void initUtils() {
         AppLogUtils.Config config = AppLogUtils.getConfig();
-        //边框开关，设置打开
-        config.setBorderSwitch(true);
-        //logcat 是否打印，设置打印
-        config.setConsoleSwitch(true);
-        //设置打印日志总开关，线上时关闭
-        config.setLogSwitch(true);
-        //设置可以写入文件。默认是false
-        config.setLog2FileSwitch(true);
-        //String property = System.getProperty("file.separator");
-        //String cacheDir = this.getCacheDir() + property + "yc" + property;
-        //设置log日志的文件路径
-        String logger = FileSaveUtils.getLocalRootSavePathDir("logger");
-        ///storage/emulated/0/yc/logger/
-        Log.e("日志存储地址" ,logger);
-        //设置存储的路径
-        config.setDir(logger);
+        if(BuildConfig.IS_DEBUG){
+            //边框开关，设置打开
+            config.setBorderSwitch(true);
+            //logcat 是否打印，设置打印
+            config.setConsoleSwitch(true);
+            //设置打印日志总开关，线上时关闭
+            config.setLogSwitch(true);
+            //设置可以写入文件。默认是false
+            config.setLog2FileSwitch(true);
+            //String property = System.getProperty("file.separator");
+            //String cacheDir = this.getCacheDir() + property + "yc" + property;
+            //设置log日志的文件路径
+            String logger = FileSaveUtils.getLocalRootSavePathDir("logger");
+            ///storage/emulated/0/yc/logger/
+            Log.e("日志存储地址" ,logger);
+            //设置存储的路径
+            config.setDir(logger);
+        }else {
+            config.setLogSwitch(false);
+        }
+
+        switch (BuildConfig.URL_CONFIG){
+            case 0:
+                Log.e("BuildConfig","测试");
+                break;
+            case 1:
+                Log.e("BuildConfig","仿真");
+                break;
+            case 2:
+                Log.e("BuildConfig","线上");
+                break;
+            default:
+                break;
+        }
     }
 
 }

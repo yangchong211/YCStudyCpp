@@ -74,6 +74,7 @@
             android:exported="false"
             android:theme="@style/LockScreenTheme"/>
         <activity android:name=".DebugActivity"/>
+        <activity android:name=".kotlin.view.activity.AndroidActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>

@@ -72,7 +72,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initViewPager();
         initFragment();
     }

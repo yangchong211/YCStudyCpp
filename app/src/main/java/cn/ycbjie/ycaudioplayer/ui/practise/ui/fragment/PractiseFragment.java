@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -66,7 +67,7 @@ public class PractiseFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initVLayout();
         initRefreshView();
     }

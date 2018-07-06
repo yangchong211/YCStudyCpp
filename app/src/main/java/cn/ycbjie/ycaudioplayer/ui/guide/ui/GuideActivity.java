@@ -283,13 +283,13 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO,
-            //Manifest.permission.WRITE_SETTINGS
     };
 
     @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
     public void locationPermissionsTask() {
         //检查是否获取该权限
         if (hasPermissions()) {
+            startCheckService();
             //具备权限 直接进行操作
             startLoading();
             //startCheckService();
@@ -301,7 +301,6 @@ public class GuideActivity extends BaseActivity implements GuideContract.View ,E
             EasyPermissions.requestPermissions(this,
                     getString(R.string.easy_permissions), RC_LOCATION_CONTACTS_PERM, LOCATION_AND_CONTACTS);
         }
-        startCheckService();
     }
 
 

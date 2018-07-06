@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.NetworkUtils;
@@ -58,7 +59,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initRecyclerView();
     }
 

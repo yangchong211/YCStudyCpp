@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
@@ -23,6 +24,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
+import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
@@ -61,7 +63,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Bind(R.id.rl_me_phone)
     LinearLayout rlMePhone;
     @Bind(R.id.btn_exit)
-    Button btnExit;
+    TextView btnExit;
     private MainActivity activity;
 
     @Override
@@ -83,7 +85,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
 
     }
 
@@ -114,7 +116,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.rl_me_setting:
-                startActivity(MeSettingActivity.class);
+                ActivityUtils.startActivity(MeSettingActivity.class);
                 break;
             case R.id.ll_timer:
                 timerDialog(activity);
@@ -126,7 +128,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.btn_exit:
-                exit();
+                ActivityUtils.startActivity(AndroidActivity.class);
+                //exit();
                 break;
             default:
                 break;

@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.pedaily.yc.ycdialoglib.selectDialog.CustomSelectDialog;
 
@@ -40,7 +39,7 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
  * </pre>
  */
 
-public class ClassCacheActivity extends BaseActivity implements View.OnClickListener {
+public class ClassDlCacheActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.ll_title_menu)
     FrameLayout flTitleMenu;
@@ -83,7 +82,7 @@ public class ClassCacheActivity extends BaseActivity implements View.OnClickList
         cacheDownloadingAdapter.setOnListItemClickListener(new OnListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ToastUtil.showToast(ClassCacheActivity.this,"点击事件"+position);
+                ToastUtil.showToast(ClassDlCacheActivity.this,"点击事件"+position);
             }
         });
         cacheDownloadingAdapter.setOnMoreClickListener(new OnMoreClickListener() {
@@ -197,13 +196,13 @@ public class ClassCacheActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        ToastUtil.showToast(ClassCacheActivity.this, "下载" + index);
+                        ToastUtil.showToast(ClassDlCacheActivity.this, "下载" + index);
                         break;
                     case 1:
-                        ToastUtil.showToast(ClassCacheActivity.this, "分享" + index);
+                        ToastUtil.showToast(ClassDlCacheActivity.this, "分享" + index);
                         break;
                     case 2:
-                        ToastUtil.showToast(ClassCacheActivity.this, "取消收藏" + index);
+                        ToastUtil.showToast(ClassDlCacheActivity.this, "取消收藏" + index);
                         break;
                     default:
                         break;

@@ -69,7 +69,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initRecyclerView();
     }
 

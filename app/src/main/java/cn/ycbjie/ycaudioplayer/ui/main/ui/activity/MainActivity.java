@@ -24,6 +24,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.meituan.android.walle.WalleChannelReader;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
@@ -53,6 +54,8 @@ import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+
+import static com.meituan.android.walle.WalleChannelReader.*;
 
 /**
  * 关于bug整理，主页面
@@ -157,6 +160,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         parseIntent();
         AppToolUtils.requestMsgPermission(this);
         ServiceUtils.startService(AppLogService.class);
+        String channel = getChannel(this.getApplicationContext());
     }
 
     /**

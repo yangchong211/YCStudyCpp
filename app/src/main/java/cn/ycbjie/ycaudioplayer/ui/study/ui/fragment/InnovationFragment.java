@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.yc.cn.ycbannerlib.BannerView;
 import com.yc.cn.ycbannerlib.util.SizeUtil;
@@ -67,7 +66,7 @@ public class InnovationFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initYCRefreshView();
     }
 

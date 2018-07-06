@@ -71,7 +71,7 @@ public class StudyFragment extends BaseFragment {
 
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         initYCRefreshView();
     }
 
