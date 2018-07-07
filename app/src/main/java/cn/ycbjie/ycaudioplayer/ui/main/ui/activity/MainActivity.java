@@ -24,7 +24,6 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.meituan.android.walle.WalleChannelReader;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
 import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -52,6 +52,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.local.view.PlayMusicFragment;
 import cn.ycbjie.ycaudioplayer.ui.practise.ui.fragment.PractiseFragment;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
+import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
@@ -161,6 +162,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         AppToolUtils.requestMsgPermission(this);
         ServiceUtils.startService(AppLogService.class);
         String channel = getChannel(this.getApplicationContext());
+        AppLogUtils.eTag("渠道"+channel);
     }
 
     /**

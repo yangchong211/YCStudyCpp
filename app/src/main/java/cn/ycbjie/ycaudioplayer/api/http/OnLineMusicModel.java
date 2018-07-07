@@ -1,11 +1,8 @@
 package cn.ycbjie.ycaudioplayer.api.http;
 
 
-import com.blankj.utilcode.util.SPUtils;
 
-import cn.ycbjie.ycaudioplayer.DebugActivity;
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper;
-import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
@@ -26,7 +23,8 @@ public class OnLineMusicModel {
      * 3001，正式接口
      */
     static {
-        int anInt = SPUtils.getInstance(Constant.SP_NAME).getInt(DebugActivity.SELECT_STATUS);
+        //int anInt = SPUtils.getInstance(Constant.SP_NAME).getInt(DebugActivity.SELECT_STATUS);
+        int anInt = 1001;
         switch (anInt){
             case 1001:
                 BASE_URL = "http://tingapi.ting.baidu.com/";

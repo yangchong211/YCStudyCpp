@@ -84,8 +84,8 @@ public class AppLogService extends Service {
     private static final int MEMORY_LOG_FILE_MAX_SIZE = 2 * 1024 * 1024;
     //内存中的日志文件大小监控时间间隔，10分钟
     private static final int MEMORY_LOG_FILE_MONITOR_INTERVAL = 10 * 60 * 1000;
-    //sd卡中日志文件的最多保存天数
-    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 7;
+    //sd卡中日志文件的最多保存天数为3天
+    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 3;
     //日志文件在内存中的路径(日志文件在安装目录中的路径)
     private String LOG_PATH_MEMORY_DIR;
     //日志文件在sdcard中的路径【主要这个很重要】
@@ -176,7 +176,8 @@ public class AppLogService extends Service {
 
     private void init(){
         //日志文件在内存中的路径(日志文件在安装目录中的路径)
-        LOG_PATH_MEMORY_DIR = getFilesDir().getAbsolutePath() + File.separator + "log";
+        //LOG_PATH_MEMORY_DIR = getFilesDir().getAbsolutePath() + File.separator + "log";
+        LOG_PATH_MEMORY_DIR = FileSaveUtils.getLocalRootSavePathDir("memory") + File.separator + "log";
         //本服务产生的日志，记录日志服务开启失败信息
         String LOG_SERVICE_LOG_PATH = LOG_PATH_MEMORY_DIR + File.separator + logServiceLogName;
         //日志文件在sdcard中的路径

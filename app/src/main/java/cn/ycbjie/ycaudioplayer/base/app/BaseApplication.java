@@ -215,6 +215,7 @@ public class BaseApplication extends Application {
             config.setLogSwitch(false);
         }
 
+        //这里的BuildConfig是由gradle动态生成的
         switch (BuildConfig.URL_CONFIG){
             case 0:
                 Log.e("BuildConfig","测试");
