@@ -103,8 +103,6 @@ public class RetrofitWrapper {
         }
 
 
-        //解析json
-        Gson gson = JsonUtils.getJson();
         //获取实例
         mRetrofit = new Retrofit
                 //设置OKHttpClient,如果不设置会提供一个默认的
@@ -112,7 +110,7 @@ public class RetrofitWrapper {
                 //设置baseUrl
                 .baseUrl(url)
                 //添加Gson转换器
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(JsonUtils.getJson()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(build)
                 .build();
