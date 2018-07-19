@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.utils;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import okhttp3.CacheControl;
 import okhttp3.Cookie;
@@ -26,6 +28,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 
 public class InterceptorUtils {
+
 
     /**
      * 创建日志拦截器
@@ -83,6 +86,7 @@ public class InterceptorUtils {
                 Request originRequest = chain.request();
                 Request request;
                 HttpUrl httpUrl = originRequest.url().newBuilder()
+                        //使用UTF-8对查询参数进行编码，并将其添加到此URL的查询字符串中
                         .addQueryParameter("paltform", "android")
                         .addQueryParameter("version", "1.0.0")
                         .build();
@@ -135,6 +139,44 @@ public class InterceptorUtils {
         };
         return commonParams;
     }
+
+    /**
+     * 网络缓存拦截器，网络连接时请求服务器，否则从本地缓存中获取
+     * @return
+     */
+    public static Interceptor addNetWorkInterceptor(){
+        Interceptor interceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                if (!NetworkUtils.isConnected()) {
+                    request = request.newBuilder()
+                            .cacheControl(CacheControl.FORCE_CACHE)
+                            .build();
+                    LogUtils.d("addNetWorkInterceptor"+ "没有网络链接");
+                }
+                Response response = chain.proceed(request);
+                if (NetworkUtils.isConnected()) {
+                    int maxAge = 0; // 有网络时 设置缓存超时时间0个小时
+                    LogUtils.d("addNetWorkInterceptor"+ "网络已连接，缓存时间为：" + maxAge);
+                    response = response.newBuilder()
+                            .addHeader("Cache-Control", "public, max-age=" + maxAge)
+                            .removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+                            .build();
+                } else {
+                    int maxStale = Constant.TIME_CACHE;
+                    LogUtils.d("addNetWorkInterceptor"+ "网络未连接，缓存时间为：" + maxStale);
+                    response = response.newBuilder()
+                            .addHeader("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                            .removeHeader("Pragma")
+                            .build();
+                }
+                return response;
+            }
+        };
+        return interceptor;
+    }
+
 
     /**
      * 自定义CookieJar

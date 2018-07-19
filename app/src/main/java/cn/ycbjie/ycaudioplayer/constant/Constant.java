@@ -96,4 +96,14 @@ public class Constant {
     public static final String APP_OPEN_COUNT = "app_open_count";
     public static final String PLAY_POSITION = "play_position";
 
+    /**
+     * 网络缓存最大值
+     */
+    public static final int CACHE_MAXSIZE = 1024 * 1024 * 30;
+
+    /**
+     * 网络缓存保存时间
+     */
+    public static final int TIME_CACHE = 60 * 60; // 一小时
+
 }

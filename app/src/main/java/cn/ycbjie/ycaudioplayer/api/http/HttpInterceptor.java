@@ -4,6 +4,7 @@ import android.os.Build;
 
 import java.io.IOException;
 
+import okhttp3.Cookie;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,6 +26,7 @@ public class HttpInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request()
                 .newBuilder()
+                //添加具有{@代码名}和{@代码值}的Header。更喜欢这种多值头的方法，比如“Cookie”。
                 .addHeader(UA, makeUA())
                 .build();
         return chain.proceed(request);

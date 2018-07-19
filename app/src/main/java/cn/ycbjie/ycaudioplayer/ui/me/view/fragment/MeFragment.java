@@ -3,10 +3,12 @@ package cn.ycbjie.ycaudioplayer.ui.me.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
@@ -21,9 +25,11 @@ import com.ns.yc.ycutilslib.activityManager.AppManager;
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
@@ -32,7 +38,6 @@ import cn.ycbjie.ycaudioplayer.utils.QuitTimer;
 
 /**
  * Created by yc on 2018/1/24.
- *
  */
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
@@ -64,6 +69,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout rlMePhone;
     @Bind(R.id.btn_exit)
     TextView btnExit;
+    @Bind(R.id.tv_author)
+    TextView tvAuthor;
     private MainActivity activity;
 
     @Override
@@ -86,7 +93,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initView(View view) {
-
+        tvAuthor.setText(SPUtils.getInstance(Constant.SP_NAME).getString("name", "杨充"));
     }
 
     @Override
@@ -108,7 +115,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_me_collect:
 
                 break;
@@ -154,10 +161,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 弹出定时停止播放对话框
-     * @param activity              activity上下文
+     *
+     * @param activity activity上下文
      */
     private static void timerDialog(final Activity activity) {
-        if(VideoPlayerUtils.isActivityLiving(activity)){
+        if (VideoPlayerUtils.isActivityLiving(activity)) {
             String[] stringArray = activity.getResources().getStringArray(R.array.timer_text);
             new AlertDialog.Builder(activity)
                     .setTitle("定时停止播放")
@@ -175,8 +183,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 开启倒计时器
-     * @param activity              activity上下文
-     * @param time                  time时间
+     *
+     * @param activity activity上下文
+     * @param time     time时间
      */
     private static void startTimer(Activity activity, int time) {
         QuitTimer.getInstance().start(time * 60 * 1000);
@@ -188,6 +197,17 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

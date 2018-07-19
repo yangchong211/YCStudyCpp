@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -16,10 +17,14 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
+import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.utils.InterceptorUtils;
 import cn.ycbjie.ycaudioplayer.utils.JsonUtils;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,9 +46,11 @@ public class RetrofitWrapper {
 
 
     public  static RetrofitWrapper getInstance(String url){
-        //synchronized 避免同时调用多个接口，导致线程并发
-        synchronized (RetrofitWrapper.class){
-            instance = new RetrofitWrapper(url);
+        if(instance==null){
+            //synchronized 避免同时调用多个接口，导致线程并发
+            synchronized (RetrofitWrapper.class){
+                instance = new RetrofitWrapper(url);
+            }
         }
         return instance;
     }
@@ -63,29 +70,38 @@ public class RetrofitWrapper {
         //添加请求头拦截器
         //builder.addInterceptor(InterceptorUtils.getRequestHeader());
 
+        //添加网络缓存缓存
+        //创建Cache
+        if(BuildConfig.IS_DEBUG){
+            File httpCacheDirectory = new File("OkHttpCache");
+            Cache cache = new Cache(httpCacheDirectory, Constant.CACHE_MAXSIZE);
+            builder.cache(cache);
+            //添加网络拦截器
+            builder.addNetworkInterceptor(InterceptorUtils.getCacheInterceptor());
+            builder.addInterceptor(InterceptorUtils.getCacheInterceptor());
+        }
+
+
         //添加统一请求拦截器
         //builder.addInterceptor(InterceptorUtils.commonParamsInterceptor());
-
-        //添加缓存拦截器
-        //创建Cache
-        //File httpCacheDirectory = new File("OkHttpCache");
-        //Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-        //builder.cache(cache);
-
-        //设置缓存
-        //builder.addNetworkInterceptor(InterceptorUtils.getCacheInterceptor());
-        //builder.addInterceptor(InterceptorUtils.getCacheInterceptor());
+        //添加网络缓存拦截器，网络连接时请求服务器，否则从本地缓存中获取
+        builder.addInterceptor(InterceptorUtils.addNetWorkInterceptor());
 
         //添加自定义CookieJar
         //InterceptorUtils.addCookie(builder);
-
 
         // Install the all-trusting trust manager
         initSSL();
         //设置读取超时时间，连接超时时间，写入超时时间值
         initTimeOut();
-        //错误重连
-        builder.retryOnConnectionFailure(true);
+        if(BuildConfig.IS_DEBUG){
+            //不需要错误重连
+            builder.retryOnConnectionFailure(false);
+        }else {
+            //错误重连
+            builder.retryOnConnectionFailure(true);
+        }
+
 
         //解析json
         Gson gson = JsonUtils.getJson();

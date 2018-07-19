@@ -1,5 +1,7 @@
 #### 目录介绍
 - 1.Gradle多渠道打包
+- 2.aidl多进程通信
+- 3.关于网络环境切换
 
 
 
@@ -9,11 +11,12 @@
 - 彻底弄明白Gradle相关配置：https://www.jianshu.com/p/8b8a550246bd
 
 
+#### 2.aidl多进程通信
+- Android 进程间的通信之AIDL：https://www.jianshu.com/p/63ad02ee266d
 
 
-
-
-
+#### 3.关于网络环境切换
+- 可以直接修改url.properties文件中的TEST_URL = n这行，当n=0时代表debug；当n=1时代表preview；当n=2时代表release
 
 
 

@@ -17,11 +17,11 @@ import com.ns.yc.ycutilslib.switchButton.SwitchButton;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.DebugActivity;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
-import cn.ycbjie.ycaudioplayer.constant.BuildAppConfig;
 import cn.ycbjie.ycaudioplayer.utils.file.FileCacheUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
@@ -90,7 +90,7 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initActionBar() {
-        if(BuildAppConfig.IS_DEBUG){
+        if(BuildConfig.IS_DEBUG){
             toolbarTitle.setText("个人设置(3连击切换调试页面)");
         }else{
             toolbarTitle.setText("个人设置");
@@ -115,7 +115,7 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
                 cleanCache();
                 break;
             case R.id.toolbar_title:
-                if(BuildAppConfig.IS_DEBUG){
+                if(BuildConfig.IS_DEBUG){
                     // 数组依次先前移动一位
                     System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
                     // 开机后运行时间

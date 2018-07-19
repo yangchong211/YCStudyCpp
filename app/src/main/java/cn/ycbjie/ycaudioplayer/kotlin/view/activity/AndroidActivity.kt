@@ -73,13 +73,12 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     }
 
     override fun initView() {
-        mTvTitleLeft = findViewById(R.id.tv_title_left) as TextView?
-        mLlTitleMenu = findViewById(R.id.ll_title_menu) as FrameLayout?
-        mToolbarTitle = findViewById(R.id.toolbar_title) as TextView?
-        mIvRightImg = findViewById(R.id.iv_right_img) as ImageView?
-        viewPager = findViewById(R.id.vp_pager) as ViewPager?
-        ctlTable = findViewById(R.id.ctl_table) as CommonTabLayout?
-
+        mTvTitleLeft = findViewById(R.id.tv_title_left)
+        mLlTitleMenu = findViewById(R.id.ll_title_menu)
+        mToolbarTitle = findViewById(R.id.toolbar_title)
+        mIvRightImg = findViewById(R.id.iv_right_img)
+        viewPager = findViewById(R.id.vp_pager)
+        ctlTable = findViewById(R.id.ctl_table)
         mTvTitleLeft!!.visibility = View.VISIBLE
         mTvTitleLeft!!.textSize = 16.0f
         mTvTitleLeft!!.typeface = Typeface.DEFAULT

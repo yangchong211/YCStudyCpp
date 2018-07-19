@@ -76,6 +76,14 @@
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>
         <service android:name=".service.AppLogService"/>
+        <service android:name=".service.AppInfoService"
+            android:process=":remote"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
 
 
         <receiver android:name=".receiver.NotificationStatusBarReceiver">

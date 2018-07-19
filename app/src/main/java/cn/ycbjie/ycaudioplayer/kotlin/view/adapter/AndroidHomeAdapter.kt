@@ -26,12 +26,12 @@ class AndroidHomeAdapter : RecyclerArrayAdapter<HomeData>{
     private inner class ViewHolder internal constructor(parent: ViewGroup) :
             BaseViewHolder<HomeData>(parent, R.layout.item_android_home_news) {
 
-        internal var tvName: TextView = `$`(R.id.tv_name)
-        internal var tvTitle: TextView = `$`(R.id.tv_title)
+        internal var tvName: TextView = getView(R.id.tv_name)
+        internal var tvTitle: TextView = getView(R.id.tv_title)
 
         override fun setData(data: HomeData?) {
             super.setData(data)
-            tvName.text = data!!.title
+            tvName.text = data!!.chapterName
             tvTitle.text = data.title
         }
     }

@@ -154,4 +154,16 @@
         android:textSize="16sp"
         android:text="退出程序"/>
 
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/elevation_layer_list"
+        android:padding="15dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="16sp"
+        android:text=""/>
+
 </LinearLayout>

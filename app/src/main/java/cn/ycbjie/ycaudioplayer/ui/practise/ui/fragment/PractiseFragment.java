@@ -85,6 +85,9 @@ public class PractiseFragment extends BaseLazyFragment {
     @Override
     public void onLazyLoad() {
         getData();
+        //设置适配器
+        delegateAdapter.setAdapters(mAdapters);
+        recyclerView.requestLayout();
     }
 
 
@@ -324,9 +327,6 @@ public class PractiseFragment extends BaseLazyFragment {
         hotList.add("1");
         hotList.add("1");
         hotAdapter.setData(hotList);
-        //设置适配器
-        delegateAdapter.setAdapters(mAdapters);
-        recyclerView.requestLayout();
     }
 
 
