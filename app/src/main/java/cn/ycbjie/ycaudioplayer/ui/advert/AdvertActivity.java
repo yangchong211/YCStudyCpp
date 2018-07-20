@@ -1,7 +1,10 @@
 package cn.ycbjie.ycaudioplayer.ui.advert;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -58,6 +61,8 @@ public class AdvertActivity extends BaseActivity implements View.OnClickListener
     public void initListener() {
         cdvTime.setOnClickListener(this);
         ivSplash.setOnClickListener(this);
+
+
     }
 
 

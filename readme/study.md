@@ -20,6 +20,7 @@
 
 #### 4.kotlin学习计划
 - 学习之旅：https://www.jianshu.com/c/10545ba15cb3
+- 玩Android ： http://www.wanandroid.com/article/list/0?cid=232
 
 
 

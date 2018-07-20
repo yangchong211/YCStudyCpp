@@ -1,11 +1,14 @@
 package cn.ycbjie.ycaudioplayer.kotlin.model.helper
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import network.request.RequestApi
+import network.response.ResponseBean
 import retrofit2.Response
 
 
@@ -28,17 +31,26 @@ class AndroidHelper private constructor() {
 
     }
 
-    fun <T> toObservable(o: Observable<T>): Observable<T> {
-        return o.subscribeOn(Schedulers.io())//网络请求在子线程，所以是在io线程，避免阻塞线程
-                .unsubscribeOn(Schedulers.io())//取消请求的的时候在 io 线程，避免阻塞线程
-                .observeOn(AndroidSchedulers.mainThread())
-    }
-
     /**
      * 获取主页文章
      */
-    fun getHomeList(page: Int): Observable<HomeListBean> {
+    fun getHomeList(page: Int): Observable<ResponseBean<HomeListBean>> {
         return mApiService.getHomeList(page)
+    }
+
+    /**
+     * 获取首页banner数据
+     */
+    fun getBanner(): Observable<ResponseBean<List<BannerBean>>> {
+        return mApiService.getBanner()
+    }
+
+
+    /**
+     * 获取知识树
+     */
+    fun getKnowledgeTree(): Observable<ResponseBean<List<TreeBean>>> {
+        return mApiService.getKnowledgeTreeList()
     }
 
 }

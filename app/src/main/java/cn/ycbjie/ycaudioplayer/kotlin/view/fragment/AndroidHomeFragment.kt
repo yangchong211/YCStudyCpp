@@ -1,22 +1,26 @@
 package cn.ycbjie.ycaudioplayer.kotlin.view.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
+import cn.ycbjie.ycaudioplayer.kotlin.base.BaseItemView
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidHomePresenter
-import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
+import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
+import com.yc.cn.ycbannerlib.BannerView
+import com.yc.cn.ycbannerlib.util.SizeUtil
+import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.YCRefreshView
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine
@@ -26,20 +30,40 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
 
 
     private var recyclerView : YCRefreshView ?=null
-    private var activity: AndroidActivity? = null
-    var presenter: AndroidHomePresenter? = null
+    private var activity: Activity? = null
+    private var presenter: AndroidHomePresenter? = null
     private var page: Int = 0
     private lateinit var adapter: AndroidHomeAdapter
+    private var mBanner: BannerView? = null
+    /**
+     * 循环轮询的数据
+     */
+    private val bannerLists = mutableListOf<BannerBean>()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        activity = context as AndroidActivity?
+        activity = context as Activity?
     }
 
     override fun onDetach() {
         super.onDetach()
         activity = null
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (mBanner!=null){
+            mBanner!!.resume()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (mBanner!=null){
+            mBanner!!.pause()
+        }
+    }
+
 
     override fun getContentView(): Int {
         return R.layout.base_easy_recycle
@@ -57,7 +81,9 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
     }
 
     override fun initData() {
+        recyclerView?.showProgress()
         presenter?.getHomeList(page)
+        presenter?.getBannerData(true)
     }
 
     private fun initRecyclerView() {
@@ -74,7 +100,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
         recyclerView!!.setRefreshListener({
             if (NetworkUtils.isConnected()) {
                 page = 0
-                initData()
+                presenter?.getHomeList(page)
             } else {
                 recyclerView!!.setRefreshing(false)
                 ToastUtil.showToast(activity, "没有网络")
@@ -86,7 +112,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                 if (NetworkUtils.isConnected()) {
                     if (adapter.allData.size > 0) {
                         page++
-                        initData()
+                        presenter?.getHomeList(page)
                     } else {
                         adapter.pauseMore()
                     }
@@ -131,19 +157,40 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
         })
     }
 
-    override fun setDataView(homeListBean: HomeListBean) {
-        if(homeListBean.datas!=null){
+    override fun setBannerView(bean: ResponseBean<List<BannerBean>>?) {
+        if(bean?.data != null){
+            adapter.removeAllHeader()
+            val itemView = object : BaseItemView(activity, R.layout.view_vlayout_banner) {
+                override fun setBindView(headerView: View) {
+                    bannerLists.addAll(bean.data!!)
+                    mBanner = headerView.findViewById<View>(R.id.banner) as BannerView
+                    mBanner!!.setHintGravity(1)
+                    mBanner!!.setAnimationDuration(1000)
+                    mBanner!!.setPlayDelay(2000)
+                    mBanner!!.setHintPadding(0, 0, 0, SizeUtil.dip2px(activity, 10f))
+                    mBanner!!.setAdapter(BannerPagerAdapter(activity, bannerLists))
+                    mBanner!!.setOnBannerClickListener { position: Int ->
+                        if(position>=0 && bannerLists.size>position){
+
+                        }
+                    }
+                }
+            }
+            adapter.addHeader(itemView)
+        }
+    }
+
+
+    override fun setDataView(bean: ResponseBean<HomeListBean>) {
+        if(bean.data!=null){
             recyclerView?.showRecycler()
-            adapter.addAll(homeListBean.datas)
-            adapter.notifyDataSetChanged()
+            adapter.addAll(bean.data!!.datas)
         }else{
             recyclerView?.showEmpty()
         }
     }
 
     override fun setNetWorkErrorView() {
-
-
         recyclerView?.showError()
     }
 

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'walle'
+apply plugin: 'kotlin-android-extensions'
 
 // 注：需要配置符号表时，使用bugly插件，使APP Crash堆栈的可读性更高，建议您配置符号表文件
 apply plugin: 'bugly'

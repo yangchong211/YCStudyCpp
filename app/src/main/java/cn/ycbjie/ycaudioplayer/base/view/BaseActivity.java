@@ -8,7 +8,6 @@ import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
 

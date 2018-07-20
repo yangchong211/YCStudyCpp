@@ -3,6 +3,7 @@ package network.request
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.*
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import io.reactivex.Observable
+import network.response.ResponseBean
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.GET
@@ -32,13 +33,13 @@ interface RequestApi {
     @GET("/article/list/{page}/json")
     fun getHomeList(
             @Path("page") page: Int
-    ): Observable<HomeListBean>
+    ): Observable<ResponseBean<HomeListBean>>
 
     /**
      * 获取首页banner数据
      */
     @GET("banner/json")
-    fun getBanner(): Observable<List<BannerBean>>
+    fun getBanner(): Observable<ResponseBean<List<BannerBean>>>
 
 
     /**
@@ -66,7 +67,7 @@ interface RequestApi {
     @GET("tree/json")
     fun getKnowledgeTreeList(
 
-    ): Observable<Response<List<TreeBean>>>
+    ): Observable<ResponseBean<List<TreeBean>>>
 
 
     /**

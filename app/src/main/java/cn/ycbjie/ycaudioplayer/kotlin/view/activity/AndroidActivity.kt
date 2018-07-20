@@ -50,10 +50,13 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
      *   并且Kotlin可以自动判断变量的类型。
      *
      * 1.常量
-     *      常量使用val关键字
+     *      常量使用val关键字，val代表只读
      *
      * 2.变量
-     *      变量使用var关键字
+     *      变量使用var关键字，val代表可变
+     *
+     * val是线程安全的，并且必须在定义时初始化，所以不需要担心 null 的问题
+     * 强烈推荐能用val的地方就用val
      */
     private var mTvTitleLeft :TextView?=null
     private var mLlTitleMenu :FrameLayout?=null
@@ -77,6 +80,17 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         return R.layout.activity_wan_android
     }
 
+
+    /**
+     * 1. ?: Elvis 操作符
+     *       val l = b?.length ?: -1
+     *       如果 ?: 左侧表达式非空，elvis 操作符就返回其左侧表达式，否则返回右侧表达式。
+     *       注意:当且仅当左侧为空时，才会对右侧表达式求值。
+     *
+     * 2. !! 操作符：
+     *      这是为空指针爱好者准备的，非空断言运算符（!!）将任何值转换为非空类型，若该值为空则抛出异常
+     *      能不用!!操作符就不要用。。。
+     */
     override fun initView() {
         YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         mTvTitleLeft = findViewById(R.id.tv_title_left)
@@ -185,20 +199,20 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     private fun selectByIndex(position: Int) {
         when (position){
             0 ->{
-                ctlTable!!.currentTab = 0
-                mTvTitleLeft!!.text = "首页"
+                ctlTable?.currentTab = 0
+                mTvTitleLeft?.text = "首页"
             }
             1 ->{
-                ctlTable!!.currentTab = 1
-                mTvTitleLeft!!.text = "项目"
+                ctlTable?.currentTab = 1
+                mTvTitleLeft?.text = "项目"
             }
             2 ->{
-                ctlTable!!.currentTab = 2
-                mTvTitleLeft!!.text = "博客"
+                ctlTable?.currentTab = 2
+                mTvTitleLeft?.text = "博客"
             }
             3 ->{
-                ctlTable!!.currentTab = 3
-                mTvTitleLeft!!.text = "我的"
+                ctlTable?.currentTab = 3
+                mTvTitleLeft?.text = "我的"
             }
             else -> {
                 // 默认，相当于switch中default

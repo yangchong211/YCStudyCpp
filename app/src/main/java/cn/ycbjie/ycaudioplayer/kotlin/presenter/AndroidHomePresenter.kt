@@ -1,8 +1,6 @@
 package cn.ycbjie.ycaudioplayer.kotlin.presenter
 
 
-import android.util.Log
-import cn.ycbjie.ycaudioplayer.R.id.recyclerView
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.helper.AndroidHelper
 import com.blankj.utilcode.util.LogUtils
@@ -15,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 
 class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
-    var mView: AndroidHomeContract.View
+    private var mView: AndroidHomeContract.View
 
     private val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
@@ -41,9 +39,9 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
                 //网络请求在子线程，所以是在io线程，避免阻塞线程
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({ homeListBean ->
+                .subscribe ({ bean ->
                     LogUtils.e("getHomeList-----"+"onNext")
-                    mView.setDataView(homeListBean)
+                    mView.setDataView(bean)
                 }, { t ->
                     LogUtils.e("getHomeList-----"+"onError"+t.localizedMessage)
                     if(NetworkUtils.isConnected()){
@@ -55,5 +53,22 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
             )
         compositeDisposable.add(disposable)
     }
+
+    override fun getBannerData(isRefresh: Boolean) {
+        val instance = AndroidHelper.instance()
+        val disposable: Disposable = instance.getBanner()
+                //网络请求在子线程，所以是在io线程，避免阻塞线程
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ({ bean ->
+                        LogUtils.e("getBanner-----"+"onNext")
+                        mView.setBannerView(bean)
+                    }, { t ->
+                        LogUtils.e("getBanner-----"+"onError"+t.localizedMessage)
+                    }
+                )
+        compositeDisposable.add(disposable)
+    }
+
 
 }

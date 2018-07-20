@@ -71,7 +71,10 @@
             android:exported="false"
             android:theme="@style/LockScreenTheme"/>
         <activity android:name=".DebugActivity"/>
+        <activity android:name=".ui.webView.WebViewActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidActivity"/>
+        <activity android:name=".kotlin.view.activity.AndroidLoginActivity"/>
+        <activity android:name=".kotlin.view.activity.AndroidAboutActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>

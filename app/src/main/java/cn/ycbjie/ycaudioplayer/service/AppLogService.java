@@ -185,8 +185,11 @@ public class AppLogService extends Service {
         createLogDir();
 
         try {
-            FileOutputStream fos = new FileOutputStream(LOG_SERVICE_LOG_PATH, true);
-            writer = new OutputStreamWriter(fos,UNICODE);
+            //先判断文件是否又创建，没有则创建，避免异常崩溃
+            if(new File(LOG_SERVICE_LOG_PATH).exists()){
+                FileOutputStream fos = new FileOutputStream(LOG_SERVICE_LOG_PATH, true);
+                writer = new OutputStreamWriter(fos,UNICODE);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);
