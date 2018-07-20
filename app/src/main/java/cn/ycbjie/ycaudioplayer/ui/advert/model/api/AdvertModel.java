@@ -3,7 +3,7 @@ package cn.ycbjie.ycaudioplayer.ui.advert.model.api;
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by PC on 2017/8/21.

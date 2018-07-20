@@ -2,13 +2,15 @@ package cn.ycbjie.ycaudioplayer.executor;
 
 import android.text.TextUtils;
 
+import org.reactivestreams.Subscriber;
+
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -35,19 +37,10 @@ public abstract class SearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,title + "-" + artist)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<SearchMusic>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<SearchMusic>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(SearchMusic searchMusic) {
+                    public void accept(SearchMusic searchMusic) throws Exception {
                         if (searchMusic == null || searchMusic.getSong() == null || searchMusic.getSong().isEmpty()) {
                             return;
                         }
@@ -62,24 +55,15 @@ public abstract class SearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getLrc(OnLineMusicModel.METHOD_LRC,songId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<MusicLrc>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<MusicLrc>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(MusicLrc lrc) {
-                        if (lrc == null || TextUtils.isEmpty(lrc.getLrcContent())) {
+                    public void accept(MusicLrc musicLrc) throws Exception {
+                        if (musicLrc == null || TextUtils.isEmpty(musicLrc.getLrcContent())) {
                             return;
                         }
                         String filePath = FileMusicUtils.getLrcDir() + FileMusicUtils.getLrcFileName(artist, title);
-                        FileMusicUtils.saveLrcFile(filePath, lrc.getLrcContent());
+                        FileMusicUtils.saveLrcFile(filePath, musicLrc.getLrcContent());
                         onExecuteSuccess(filePath);
                     }
                 });

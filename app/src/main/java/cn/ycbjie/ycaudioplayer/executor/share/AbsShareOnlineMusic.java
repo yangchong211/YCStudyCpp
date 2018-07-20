@@ -3,13 +3,16 @@ package cn.ycbjie.ycaudioplayer.executor.share;
 import android.content.Context;
 import android.content.Intent;
 
+import org.reactivestreams.Subscriber;
+
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.executor.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * <pre>
@@ -44,19 +47,10 @@ public abstract class AbsShareOnlineMusic implements IExecutor<Void> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getMusicDownloadInfo(OnLineMusicModel.METHOD_DOWNLOAD_MUSIC,mSongId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<DownloadInfo>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DownloadInfo>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onExecuteFail(null);
-                    }
-
-                    @Override
-                    public void onNext(DownloadInfo downloadInfo) {
+                    public void accept(DownloadInfo downloadInfo) throws Exception {
                         if (downloadInfo == null || downloadInfo.getBitrate() == null) {
                             onExecuteFail(null);
                             return;

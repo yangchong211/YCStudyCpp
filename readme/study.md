@@ -2,7 +2,7 @@
 - 1.Gradle多渠道打包
 - 2.aidl多进程通信
 - 3.关于网络环境切换
-
+- 4.kotlin学习计划
 
 
 #### 1.Gradle多渠道打包
@@ -17,6 +17,9 @@
 
 #### 3.关于网络环境切换
 - 可以直接修改url.properties文件中的TEST_URL = n这行，当n=0时代表debug；当n=1时代表preview；当n=2时代表release
+
+#### 4.kotlin学习计划
+- 学习之旅：https://www.jianshu.com/c/10545ba15cb3
 
 
 

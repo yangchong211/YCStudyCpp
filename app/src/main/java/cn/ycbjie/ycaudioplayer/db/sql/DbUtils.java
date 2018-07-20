@@ -40,7 +40,7 @@ public class DbUtils {
                         is = context.getAssets().open(dbName);
                         fos = new FileOutputStream(file.getPath());
                         byte[] buffer = new byte[10240];
-                        int count = 0;
+                        int count ;
                         while ((count = is.read(buffer)) > 0) {
                             fos.write(buffer, 0, count);
                         }
@@ -83,7 +83,6 @@ public class DbUtils {
 
                     }
                 });
-
     }
 
 }

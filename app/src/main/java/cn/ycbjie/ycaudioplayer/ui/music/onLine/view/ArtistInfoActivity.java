@@ -18,15 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by yc on 2018/2/7.
@@ -100,19 +101,10 @@ public class ArtistInfoActivity extends BaseActivity implements View.OnClickList
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO, tingUid)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ArtistInfo>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ArtistInfo>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ArtistInfo artistInfo) {
+                    public void accept(ArtistInfo artistInfo) throws Exception {
                         if (artistInfo != null) {
                             setData(artistInfo);
                         }

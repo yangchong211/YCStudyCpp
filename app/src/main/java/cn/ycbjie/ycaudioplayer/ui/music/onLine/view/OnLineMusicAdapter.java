@@ -8,22 +8,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
-
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo> {
 
@@ -92,19 +90,10 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                 OnLineMusicModel model = OnLineMusicModel.getInstance();
                 model.getList(OnLineMusicModel.METHOD_LINE_MUSIC , data.getType(), 0 ,3)
                         .subscribeOn(Schedulers.io())
-                        .subscribe(new Subscriber<OnlineMusicList>() {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<OnlineMusicList>() {
                             @Override
-                            public void onCompleted() {
-                                Log.e("OnLineMusicModel","onCompleted");
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("OnLineMusicModel",e.getLocalizedMessage());
-                            }
-
-                            @Override
-                            public void onNext(OnlineMusicList onlineMusicList) {
+                            public void accept(OnlineMusicList onlineMusicList) throws Exception {
                                 Log.e("OnLineMusicModel","onNext");
                                 if (onlineMusicList == null || onlineMusicList.getSong_list() == null) {
                                     return;
@@ -114,6 +103,16 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
                                 }
                                 parse(onlineMusicList,data);
                                 setMusicData(data);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+
+                            }
+                        }, new Action() {
+                            @Override
+                            public void run() throws Exception {
+
                             }
                         });
             }else {

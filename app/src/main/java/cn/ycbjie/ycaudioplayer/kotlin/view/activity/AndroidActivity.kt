@@ -30,13 +30,18 @@ import java.util.ArrayList
  *     @author 杨充
  *     blog  :
  *     time  : 2017/05/30
- *     desc  : kotlin学习
+ *     desc  : kotlin学习：
  *     revise:
  * </pre>
  */
 class AndroidActivity : BaseActivity<AndroidPresenter>(){
 
-    var presenter: AndroidPresenter? = null
+    /**
+     * var关键字声明可变属性
+     * val关键字声明只读属性
+     * 属性的类型在后面，变量名在前面，中间加冒号和空格
+     */
+    var presenter : AndroidPresenter? = null
 
     /**
      * 定义局部变量和常量
@@ -73,6 +78,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     }
 
     override fun initView() {
+        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         mTvTitleLeft = findViewById(R.id.tv_title_left)
         mLlTitleMenu = findViewById(R.id.ll_title_menu)
         mToolbarTitle = findViewById(R.id.toolbar_title)
@@ -84,7 +90,6 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         mTvTitleLeft!!.typeface = Typeface.DEFAULT
         mLlTitleMenu!!.visibility = View.GONE
         mIvRightImg!!.visibility = View.VISIBLE
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         initFragment()
         initTabLayout()
     }
@@ -100,6 +105,9 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     }
 
     private fun initFragment() {
+        /**
+         * Kotlin不需要使用new关键字，直接写：类()
+         */
         fragments.add(AndroidHomeFragment())
         fragments.add(AndroidKnowledgeFragment())
         fragments.add(AndroidProjectFragment())
@@ -160,7 +168,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
         override fun onPageSelected(position: Int) {
-            var activity: AndroidActivity? = weakActivity?.get()
+            val activity: AndroidActivity? = weakActivity?.get()
             if (activity != null) {
                 activity.index = position
                 activity.selectByIndex(position)
@@ -171,6 +179,8 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     /**
      * 使用when表达式
      * when表达式就相当于Java的switch表达式，省去了case和break，并且支持各种类型。
+     *
+     * 控制流(Control Flow)：Kotlin的控制流有if``when``for``while四种
      */
     private fun selectByIndex(position: Int) {
         when (position){
@@ -189,6 +199,10 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
             3 ->{
                 ctlTable!!.currentTab = 3
                 mTvTitleLeft!!.text = "我的"
+            }
+            else -> {
+                // 默认，相当于switch中default
+                print("x is neither 1 nor 2")
             }
         }
     }

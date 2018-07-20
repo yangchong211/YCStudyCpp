@@ -2,7 +2,7 @@ package network.request
 
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.*
 import com.mg.axechen.wanandroid.javabean.HomeListBean
-import rx.Observable
+import io.reactivex.Observable
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.GET
@@ -32,13 +32,13 @@ interface RequestApi {
     @GET("/article/list/{page}/json")
     fun getHomeList(
             @Path("page") page: Int
-    ): Observable<Response<HomeListBean>>
+    ): Observable<HomeListBean>
 
     /**
      * 获取首页banner数据
      */
     @GET("banner/json")
-    fun getBanner(): Observable<Response<List<BannerBean>>>
+    fun getBanner(): Observable<List<BannerBean>>
 
 
     /**
@@ -64,22 +64,28 @@ interface RequestApi {
      * 获取知识树
      */
     @GET("tree/json")
-    fun getKnowledgeTreeList(): Observable<Response<List<TreeBean>>>
+    fun getKnowledgeTreeList(
+
+    ): Observable<Response<List<TreeBean>>>
 
 
     /**
      * 获取项目树
      */
     @GET("project/tree/json")
-    fun getProjectTree(): Observable<Response<List<TreeBean>>>
+    fun getProjectTree(
+
+    ): Observable<Response<List<TreeBean>>>
 
 
     /**
      * 根据项目分类id获取项目列表
      */
     @GET("project/list/{page}/json")
-    fun getProjectListByCid(@Path("page") page: Int,
-                            @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
+    fun getProjectListByCid(
+            @Path("page") page: Int,
+            @Query("cid") cid: Int
+    ): Observable<Response<ProjectListBean>>
 
     /**
      * 获取知识体系的文章

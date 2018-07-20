@@ -16,6 +16,8 @@ import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
+import org.reactivestreams.Subscriber;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,8 +34,9 @@ import cn.ycbjie.ycaudioplayer.ui.main.ui.adapter.SearchMusicAdapter;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by yc on 2018/2/7
@@ -237,19 +240,10 @@ public class SearchMusicActivity extends BaseActivity {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,query)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<SearchMusic>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<SearchMusic>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        AppLogUtils.e(TAG + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onNext(SearchMusic searchMusic) {
+                    public void accept(SearchMusic searchMusic) throws Exception {
                         if(searchMusic!=null){
                             mSearchMusicList.clear();
                             mSearchMusicList.addAll(searchMusic.getSong());

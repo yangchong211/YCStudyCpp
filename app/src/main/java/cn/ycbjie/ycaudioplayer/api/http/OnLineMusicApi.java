@@ -5,9 +5,9 @@ import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 
 public interface OnLineMusicApi {
@@ -18,9 +18,9 @@ public interface OnLineMusicApi {
      */
     @GET("v1/restserver/ting")
     Observable<OnlineMusicList> getList2(@Query("method") String method,
-                                        @Query("type") String type,
-                                        @Query("size") int size,
-                                        @Query("offset") int offset);
+                                         @Query("type") String type,
+                                         @Query("size") int size,
+                                         @Query("offset") int offset);
 
 
     /**

@@ -24,9 +24,8 @@ import cn.ycbjie.ycaudioplayer.utils.InterceptorUtils;
 import cn.ycbjie.ycaudioplayer.utils.JsonUtils;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okio.Buffer;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -111,7 +110,8 @@ public class RetrofitWrapper {
                 .baseUrl(url)
                 //添加Gson转换器
                 .addConverterFactory(GsonConverterFactory.create(JsonUtils.getJson()))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(build)
                 .build();
     }

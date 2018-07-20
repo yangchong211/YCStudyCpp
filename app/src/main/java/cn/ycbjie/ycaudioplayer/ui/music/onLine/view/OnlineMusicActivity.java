@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
+import org.reactivestreams.Subscriber;
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 
@@ -40,8 +41,11 @@ import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.ImageUtils;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by yc on 2018/1/29.
@@ -58,12 +62,6 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
     FrameLayout llTitleMenu;
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
-    private View view;
-    private TextView tv_comment;
-    private TextView tv_update_date;
-    private TextView tv_title;
-    private ImageView iv_cover;
-    private ImageView iv_header_bg;
 
     private OnLineSongListInfo mListInfo;
     private LineMusicAdapter adapter;
@@ -163,25 +161,40 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LineMusicAdapter(this);
         recyclerView.setAdapter(adapter);
-        addHeader();
     }
 
 
-    private void addHeader() {
+    private void addHeader(final OnlineMusicList onlineMusicList) {
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup parent) {
-                view = getLayoutInflater().inflate(R.layout.header_online_music, parent, false);
-                return view;
+                return getLayoutInflater().inflate(R.layout.header_online_music, parent, false);
             }
 
             @Override
             public void onBindView(View view) {
-                iv_header_bg = (ImageView) view.findViewById(R.id.iv_header_bg);
-                iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
-                tv_title = (TextView) view.findViewById(R.id.tv_title);
-                tv_update_date = (TextView) view.findViewById(R.id.tv_update_date);
-                tv_comment = (TextView) view.findViewById(R.id.tv_comment);
+                final ImageView iv_header_bg = (ImageView) view.findViewById(R.id.iv_header_bg);
+                final ImageView iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
+                TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+                TextView tv_update_date = (TextView) view.findViewById(R.id.tv_update_date);
+                TextView tv_comment = (TextView) view.findViewById(R.id.tv_comment);
+
+                tv_title.setText(onlineMusicList.getBillboard().getName());
+                tv_update_date.setText(getString(R.string.recent_update, onlineMusicList.getBillboard().getUpdate_date()));
+                tv_comment.setText(onlineMusicList.getBillboard().getComment());
+                Glide.with(OnlineMusicActivity.this)
+                        .load(onlineMusicList.getBillboard().getPic_s640())
+                        .asBitmap()
+                        .placeholder(R.drawable.default_cover)
+                        .error(R.drawable.default_cover)
+                        .override(200, 200)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                iv_cover.setImageBitmap(resource);
+                                iv_header_bg.setImageBitmap(ImageUtils.blur(resource));
+                            }
+                        });
             }
         });
     }
@@ -191,15 +204,26 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST, mListInfo.getType(), "20", String.valueOf(offset))
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<OnlineMusicList>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<OnlineMusicList>() {
                     @Override
-                    public void onCompleted() {
+                    public void accept(OnlineMusicList onlineMusicList) throws Exception {
+                        if (onlineMusicList == null || onlineMusicList.getSong_list() == null || onlineMusicList.getSong_list().size() == 0) {
+                            return;
+                        }
+                        if (offset == 0) {
+                            addHeader(onlineMusicList);
+                            recyclerView.showRecycler();
+                        }
 
+                        mOffset += MUSIC_LIST_SIZE;
+                        adapter.addAll(onlineMusicList.getSong_list());
+                        adapter.notifyDataSetChanged();
                     }
-
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof RuntimeException) {
+                    public void accept(Throwable throwable) throws Exception {
+                        if (throwable instanceof RuntimeException) {
                             // 歌曲全部加载完成
                             recyclerView.showError();
                             return;
@@ -210,46 +234,12 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                             ToastUtils.showShort(R.string.load_fail);
                         }
                     }
-
+                }, new Action() {
                     @Override
-                    public void onNext(OnlineMusicList onlineMusicList) {
-                        if (offset == 0 && onlineMusicList == null) {
-                            recyclerView.showEmpty();
-                            return;
-                        } else if (offset == 0) {
-                            initHeader(onlineMusicList);
-                            recyclerView.showRecycler();
-                        }
-                        if (onlineMusicList == null || onlineMusicList.getSong_list() == null || onlineMusicList.getSong_list().size() == 0) {
-                            return;
-                        }
-                        mOffset += MUSIC_LIST_SIZE;
-                        adapter.addAll(onlineMusicList.getSong_list());
-                        adapter.notifyDataSetChanged();
+                    public void run() throws Exception {
+
                     }
                 });
-    }
-
-
-    private void initHeader(OnlineMusicList response) {
-        if (view != null) {
-            tv_title.setText(response.getBillboard().getName());
-            tv_update_date.setText(getString(R.string.recent_update, response.getBillboard().getUpdate_date()));
-            tv_comment.setText(response.getBillboard().getComment());
-            Glide.with(this)
-                    .load(response.getBillboard().getPic_s640())
-                    .asBitmap()
-                    .placeholder(R.drawable.default_cover)
-                    .error(R.drawable.default_cover)
-                    .override(200, 200)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            iv_cover.setImageBitmap(resource);
-                            iv_header_bg.setImageBitmap(ImageUtils.blur(resource));
-                        }
-                    });
-        }
     }
 
 

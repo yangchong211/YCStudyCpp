@@ -1,12 +1,9 @@
 package cn.ycbjie.ycaudioplayer.kotlin.view.adapter
 
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import cn.ycbjie.ycaudioplayer.R
-import cn.ycbjie.ycaudioplayer.R.id.*
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter

@@ -9,7 +9,7 @@ import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
-import rx.Observable;
+import io.reactivex.Observable;
 
 
 public class OnLineMusicModel {

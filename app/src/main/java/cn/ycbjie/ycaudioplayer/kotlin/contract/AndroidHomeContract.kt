@@ -2,12 +2,14 @@ package cn.ycbjie.ycaudioplayer.kotlin.contract
 
 import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter
 import cn.ycbjie.ycaudioplayer.base.mvp.BaseView
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
+import com.mg.axechen.wanandroid.javabean.HomeListBean
 
 interface AndroidHomeContract {
 
     interface View : BaseView{
-        fun setDataView(data: List<HomeData>)
+        fun setDataErrorView()
+        fun setNetWorkErrorView()
+        fun setDataView(homeListBean: HomeListBean)
     }
 
     interface Presenter : BasePresenter {

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.blankj.utilcode.util.LogUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +17,10 @@ import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.advert.utils.DownLoadUtils;
 import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
-import rx.Observer;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by yc on 2018/2/8.
@@ -51,19 +52,10 @@ public class SplashDownLoadService extends IntentService {
         AdvertModel model = AdvertModel.getInstance();
         model.getSplashImage(1)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<AdvertCommon>() {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<AdvertCommon>() {
                     @Override
-                    public void onCompleted() {
-                        AppLogUtils.e("SplashDownLoadService"+ "onCompleted" );
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        AppLogUtils.e("SplashDownLoadService"+ e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onNext(AdvertCommon advertCommon) {
+                    public void accept(AdvertCommon advertCommon) throws Exception {
                         if(advertCommon!=null){
                             mScreen = advertCommon.splash;
                             AdvertCommon.Splash splashLocal = getSplashLocal();

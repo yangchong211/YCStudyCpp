@@ -8,6 +8,7 @@ import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
 
@@ -140,6 +141,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public PlayService getPlayService() {
         PlayService playService = BaseAppHelper.get().getPlayService();
         if (playService == null) {
+            //待解决：当长期处于后台，如何保活？避免service被杀死……
             throw new NullPointerException("play service is null");
         }
         return playService;
