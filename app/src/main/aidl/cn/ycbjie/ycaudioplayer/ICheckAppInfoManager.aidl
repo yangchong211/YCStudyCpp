@@ -12,6 +12,7 @@ interface ICheckAppInfoManager {
     //4. AIDL自动生成的接口（需要导入-import）
     //5. 实现android.os.Parcelable 接口的类（需要导入-import)
 
+    //获取app信息，比如token，版本号，签名，渠道等信息
     List<AppInfo> getAppInfo(String sign);
 
     boolean setToken(String sign,String token);

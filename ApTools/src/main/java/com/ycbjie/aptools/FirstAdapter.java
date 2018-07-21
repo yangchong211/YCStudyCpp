@@ -18,7 +18,7 @@ public class FirstAdapter extends RecyclerView.Adapter<FirstAdapter.MyViewHolder
     private List<AppInfo> list;
     private OnItemClickListener mItemClickListener;
 
-    public FirstAdapter(List<AppInfo> list, Context context) {
+    FirstAdapter(List<AppInfo> list, Context context) {
         this.list = list;
         this.context = context;
     }

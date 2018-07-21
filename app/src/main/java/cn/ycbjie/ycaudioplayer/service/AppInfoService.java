@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
@@ -24,7 +25,7 @@ import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
  * <pre>
  *     @author yangchong
  *     blog  :
- *     time  : 2018/05/30
+ *     time  : 2018/01/30
  *     desc  : 用于aidl多进程通信服务service
  *     revise:
  * </pre>
@@ -35,6 +36,10 @@ public class AppInfoService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         LogUtils.i("AppInfoService--IBinder:");
+        int check = checkCallingOrSelfPermission("aidl.AppInfoService");
+        if(check == PackageManager.PERMISSION_DENIED){
+            return null;
+        }
         return binder;
     }
 
@@ -58,6 +63,7 @@ public class AppInfoService extends Service {
      *   当两者处于不同晋城市，方法调用走transact过程，这个逻辑由Stub的内部代理类Proxy完成。
      */
     private final IBinder binder = new ICheckAppInfoManager.Stub() {
+
         @Override
         public List<AppInfo> getAppInfo(String sign) throws RemoteException {
             List<AppInfo> list=new ArrayList<>();

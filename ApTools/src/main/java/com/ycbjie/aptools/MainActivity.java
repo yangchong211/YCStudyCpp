@@ -44,11 +44,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnSetApp;
 
     public static final String packName = "cn.ycbjie.ycaudioplayer";
+    public static final String action = "cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService";
 
     //由AIDL文件生成的Java类
     private ICheckAppInfoManager messageCenter = null;
     //标志当前与服务端连接状况的布尔值，false为未连接，true为连接中
     private boolean mBound = false;
+
+
+    @Override
+    protected void onDestroy() {
+        unbindService(connection);
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,6 +137,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
                 FirstAdapter adapter = new FirstAdapter(info, this);
                 mRecyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(new FirstAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                    }
+                });
             }
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -142,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         //通过Intent指定服务端的服务名称和所在包，与远程Service进行绑定
         //参数与服务器端的action要一致,即"服务器包名.aidl接口文件名"
-        intent.setAction("cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService");
+        intent.setAction(action);
         //Android5.0后无法只通过隐式Intent绑定远程Service
         //需要通过setPackage()方法指定包名
         intent.setPackage(packName);
@@ -173,10 +187,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try {
                     //链接成功
                     Toast.makeText(MainActivity.this,"链接成功",Toast.LENGTH_SHORT).show();
+                    // 在创建ServiceConnection的匿名类中的onServiceConnected方法中
+                    // 设置死亡代理
+                    messageCenter.asBinder().linkToDeath(deathRecipient, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+    };
+
+
+    /**
+     * 给binder设置死亡代理
+     */
+    private IBinder.DeathRecipient deathRecipient = new IBinder.DeathRecipient() {
+
+        @Override
+        public void binderDied() {
+            if(messageCenter == null){
+                return;
+            }
+            messageCenter.asBinder().unlinkToDeath(deathRecipient, 0);
+            messageCenter = null;
+            //这里重新绑定服务
+            attemptToBindService();
         }
     };
 
