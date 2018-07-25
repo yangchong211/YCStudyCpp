@@ -76,7 +76,7 @@ interface RequestApi {
     @GET("project/tree/json")
     fun getProjectTree(
 
-    ): Observable<Response<List<TreeBean>>>
+    ): Observable<ResponseBean<List<TreeBean>>>
 
 
     /**
@@ -86,7 +86,7 @@ interface RequestApi {
     fun getProjectListByCid(
             @Path("page") page: Int,
             @Query("cid") cid: Int
-    ): Observable<Response<ProjectListBean>>
+    ): Observable<ResponseBean<ProjectListBean>>
 
     /**
      * 获取知识体系的文章

@@ -6,22 +6,19 @@ import android.view.View
 import android.widget.LinearLayout
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
-import cn.ycbjie.ycaudioplayer.kotlin.contract.KnowledgeListContract
+import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidKnowledgeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
-import cn.ycbjie.ycaudioplayer.kotlin.presenter.KnowledgeListPresenter
-import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
+import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidKnowledgePresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.KnowledgeListAdapter
-import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SizeUtils
 import kotlinx.android.synthetic.main.base_bar_easy_recycle.*
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine
-import java.util.*
 
 
-class AndroidKnowledgeFragment : BaseFragment<KnowledgeListPresenter>()  , KnowledgeListContract.View{
+class AndroidKnowledgeFragment : BaseFragment<AndroidKnowledgePresenter>()  , AndroidKnowledgeContract.View{
 
-    var presenter : KnowledgeListPresenter? = null
+    var presenter : AndroidKnowledgePresenter? = null
     private lateinit var adapter: KnowledgeListAdapter
 
 
@@ -30,7 +27,7 @@ class AndroidKnowledgeFragment : BaseFragment<KnowledgeListPresenter>()  , Knowl
     }
 
     override fun initView(view: View) {
-        presenter = KnowledgeListPresenter(this)
+        presenter = AndroidKnowledgePresenter(this)
         initRecyclerView()
     }
 

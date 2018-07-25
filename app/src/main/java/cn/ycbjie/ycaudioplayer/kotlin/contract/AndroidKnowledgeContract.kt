@@ -6,7 +6,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import network.response.ResponseBean
 
 
-class KnowledgeListContract {
+class AndroidKnowledgeContract {
 
     interface View : BaseView{
         fun getTreeSuccess(bean: ResponseBean<List<TreeBean>>?)

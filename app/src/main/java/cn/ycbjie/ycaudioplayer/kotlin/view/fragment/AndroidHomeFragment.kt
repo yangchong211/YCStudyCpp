@@ -14,6 +14,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidHomePresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
+import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
@@ -171,7 +172,8 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                     mBanner!!.setAdapter(BannerPagerAdapter(activity, bannerLists))
                     mBanner!!.setOnBannerClickListener { position: Int ->
                         if(position>=0 && bannerLists.size>position){
-
+                            val bannerBean = bean.data!![position]
+                            WebViewActivity.lunch(activity, bannerBean.url!!, bannerBean.title!!)
                         }
                     }
                 }

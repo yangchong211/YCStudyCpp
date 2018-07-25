@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.kotlin.model.helper
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import io.reactivex.Observable
@@ -51,6 +52,21 @@ class AndroidHelper private constructor() {
      */
     fun getKnowledgeTree(): Observable<ResponseBean<List<TreeBean>>> {
         return mApiService.getKnowledgeTreeList()
+    }
+
+    /**
+     * 获取项目树
+     */
+    fun getProjectTree(): Observable<ResponseBean<List<TreeBean>>> {
+        return mApiService.getProjectTree()
+    }
+
+
+    /**
+     * 根据项目分类id获取项目列表
+     */
+    fun getProjectListByCid(page: Int, cid: Int): Observable<ResponseBean<ProjectListBean>> {
+        return mApiService.getProjectListByCid(page, cid)
     }
 
 }

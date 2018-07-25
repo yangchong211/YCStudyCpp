@@ -78,11 +78,13 @@ public class WebViewActivity extends BaseActivity {
     private MyWebChromeClient webChromeClient;
     private View mErrorView;
 
-    public static void lunch(@NotNull Activity activity, @NotNull String url, @NotNull String title) {
-        Intent intent = new Intent(activity, WebViewActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        activity.startActivity(intent);
+    public static void lunch(Activity activity, @NotNull String url, @NotNull String title) {
+        if(activity!=null){
+            Intent intent = new Intent(activity, WebViewActivity.class);
+            intent.putExtra("url", url);
+            intent.putExtra("title", title);
+            activity.startActivity(intent);
+        }
     }
 
 

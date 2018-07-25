@@ -1,25 +1,24 @@
 package cn.ycbjie.ycaudioplayer.kotlin.presenter
 
-import cn.ycbjie.ycaudioplayer.kotlin.contract.KnowledgeListContract
+import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidKnowledgeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.helper.AndroidHelper
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
-import com.tencent.bugly.proguard.t
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class KnowledgeListPresenter : KnowledgeListContract.Presenter {
+class AndroidKnowledgePresenter : AndroidKnowledgeContract.Presenter {
 
-    var mView: KnowledgeListContract.View
+    var mView: AndroidKnowledgeContract.View
 
     private val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
     }
 
 
-    constructor(androidView: KnowledgeListContract.View){
+    constructor(androidView: AndroidKnowledgeContract.View){
         this.mView = androidView
     }
 
