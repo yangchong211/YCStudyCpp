@@ -1,6 +1,7 @@
 package cn.ycbjie.ycaudioplayer.ui.me.view.activity;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -17,12 +18,15 @@ import com.ns.yc.ycutilslib.switchButton.SwitchButton;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.DebugActivity;
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
+import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
+import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity;
 import cn.ycbjie.ycaudioplayer.utils.file.FileCacheUtils;
+import cn.ycbjie.ycaudioplayer.utils.url.UrlUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 import cn.ycbjie.ycthreadpoollib.callback.ThreadCallback;
@@ -90,9 +94,9 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initActionBar() {
-        if(BuildConfig.IS_DEBUG){
+        if (BuildConfig.IS_DEBUG) {
             toolbarTitle.setText("个人设置(3连击切换调试页面)");
-        }else{
+        } else {
             toolbarTitle.setText("个人设置");
         }
     }
@@ -110,17 +114,17 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_set_clean_cache:
                 cleanCache();
                 break;
             case R.id.toolbar_title:
-                if(BuildConfig.IS_DEBUG){
+                if (BuildConfig.IS_DEBUG) {
                     // 数组依次先前移动一位
                     System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
                     // 开机后运行时间
                     mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-                    if (mHits[0] >= (mHits[mHits.length - 1] - 500) ) {
+                    if (mHits[0] >= (mHits[mHits.length - 1] - 500)) {
                         mHits = new long[3];
                         ActivityUtils.startActivity(DebugActivity.class);
                     }
@@ -149,10 +153,10 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
                 long cache = FileCacheUtils.getFolderSize(this.getCacheDir());
                 long size = cache / (1024 * 1024);
                 //当大于5M时显示
-                if(size>0){
+                if (size > 0) {
                     String formatSize = FileCacheUtils.getFormatSize(cache);
                     tvSetCacheSize.setText(formatSize);
-                }else {
+                } else {
                     tvSetCacheSize.setText("");
                 }
             }
@@ -164,13 +168,13 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
 
     private void cleanCache() {
         PoolThread executor = BaseApplication.getInstance().getExecutor();
-        LoadDialog.show(this,"清除中");
+        LoadDialog.show(this, "清除中");
         executor.setDelay(2, TimeUnit.SECONDS);
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 String path = BaseApplication.getInstance().getCacheDir().getPath();
-                FileCacheUtils.deleteFolderFile(path,true);
+                FileCacheUtils.deleteFolderFile(path, true);
             }
         });
         executor.setCallback(new ThreadCallback() {
@@ -192,4 +196,10 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

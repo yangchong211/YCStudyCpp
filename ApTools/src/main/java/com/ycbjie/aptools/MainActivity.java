@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import java.util.List;
 
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTvGetInfo;
     private RecyclerView mRecyclerView;
     private Button mBtnSetApp;
+    private TextView mTvScheme;
+
 
     public static final String packName = "cn.ycbjie.ycaudioplayer";
     public static final String action = "cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService";
@@ -54,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        unbindService(connection);
+        if(connection!=null){
+            unbindService(connection);
+        }
         super.onDestroy();
     }
 
@@ -74,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvNetName = (TextView) findViewById(R.id.tv_net_name);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mBtnSetApp = (Button) findViewById(R.id.btn_set_app);
+        mTvScheme = (TextView) findViewById(R.id.tv_scheme);
     }
 
     private void initListener() {
         mTvBindService.setOnClickListener(this);
         mTvGetInfo.setOnClickListener(this);
         mBtnSetApp.setOnClickListener(this);
+        mTvScheme.setOnClickListener(this);
     }
 
 
@@ -94,6 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_set_app:
                 startActivity(new Intent(this,SetAppActivity.class));
+                break;
+            case R.id.tv_scheme:
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("xl://goods:8888/goodsDetail?goodsId=yangchong"));
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -173,11 +187,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 在Activity与Service建立关联和解除关联的时候调用
         @Override public void onServiceDisconnected(ComponentName name) {
             Log.e(getLocalClassName(), "无法绑定aidlServer的AIDLService服务");
+            ToastUtil.showToast(MainActivity.this,"无法绑定aidlServer的AIDLService服务");
             mBound = false;
         }
 
         //在Activity与Service建立关联时调用
         @Override public void onServiceConnected(ComponentName name, IBinder service) {
+            ToastUtil.showToast(MainActivity.this,"完成绑定aidlServer的AIDLService服务");
             Log.e(getLocalClassName(), "完成绑定aidlServer的AIDLService服务");
             //使用IAppInfoManager.Stub.asInterface()方法获取服务器端返回的IBinder对象
             //将IBinder对象传换成了mAIDL_Service接口对象
@@ -189,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this,"链接成功",Toast.LENGTH_SHORT).show();
                     // 在创建ServiceConnection的匿名类中的onServiceConnected方法中
                     // 设置死亡代理
-                    messageCenter.asBinder().linkToDeath(deathRecipient, 0);
+                    //messageCenter.asBinder().linkToDeath(deathRecipient, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -201,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 给binder设置死亡代理
      */
-    private IBinder.DeathRecipient deathRecipient = new IBinder.DeathRecipient() {
+    /*private IBinder.DeathRecipient deathRecipient = new IBinder.DeathRecipient() {
 
         @Override
         public void binderDied() {
@@ -213,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //这里重新绑定服务
             attemptToBindService();
         }
-    };
+    };*/
 
 
 }

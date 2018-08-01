@@ -42,4 +42,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:support-v4:25.4.0'
     compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile 'cn.yc:YCUtilsLib:1.6.2'
+    compile 'cn.yc:YCDialogLib:3.5'
 }

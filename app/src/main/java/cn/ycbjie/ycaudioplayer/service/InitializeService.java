@@ -62,7 +62,7 @@ public class InitializeService extends IntentService {
         AppLogUtils.Config config = AppLogUtils.getConfig();
         if(BuildConfig.IS_DEBUG){
             //边框开关，设置打开
-            config.setBorderSwitch(true);
+            config.setBorderSwitch(false);
             //logcat 是否打印，设置打印
             config.setConsoleSwitch(true);
             //设置打印日志总开关，线上时关闭

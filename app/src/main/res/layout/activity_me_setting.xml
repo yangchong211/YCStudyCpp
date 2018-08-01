@@ -197,6 +197,21 @@
             <View style="@style/DeepUnderLine"/>
 
 
+            <!--关于我们-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:padding="10dp">
+                <TextView
+                    style="@style/MeInfoTextLeftStyle"
+                    android:text=""/>
+                <TextView
+                    style="@style/MeInfoTextRightStyle"
+                    android:textColor="@color/blackText2"/>
+            </RelativeLayout>
+            <View style="@style/DeepUnderLine"/>
+
             <!--账户绑定-->
             <RelativeLayout
                 android:id="@+id/rl_set_binding"

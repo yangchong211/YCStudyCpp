@@ -36,10 +36,10 @@ public class AppInfoService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         LogUtils.i("AppInfoService--IBinder:");
-        int check = checkCallingOrSelfPermission("aidl.AppInfoService");
+        /*int check = checkCallingOrSelfPermission("aidl.AppInfoService");
         if(check == PackageManager.PERMISSION_DENIED){
             return null;
-        }
+        }*/
         return binder;
     }
 

@@ -167,75 +167,6 @@ public class PlayService extends Service {
         initQuitTimer();
     }
 
-
-    /**
-     * 创建MediaPlayer对象
-     */
-    private void createMediaPlayer() {
-        if(mPlayer==null){
-            //MediaCodec codec = new MediaCodec();
-            mPlayer = new MediaPlayer();
-        }
-    }
-
-
-    /**
-     * 允许与媒体控制器、音量键、媒体按钮和传输控件交互。
-     * 播放器除了播放了音乐之外什么都没做，就可以分别在任务管理、锁屏、负一屏控制我的播放器
-     */
-    private void initMediaSessionManager() {
-        mMediaSessionManager = new MediaSessionManager(this);
-    }
-
-    /**
-     * 捕获/丢弃音乐焦点处理
-     */
-    private void initAudioFocusManager() {
-        mAudioFocusManager = new AudioFocusManager(this);
-    }
-
-
-    /**
-     * 初始化耳机插入和拔出监听
-     */
-    private void initEarPhoneBroadcastReceiver() {
-        //这块直接在清单文件注册
-    }
-
-
-    /**
-     * 初始化IntentFilter添加action意图
-     * 主要是监听屏幕亮了与灭了
-     */
-    private void initAudioBroadcastReceiver() {
-        final IntentFilter filter = new IntentFilter();
-        //来电/耳机
-        filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        //锁屏
-        filter.addAction(Constant.LOCK_SCREEN_ACTION);
-        //当屏幕灭了
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        //当屏幕亮了
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        registerReceiver(mAudioReceiver, filter);
-    }
-
-
-    /**
-     * 初始化计时器
-     */
-    private void initQuitTimer() {
-        QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
-            @Override
-            public void onEvent(Long aLong) {
-                if (mListener != null) {
-                    mListener.onTimer(aLong);
-                }
-            }
-        });
-    }
-
-
     /**
      * 服务在销毁时调用该方法
      */
@@ -309,6 +240,75 @@ public class PlayService extends Service {
             }
         }
         return START_NOT_STICKY;
+    }
+
+
+
+    /**
+     * 创建MediaPlayer对象
+     */
+    private void createMediaPlayer() {
+        if(mPlayer==null){
+            //MediaCodec codec = new MediaCodec();
+            mPlayer = new MediaPlayer();
+        }
+    }
+
+
+    /**
+     * 允许与媒体控制器、音量键、媒体按钮和传输控件交互。
+     * 播放器除了播放了音乐之外什么都没做，就可以分别在任务管理、锁屏、负一屏控制我的播放器
+     */
+    private void initMediaSessionManager() {
+        mMediaSessionManager = new MediaSessionManager(this);
+    }
+
+    /**
+     * 捕获/丢弃音乐焦点处理
+     */
+    private void initAudioFocusManager() {
+        mAudioFocusManager = new AudioFocusManager(this);
+    }
+
+
+    /**
+     * 初始化耳机插入和拔出监听
+     */
+    private void initEarPhoneBroadcastReceiver() {
+        //这块直接在清单文件注册
+    }
+
+
+    /**
+     * 初始化IntentFilter添加action意图
+     * 主要是监听屏幕亮了与灭了
+     */
+    private void initAudioBroadcastReceiver() {
+        final IntentFilter filter = new IntentFilter();
+        //来电/耳机
+        filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        //锁屏
+        filter.addAction(Constant.LOCK_SCREEN_ACTION);
+        //当屏幕灭了
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        //当屏幕亮了
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(mAudioReceiver, filter);
+    }
+
+
+    /**
+     * 初始化计时器
+     */
+    private void initQuitTimer() {
+        QuitTimer.getInstance().init(this, handler, new EventCallback<Long>() {
+            @Override
+            public void onEvent(Long aLong) {
+                if (mListener != null) {
+                    mListener.onTimer(aLong);
+                }
+            }
+        });
     }
 
 

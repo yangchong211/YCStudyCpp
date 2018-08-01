@@ -123,10 +123,6 @@ public abstract class BaseFragmentDialog extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //yc 添加结束监听
-        if(mListener!=null){
-            mListener.listener(true);
-        }
         if(v!=null){
              ViewParent vp= v.getParent();
                 if(vp!=null){
@@ -134,15 +130,4 @@ public abstract class BaseFragmentDialog extends DialogFragment {
                 }
         }
     }
-
-
-    public onLoadFinishListener mListener;
-    public void setLoadFinishListener(onLoadFinishListener listener){
-        mListener = listener;
-    }
-    public interface onLoadFinishListener{
-        void listener(boolean isSuccess);
-    }
-
-
 }
