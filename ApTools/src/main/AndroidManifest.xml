@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetAppActivity"/>
+        <activity android:name=".WebActivity"/>
+        <activity android:name=".SchemeActivity"/>
     </application>
 
 </manifest>

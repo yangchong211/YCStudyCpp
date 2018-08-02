@@ -4,20 +4,29 @@ import android.graphics.Color
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import cn.ycbjie.ycaudioplayer.R
-import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
+import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidProjectContract
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidProjectPresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectAdapter
+import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectTreeAdapter
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.fragment_android_project.*
 import network.response.ResponseBean
+import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
+import java.util.ArrayList
 
-class AndroidProjectFragment : BaseFragment<AndroidProjectPresenter>()  , AndroidProjectContract.View, View.OnClickListener {
+class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View, View.OnClickListener {
 
-    private var presenter : AndroidProjectPresenter? = null
-    private lateinit var adapter: AndroidProjectAdapter
+    var presenter : AndroidProjectPresenter? = null
+    private lateinit var listsAdapter: AndroidProjectAdapter
+    private lateinit var kindsAdapter: AndroidProjectTreeAdapter
     private var kinds = mutableListOf<TreeBean>()
     private var selectProject: TreeBean? = null
 
@@ -30,6 +39,7 @@ class AndroidProjectFragment : BaseFragment<AndroidProjectPresenter>()  , Androi
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         drawerLayout.setScrimColor(Color.TRANSPARENT)
         initProjectsRecyclerView()
+        initRProjectTreeRecyclerView()
         initRefresh()
     }
 
@@ -39,8 +49,13 @@ class AndroidProjectFragment : BaseFragment<AndroidProjectPresenter>()  , Androi
     }
 
     override fun initData() {
+
+    }
+
+    override fun onLazyLoad() {
         presenter?.getProjectTree()
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id){
@@ -63,15 +78,15 @@ class AndroidProjectFragment : BaseFragment<AndroidProjectPresenter>()  , Androi
 
     private fun initProjectsRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(activity)
-        rvList!!.layoutManager = linearLayoutManager
-        adapter = AndroidProjectAdapter(activity)
-        rvList!!.adapter = adapter
-        adapter.setOnItemClickListener({ position ->
-            if (adapter.allData.size > position && position > -1) {
+        rvList.layoutManager = linearLayoutManager
+        listsAdapter = AndroidProjectAdapter(activity)
+        rvList.adapter = listsAdapter
+        listsAdapter.setOnItemClickListener({ position ->
+            if (listsAdapter.allData.size > position && position > -1) {
                 //条目点击事件
             }
         })
-        adapter.setOnItemChildClickListener(object : AndroidProjectAdapter.OnItemChildClickListener {
+        listsAdapter.setOnItemChildClickListener(object : AndroidProjectAdapter.OnItemChildClickListener {
             override fun onChildClick(view: View, position: Int) {
                 //子View点击事件
                 when(view.id){
@@ -84,37 +99,113 @@ class AndroidProjectFragment : BaseFragment<AndroidProjectPresenter>()  , Androi
                 }
             }
         })
+
+        //加载更多
+        listsAdapter.setMore(R.layout.view_recycle_more, object : RecyclerArrayAdapter.OnMoreListener {
+            override fun onMoreShow() {
+                if (NetworkUtils.isConnected()) {
+                    presenter?.getProjectTreeList(selectProject!!.id, false)
+                } else {
+                    listsAdapter.pauseMore()
+                    ToastUtils.showShort("没有网络")
+                }
+            }
+
+            override fun onMoreClick() {
+
+            }
+        })
+
+        //设置没有数据
+        listsAdapter.setNoMore(R.layout.view_recycle_no_more, object : RecyclerArrayAdapter.OnNoMoreListener {
+            override fun onNoMoreShow() {
+                if (NetworkUtils.isConnected()) {
+                    listsAdapter.resumeMore()
+                } else {
+                    ToastUtils.showShort("没有网络")
+                }
+            }
+
+            override fun onNoMoreClick() {
+                if (NetworkUtils.isConnected()) {
+                    listsAdapter.resumeMore()
+                } else {
+                    ToastUtils.showShort("没有网络")
+                }
+            }
+        })
+
+        //设置错误
+        listsAdapter.setError(R.layout.view_recycle_error, object : RecyclerArrayAdapter.OnErrorListener {
+            override fun onErrorShow() {
+                listsAdapter.resumeMore()
+            }
+
+            override fun onErrorClick() {
+                listsAdapter.resumeMore()
+            }
+        })
     }
+
+    private fun initRProjectTreeRecyclerView() {
+        rvKinds.layoutManager = LinearLayoutManager(activity)
+        kindsAdapter = AndroidProjectTreeAdapter(activity)
+        rvKinds.adapter = kindsAdapter
+        kindsAdapter.setOnItemClickListener({ position ->
+            if (kindsAdapter.allData.size > position && position > -1) {
+                //条目点击事件
+                //关闭侧滑。请求数据
+                drawerLayout.closeDrawer(flRight)
+                selectProject = kinds[position]
+                //结束更多刷新
+                //listAdapter?.loadMoreEnd(true)
+                kindsAdapter.setSelect(selectProject!!)
+                tvKind.text = selectProject!!.name
+                presenter?.getProjectTreeList(selectProject!!.id, true)
+                kindsAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
+
 
     private fun initRefresh() {
-
+        sRefresh.setOnRefreshListener({
+            presenter?.getProjectTreeList(selectProject!!.id, true)
+        })
     }
 
 
-    override fun setProjectTreeSuccess(bean: ResponseBean<List<TreeBean>>?) {
+    override fun setProjectTreeSuccess(bean: List<TreeBean>) {
         kinds = bean as MutableList<TreeBean>
         selectProject = kinds[0]
+        kindsAdapter.clear()
+        kindsAdapter.addAll(bean)
+        kindsAdapter.setSelect(selectProject!!)
+        kindsAdapter.notifyDataSetChanged()
+
         tvKind.text = selectProject!!.name
         presenter?.getProjectTreeList(selectProject!!.id, true)
+
     }
 
-    override fun setProjectListByCidSuccess(bean: ResponseBean<ProjectListBean>?, isRefresh: Boolean) {
+    override fun setProjectListByCidSuccess(bean: ResponseBean<ProjectListBean>, isRefresh: Boolean) {
         sRefresh.isRefreshing = false
-        val data = bean?.data!!
         if (isRefresh) {
-            adapter.clear()
-            adapter.addAll(data.datas)
-            adapter.notifyDataSetChanged()
-
-            // 计算页数，是否开启加载下一页
-            /*if (bean.size >= bean.total) {
-                listAdapter.setEnableLoadMore(false)
-            }*/
+            val data = bean.data
+            val size = data?.size
+            val homeData = ArrayList<HomeData>()
+            homeData.addAll(data?.datas!!)
+            LogUtils.e("size数量-----$size")
+            listsAdapter.clear()
+            //这种为什么不行？？？？
+            listsAdapter.addAll(homeData)
+            listsAdapter.notifyDataSetChanged()
         } else {
-            if (data.size != 0) {
-                adapter.clear()
-                adapter.addAll(data.datas)
-                adapter.notifyDataSetChanged()
+            if (bean.data?.size  != 0) {
+                listsAdapter.clear()
+                listsAdapter.addAll(bean.data?.datas!!)
+                listsAdapter.notifyDataSetChanged()
             }
         }
     }

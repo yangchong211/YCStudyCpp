@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
     private Button mBtnSetApp;
     private TextView mTvScheme;
-
+    private TextView mTvScheme2;
+    private TextView mTvWeb;
 
     public static final String packName = "cn.ycbjie.ycaudioplayer";
     public static final String action = "cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService";
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mBtnSetApp = (Button) findViewById(R.id.btn_set_app);
         mTvScheme = (TextView) findViewById(R.id.tv_scheme);
+        mTvScheme2 = (TextView) findViewById(R.id.tv_scheme2);
+        mTvWeb = (TextView) findViewById(R.id.tv_web);
     }
 
     private void initListener() {
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvGetInfo.setOnClickListener(this);
         mBtnSetApp.setOnClickListener(this);
         mTvScheme.setOnClickListener(this);
+        mTvScheme2.setOnClickListener(this);
+        mTvWeb.setOnClickListener(this);
     }
 
 
@@ -105,9 +110,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this,SetAppActivity.class));
                 break;
             case R.id.tv_scheme:
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("xl://goods:8888/goodsDetail?goodsId=yangchong"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://ycbjie:8888/from?type=yangchong"));
                 startActivity(intent);
+                break;
+            case R.id.tv_scheme2:
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));
+                startActivity(intent2);
+                //startActivity(new Intent(this,SchemeActivity.class));
+                break;
+            case R.id.tv_web:
+                startActivity(new Intent(this,WebActivity.class));
                 break;
             default:
                 break;

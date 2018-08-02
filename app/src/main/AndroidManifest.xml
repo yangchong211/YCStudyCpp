@@ -47,18 +47,36 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.main.ui.activity.SchemeActivity"
+            android:name=".ui.main.ui.activity.SchemeFirstActivity"
             android:screenOrientation="portrait">
             <!--Android 接收外部跳转过滤器-->
             <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
             <intent-filter>
                 <!-- 协议部分配置 ,注意需要跟web配置相同-->
-                <!--协议部分，随便设置 xl://goods:8888/goodsDetail?goodsId=10011002  -->
-                <data android:scheme="xl"
-                    android:host="goods"
-                    android:path="/goodsDetail"
+                <!--协议部分，随便设置 yc://ycbjie:8888/from?type=yangchong  -->
+                <data android:scheme="yc"
+                    android:host="ycbjie"
+                    android:path="/from"
                     android:port="8888"/>
 
+
+                <!--下面这几行也必须得设置-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.main.ui.activity.SchemeSecondActivity"
+            android:screenOrientation="portrait">
+            <!--Android 接收外部跳转过滤器-->
+            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+            <intent-filter>
+                <!-- 协议部分配置 ,注意需要跟web配置相同-->
+                <!--协议部分，随便设置  yc://app/?page=main -->
+                <data android:scheme="yc"
+                    android:host="app"/>
 
                 <!--下面这几行也必须得设置-->
                 <category android:name="android.intent.category.DEFAULT" />

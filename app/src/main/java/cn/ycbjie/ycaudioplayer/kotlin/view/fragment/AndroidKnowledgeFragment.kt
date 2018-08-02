@@ -5,7 +5,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
 import cn.ycbjie.ycaudioplayer.R
+import cn.ycbjie.ycaudioplayer.R.id.recyclerView
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
+import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidKnowledgeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidKnowledgePresenter
@@ -16,7 +18,7 @@ import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine
 
 
-class AndroidKnowledgeFragment : BaseFragment<AndroidKnowledgePresenter>()  , AndroidKnowledgeContract.View{
+class AndroidKnowledgeFragment : BaseLazyFragment()  , AndroidKnowledgeContract.View{
 
     var presenter : AndroidKnowledgePresenter? = null
     private lateinit var adapter: KnowledgeListAdapter
@@ -45,10 +47,14 @@ class AndroidKnowledgeFragment : BaseFragment<AndroidKnowledgePresenter>()  , An
     }
 
     override fun initData() {
+
+    }
+
+
+    override fun onLazyLoad() {
         recyclerView.showProgress()
         presenter?.getKnowledgeTree()
     }
-
 
 
     private fun initRecyclerView() {
