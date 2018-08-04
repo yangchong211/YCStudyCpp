@@ -22,6 +22,7 @@ import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import com.tencent.bugly.proguard.y
 import java.lang.ref.WeakReference
 import java.util.ArrayList
 
@@ -217,9 +218,70 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
             else -> {
                 // 默认，相当于switch中default
                 print("x is neither 1 nor 2")
+                print(Foo(10, 20))
+                print(Foo(10, 20))
             }
         }
     }
 
+
+    // 一个简单的数据类
+    // 用于重载运算符的所有函数都必须使用operator关键字标记。
+    // 算术运算符：https://www.jianshu.com/p/d445209091f0
+    data class Foo(private val x: Int, private val y: Int) {
+        // a + b
+        operator fun plus(other: Foo) {
+            Foo(x + other.x, y + other.y)
+        }
+        // a * b
+        operator fun times(other: Foo): Foo = Foo(x * other.x, y * other.y)
+        // a % b
+        operator fun rem(other: Foo): Foo = Foo(x % other.x, y % other.y)
+        // a / b
+        operator fun div(other: Foo): Foo = Foo(x % other.x, y % other.y)
+        // a - b
+        operator fun minus(other: Foo): Foo = Foo(x % other.x, y % other.y)
+
+        // 支持运算符两边互换使用
+        operator fun Double.times(other: Foo): Foo = Foo((this * other.x).toInt(), (this * other.y).toInt())
+    }
+
+    /**
+     * 关键字
+     * object           为同时声明一个类及其实例
+     * typealias        类型别名为现有类型提供替代名称
+     * as               是一个中缀操作符，as是不安全的转换操作符，如果as转换失败，会抛出一个异常，这就是不安全的。
+     * as?              as?与as类似，也是转换操作符，但是与as不同的是，as?是安全的，也就是可空的，可以避免抛出异常，在转换失败是会返回null
+     * fun              表示声明一个函数
+     * in               用于指定for循环中迭代的对象
+     * !in              表示与in相反，用作中缀操作符以检查一个值不属于一个区间、一个集合或者其他定义contains方法的实体。
+     * is和!is          是否符合给定类型，类似与Java的instanceOf，is操作符或其否定形式!is来检查对象是否符合给定类型
+     * constructor      声明一个主构造函数或次构造函数
+     * init             主构造函数不能包含任何的代码。初始化的代码可以放到以init关键字作为前缀的初始化块中：
+     * where            用于指定泛型多个类型的上界约束
+     *
+     */
+
+    val y = 1
+    val x: String = y as String
+    // 上面的代码表示将y强转为String类型，如果y为null，那么将不能转换成String，
+    // 因为String是不可空的类型，那么就会抛出一个异常，所以如果y的类型是可空类型的话，
+    // 那么强转的类型就必须是可空的
+    val x1: String? = y as String?
+    init {
+        test()
+    }
+
+    private fun test(){
+        //for (item in collection) print(item)
+        var i = 5
+        if (i in 1..10) { // 等同于 1 <= i && i <= 10
+            println(i)
+        }
+
+        if(x is String){
+
+        }
+    }
 
 }

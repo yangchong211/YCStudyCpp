@@ -29,7 +29,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
     }
 
     override fun unSubscribe() {
-
+        compositeDisposable.dispose()
     }
 
 

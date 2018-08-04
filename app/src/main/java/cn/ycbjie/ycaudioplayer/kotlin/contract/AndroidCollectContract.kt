@@ -6,18 +6,15 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import network.response.ResponseBean
 
-interface AndroidProjectContract {
+interface AndroidCollectContract {
 
     interface View : BaseView{
-        fun setProjectTreeSuccess(bean: List<TreeBean>)
-        fun setProjectListByCidSuccess(bean: ResponseBean<ProjectListBean>, refresh: Boolean)
-        fun setProjectListByCidError()
-        fun setProjectListByCidNetError()
+
     }
 
     interface Presenter : BasePresenter {
-        fun getProjectTree()
-        fun getProjectTreeList(id: Int, b: Boolean)
+        fun unCollectArticle(articleId: Int)
+        fun collectInArticle(articleId: Int)
     }
 
 }

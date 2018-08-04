@@ -69,7 +69,7 @@ class AndroidKnowledgeFragment : BaseLazyFragment()  , AndroidKnowledgeContract.
         recyclerView!!.scrollTo(0, 0)
         recyclerView!!.scrollBy(0, 0)
         recyclerView!!.setRefreshListener({
-
+            onLazyLoad()
         })
     }
 

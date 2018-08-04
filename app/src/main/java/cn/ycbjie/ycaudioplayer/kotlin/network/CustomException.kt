@@ -37,11 +37,11 @@ class CustomException {
         fun handleException(cause: Throwable?): ApiException? {
             var exception: ApiException? = null
             exception = if (cause is JsonParseException) {
-                ApiException(cause?.message, cause, PARSE_ERROR)
+                ApiException(cause.message, cause, PARSE_ERROR)
             } else if (cause is UnknownHostException ||
                     cause is SocketTimeoutException ||
                     cause is ConnectException) {
-                ApiException(cause?.message, cause, NETWORK_ERROR)
+                ApiException(cause.message, cause, NETWORK_ERROR)
             } else {
                 ApiException(cause?.message, cause, UNKNOWN)
             }

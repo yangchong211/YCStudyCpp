@@ -78,9 +78,9 @@ class AndroidProjectPresenter : AndroidProjectContract.Presenter {
                 }, { t ->
                     LogUtils.e("getProjectTreeList-----"+"onError"+t.localizedMessage)
                     if(NetworkUtils.isConnected()){
-
+                        mView.setProjectListByCidError()
                     }else{
-
+                        mView.setProjectListByCidNetError()
                     }
                 })
         compositeDisposable.add(disposable)

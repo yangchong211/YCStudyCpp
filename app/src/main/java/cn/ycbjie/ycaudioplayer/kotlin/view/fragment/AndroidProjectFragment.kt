@@ -1,10 +1,12 @@
 package cn.ycbjie.ycaudioplayer.kotlin.view.fragment
 
+import android.content.Intent
 import android.graphics.Color
+import android.provider.Settings
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
+import android.widget.LinearLayout
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidProjectContract
@@ -12,15 +14,16 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidProjectPresenter
+import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidDetailActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectTreeAdapter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
 import kotlinx.android.synthetic.main.fragment_android_project.*
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
-import java.util.ArrayList
 
 class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View, View.OnClickListener {
 
@@ -53,6 +56,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
     }
 
     override fun onLazyLoad() {
+        rvList.showProgress()
         presenter?.getProjectTree()
     }
 
@@ -74,16 +78,17 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
     }
 
 
-
-
     private fun initProjectsRecyclerView() {
+        //val表示常量
         val linearLayoutManager = LinearLayoutManager(activity)
-        rvList.layoutManager = linearLayoutManager
+        rvList.recyclerView.layoutManager = linearLayoutManager
         listsAdapter = AndroidProjectAdapter(activity)
         rvList.adapter = listsAdapter
         listsAdapter.setOnItemClickListener({ position ->
             if (listsAdapter.allData.size > position && position > -1) {
                 //条目点击事件
+                val homeData: HomeData = listsAdapter.allData[position] as HomeData
+                AndroidDetailActivity.lunch(activity, homeData, homeData.collect, homeData.id)
             }
         })
         listsAdapter.setOnItemChildClickListener(object : AndroidProjectAdapter.OnItemChildClickListener {
@@ -104,15 +109,29 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
         listsAdapter.setMore(R.layout.view_recycle_more, object : RecyclerArrayAdapter.OnMoreListener {
             override fun onMoreShow() {
                 if (NetworkUtils.isConnected()) {
-                    presenter?.getProjectTreeList(selectProject!!.id, false)
+                    if (listsAdapter.allData.size > 0) {
+                        presenter?.getProjectTreeList(selectProject!!.id, false)
+                    } else {
+                        listsAdapter.pauseMore()
+                    }
                 } else {
                     listsAdapter.pauseMore()
                     ToastUtils.showShort("没有网络")
                 }
+
             }
 
             override fun onMoreClick() {
-
+                if (NetworkUtils.isConnected()) {
+                    if (listsAdapter.allData.size > 0) {
+                        presenter?.getProjectTreeList(selectProject!!.id, false)
+                    } else {
+                        listsAdapter.pauseMore()
+                    }
+                } else {
+                    listsAdapter.pauseMore()
+                    ToastUtils.showShort("没有网络")
+                }
             }
         })
 
@@ -170,9 +189,14 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
 
 
     private fun initRefresh() {
-        sRefresh.setOnRefreshListener({
-            presenter?.getProjectTreeList(selectProject!!.id, true)
-        })
+        rvList.setRefreshListener {
+            if (NetworkUtils.isConnected()) {
+                presenter?.getProjectTreeList(selectProject!!.id, true)
+            } else {
+                rvList.setRefreshing(false)
+                ToastUtil.showToast(activity, "网络不可用")
+            }
+        }
     }
 
 
@@ -190,24 +214,43 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
     }
 
     override fun setProjectListByCidSuccess(bean: ResponseBean<ProjectListBean>, isRefresh: Boolean) {
-        sRefresh.isRefreshing = false
+        rvList.setRefreshing(false)
         if (isRefresh) {
             val data = bean.data
             val size = data?.size
-            val homeData = ArrayList<HomeData>()
-            homeData.addAll(data?.datas!!)
             LogUtils.e("size数量-----$size")
             listsAdapter.clear()
             //这种为什么不行？？？？
-            listsAdapter.addAll(homeData)
+            listsAdapter.addAll(data?.datas!!)
             listsAdapter.notifyDataSetChanged()
+            rvList.showRecycler()
         } else {
             if (bean.data?.size  != 0) {
-                listsAdapter.clear()
                 listsAdapter.addAll(bean.data?.datas!!)
                 listsAdapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun setProjectListByCidNetError() {
+        rvList.setErrorView(R.layout.view_custom_network_error)
+        rvList.showError()
+        val network = rvList.findViewById(R.id.ll_set_network) as LinearLayout
+        network.setOnClickListener {
+            if (NetworkUtils.isConnected()) {
+                onLazyLoad()
+            } else {
+                val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun setProjectListByCidError() {
+        rvList.setErrorView(R.layout.view_custom_data_error)
+        rvList.showError()
+        val errorView = rvList.findViewById(R.id.ll_error_view) as LinearLayout
+        errorView.setOnClickListener { onLazyLoad() }
     }
 
 }

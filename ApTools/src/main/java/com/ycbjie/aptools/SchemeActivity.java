@@ -16,6 +16,8 @@ public class SchemeActivity extends AppCompatActivity {
 
     private TextView mTvDomain;
     private TextView mTvParam;
+    private TextView mTvDomain1;
+    private TextView mTvParam1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,32 +35,15 @@ public class SchemeActivity extends AppCompatActivity {
         mTvParam = (TextView) findViewById(R.id.tv_param);
         mTvParam.setText(Html.fromHtml("<a href='yc://ycbjie:8888/from?type=yangchong'>点我一下</a>"));
         mTvParam.setMovementMethod(LinkMovementMethod.getInstance());
+
+        mTvDomain1 = (TextView) findViewById(R.id.tv_domain1);
+        mTvDomain1.setText(Html.fromHtml("<a href='//yc:app/?page=main'>点我试试</a>"));
+        mTvDomain1.setMovementMethod(LinkMovementMethod.getInstance());
+
+        mTvParam1 = (TextView) findViewById(R.id.tv_param1);
+        mTvParam1.setText(Html.fromHtml("<a href='//yc:ycbjie:8888/from?type=yangchong'>点我一下</a>"));
+        mTvParam1.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
-    @Override protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Uri uri = intent.getData();
-        if (uri != null) {
-            dispatchUri(uri);
-        } else {
-
-        }
-    }
-
-    private static final String SCHEME_DOMAIN = "scheme_activity";
-    private void dispatchUri(Uri uri) {
-        try {
-            final String domain = uri.getAuthority();
-            if (TextUtils.equals(SCHEME_DOMAIN, domain)) {
-                final String buffer = uri.getQueryParameter("buffer");
-                final int type = Integer.valueOf(uri.getQueryParameter("type"));
-                Toast.makeText(this, type + " " + buffer, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-        }
-    }
-
-
 
 
 }

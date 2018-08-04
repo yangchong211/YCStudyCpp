@@ -19,9 +19,14 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by yc on 2018/6/23.
+ * <pre>
+ *     @author yangchong
+ *     blog  :
+ *     time  : 2017/6/6
+ *     desc  : RxJava工具类
+ *     revise:
+ * </pre>
  */
-
 public class RxJavaUtils {
 
     public interface RxJavaCallback {

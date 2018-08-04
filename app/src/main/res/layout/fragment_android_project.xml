@@ -36,17 +36,16 @@
         </RelativeLayout>
 
 
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/sRefresh"
+        <org.yczbj.ycrefreshviewlib.YCRefreshView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rvList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_marginTop="50dp"
+            app:layout_progress="@layout/view_custom_loading_data"
+            app:layout_empty="@layout/view_custom_empty_data"
+            app:layout_error="@layout/view_custom_data_error"/>
+
     </FrameLayout>
 
     <FrameLayout

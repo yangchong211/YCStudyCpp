@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -110,8 +112,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this,SetAppActivity.class));
                 break;
             case R.id.tv_scheme:
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://ycbjie:8888/from?type=yangchong"));
-                startActivity(intent);
+                PackageManager packageManager = getPackageManager();
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("yc://ycbjie:8888/from?type=yangchong"));
+                List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+                boolean isValid = !activities.isEmpty();
+                if (isValid) {
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv_scheme2:
                 Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));

@@ -16,4 +16,16 @@
         android:layout_height="120dp"
         android:gravity="center" />
 
+    <TextView
+        android:id="@+id/tv_domain1"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_param1"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center" />
+
 </LinearLayout>

@@ -21,6 +21,13 @@ open class BannerBean : Parcelable {
      * url : http://www.wanandroid.com/blog/show/2
      */
 
+
+    /**
+     * 在Kotlin中创建一个属性，
+     * 如果是val，那么会自动生成getter方法，
+     * 如果是var，那么会自动生成getter和setter方法。
+     */
+
     private var desc: String? = null
     var id: Int = 0
     var imagePath: String? = null
@@ -57,7 +64,6 @@ open class BannerBean : Parcelable {
     }
 
     companion object {
-
         val CREATOR: Parcelable.Creator<BannerBean> = object : Parcelable.Creator<BannerBean> {
             override fun createFromParcel(source: Parcel): BannerBean {
                 return BannerBean(source)
@@ -68,4 +74,5 @@ open class BannerBean : Parcelable {
             }
         }
     }
+
 }

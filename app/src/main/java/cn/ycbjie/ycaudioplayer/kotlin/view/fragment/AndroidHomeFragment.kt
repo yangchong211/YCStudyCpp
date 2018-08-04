@@ -11,7 +11,9 @@ import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
 import cn.ycbjie.ycaudioplayer.kotlin.base.BaseItemView
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidHomePresenter
+import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidDetailActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
 import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
@@ -43,7 +45,9 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+        //as 是一个中缀操作符，as是不安全的转换操作符，如果as转换失败，会抛出一个异常，这就是不安全的。
         activity = context as Activity?
+        //activity = context as? Activity
     }
 
     override fun onDetach() {
@@ -78,7 +82,10 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
 
 
     override fun initListener() {
-
+        adapter.setOnItemClickListener { position ->
+            val homeData: HomeData = adapter.allData[position] as HomeData
+            AndroidDetailActivity.lunch(activity, homeData, homeData.collect, homeData.id)
+        }
     }
 
     override fun initData() {

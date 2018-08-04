@@ -116,6 +116,7 @@
         <activity android:name=".kotlin.view.activity.AndroidActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidLoginActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidAboutActivity"/>
+        <activity android:name=".kotlin.view.activity.AndroidDetailActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>

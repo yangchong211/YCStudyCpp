@@ -73,7 +73,7 @@ public class WebViewActivity extends BaseActivity {
     TextView toolbarTitle;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    private String url;
+    public String url;
     private String name;
     private MyWebChromeClient webChromeClient;
     private View mErrorView;
@@ -199,7 +199,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
 
-    private void initIntentData() {
+    public void initIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
             url = intent.getStringExtra("url");

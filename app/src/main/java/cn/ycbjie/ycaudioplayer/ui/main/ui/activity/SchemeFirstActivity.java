@@ -17,8 +17,6 @@ import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
 /**
  * Android业务组件化之URL Scheme使用
  * http://www.cnblogs.com/whoislcj/p/5825333.html
- * http://blog.csdn.net/sinat_31057219/article/details/78362326
- *
  */
 
 public class SchemeFirstActivity extends AppCompatActivity {
