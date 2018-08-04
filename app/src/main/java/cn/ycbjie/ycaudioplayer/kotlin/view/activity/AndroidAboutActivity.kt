@@ -10,11 +10,20 @@ import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import kotlinx.android.synthetic.main.activity_android_about.*
 
+/**
+ * <pre>
+ *     @author 杨充
+ *     blog  :
+ *     time  : 2017/05/30
+ *     desc  : 关于页面
+ *     revise:
+ * </pre>
+ */
 class AndroidAboutActivity : BaseActivity<AndroidPresenter>() {
 
     private val HOME_URL = "http://www.wanandroid.com/index"
     private val OPEN_API = "http://www.wanandroid.com/blog/show/2"
-    private val PROJECT_URL = "https://github.com/AxeChen/WanAndroid"
+    private val PROJECT_URL = "https://github.com/yangchong211"
     private val DEVELOPER_BLOG = "https://blog.csdn.net/m0_37700275/article/details/80863685"
     private val DEVELOPER_GITHUB = "https://github.com/yangchong211"
 

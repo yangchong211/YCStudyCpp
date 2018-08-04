@@ -54,6 +54,7 @@ class AndroidHelper private constructor() {
         return mApiService.getKnowledgeTreeList()
     }
 
+
     /**
      * 获取项目树
      */
@@ -68,5 +69,14 @@ class AndroidHelper private constructor() {
     fun getProjectListByCid(page: Int, cid: Int): Observable<ResponseBean<ProjectListBean>> {
         return mApiService.getProjectListByCid(page, cid)
     }
+
+
+    /**
+     * 获取知识体系的文章
+     */
+    fun getKnowledgeList(page: Int, cid: Int): Observable<ResponseBean<ProjectListBean>> {
+        return mApiService.getKnowledgeList(page, cid)
+    }
+
 
 }

@@ -93,7 +93,7 @@ interface RequestApi {
      */
     @GET("article/list/{page}/json")
     fun getKnowledgeList(@Path("page") page: Int,
-                         @Query("cid") cid: Int): Observable<Response<ProjectListBean>>
+                         @Query("cid") cid: Int): Observable<ResponseBean<ProjectListBean>>
 
     /**
      * 获取热词

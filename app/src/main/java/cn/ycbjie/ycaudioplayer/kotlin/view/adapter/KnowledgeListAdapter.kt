@@ -1,91 +1,71 @@
 package cn.ycbjie.ycaudioplayer.kotlin.view.adapter
 
 
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.ActionMenuView
-import android.view.LayoutInflater
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.media.Image
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.*
 import cn.ycbjie.ycaudioplayer.R
+import cn.ycbjie.ycaudioplayer.R.id.*
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
-import com.mg.axechen.wanandroid.FlowLayout
+import cn.ycbjie.ycaudioplayer.utils.ImageUtil
+import com.bumptech.glide.Glide
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
+import java.util.*
 
 
-class KnowledgeListAdapter : RecyclerArrayAdapter<TreeBean>{
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  :
+ *     time  : 2018/7/17
+ *     desc  :
+ *     revise:
+ * </pre>
+ */
+class KnowledgeListAdapter: RecyclerArrayAdapter<HomeData> {
 
-    var openTags = mutableListOf<Int>()
 
-    constructor(activity: FragmentActivity?) : super(activity)
+    private var activity: Activity?
 
-    override fun OnCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeBean> {
-        return ViewHolder(parent)
+    constructor(activity: Activity?) : super(activity){
+        this.activity = activity
     }
 
+    override fun OnCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<HomeData> {
+        return MyViewHolder(parent)
+    }
 
-    private inner class ViewHolder internal constructor(parent: ViewGroup) :
-            BaseViewHolder<TreeBean>(parent, R.layout.item_android_knowledge_tree) {
+    private inner class MyViewHolder internal constructor(parent: ViewGroup) :
+            BaseViewHolder<HomeData>(parent, R.layout.item_knowledge_list) {
 
-        internal var tvName: TextView = getView(R.id.tvName)
-        internal var tvKinds: TextView = getView(R.id.tvKinds)
-        internal var flowLayout: FlowLayout = getView(R.id.flowLayout)
+        private val llInfo: LinearLayout = getView(R.id.llInfo)
+        private val ttIvHead: ImageView = getView(R.id.ttIvHead)
+        private val ttTvName: TextView = getView(R.id.ttTvName)
+        private val ivMore: ImageView = getView(R.id.ivMore)
+        private val flLike: FrameLayout = getView(R.id.flLike)
+        private val ivLike: ImageView = getView(R.id.ivLike)
+        private val tvContent: TextView = getView(R.id.tvContent)
+        private val tvTime: TextView = getView(R.id.tvTime)
 
-        override fun setData(data: TreeBean?) {
-            super.setData(data)
-            if (data != null) {
-                tvName.text = data.name
-                var kind: String = data.children?.size.toString()
-                kind += "分类"
-                tvKinds.text = kind
+        init {
 
-                var tags: MutableList<TreeBean> = data.children as MutableList<TreeBean>
+        }
 
-                var views = mutableListOf<View>()
-                for (tag in tags) {
-
-                    val textView = LayoutInflater.from(context)!!.inflate(R.layout.tag_view_flowlayout, null) as TextView
-                    textView.text = tag.name
-                    textView.id = tag.id
-                    val margin = ViewGroup.MarginLayoutParams(ActionMenuView.LayoutParams.WRAP_CONTENT, ActionMenuView.LayoutParams.WRAP_CONTENT)
-                    margin.rightMargin = 10
-                    margin.topMargin = 10
-                    margin.leftMargin = 10
-                    margin.bottomMargin = 10
-                    textView.layoutParams = margin
-                    views.add(textView)
-
-                    textView.setOnClickListener({
-                        knowledgeItemClick?.knowledgeItemClick(tag, tags.indexOf(tag), dataPosition)
-                    })
-                }
-                flowLayout.addItems(views)
-
-                if (openTags.contains(data.id)) {
-                    flowLayout.visibility = View.VISIBLE
-                } else {
-                    flowLayout.visibility = View.GONE
-                }
-
-                tvKinds.setOnClickListener({
-                    if (flowLayout.visibility == View.VISIBLE) {
-                        flowLayout.visibility = View.GONE
-                        openTags.remove(data.id)
-                    } else {
-                        flowLayout.visibility = View.VISIBLE
-                        openTags.add(data.id)
-                    }
-                })
-
-            }
+        @SuppressLint("SetTextI18n")
+        override fun setData(item: HomeData) {
+            super.setData(item)
+            ttTvName.text = item.author
+            tvContent.text = item.title
+            tvTime.text = item.niceDate
         }
     }
 
-    var knowledgeItemClick: KnowledgeItemListener? = null
-    interface KnowledgeItemListener {
-        fun knowledgeItemClick(bean: TreeBean, index: Int, position: Int)
-    }
 
 }
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import cn.ycbjie.ycaudioplayer.R
-import cn.ycbjie.ycaudioplayer.constant.Constant
 import cn.ycbjie.ycaudioplayer.kotlin.base.KotlinConstant
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidCollectContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
@@ -13,6 +12,15 @@ import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidCollectPresenter
 import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
 
 
+/**
+ * <pre>
+ *     @author 杨充
+ *     blog  :
+ *     time  : 2017/05/30
+ *     desc  : 详情页面
+ *     revise:
+ * </pre>
+ */
 class AndroidDetailActivity : WebViewActivity() , AndroidCollectContract.View{
 
     private var isCollect: Boolean = false
@@ -36,7 +44,6 @@ class AndroidDetailActivity : WebViewActivity() , AndroidCollectContract.View{
             intent.putExtra(INTENT_TAG_INT_ARTICLE_ID, articleId)
             context?.startActivity(intent)
         }
-
     }
 
     override fun initIntentData() {
