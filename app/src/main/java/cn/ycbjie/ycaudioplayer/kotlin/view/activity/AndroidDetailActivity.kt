@@ -9,7 +9,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.base.KotlinConstant
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidCollectContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidCollectPresenter
-import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
+import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
 
 
 /**

@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPresenter
-import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
+import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import kotlinx.android.synthetic.main.activity_android_about.*
 

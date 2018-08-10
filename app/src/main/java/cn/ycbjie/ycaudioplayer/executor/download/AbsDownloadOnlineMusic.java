@@ -8,14 +8,11 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.io.File;
 
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.ui.music.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -34,9 +31,9 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
 
     private Activity mActivity;
-    private OnlineMusicList.OnlineMusic mOnlineMusic;
+    private OnlineMusicList.SongListBean mOnlineMusic;
 
-    protected AbsDownloadOnlineMusic(Activity activity, OnlineMusicList.OnlineMusic onlineMusic) {
+    protected AbsDownloadOnlineMusic(Activity activity, OnlineMusicList.SongListBean onlineMusic) {
         super(activity);
         mActivity = activity;
         mOnlineMusic = onlineMusic;

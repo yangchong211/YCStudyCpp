@@ -16,7 +16,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidHomePresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidDetailActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
-import cn.ycbjie.ycaudioplayer.ui.webView.WebViewActivity
+import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean

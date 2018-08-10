@@ -6,8 +6,8 @@ import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.ui.music.model.ArtistInfo;
+import cn.ycbjie.ycaudioplayer.ui.music.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import io.reactivex.Observable;
 

@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.constant.Constant;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.AdSecondViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.AdViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.BannerViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.BottomViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.ButtonViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.FooterMoreViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.HeaderTitleViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.HotNewsHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.IndustryDynamicsViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.PopularizeNewsHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.ShareContentViewHolder;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter.TrendAnalysisViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.AdSecondViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.AdViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.BannerViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.BottomViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.ButtonViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.FooterMoreViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.HeaderTitleViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.HotNewsHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.IndustryDynamicsViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.PopularizeNewsHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.ShareContentViewHolder;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.adapter.TrendAnalysisViewHolder;
 
 
 /**

@@ -14,7 +14,7 @@ import java.io.File;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.OnlineMusicList;
+import cn.ycbjie.ycaudioplayer.ui.music.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -26,10 +26,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public abstract class PlayOnlineMusic extends PlayMusic {
 
-    private OnlineMusicList.OnlineMusic mOnlineMusic;
+    private OnlineMusicList.SongListBean mOnlineMusic;
     private Activity mActivity;
 
-    public PlayOnlineMusic(Activity activity, OnlineMusicList.OnlineMusic onlineMusic) {
+    public PlayOnlineMusic(Activity activity, OnlineMusicList.SongListBean onlineMusic) {
         super(activity);
         this.mActivity = activity;
         mOnlineMusic = onlineMusic;

@@ -1,13 +1,13 @@
 package cn.ycbjie.ycaudioplayer.base;
 
 import cn.ycbjie.ycaudioplayer.ui.me.view.fragment.MeFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.MusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.local.LocalMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.music.onLine.OnLineMusicFragment;
-import cn.ycbjie.ycaudioplayer.ui.practise.ui.fragment.PractiseFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.HomeFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.InnovationFragment;
-import cn.ycbjie.ycaudioplayer.ui.study.ui.fragment.StudyFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.view.fragment.MusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.view.fragment.LocalMusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.music.view.fragment.OnLineMusicFragment;
+import cn.ycbjie.ycaudioplayer.ui.news.ui.fragment.PractiseFragment;
+import cn.ycbjie.ycaudioplayer.ui.home.ui.fragment.HomeFragment;
+import cn.ycbjie.ycaudioplayer.ui.home.ui.fragment.InnovationFragment;
+import cn.ycbjie.ycaudioplayer.ui.home.ui.fragment.StudyFragment;
 
 
 /**
