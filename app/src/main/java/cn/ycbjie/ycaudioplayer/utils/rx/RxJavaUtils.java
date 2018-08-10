@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils;
+package cn.ycbjie.ycaudioplayer.utils.rx;
 
 import android.graphics.Bitmap;
 import android.view.View;

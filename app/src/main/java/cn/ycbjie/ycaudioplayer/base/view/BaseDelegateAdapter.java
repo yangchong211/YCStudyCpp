@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
-import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
+
+import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

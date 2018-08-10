@@ -23,7 +23,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.onLine.model.ArtistInfo;
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;

@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
 
 public class SearchMusicAdapter extends RecyclerView.Adapter<SearchMusicAdapter.VideoViewHolder> {
 

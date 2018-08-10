@@ -2,8 +2,6 @@ package cn.ycbjie.ycaudioplayer.api.manager;
 
 import android.annotation.SuppressLint;
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
@@ -20,8 +18,8 @@ import javax.net.ssl.X509TrustManager;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
-import cn.ycbjie.ycaudioplayer.utils.InterceptorUtils;
-import cn.ycbjie.ycaudioplayer.utils.JsonUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.InterceptorUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.JsonUtils;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

@@ -112,6 +112,11 @@
             android:exported="false"
             android:theme="@style/LockScreenTheme"/>
         <activity android:name=".DebugActivity"/>
+        <activity android:name=".ui.study.ui.activity.LocalVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.study.ui.activity.LocalOfficeActivity"/>
+        <activity android:name=".ui.study.ui.activity.LocalZipFileActivity"/>
         <activity android:name=".ui.webView.WebViewActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidLoginActivity"/>

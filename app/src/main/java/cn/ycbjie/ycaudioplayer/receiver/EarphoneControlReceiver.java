@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.view.KeyEvent;
 
-import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
+import cn.ycbjie.ycaudioplayer.model.action.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 

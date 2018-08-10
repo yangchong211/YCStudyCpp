@@ -15,7 +15,7 @@ import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.api.AdvertModel;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.advert.utils.DownLoadUtils;
-import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.SerializableUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;

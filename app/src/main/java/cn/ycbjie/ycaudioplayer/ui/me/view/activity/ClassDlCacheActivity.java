@@ -26,7 +26,7 @@ import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadedAdapter;
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadingAdapter;
-import cn.ycbjie.ycaudioplayer.utils.DialogUtils;
+import cn.ycbjie.ycaudioplayer.utils.dialog.DialogUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**

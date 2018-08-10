@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.model;
+package cn.ycbjie.ycaudioplayer.model.bean;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 

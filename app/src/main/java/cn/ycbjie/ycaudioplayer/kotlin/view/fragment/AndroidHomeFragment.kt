@@ -22,7 +22,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
 import com.yc.cn.ycbannerlib.BannerView
-import com.yc.cn.ycbannerlib.util.SizeUtil
+import com.yc.cn.ycbannerlib.banner.util.SizeUtil
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.YCRefreshView
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter

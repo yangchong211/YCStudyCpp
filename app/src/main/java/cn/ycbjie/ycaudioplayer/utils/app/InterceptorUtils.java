@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils;
+package cn.ycbjie.ycaudioplayer.utils.app;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.constant.Constant;
-import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.JsonUtils;
 import okhttp3.CacheControl;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;

@@ -4,17 +4,16 @@ import android.content.Context;
 import android.view.View;
 
 import com.yc.cn.ycbannerlib.BannerView;
-import com.yc.cn.ycbannerlib.util.SizeUtil;
-import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
+import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
+
+
+import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
 import java.util.ArrayList;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 
-/**
- * Created by yc on 2018/3/20.
- */
 
 public class BannerViewHolder extends BaseViewHolder {
 
@@ -22,7 +21,7 @@ public class BannerViewHolder extends BaseViewHolder {
 
     public BannerViewHolder(View itemView) {
         super(itemView);
-        mBanner = getView(R.id.banner);
+        mBanner = (BannerView) getView(R.id.banner);
     }
 
 

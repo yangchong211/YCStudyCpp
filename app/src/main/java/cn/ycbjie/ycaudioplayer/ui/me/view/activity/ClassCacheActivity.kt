@@ -18,7 +18,7 @@ import cn.ycbjie.ycaudioplayer.db.dl.TasksManagerModel
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPresenter
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadedAdapter
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadingAdapter
-import cn.ycbjie.ycaudioplayer.utils.DialogUtils
+import cn.ycbjie.ycaudioplayer.utils.dialog.DialogUtils
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils
 
 /**

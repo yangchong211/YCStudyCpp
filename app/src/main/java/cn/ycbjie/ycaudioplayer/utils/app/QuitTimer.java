@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils;
+package cn.ycbjie.ycaudioplayer.utils.app;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;

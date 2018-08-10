@@ -18,10 +18,6 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
 
-/**
- * Created by yc on 2018/1/23.
- */
-
 public class FileMusicUtils {
 
     private static final String MP3 = ".mp3";

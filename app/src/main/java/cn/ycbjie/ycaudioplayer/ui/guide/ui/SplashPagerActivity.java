@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.yc.cn.ycbannerlib.BannerView;
-import com.yc.cn.ycbannerlib.adapter.AbsDynamicPagerAdapter;
-import com.yc.cn.ycbannerlib.inter.OnPageListener;
-import com.yc.cn.ycbannerlib.util.SizeUtil;
+import com.yc.cn.ycbannerlib.banner.adapter.AbsDynamicPagerAdapter;
+import com.yc.cn.ycbannerlib.banner.inter.OnPageListener;
+import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
 
 import java.util.ArrayList;
 import java.util.List;

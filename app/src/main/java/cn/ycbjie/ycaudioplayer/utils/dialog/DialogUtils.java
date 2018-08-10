@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils;
+package cn.ycbjie.ycaudioplayer.utils.dialog;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

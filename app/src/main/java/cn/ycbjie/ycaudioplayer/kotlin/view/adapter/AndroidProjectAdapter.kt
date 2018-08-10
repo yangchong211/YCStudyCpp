@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.*
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil
-import com.bumptech.glide.Glide
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
-import java.util.*
 
 
 /**

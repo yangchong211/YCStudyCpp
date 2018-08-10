@@ -2,7 +2,6 @@ package cn.ycbjie.ycaudioplayer.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
@@ -18,7 +17,7 @@ import cn.ycbjie.ycaudioplayer.AppInfo;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.ICheckAppInfoManager;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
-import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 
 
 /**

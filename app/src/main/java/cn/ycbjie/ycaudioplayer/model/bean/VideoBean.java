@@ -1,5 +1,7 @@
 package cn.ycbjie.ycaudioplayer.model.bean;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -18,20 +20,26 @@ public class VideoBean implements Serializable {
     private Type type;
     // [本地视频]视频id
     private long id;
-    // 音频标题
+    // 视频标题
     private String title;
     // [本地视频]专辑ID
     private long albumId;
-    // [在线音频]专辑封面路径
+    // [在线视频]专辑封面路径
     private String coverPath;
     // 持续时间
     private long duration;
-    // 音频路径
+    // 视频路径
     private String path;
     // 文件名
     private String fileName;
     // 文件大小
     private long fileSize;
+    // 分辨率
+    private String resolution;
+    // 修改时间
+    private long date;
+    // 封面缩略图
+    private Bitmap videoThumbnail;
 
     public enum Type {
         /**
@@ -114,6 +122,30 @@ public class VideoBean implements Serializable {
 
     public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public Bitmap getVideoThumbnail() {
+        return videoThumbnail;
+    }
+
+    public void setVideoThumbnail(Bitmap videoThumbnail) {
+        this.videoThumbnail = videoThumbnail;
     }
 
     /**

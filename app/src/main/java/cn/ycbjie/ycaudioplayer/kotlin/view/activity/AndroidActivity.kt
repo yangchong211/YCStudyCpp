@@ -16,13 +16,12 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidHomeFragment
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidKnowledgeFragment
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidProfileFragment
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidProjectFragment
-import cn.ycbjie.ycaudioplayer.model.TabEntity
+import cn.ycbjie.ycaudioplayer.model.bean.TabEntity
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
-import com.tencent.bugly.proguard.y
 import java.lang.ref.WeakReference
 import java.util.ArrayList
 
@@ -99,7 +98,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         mToolbarTitle = findViewById(R.id.toolbar_title)
         mIvRightImg = findViewById(R.id.iv_right_img)
         viewPager = findViewById(R.id.vp_pager)
-        ctlTable = findViewById(R.id.ctl_table)
+        ctlTable = this.findViewById(R.id.ctl_table)
         mTvTitleLeft!!.visibility = View.VISIBLE
         mTvTitleLeft!!.textSize = 16.0f
         mTvTitleLeft!!.typeface = Typeface.DEFAULT

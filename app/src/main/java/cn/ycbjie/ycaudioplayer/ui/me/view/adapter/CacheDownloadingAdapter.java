@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
@@ -45,7 +44,6 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
  *     revise:
  * </pre>
  */
-
 public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadingAdapter.MyViewHolder> {
 
     private List<TasksManagerModel> list;
@@ -194,8 +192,8 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             pb.setMax(1);
             pb.setProgress(1);
             tvState.setText("下载完成");
-            ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-            ivDownload.setTag(R.drawable.note_btn_play_white);
+            ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+            ivDownload.setTag(R.drawable.ic_note_btn_play_white);
 
             TasksManagerModel model = list.get(holder.position);
             TasksManager.getImpl().deleteTasksManagerModel(model.getUrl());
@@ -221,18 +219,18 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             }
             switch (status) {
                 case FileDownloadStatus.error:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     tvState.setText("错误");
                     break;
                 case FileDownloadStatus.paused:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     tvState.setText("暂停");
                     break;
                 default:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     break;
             }
         }
@@ -245,36 +243,36 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             switch (status) {
                 //排队中
                 case FileDownloadStatus.pending:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     AppLogUtils.e("ViewHolder----"+"排队中--------");
                     tvState.setText("排队中");
                     break;
                 //开始下载
                 case FileDownloadStatus.started:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     AppLogUtils.e("ViewHolder----"+"开始下载--------");
                     tvState.setText("开始下载");
                     break;
                 //链接中
                 case FileDownloadStatus.connected:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    ivDownload.setTag(R.drawable.note_btn_play_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     AppLogUtils.e("ViewHolder----"+"链接中--------");
                     tvState.setText("链接中");
                     break;
                 //下载中
                 case FileDownloadStatus.progress:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_pause_white);
-                    ivDownload.setTag(R.drawable.note_btn_pause_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_pause_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_pause_white);
                     AppLogUtils.e("ViewHolder----"+"下载中--------");
                     tvState.setText("下载中");
                     break;
                 //默认
                 default:
-                    ivDownload.setBackgroundResource(R.drawable.note_btn_pause_white);
-                    ivDownload.setTag(R.drawable.note_btn_pause_white);
+                    ivDownload.setBackgroundResource(R.drawable.ic_note_btn_pause_white);
+                    ivDownload.setTag(R.drawable.ic_note_btn_pause_white);
                     AppLogUtils.e("ViewHolder----"+"默认--------");
                     tvState.setText("默认");
                     break;
@@ -295,7 +293,7 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
             String url = model.getUrl();
             AppLogUtils.e("listener----"+url+ "--------");
             switch (imgResId) {
-                case R.drawable.note_btn_play_white:
+                case R.drawable.ic_note_btn_play_white:
                     AppLogUtils.e("listener----"+"------开始下载--");
                     // 开始下载
                     final BaseDownloadTask task = FileDownloader.getImpl().create(url)
@@ -306,12 +304,12 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
                     TasksManager.getImpl().updateViewHolder(holder.id, holder);
                     task.start();
                     break;
-                case R.drawable.note_btn_pause_white:
+                case R.drawable.ic_note_btn_pause_white:
                     AppLogUtils.e("listener----"+"------暂停下载--");
                     // 暂停下载
                     FileDownloader.getImpl().pause(holder.id);
-                    holder.ivDownload.setBackgroundResource(R.drawable.note_btn_play_white);
-                    holder.ivDownload.setTag(R.drawable.note_btn_play_white);
+                    holder.ivDownload.setBackgroundResource(R.drawable.ic_note_btn_play_white);
+                    holder.ivDownload.setTag(R.drawable.ic_note_btn_play_white);
                     break;
                 default:
                     break;

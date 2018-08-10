@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.yc.cn.ycbannerlib.BannerView;
-import com.yc.cn.ycbannerlib.util.SizeUtil;
+import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -31,15 +31,24 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.activity.DetailVideoActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.activity.LocalOfficeActivity;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.activity.LocalVideoActivity;
+import cn.ycbjie.ycaudioplayer.ui.study.ui.activity.LocalZipFileActivity;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.BannerPagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.study.ui.adapter.InnovationAdapter;
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
-/**
- * Created by yc on 2018/3/1.
- */
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  :
+ *     time  : 2018/3/1
+ *     desc  : 视频页面
+ *     revise:
+ * </pre>
+ */
 public class InnovationFragment extends BaseLazyFragment {
 
     @Bind(R.id.recyclerView)
@@ -189,6 +198,12 @@ public class InnovationFragment extends BaseLazyFragment {
 
     @SuppressLint("ResourceType")
     private LinearLayout initFiveButtonView() {
+        ArrayList<String> title = new ArrayList<>();
+        title.add("视频");
+        title.add("图片");
+        title.add("压缩包");
+        title.add("文档");
+        title.add("其他");
         //四个按钮
         LinearLayout btnLinearLayout = new LinearLayout(activity);
         LinearLayout.LayoutParams params = new
@@ -214,13 +229,13 @@ public class InnovationFragment extends BaseLazyFragment {
                     AppLogUtils.e("onClick"+v.getId());
                     switch (v.getId()) {
                         case 1000:
-
+                            ActivityUtils.startActivity(LocalVideoActivity.class);
                             break;
                         case 1001:
-
+                            ActivityUtils.startActivity(LocalOfficeActivity.class);
                             break;
                         case 1002:
-
+                            ActivityUtils.startActivity(LocalZipFileActivity.class);
                             break;
                         case 1003:
                             ActivityUtils.startActivity(DetailVideoActivity.class);
@@ -246,7 +261,7 @@ public class InnovationFragment extends BaseLazyFragment {
             tvLayoutParams.gravity = Gravity.CENTER;
             textView.setLayoutParams(tvLayoutParams);
             textView.setTextSize(14);
-            textView.setText("标题");
+            textView.setText(title.get(i));
             llBtn.addView(imageView);
             llBtn.addView(textView);
             btnLinearLayout.addView(llBtn);

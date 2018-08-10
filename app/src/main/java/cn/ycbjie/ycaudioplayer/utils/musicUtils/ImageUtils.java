@@ -243,7 +243,7 @@ public class ImageUtils {
     /**
      * 将图片剪裁为圆形
      */
-    public static Bitmap createCircleImage(Bitmap source) {
+    static Bitmap createCircleImage(Bitmap source) {
         if (source == null) {
             return null;
         }

@@ -5,12 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.yc.cn.ycbannerlib.adapter.AbsStaticPagerAdapter;
+
+import com.yc.cn.ycbannerlib.banner.adapter.AbsStaticPagerAdapter;
 
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
 
 /**
  * ================================================

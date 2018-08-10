@@ -1,14 +1,10 @@
 package cn.ycbjie.ycaudioplayer.ui.advert;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.yccountdownviewlib.CountDownView;
 
 import java.io.File;
@@ -21,8 +17,8 @@ import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.service.SplashDownLoadService;
 import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil;
-import cn.ycbjie.ycaudioplayer.utils.SerializableUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.app.SerializableUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 

@@ -12,7 +12,7 @@ import com.blankj.utilcode.util.SPUtils;
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
-import cn.ycbjie.ycaudioplayer.utils.RestartAppUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.RestartAppUtils;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
 
 

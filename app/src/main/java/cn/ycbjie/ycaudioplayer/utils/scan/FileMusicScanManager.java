@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils.musicUtils;
+package cn.ycbjie.ycaudioplayer.utils.scan;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,30 +16,31 @@ import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-
+import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 
 
 /**
  * <pre>
- *     @author: yangchong
- *     blog  : www.ycbjie.cn
+ *     author: yangchong
+ *     blog  : https://github.com/yangchong211
  *     time  : 2018/01/22
- *     desc  :
- *     revise:
+ *     desc  : 本地音乐扫描工具类
+ *     revise: 参考链接：https://www.jianshu.com/p/498c9d06c193
+ *                      https://blog.csdn.net/chay_chan/article/details/76984665
  * </pre>
  */
 
-public class FileScanManager {
+public class FileMusicScanManager {
 
 
-    private static FileScanManager mInstance;
+    private static FileMusicScanManager mInstance;
     private static final Object mLock = new Object();
 
-    public static FileScanManager getInstance(){
+    public static FileMusicScanManager getInstance(){
         if (mInstance == null){
             synchronized (mLock){
                 if (mInstance == null){
-                    mInstance = new FileScanManager();
+                    mInstance = new FileMusicScanManager();
                 }
             }
         }

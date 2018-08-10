@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 
-import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
+import cn.ycbjie.ycaudioplayer.model.action.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 

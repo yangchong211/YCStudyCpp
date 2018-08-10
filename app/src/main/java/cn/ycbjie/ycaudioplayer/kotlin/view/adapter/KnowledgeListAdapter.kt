@@ -3,20 +3,12 @@ package cn.ycbjie.ycaudioplayer.kotlin.view.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.media.Image
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import cn.ycbjie.ycaudioplayer.R
-import cn.ycbjie.ycaudioplayer.R.id.*
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil
-import com.bumptech.glide.Glide
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
-import java.util.*
 
 
 /**

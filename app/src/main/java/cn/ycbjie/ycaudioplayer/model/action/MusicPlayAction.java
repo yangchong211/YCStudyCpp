@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.model;
+package cn.ycbjie.ycaudioplayer.model.action;
 
 /**
  * Created by yc on 2018/1/24.

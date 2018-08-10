@@ -14,7 +14,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 
 import java.io.IOException;
@@ -27,16 +26,16 @@ import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.inter.callback.EventCallback;
-import cn.ycbjie.ycaudioplayer.model.MusicPlayAction;
+import cn.ycbjie.ycaudioplayer.model.action.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
 import cn.ycbjie.ycaudioplayer.receiver.AudioBroadcastReceiver;
 import cn.ycbjie.ycaudioplayer.receiver.AudioEarPhoneReceiver;
 import cn.ycbjie.ycaudioplayer.ui.lock.LockAudioActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
-import cn.ycbjie.ycaudioplayer.utils.QuitTimer;
+import cn.ycbjie.ycaudioplayer.utils.app.QuitTimer;
 import cn.ycbjie.ycaudioplayer.manager.AudioFocusManager;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
-import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileScanManager;
+import cn.ycbjie.ycaudioplayer.utils.scan.FileMusicScanManager;
 import cn.ycbjie.ycaudioplayer.manager.MediaSessionManager;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.NotificationUtils;
 
@@ -828,7 +827,7 @@ public class PlayService extends Service {
         new AsyncTask<Void, Void, List<AudioBean>>() {
             @Override
             protected List<AudioBean> doInBackground(Void... params) {
-                return FileScanManager.getInstance().scanMusic(PlayService.this);
+                return FileMusicScanManager.getInstance().scanMusic(PlayService.this);
             }
 
             @Override

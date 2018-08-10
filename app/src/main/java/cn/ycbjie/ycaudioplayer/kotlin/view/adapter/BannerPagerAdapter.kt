@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 
-import com.yc.cn.ycbannerlib.adapter.AbsStaticPagerAdapter
 
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
-import cn.ycbjie.ycaudioplayer.utils.ImageUtil
+import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil
+import com.yc.cn.ycbannerlib.banner.adapter.AbsStaticPagerAdapter
 
 
 class BannerPagerAdapter(private val ctx: Activity?, private val list: MutableList<BannerBean>) : AbsStaticPagerAdapter() {

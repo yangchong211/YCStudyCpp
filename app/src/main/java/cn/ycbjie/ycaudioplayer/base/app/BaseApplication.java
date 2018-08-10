@@ -7,7 +7,6 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -15,14 +14,11 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.net.Proxy;
 
-import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
 import cn.ycbjie.ycaudioplayer.service.InitializeService;
-import cn.ycbjie.ycaudioplayer.utils.AppToolUtils;
-import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
-import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
+import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 /**

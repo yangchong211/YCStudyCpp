@@ -3,8 +3,7 @@ package cn.ycbjie.ycaudioplayer.ui.practise.ui.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
-
+import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import java.util.List;
 
 /**

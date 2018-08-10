@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
@@ -34,7 +33,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
-import cn.ycbjie.ycaudioplayer.utils.QuitTimer;
+import cn.ycbjie.ycaudioplayer.utils.app.QuitTimer;
 
 /**
  * Created by yc on 2018/1/24.

@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yc.cn.ycbaseadapterlib.BaseViewHolder;
+
+import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class ButtonViewHolder extends BaseViewHolder {
 
     public ButtonViewHolder(View itemView) {
         super(itemView);
-        tv_home_first = getView(R.id.tv_home_first);
-        tv_home_second = getView(R.id.tv_home_second);
-        tv_home_third = getView(R.id.tv_home_third);
-        tv_home_four = getView(R.id.tv_home_four);
-        tv_home_five = getView(R.id.tv_home_five);
+        tv_home_first = (TextView) getView(R.id.tv_home_first);
+        tv_home_second = (TextView) getView(R.id.tv_home_second);
+        tv_home_third = (TextView) getView(R.id.tv_home_third);
+        tv_home_four = (TextView) getView(R.id.tv_home_four);
+        tv_home_five = (TextView) getView(R.id.tv_home_five);
     }
 
 

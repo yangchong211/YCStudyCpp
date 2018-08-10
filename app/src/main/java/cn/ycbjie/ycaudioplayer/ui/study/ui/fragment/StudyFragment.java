@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SizeUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 import com.yc.cn.ycbannerlib.BannerView;
-import com.yc.cn.ycbannerlib.util.SizeUtil;
+import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;

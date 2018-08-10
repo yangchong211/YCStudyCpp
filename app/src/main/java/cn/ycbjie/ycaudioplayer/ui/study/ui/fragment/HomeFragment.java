@@ -21,10 +21,16 @@ import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
 import cn.ycbjie.ycaudioplayer.base.view.BasePagerAdapter;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 
-/**
- * Created by yc on 2018/3/1.
- */
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  :
+ *     time  : 2018/2/10
+ *     desc  : home页面
+ *     revise:
+ * </pre>
+ */
 public class HomeFragment extends BaseFragment {
 
 
@@ -41,7 +47,7 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.vp_content)
     ViewPager vpContent;
 
-    private String[] mStudyTitles = {"研习社", "创新院"};
+    private String[] mStudyTitles = {"视频", "文件"};
 
     private MainActivity activity;
 
