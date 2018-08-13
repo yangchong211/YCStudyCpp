@@ -58,8 +58,6 @@
                     android:host="ycbjie"
                     android:path="/from"
                     android:port="8888"/>
-
-
                 <!--下面这几行也必须得设置-->
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -77,7 +75,6 @@
                 <!--协议部分，随便设置  yc://app/?page=main -->
                 <data android:scheme="yc"
                     android:host="app"/>
-
                 <!--下面这几行也必须得设置-->
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
