@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
 
+import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
@@ -29,7 +31,7 @@ class JsMethodUtils {
      * -4:app内部错误
      */
 
-    public final static int successCode = 10000;
+    final static int successCode = 10000;
 
     private Context mContext;
     private WebView mWebView;
@@ -84,6 +86,5 @@ class JsMethodUtils {
             e.printStackTrace();
         }
     }
-
 
 }

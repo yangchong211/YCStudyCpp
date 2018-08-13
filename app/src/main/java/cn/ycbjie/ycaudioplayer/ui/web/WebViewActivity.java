@@ -230,7 +230,6 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        url = "http://222.168.49.125:80/dsideal_yy/dsidealWeb/jinjiaxuan-test/0806/index.html";
         mWebView.loadUrl(url);
     }
 
@@ -642,14 +641,14 @@ public class WebViewActivity extends BaseActivity {
                 "})()");
 
         // 遍历所有的a节点,将节点里的属性传递过去(属性自定义,用于页面跳转)
-        mWebView.loadUrl("javascript:(function(){" +
+        /*mWebView.loadUrl("javascript:(function(){" +
                 "var objs =document.getElementsByTagName(\"a\");" +
                 "for(var i=0;i<objs.length;i++)" +
                 "{" +
                 "objs[i].onclick=function(){" +
                 "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}" +
                 "}" +
-                "})()");
+                "})()");*/
     }
 
 
