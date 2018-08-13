@@ -68,7 +68,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
 
     private OnLineSongListInfo mListInfo;
     private LineMusicAdapter adapter;
-    private int mOffset = 0;
+    private int mOffset = 1;
     private static final String MUSIC_LIST_SIZE = "10";
     private boolean isPlayFragmentShow = false;
     private PlayMusicFragment mPlayFragment;
@@ -169,6 +169,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
 
 
     private void addHeader(final OnlineMusicList onlineMusicList) {
+        adapter.removeAllHeader();
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -216,10 +217,9 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                         if (onlineMusicList == null || onlineMusicList.getSong_list() == null || onlineMusicList.getSong_list().size() == 0) {
                             return;
                         }
-                        addHeader(onlineMusicList);
+                        //addHeader(onlineMusicList);
+                        //adapter.addAll(onlineMusicList.getSong_list());
                         recyclerView.showRecycler();
-                        adapter.addAll(onlineMusicList.getSong_list());
-                        adapter.notifyDataSetChanged();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

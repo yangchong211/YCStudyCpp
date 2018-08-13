@@ -224,6 +224,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        url = "http://222.168.49.125:80/dsideal_yy/dsidealWeb/jinjiaxuan-test/0806/index.html";
         mWebView.loadUrl(url);
     }
 
@@ -307,12 +308,6 @@ public class WebViewActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     /**
      * 监听网页链接:
@@ -378,6 +373,7 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
+            LogUtils.e("WebViewActivity-----onReceivedError-------" + error.toString());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 LogUtils.e("服务器异常" + error.getDescription().toString());
             }
@@ -393,6 +389,7 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
+            LogUtils.e("WebViewActivity-----onReceivedError-------" + failingUrl);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 LogUtils.e("服务器异常" + "----");
             }
@@ -414,12 +411,14 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onReceivedLoginRequest(WebView view, String realm, String account, String args) {
             super.onReceivedLoginRequest(view, realm, account, args);
+            LogUtils.e("WebViewActivity-----onReceivedLoginRequest-------");
         }
 
         // 在加载资源时通知主机应用程序发生SSL错误。
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             super.onReceivedSslError(view, handler, error);
+            LogUtils.e("WebViewActivity-----onReceivedSslError-------" + error.getUrl());
         }
     }
 
