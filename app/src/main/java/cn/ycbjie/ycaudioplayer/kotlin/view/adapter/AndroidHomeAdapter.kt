@@ -39,6 +39,10 @@ class AndroidHomeAdapter : RecyclerArrayAdapter<HomeData>{
         internal var tvChildChapterName: TextView = getView(R.id.tvChildChapterName)
         internal var tvTime: TextView = getView(R.id.tvTime)
 
+        init {
+
+        }
+
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun setData(data: HomeData?) {
             super.setData(data)
@@ -48,6 +52,7 @@ class AndroidHomeAdapter : RecyclerArrayAdapter<HomeData>{
             tvSuperChapterName.text = data?.superChapterName
             tvChildChapterName.text = data?.chapterName
             tvContent.text = data?.title
+
         }
     }
 

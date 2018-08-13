@@ -76,6 +76,9 @@ public class WebViewActivity extends BaseActivity {
     private String name;
     private MyWebChromeClient webChromeClient;
     private View mErrorView;
+    private JsAppInterface jsAppInterface;
+    //是否可以调用app的js交互
+    public boolean isJsToAppCallBack = true;
 
     public static void lunch(Activity activity, @NotNull String url, @NotNull String title) {
         if(activity!=null){
@@ -116,6 +119,9 @@ public class WebViewActivity extends BaseActivity {
             mWebView = null;
         }
         super.onDestroy();
+        if (jsAppInterface != null) {
+            jsAppInterface.unregister();
+        }
     }
 
     @Override
@@ -269,6 +275,10 @@ public class WebViewActivity extends BaseActivity {
         }
         /*设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
         ws.setTextZoom(100);
+        //在js中调用本地java方法
+        jsAppInterface = new JsAppInterface(this, mWebView);
+        jsAppInterface.register();
+        mWebView.addJavascriptInterface(jsAppInterface, "WebViewJsMethodName");
         mWebView.addJavascriptInterface(new JavascriptInterface(this), "injectedObject");
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(webChromeClient = new MyWebChromeClient());
