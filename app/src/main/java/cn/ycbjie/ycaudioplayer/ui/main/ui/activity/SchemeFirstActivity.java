@@ -45,7 +45,7 @@ public class SchemeFirstActivity extends AppCompatActivity {
 
 
     /**
-     * 协议部分，随便设置 yc://ycbjie:8888/from?type=yangchong
+     * 协议部分，随便设置 yc://ycbjie.cn:8888/from?type=yangchong
      */
 
     @Override

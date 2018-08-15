@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">叮咚播放器</string>
+    <string name="app_name">叮咚</string>
+    <string name="app_name_ceshi">测试版叮咚</string>
+    <string name="app_name_shengchan">生产版叮咚</string>
 
     <string name="guideTime">Time © 2017&#045;%d 潇湘剑雨</string>
     <string name="menu_home">音乐中心</string>

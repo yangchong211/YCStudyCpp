@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
 import com.ns.yc.ycutilslib.switchButton.SwitchButton;
 
@@ -20,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
-import cn.ycbjie.ycaudioplayer.DebugActivity;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -124,7 +122,7 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
                     mHits[mHits.length - 1] = SystemClock.uptimeMillis();
                     if (mHits[0] >= (mHits[mHits.length - 1] - 500)) {
                         mHits = new long[3];
-                        ActivityUtils.startActivity(DebugActivity.class);
+                        //ActivityUtils.startActivity(DebugActivity.class);
                     }
                 }
                 break;

@@ -323,6 +323,9 @@ public class PlayService extends Service {
      * 4.其他情况是直接播放
      */
     public void playPause() {
+        if(mPlayingMusic==null){
+            return;
+        }
         if (isPreparing()) {
             stop();
         } else if (isPlaying()) {
@@ -484,6 +487,9 @@ public class PlayService extends Service {
      * 停止播放
      */
     public void stop() {
+        if(mPlayingMusic==null){
+            return;
+        }
         if (isDefault()) {
             return;
         }

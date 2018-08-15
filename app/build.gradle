@@ -25,7 +25,7 @@ android {
 
     //默认配置，是ProductFlavor类型。它共享给其他ProductFlavor使用
     defaultConfig {
-        applicationId "cn.ycbjie.ycaudioplayer"
+        //applicationId "cn.ycbjie.ycaudioplayer"
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 2
@@ -37,7 +37,20 @@ android {
             // yc 设置支持的SO库架构，so库不要支持所有
             abiFilters 'armeabi', 'x86', 'armeabi-v7a' //'x86_64', 'arm64-v8a'
         }
+        //flavorDimensions "versionCode"
     }
+
+    //创建productFlavors，差异化打包
+    /*productFlavors {
+        ceshi{
+            applicationId "ceshi.cn.ycbjie.ycaudioplayer"
+            manifestPlaceholders = [APP_NAME: "@string/app_name_ceshi"]
+        }
+        shengchan{
+            applicationId "shengchan.cn.ycbjie.ycaudioplayer"
+            manifestPlaceholders = [APP_NAME: "@string/app_name_shengchan"]
+        }
+    }*/
 
     //签名配置，SigningConfig类型
     //Plugin requires 'APK Signature Scheme v2 Enabled' for debug.
@@ -296,12 +309,12 @@ dependencies {
     compile 'me.yokeyword:fragmentation:1.3.3'
     compile 'com.meituan.android.walle:library:1.1.6'
 
-    compile 'org.yczbj:YCRefreshViewLib:2.5'
+    compile 'org.yczbj:YCRefreshViewLib:2.5.6'
     compile 'cn.yc:YCCountDownViewLib:1.0'
     compile 'cn.yc:YCUtilsLib:1.6.2'
     compile 'cn.yc:YCDialogLib:3.5'
     compile 'cn.yc:YCBannerLib:1.3.2'
-    compile 'cn.yc:YCVideoPlayerLib:2.4.6'
+    compile 'cn.yc:YCVideoPlayerLib:2.4.7'
     compile 'cn.yc:YCBaseAdapterLib:1.3.2'
     compile 'cn.yc:YCStatusBarLib:1.3'
     compile 'cn.yc:YCProgressLib:1.2'

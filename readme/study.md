@@ -22,6 +22,10 @@
 - 学习之旅：https://www.jianshu.com/c/10545ba15cb3
 - 玩Android ： http://www.wanandroid.com/article/list/0?cid=232
 
+#### 5.差异化打包
+- Android 通过配置 productFlavors 实现多版本差异化打包：https://blog.csdn.net/qq_30878303/article/details/79536921
+- Android差异化打包productFlavors ：https://blog.csdn.net/mingtiannihao0522/article/details/78390365
+
 
 
 

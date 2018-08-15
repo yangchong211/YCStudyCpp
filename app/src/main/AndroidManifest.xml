@@ -36,6 +36,7 @@
     <!--编译报错：Manifest merger failed : Attribute application@label value=(@string/app_name)-->
     <!--该错误的原因是工程A和工程B中的AndroidManifest.xml文件中都使用了app name，合并manifest的过程出现了问题。-->
     <!--解决办法： tools:replace="android:icon,android:label"-->
+    <!--如果需要使用差异化打包-->
     <application
         android:name=".base.app.BaseApplication"
         android:allowBackup="true"
@@ -55,7 +56,7 @@
                 <!-- 协议部分配置 ,注意需要跟web配置相同-->
                 <!--协议部分，随便设置 yc://ycbjie:8888/from?type=yangchong  -->
                 <data android:scheme="yc"
-                    android:host="ycbjie"
+                    android:host="ycbjie.cn"
                     android:path="/from"
                     android:port="8888"/>
                 <!--下面这几行也必须得设置-->

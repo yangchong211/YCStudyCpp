@@ -8,8 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -105,6 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int positionIndex;
     private boolean isPlayFragmentShow = false;
     private long firstClickTime = 0;
+    private long time;
 
 
     @Override
@@ -114,6 +119,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
         super.onBackPressed();
+    }
+
+    /**
+     * 是当某个按键被按下是触发。所以也有人在点击返回键的时候去执行该方法来做判断
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        LogUtils.e("触摸监听", "onKeyDown");
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mPlayFragment != null && isPlayFragmentShow) {
+                hidePlayingFragment();
+            }else {
+                //双击返回桌面
+                if ((System.currentTimeMillis() - time > 1000)) {
+                    ToastUtil.showToast(MainActivity.this, "再按一次返回桌面");
+                    time = System.currentTimeMillis();
+                } else {
+                    moveTaskToBack(true);
+                }
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
