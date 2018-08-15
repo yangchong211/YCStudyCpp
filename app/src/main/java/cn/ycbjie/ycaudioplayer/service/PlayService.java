@@ -15,6 +15,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -324,6 +325,7 @@ public class PlayService extends Service {
      */
     public void playPause() {
         if(mPlayingMusic==null){
+            ToastUtil.showToast(this,"请检查是否有音乐");
             return;
         }
         if (isPreparing()) {
@@ -455,6 +457,7 @@ public class PlayService extends Service {
      */
     public void pause() {
         if(mPlayingMusic==null){
+            ToastUtil.showToast(this,"请检查是否有音乐");
             return;
         }
         if(mPlayer!=null){
@@ -488,6 +491,7 @@ public class PlayService extends Service {
      */
     public void stop() {
         if(mPlayingMusic==null){
+            ToastUtil.showToast(this,"请检查是否有音乐");
             return;
         }
         if (isDefault()) {
