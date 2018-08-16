@@ -91,7 +91,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.ll_main)
     LinearLayout llMain;
 
-
     private Bundle bundle;
     private MusicFragment mMusicFragment;
     private HomeFragment mHomeFragment;
