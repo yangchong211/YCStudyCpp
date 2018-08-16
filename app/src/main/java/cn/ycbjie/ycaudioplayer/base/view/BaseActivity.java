@@ -137,7 +137,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 获取到播放音乐的服务
      * @return              PlayService对象
      */
-    public PlayService getPlayService() {
+    public PlayService getPlayService () {
         PlayService playService = BaseAppHelper.get().getPlayService();
         if (playService == null) {
             //待解决：当长期处于后台，如何保活？避免service被杀死……

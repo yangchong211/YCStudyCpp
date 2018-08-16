@@ -91,6 +91,9 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
+        if (!checkServiceAlive()) {
+            return;
+        }
         YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initIntentData();
         initToolBar();

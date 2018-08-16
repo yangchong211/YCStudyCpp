@@ -131,6 +131,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.subscribe();
+
     }
 
     @Override
