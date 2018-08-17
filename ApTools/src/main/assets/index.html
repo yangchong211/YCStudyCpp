@@ -1,59 +1,67 @@
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title></title>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>Scheme协议测试</title>
 
-	<script type="text/javascript" charset="utf-8">
-    
-            function clickToApp(){
-            	window.location.href="yc://ycbjie.cn:8888/from?type=yangchong";
-        	}
+		<script type="text/javascript" charset="utf-8">
 
-       		function clickToAppMain(){
-            	window.location.href="yc://ycbjie.cn:8888/from?type=main";
-        	}
+				function clickToApp(){
+					window.location.href="yc://ycbjie.cn:8888/from?type=yangchong";
+				}
 
-            function clickToApp(){
-            	window.location.href="yc://app/?type=yangchong";
-        	}
+				function clickToAppMain(){
+					window.location.href="yc://ycbjie.cn:8888/from?type=main";
+				}
 
-       		function clickToAppMain(){
-            	window.location.href="yc://app/?type=main";
-        	}
-    </script>
-</head>
-<body>
+				function clickToApp2(){
+					window.location.href="yc://app/?type=yangchong";
+				}
 
-<body>
-	<a href="yc://ycbjie.cn:8888/from?type=yangchong">跳转回app</a><br/>
-</body>
+				function clickToAppMain2(){
+					window.location.href="yc://app/?type=main";
+				}
+		</script>
+	</head>
+	<body>
+		<body>
+			<a href="yc://ycbjie.cn:8888/from?type=yangchong">跳转回app</a><br/>
+		</body>
+		<b>
+		<body>
+		<a href="yc://ycbjie.cn:8888/from?type=main">跳转回app主页面</a><br/>
+		</body>
+		<b>
+		<body>
+		<a href="yc://ycbjie.cn:8888/from?type=setting">跳转回app设置页面</a><br/>
+		</body>
+		<b>
+		<b>
+		<body>
+		<a href="yc://ycbjie.cn:8888/from?type=setting & level=20">跳转回app设置页面并且带参数</a><br/>
+		</body>
+		<b>
+		<body>
+		<a href="yc://app/?page=yangchong">跳转回app</a><br/>
+		</body>
+		<b>
+		<b>
 
-<b>
+		<body>
+		<a href="yc://app/?page=main">跳转回app主页面</a><br/>
+		</body>
 
-<body>
-<a href="yc://app/?page=main">跳转回app1</a><br/>
-</body>
+		<b>
+		<b>
 
-<b>
+		<body>
+		<a href="yc://app/?page=setting">跳转回app设置页面</a><br/>
+		</body>
 
-<body>
-<a href="//yc:app/?page=main">跳转回app</a><br/>
-</body>
-
-<b>
-
-<body>
-<a href="//yc:ycbjie.cn:8888/from?type=yangchong">跳转回app</a><br/>
-</body>
-
-<b>
-
-<button onclick="clickToApp1()">跳转到app指定页面</button>
-<button onclick="clickToAppMain1()">跳转到app指定主页面</button>
-<button onclick="clickToApp2()">跳转到app指定页面</button>
-<button onclick="clickToAppMain2()">跳转到app指定主页面</button>
-
-
-</body>
+		<b>
+		<button onclick="clickToApp()">跳转到app指定页面</button>
+		<button onclick="clickToAppMain()">跳转到app指定主页面</button>
+		<button onclick="clickToApp2()">跳转到app指定页面</button>
+		<button onclick="clickToAppMain2()">跳转到app指定主页面</button>
+	</body>
 </html>

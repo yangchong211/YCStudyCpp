@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tv_scheme3:
                 Intent intent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));
-                startActivity(intent3);
+                if(checkUrlScheme(intent3)){
+                    startActivity(intent3);
+                }
                 break;
             case R.id.tv_scheme4:
                 Intent intent4 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=setting"));
@@ -140,6 +142,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    /**
+     * 判断URL Scheme是否有效
+     */
+    boolean checkUrlScheme(Intent intent){
+        PackageManager packageManager = getPackageManager();
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+        return !activities.isEmpty();
+    }
+
+
 
     @SuppressLint("SetTextI18n")
     private void initData() {

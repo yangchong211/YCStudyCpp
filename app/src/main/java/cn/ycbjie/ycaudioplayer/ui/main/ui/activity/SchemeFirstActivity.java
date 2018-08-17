@@ -87,7 +87,15 @@ public class SchemeFirstActivity extends AppCompatActivity {
             Log.e( "UrlUtils","userInfo: " + userInfo);
             //获取指定参数值
             String type = uri.getQueryParameter("type");
-            Log.e( "UrlUtils","main: " + type);
+            Log.e( "UrlUtils","type: " + type);
+
+            //获取指定参数值，该方法获取值一直是空
+            //String level = uri.getQueryParameter("level");
+            ///Log.e( "UrlUtils","level: " + level);
+
+            String level = getValueByName(urlStr, "level");
+            Log.e( "UrlUtils","level: " + level);
+
             //UrlUtils: url: https://m.dev.haowumc.com/app/financialManagement
             //UrlUtils: scheme: https
             //UrlUtils: host: m.dev.haowumc.com
@@ -114,6 +122,29 @@ public class SchemeFirstActivity extends AppCompatActivity {
             }
         }
         finish();
+    }
+
+
+    /***
+     * 获取url 指定name的value;
+     * @param url                       url
+     * @param name                      参数名
+     * @return                          获取某个参数值
+     */
+    private String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        if(temp.contains("&")){
+            String[] keyValue = temp.split("&");
+            for (String str : keyValue) {
+                if (str.contains(name)) {
+                    result = str.replace(name + "=", "");
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
 
