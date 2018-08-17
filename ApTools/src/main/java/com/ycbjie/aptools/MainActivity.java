@@ -112,19 +112,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this,SetAppActivity.class));
                 break;
             case R.id.tv_scheme:
-                PackageManager packageManager = getPackageManager();
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("yc://ycbjie:8888/from?type=yangchong"));
-                List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
-                boolean isValid = !activities.isEmpty();
-                if (isValid) {
-                    startActivity(intent);
-                }
+                Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://ycbjie.cn:8888/from?type=main"));
+                startActivity(intent1);
                 break;
             case R.id.tv_scheme2:
                 Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));
                 startActivity(intent2);
-                //startActivity(new Intent(this,SchemeActivity.class));
                 break;
             case R.id.tv_web:
                 startActivity(new Intent(this,WebActivity.class));

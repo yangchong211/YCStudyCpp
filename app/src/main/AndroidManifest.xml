@@ -54,7 +54,7 @@
             <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
             <intent-filter>
                 <!-- 协议部分配置 ,注意需要跟web配置相同-->
-                <!--协议部分，随便设置 yc://ycbjie:8888/from?type=yangchong  -->
+                <!--协议部分，随便设置 yc://ycbjie.cn:8888/from?type=yangchong  -->
                 <data android:scheme="yc"
                     android:host="ycbjie.cn"
                     android:path="/from"

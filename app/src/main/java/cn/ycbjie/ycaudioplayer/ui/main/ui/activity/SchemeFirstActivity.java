@@ -99,12 +99,15 @@ public class SchemeFirstActivity extends AppCompatActivity {
             //UrlUtils: userInfo: null
 
             switch (type){
+                //yc://ycbjie.cn:8888/from?type=yangchong
                 case "yangchong":
                     ActivityUtils.startActivity(GuideActivity.class);
                     break;
+                //yc://ycbjie.cn:8888/from?type=main
                 case "main":
                     readGoActivity(new Intent(this,MainActivity.class),this);
                     break;
+                //yc://ycbjie.cn:8888/from?type=setting
                 case "setting":
                     readGoActivity(new Intent(this, MeSettingActivity.class),this);
                     break;
