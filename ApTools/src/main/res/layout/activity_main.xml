@@ -53,7 +53,7 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray"
             android:padding="10dp"
-            android:text="通过scheme协议打开叮咚App"/>
+            android:text="scheme1"/>
         <TextView
             android:id="@+id/tv_scheme2"
             android:layout_width="wrap_content"
@@ -62,7 +62,25 @@
             android:layout_marginLeft="10dp"
             android:background="@android:color/darker_gray"
             android:padding="10dp"
-            android:text="scheme协议2"/>
+            android:text="scheme2"/>
+        <TextView
+            android:id="@+id/tv_scheme3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/darker_gray"
+            android:padding="10dp"
+            android:text="scheme3"/>
+        <TextView
+            android:id="@+id/tv_scheme4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/darker_gray"
+            android:padding="10dp"
+            android:text="scheme4"/>
     </LinearLayout>
 
 

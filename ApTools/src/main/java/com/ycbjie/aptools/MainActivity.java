@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnSetApp;
     private TextView mTvScheme;
     private TextView mTvScheme2;
+    private TextView mTvScheme3;
+    private TextView mTvScheme4;
     private TextView mTvWeb;
 
     public static final String packName = "cn.ycbjie.ycaudioplayer";
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnSetApp = (Button) findViewById(R.id.btn_set_app);
         mTvScheme = (TextView) findViewById(R.id.tv_scheme);
         mTvScheme2 = (TextView) findViewById(R.id.tv_scheme2);
+        mTvScheme3 = (TextView) findViewById(R.id.tv_scheme3);
+        mTvScheme4 = (TextView) findViewById(R.id.tv_scheme4);
         mTvWeb = (TextView) findViewById(R.id.tv_web);
     }
 
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnSetApp.setOnClickListener(this);
         mTvScheme.setOnClickListener(this);
         mTvScheme2.setOnClickListener(this);
+        mTvScheme3.setOnClickListener(this);
+        mTvScheme4.setOnClickListener(this);
         mTvWeb.setOnClickListener(this);
     }
 
@@ -116,8 +122,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.tv_scheme2:
-                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://ycbjie.cn:8888/from?type=setting"));
                 startActivity(intent2);
+                break;
+            case R.id.tv_scheme3:
+                Intent intent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=main"));
+                startActivity(intent3);
+                break;
+            case R.id.tv_scheme4:
+                Intent intent4 = new Intent(Intent.ACTION_VIEW, Uri.parse("yc://app/?page=setting"));
+                startActivity(intent4);
                 break;
             case R.id.tv_web:
                 startActivity(new Intent(this,WebActivity.class));
