@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.utils.app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -25,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.weight.dialog.AlertNormalDialog;
@@ -213,5 +215,27 @@ public class AppToolUtils {
         return fingerprint;
     }
 
+    /**
+     * 判断app是否正在运行
+     * @param context                       上下文
+     * @param packageName                   应用的包名
+     * @return true 表示正在运行，false 表示没有运行
+     */
+    public static boolean isAppRunning(Context context, String packageName) {
+        ActivityManager am = (ActivityManager) context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list ;
+        if (am != null) {
+            list = am.getRunningTasks(100);
+            if (list.size() <= 0) {
+                return false;
+            }
+            for (ActivityManager.RunningTaskInfo info : list) {
+                if (info.baseActivity.getPackageName().equals(packageName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

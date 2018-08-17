@@ -1,5 +1,8 @@
 package cn.ycbjie.ycaudioplayer.ui.main.ui.activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +15,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import java.util.List;
 
 import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
+import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
+import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 
 
 /**
@@ -93,12 +98,46 @@ public class SchemeFirstActivity extends AppCompatActivity {
             //UrlUtils: authority: m.dev.haowumc.com
             //UrlUtils: userInfo: null
 
-            if(type.equals("yangchong")){
-                ActivityUtils.startActivity(GuideActivity.class);
-            }else if(type.equals("main")){
-                ActivityUtils.startActivity(MainActivity.class);
+            switch (type){
+                case "yangchong":
+                    ActivityUtils.startActivity(GuideActivity.class);
+                    break;
+                case "main":
+                    readGoActivity(new Intent(this,MainActivity.class),this);
+                    break;
+                case "setting":
+                    readGoActivity(new Intent(this, MeSettingActivity.class),this);
+                    break;
             }
         }
         finish();
     }
+
+
+    public void readGoActivity(Intent intent, Context context) {
+        // 如果app 运行中，直接打开页面，没有运行中就先打开主界面，在打开
+        if (AppToolUtils.isAppRunning(context, context.getPackageName())) {
+            openActivity(intent, context);
+        } else {
+            reStartActivity(intent, context);
+        }
+    }
+
+    public void openActivity(Intent intent, Context context) {
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public void reStartActivity(Intent intent, Context context) {
+        Intent[] intents = new Intent[2];
+        Intent mainIntent = new Intent(context, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intents[0] = mainIntent;
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intents[1] = intent;
+        context.startActivities(intents);
+    }
+
+
+
 }
