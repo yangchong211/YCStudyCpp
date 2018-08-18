@@ -1,6 +1,5 @@
 package cn.ycbjie.ycaudioplayer.ui.main.ui.activity;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,7 +20,6 @@ import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 
 /**
  * Android业务组件化之URL Scheme使用
- * http://www.cnblogs.com/whoislcj/p/5825333.html
  */
 
 public class SchemeFirstActivity extends AppCompatActivity {
@@ -51,6 +49,7 @@ public class SchemeFirstActivity extends AppCompatActivity {
 
     /**
      * 协议部分，随便设置 yc://ycbjie.cn:8888/from?type=yangchong
+     * 如果携带参数，则：yc://ycbjie.cn:8888/from?type=yangchong&level=20
      */
 
     @Override
@@ -96,15 +95,6 @@ public class SchemeFirstActivity extends AppCompatActivity {
             String level = getValueByName(urlStr, "level");
             Log.e( "UrlUtils","level: " + level);
 
-            //UrlUtils: url: https://m.dev.haowumc.com/app/financialManagement
-            //UrlUtils: scheme: https
-            //UrlUtils: host: m.dev.haowumc.com
-            //UrlUtils: port: -1
-            //UrlUtils: path: /app/financialManagement
-            //UrlUtils: pathSegments: [app, financialManagement]
-            //UrlUtils: query: null
-            //UrlUtils: authority: m.dev.haowumc.com
-            //UrlUtils: userInfo: null
 
             switch (type){
                 //yc://ycbjie.cn:8888/from?type=yangchong
@@ -148,7 +138,7 @@ public class SchemeFirstActivity extends AppCompatActivity {
     }
 
 
-    public void readGoActivity(Intent intent, Context context) {
+    private void readGoActivity(Intent intent, Context context) {
         // 如果app 运行中，直接打开页面，没有运行中就先打开主界面，在打开
         if (AppToolUtils.isAppRunning(context, context.getPackageName())) {
             openActivity(intent, context);
@@ -157,12 +147,12 @@ public class SchemeFirstActivity extends AppCompatActivity {
         }
     }
 
-    public void openActivity(Intent intent, Context context) {
+    private void openActivity(Intent intent, Context context) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public void reStartActivity(Intent intent, Context context) {
+    private void reStartActivity(Intent intent, Context context) {
         Intent[] intents = new Intent[2];
         Intent mainIntent = new Intent(context, MainActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -171,7 +161,6 @@ public class SchemeFirstActivity extends AppCompatActivity {
         intents[1] = intent;
         context.startActivities(intents);
     }
-
 
 
 }
