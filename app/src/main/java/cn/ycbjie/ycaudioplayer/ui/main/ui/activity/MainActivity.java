@@ -218,7 +218,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initData() {
         //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
-        onChangeImpl(getPlayService().getPlayingMusic());
+        List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
+        if(musicList.size()>0){
+            onChangeImpl(musicList.get(0));
+        }else {
+            onChangeImpl(getPlayService().getPlayingMusic());
+        }
     }
 
     /**
@@ -228,6 +233,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
+        //处理
     }
 
     @Override
@@ -243,7 +249,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showListDialog();
                 break;
             case R.id.iv_play_bar_play:
-                getPlayService().playPause();
+                if(getPlayService().isDefault()){
+                    if(BaseAppHelper.get().getMusicList().size()>0){
+                        getPlayService().play(BaseAppHelper.get().getMusicList().get(0));
+                    }else {
+                        ToastUtil.showToast(this,"请检查是否有音乐");
+                    }
+                }else {
+                    getPlayService().playPause();
+                }
                 break;
             case R.id.iv_play_bar_next:
                 getPlayService().next();
@@ -569,9 +583,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onItemClick(View view, int position) {
                         List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
-                        getPlayService().play(musicList,position);
-                        mAdapter.updatePlayingPosition(getPlayService());
-                        mAdapter.notifyDataSetChanged();
+                        if(musicList!=null && musicList.size()>0 && musicList.size()>position && position>=0){
+                            getPlayService().play(position);
+                            mAdapter.updatePlayingPosition(getPlayService());
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
                 View.OnClickListener listener = new View.OnClickListener() {

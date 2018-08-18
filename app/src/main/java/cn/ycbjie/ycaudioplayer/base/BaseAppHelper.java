@@ -76,6 +76,16 @@ public class BaseAppHelper {
         return mMusicList;
     }
 
+
+    /**
+     * 设置音频结合
+     * @param list              音频集合
+     */
+    public void setMusicList(List<AudioBean> list) {
+        mMusicList.clear();
+        mMusicList.addAll(list);
+    }
+
     /**
      * 获取扫描到的音乐信息数据集合
      * @return              返回list集合
@@ -90,25 +100,6 @@ public class BaseAppHelper {
      */
     public LongSparseArray<DownloadMusicInfo> getDownloadList() {
         return mDownloadList;
-    }
-
-    /**
-     * 获取音频集合
-     * @return                  返回list集合
-     */
-    public List<AudioBean> getAudioList() {
-        return mMusicList;
-    }
-
-    /**
-     * 设置音频结合
-     * @param list              音频集合
-     */
-    public void setAudioList(List<AudioBean> list) {
-        if(mMusicList!=null){
-            mMusicList.clear();
-            mMusicList.addAll(list);
-        }
     }
 
 }

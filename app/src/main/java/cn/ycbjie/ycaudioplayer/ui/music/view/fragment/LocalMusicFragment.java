@@ -37,10 +37,16 @@ import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.view.adapter.LocalMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.view.activity.MusicInfoActivity;
 
-/**
- * Created by yc on 2018/1/19.
- */
 
+/**
+ * <pre>
+ *     @author yangchong
+ *     blog  :
+ *     time  : 2017/6/6
+ *     desc  : 本地音乐list也米娜
+ *     revise:
+ * </pre>
+ */
 public class LocalMusicFragment extends BaseLazyFragment implements View.OnClickListener {
 
 
@@ -115,7 +121,11 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
             @Override
             public void onItemClick(int position) {
                 List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
-                getPlayService().play(musicList,position);
+                if(musicList!=null && musicList.size()>0 && musicList.size()>position && position>=0){
+                    getPlayService().play(position);
+                    adapter.updatePlayingPosition(getPlayService());
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }

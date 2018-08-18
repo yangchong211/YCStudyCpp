@@ -493,7 +493,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
         AppLogUtils.e("播放位置----视频页开始显示音频--" + videoPlayer.getCurrentPosition());
 
         if (mDetailAudioFragment != null) {
-            mDetailAudioFragment.setViewData(BaseAppHelper.get().getAudioList().get(0));
+            mDetailAudioFragment.setViewData(BaseAppHelper.get().getMusicList().get(0));
             if (getPlayService().isDefault() || getPlayService().isPausing()) {
                 getPlayService().seekTo((int) BaseConfig.INSTANCE.getPosition());
                 getPlayService().playPause();

@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
@@ -54,7 +55,7 @@ public class PlayService extends Service {
      */
     private AudioBean mPlayingMusic;
     /**
-     * 在线音频的集合
+     * 音频list集合
      */
     private List<AudioBean> audioMusics;
     /**
@@ -118,6 +119,7 @@ public class PlayService extends Service {
     };
 
 
+
     /**
      * 绑定服务时才会调用
      * 必须要实现的方法
@@ -157,7 +159,6 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        audioMusics = new ArrayList<>();
         NotificationUtils.init(this);
         createMediaPlayer();
         initMediaSessionManager();
@@ -324,10 +325,6 @@ public class PlayService extends Service {
      * 4.其他情况是直接播放
      */
     public void playPause() {
-        if(mPlayingMusic==null){
-            ToastUtil.showToast(this,"请检查是否有音乐");
-            return;
-        }
         if (isPreparing()) {
             stop();
         } else if (isPlaying()) {
@@ -412,6 +409,7 @@ public class PlayService extends Service {
                     // 如果是最后一首，则切换回第一首
                     mPlayingPosition = 0;
                 }
+                LogUtils.e("PlayService"+"----mPlayingPosition----"+ mPlayingPosition);
                 play(mPlayingPosition);
                 break;
         }
@@ -456,10 +454,6 @@ public class PlayService extends Service {
      * 暂停
      */
     public void pause() {
-        if(mPlayingMusic==null){
-            ToastUtil.showToast(this,"请检查是否有音乐");
-            return;
-        }
         if(mPlayer!=null){
             //暂停
             mPlayer.pause();
@@ -490,10 +484,6 @@ public class PlayService extends Service {
      * 停止播放
      */
     public void stop() {
-        if(mPlayingMusic==null){
-            ToastUtil.showToast(this,"请检查是否有音乐");
-            return;
-        }
         if (isDefault()) {
             return;
         }
@@ -509,7 +499,7 @@ public class PlayService extends Service {
      * 播放索引为position的音乐
      * @param position              索引
      */
-    private void play(int position) {
+    public void play(int position) {
         if (audioMusics.isEmpty()) {
             return;
         }
@@ -523,8 +513,10 @@ public class PlayService extends Service {
 
         mPlayingPosition = position;
         AudioBean music = audioMusics.get(mPlayingPosition);
+        String id = music.getId();
+        LogUtils.e("PlayService"+"----id----"+ id);
         //保存当前播放的musicId，下次进来可以记录状态
-        long musicId = Long.getLong(music.getId());
+        long musicId = Long.parseLong(id);
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
         play(music);
     }
@@ -547,7 +539,6 @@ public class PlayService extends Service {
 
     /**
      * 播放，这种是直接传音频实体类
-     * 有两种，一种是播放本地播放，另一种是在线播放
      * @param music         music
      */
     public void play(AudioBean music) {
@@ -575,57 +566,6 @@ public class PlayService extends Service {
             //更新通知栏
             NotificationUtils.showPlay(mPlayingMusic);
 
-            //更新
-            mMediaSessionManager.updateMetaData(mPlayingMusic);
-            mMediaSessionManager.updatePlaybackState();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    /**
-     * 播放，这种是传音频实体类集合
-     * 有两种，一种是播放本地播放，另一种是在线播放
-     * @param music         music
-     */
-    public void play(List<AudioBean> music , int position) {
-        if(music==null || music.size()==0 || position<0){
-            return;
-        }
-        if(audioMusics==null){
-            audioMusics = new ArrayList<>();
-        }
-        if(!audioMusics.isEmpty()){
-            audioMusics.clear();
-        }
-        audioMusics.addAll(music);
-        mPlayingPosition = position;
-        //赋值
-        mPlayingMusic = music.get(mPlayingPosition);
-        createMediaPlayer();
-        try {
-            mPlayer.reset();
-            //把音频路径传给播放器
-            mPlayer.setDataSource(mPlayingMusic.getPath());
-            //准备
-            mPlayer.prepareAsync();
-            //设置状态为准备中
-            mPlayState = MusicPlayAction.STATE_PREPARING;
-            //监听
-            mPlayer.setOnPreparedListener(mOnPreparedListener);
-            mPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
-            mPlayer.setOnCompletionListener(mOnCompletionListener);
-            mPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
-            mPlayer.setOnErrorListener(mOnErrorListener);
-            mPlayer.setOnInfoListener(mOnInfoListener);
-            //当播放的时候，需要刷新界面信息
-            if (mListener != null) {
-                mListener.onChange(mPlayingMusic);
-            }
-            //更新通知栏
-            NotificationUtils.showPlay(mPlayingMusic);
             //更新
             mMediaSessionManager.updateMetaData(mPlayingMusic);
             mMediaSessionManager.updatePlaybackState();
@@ -797,7 +737,7 @@ public class PlayService extends Service {
      * @return          true表示有
      */
     public boolean isHavePre() {
-        if(audioMusics!=null && audioMusics.size()>0){
+        if(audioMusics !=null && audioMusics.size()>0){
             if(mPlayingPosition != 0){
                 // 如果不是第一首，则还有上一首
                 return true;
@@ -814,7 +754,7 @@ public class PlayService extends Service {
      * @return          true表示有
      */
     public boolean isHaveNext() {
-        if(audioMusics!=null && audioMusics.size()>0){
+        if(audioMusics !=null && audioMusics.size()>0){
             if (mPlayingPosition != audioMusics.size() - 1) {
                 // 如果不是最后一首，则还有下一首
                 return true;
@@ -843,21 +783,19 @@ public class PlayService extends Service {
             @Override
             protected void onPostExecute(List<AudioBean> musicList) {
                 //首先先清空
-                BaseAppHelper.get().getMusicList().clear();
                 //然后添加所有扫描到的音乐
-                BaseAppHelper.get().getMusicList().addAll(musicList);
+                BaseAppHelper.get().setMusicList(musicList);
 
                 //如果获取音乐数据集合不为空
                 if (!BaseAppHelper.get().getMusicList().isEmpty()) {
+                    //音频的集合
+                    audioMusics = BaseAppHelper.get().getMusicList();
                     //刷新正在播放的本地歌曲的序号
                     updatePlayingPosition();
                     //获取正在播放的音乐
                     if(mPlayingPosition>=0){
                         mPlayingMusic = BaseAppHelper.get().getMusicList().get(mPlayingPosition);
                     }
-                    //每次扫描先清除之前的集合
-                    audioMusics.clear();
-                    audioMusics.addAll(BaseAppHelper.get().getMusicList());
                 }
                 if (callback != null) {
                     callback.onEvent(null);
@@ -877,13 +815,15 @@ public class PlayService extends Service {
             return;
         }
         for (int i = 0; i < audioMusics.size(); i++) {
-            if (Long.getLong(audioMusics.get(i).getId()) == id) {
+            String musicId = audioMusics.get(i).getId();
+            LogUtils.e("PlayService"+"----musicId----"+ musicId);
+            if (Long.parseLong(musicId) == id) {
                 position = i;
                 break;
             }
         }
         mPlayingPosition = position;
-        long musicId = Long.getLong(audioMusics.get(mPlayingPosition).getId());
+        long musicId = Long.parseLong(audioMusics.get(mPlayingPosition).getId());
         SPUtils.getInstance(Constant.SP_NAME).put(Constant.MUSIC_ID,musicId);
     }
 
@@ -921,6 +861,12 @@ public class PlayService extends Service {
             BaseConfig.INSTANCE.setLocked(true);
         }
     }
+
+
+
+    /**-------------------------------------播放list----------------------------------------*/
+
+
 
 
 }

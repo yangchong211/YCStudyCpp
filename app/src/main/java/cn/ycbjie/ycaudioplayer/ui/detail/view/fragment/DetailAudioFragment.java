@@ -197,7 +197,7 @@ public class DetailAudioFragment extends BaseFragment implements View.OnClickLis
         }
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
-        setViewData(BaseAppHelper.get().getAudioList().get(0));
+        setViewData(BaseAppHelper.get().getMusicList().get(0));
     }
 
 

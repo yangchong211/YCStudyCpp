@@ -324,10 +324,10 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         dialog.setViewListener(new BottomDialogFragment.ViewListener() {
             @Override
             public void bindView(View v) {
-                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-                TextView tv_play_type = (TextView) v.findViewById(R.id.tv_play_type);
-                TextView tv_collect = (TextView) v.findViewById(R.id.tv_collect);
-                ImageView iv_close = (ImageView) v.findViewById(R.id.iv_close);
+                RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                TextView tv_play_type = v.findViewById(R.id.tv_play_type);
+                TextView tv_collect = v.findViewById(R.id.tv_collect);
+                ImageView iv_close = v.findViewById(R.id.iv_close);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 final DialogMusicListAdapter mAdapter = new DialogMusicListAdapter(activity, musicList);
@@ -340,9 +340,11 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onItemClick(View view, int position) {
                         List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
-                        getPlayService().play(musicList,position);
-                        mAdapter.updatePlayingPosition(getPlayService());
-                        mAdapter.notifyDataSetChanged();
+                        if(musicList!=null && musicList.size()>0 && musicList.size()>position && position>=0){
+                            getPlayService().play(position);
+                            mAdapter.updatePlayingPosition(getPlayService());
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
                 View.OnClickListener listener = new View.OnClickListener() {
