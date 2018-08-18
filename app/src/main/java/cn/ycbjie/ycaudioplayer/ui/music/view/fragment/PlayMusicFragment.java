@@ -96,8 +96,6 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     YCLrcCustomView lrcView;
     @Bind(R.id.sb_volume)
     SeekBar sbVolume;
-    @Bind(R.id.iv_playing_velocity)
-    ImageView ivPlayingVelocity;
     private MainActivity activity;
     private int mLastProgress;
     /**
@@ -168,7 +166,6 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void initView(View view) {
         type = getArguments().getString(TAG);
-        initSystemBar();
         initPlayMode();
         initVolume();
     }
@@ -182,7 +179,6 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         ivPrev.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         ivOther.setOnClickListener(this);
-        ivPlayingVelocity.setOnClickListener(this);
         initSeekBarListener();
     }
 
@@ -265,9 +261,6 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.iv_other:
                 showListDialog();
-                break;
-            case R.id.iv_playing_velocity:
-                setPlayingVelocity();
                 break;
             default:
                 break;
@@ -379,23 +372,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         dialog.show();
     }
 
-    /**
-     * 设置播放速度
-     */
-    private void setPlayingVelocity() {
 
-    }
-
-
-    /**
-     * 沉浸式状态栏
-     */
-    private void initSystemBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int top = BarUtils.getStatusBarHeight();
-            llContent.setPadding(0, top, 0, 0);
-        }
-    }
 
     private void initPlayMode() {
         int playMode = SPUtils.getInstance(Constant.SP_NAME).getInt(Constant.PLAY_MODE, 0);
