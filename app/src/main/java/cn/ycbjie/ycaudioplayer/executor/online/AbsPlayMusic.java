@@ -8,17 +8,17 @@ import android.support.v7.app.AlertDialog;
 import com.blankj.utilcode.util.NetworkUtils;
 
 import cn.ycbjie.ycaudioplayer.R;
-import cn.ycbjie.ycaudioplayer.executor.IExecutor;
+import cn.ycbjie.ycaudioplayer.executor.inter.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 
-public abstract class PlayMusic implements IExecutor<AudioBean> {
+public abstract class AbsPlayMusic implements IExecutor<AudioBean> {
 
     private Activity mActivity;
     protected AudioBean music;
     int mCounter = 0;
 
-    PlayMusic(Activity activity) {
+    AbsPlayMusic(Activity activity) {
         mActivity = activity;
     }
 

@@ -92,6 +92,7 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onTabReselect(int position) {
+
             }
         });
     }
@@ -113,7 +114,9 @@ public class MusicFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onPageSelected(int position) {
-                stlLayout.setCurrentTab(position);
+                if(position>=0){
+                    stlLayout.setCurrentTab(position);
+                }
             }
 
             @Override

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -39,7 +37,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
-import cn.ycbjie.ycaudioplayer.executor.SearchLrc;
+import cn.ycbjie.ycaudioplayer.executor.search.AbsSearchLrc;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
@@ -448,7 +446,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
             if (!TextUtils.isEmpty(lrcPath)) {
                 loadLrc(lrcPath);
             } else {
-                new SearchLrc(playingMusic.getArtist(), playingMusic.getTitle()) {
+                new AbsSearchLrc(playingMusic.getArtist(), playingMusic.getTitle()) {
                     @Override
                     public void onPrepare() {
                         loadLrc("");

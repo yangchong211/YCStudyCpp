@@ -3,7 +3,8 @@ package cn.ycbjie.ycaudioplayer.weight.animView;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.widget.Toast;
+
+import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -13,7 +14,6 @@ abstract class ViewBase extends GLSurfaceView implements GLSurfaceView.Renderer 
 	public ViewBase(Context context) {
 		super(context);
 	}
-
 
 	protected String loadRawString(int rawId) throws Exception {
 		InputStream is = getContext().getResources().openRawResource(rawId);
@@ -30,8 +30,7 @@ abstract class ViewBase extends GLSurfaceView implements GLSurfaceView.Renderer 
 		post(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG)
-						.show();
+				ToastUtil.showToast(getContext(),errorMsg);
 			}
 		});
 	}

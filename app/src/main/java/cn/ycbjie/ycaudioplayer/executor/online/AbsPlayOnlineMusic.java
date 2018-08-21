@@ -24,12 +24,12 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 播放在线音乐
  */
-public abstract class PlayOnlineMusic extends PlayMusic {
+public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
 
     private OnlineMusicList.SongListBean mOnlineMusic;
     private Activity mActivity;
 
-    public PlayOnlineMusic(Activity activity, OnlineMusicList.SongListBean onlineMusic) {
+    public AbsPlayOnlineMusic(Activity activity, OnlineMusicList.SongListBean onlineMusic) {
         super(activity);
         this.mActivity = activity;
         mOnlineMusic = onlineMusic;

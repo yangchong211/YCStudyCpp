@@ -32,7 +32,7 @@ import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.executor.download.AbsDownloadOnlineMusic;
-import cn.ycbjie.ycaudioplayer.executor.online.PlayOnlineMusic;
+import cn.ycbjie.ycaudioplayer.executor.online.AbsPlayOnlineMusic;
 import cn.ycbjie.ycaudioplayer.executor.share.AbsShareOnlineMusic;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
@@ -310,9 +310,12 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         isPlayFragmentShow = false;
     }
 
-
+    /**
+     * 播放音乐
+     * @param onlineMusic                       onlineMusic
+     */
     private void playMusic(OnlineMusicList.SongListBean onlineMusic) {
-        new PlayOnlineMusic(this, onlineMusic) {
+        new AbsPlayOnlineMusic(this, onlineMusic) {
             @Override
             public void onPrepare() {
 

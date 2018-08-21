@@ -3,11 +3,9 @@ package cn.ycbjie.ycaudioplayer.executor.share;
 import android.content.Context;
 import android.content.Intent;
 
-import org.reactivestreams.Subscriber;
-
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
-import cn.ycbjie.ycaudioplayer.executor.IExecutor;
+import cn.ycbjie.ycaudioplayer.executor.inter.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;

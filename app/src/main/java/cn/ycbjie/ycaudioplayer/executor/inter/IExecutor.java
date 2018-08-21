@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.executor;
+package cn.ycbjie.ycaudioplayer.executor.inter;
 
 
 public interface IExecutor<T> {

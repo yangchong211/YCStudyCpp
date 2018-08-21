@@ -1,9 +1,8 @@
-package cn.ycbjie.ycaudioplayer.executor;
+package cn.ycbjie.ycaudioplayer.executor.search;
 
 import android.text.TextUtils;
 
-import org.reactivestreams.Subscriber;
-
+import cn.ycbjie.ycaudioplayer.executor.inter.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.MusicLrc;
 import cn.ycbjie.ycaudioplayer.model.bean.SearchMusic;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
@@ -16,12 +15,12 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 如果本地歌曲没有歌词则从网络搜索歌词
  */
-public abstract class SearchLrc implements IExecutor<String> {
+public abstract class AbsSearchLrc implements IExecutor<String> {
 
     private String artist;
     private String title;
 
-    protected SearchLrc(String artist, String title) {
+    protected AbsSearchLrc(String artist, String title) {
         this.artist = artist;
         this.title = title;
     }

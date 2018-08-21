@@ -15,16 +15,16 @@ import com.blankj.utilcode.util.Utils;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
-import cn.ycbjie.ycaudioplayer.executor.IExecutor;
+import cn.ycbjie.ycaudioplayer.executor.inter.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadMusicInfo;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 
 
 /**
  * <pre>
- *     author: yangchong
- *     blog  : www.pedaily.cn
- *     time  : 2018/01/24
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2017/01/24
  *     desc  : 下载音乐
  *     revise:
  * </pre>
@@ -45,7 +45,7 @@ public abstract class AbsDownloadMusic implements IExecutor<Void> {
 
 
     private void checkNetwork() {
-        if (NetworkUtils.isConnected()) {
+        if (!NetworkUtils.isConnected()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
             builder.setTitle(R.string.tips);
             builder.setMessage(R.string.download_tips);
