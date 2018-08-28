@@ -124,6 +124,12 @@ public class LocalOfficeActivity extends BaseActivity {
 
     private void initActionBar() {
         toolbarTitle.setText("本地Office文件");
+        llTitleMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 

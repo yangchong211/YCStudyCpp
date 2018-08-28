@@ -447,11 +447,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 隐藏页面
      */
     private void hidePlayingFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(0, R.anim.fragment_slide_down);
-        ft.hide(mPlayFragment);
-        ft.commitAllowingStateLoss();
-        isPlayFragmentShow = false;
+        if(mPlayFragment!=null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(0, R.anim.fragment_slide_down);
+            ft.hide(mPlayFragment);
+            ft.commitAllowingStateLoss();
+            isPlayFragmentShow = false;
+        }
     }
 
 

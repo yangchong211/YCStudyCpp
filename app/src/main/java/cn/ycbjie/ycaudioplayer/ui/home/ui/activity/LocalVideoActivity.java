@@ -120,11 +120,13 @@ public class LocalVideoActivity extends BaseActivity {
      * 隐藏页面
      */
     private void hidePlayingFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(0, R.anim.fragment_slide_down);
-        ft.hide(mLocalVideoFragment);
-        ft.commitAllowingStateLoss();
-        isPlayFragmentShow = false;
+        if(mLocalVideoFragment!=null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(0, R.anim.fragment_slide_down);
+            ft.hide(mLocalVideoFragment);
+            ft.commitAllowingStateLoss();
+            isPlayFragmentShow = false;
+        }
     }
     
     @Override
@@ -169,6 +171,7 @@ public class LocalVideoActivity extends BaseActivity {
 
     private void initActionBar() {
         toolbarTitle.setText("本地视频");
+
     }
 
 
