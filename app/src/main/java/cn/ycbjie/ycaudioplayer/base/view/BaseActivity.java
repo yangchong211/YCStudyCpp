@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
-import android.support.v7.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -14,6 +13,7 @@ import com.ns.yc.ycutilslib.activityManager.AppManager;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
+import cn.ycbjie.ycaudioplayer.base.density.BaseAutoActivity;
 import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter;
 import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
@@ -29,7 +29,7 @@ import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
  * 修订历史：
  * ================================================
  */
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends BaseAutoActivity {
 
     /**
      * 将代理类通用行为抽出来

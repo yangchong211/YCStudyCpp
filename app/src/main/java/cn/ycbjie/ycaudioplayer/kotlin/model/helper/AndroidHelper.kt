@@ -2,6 +2,7 @@ package cn.ycbjie.ycaudioplayer.kotlin.model.helper
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.NaviBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import com.mg.axechen.wanandroid.javabean.HomeListBean
@@ -76,6 +77,13 @@ class AndroidHelper private constructor() {
      */
     fun getKnowledgeList(page: Int, cid: Int): Observable<ResponseBean<ProjectListBean>> {
         return mApiService.getKnowledgeList(page, cid)
+    }
+
+    /**
+     * 网址导航
+     */
+    fun getNaviJson(): Observable<ResponseBean<MutableList<NaviBean>>> {
+        return mApiService.getNaviJson()
     }
 
 

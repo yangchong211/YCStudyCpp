@@ -17,12 +17,14 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidDetailActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
 import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
+import cn.ycbjie.ycaudioplayer.utils.app.DoShareUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
 import com.yc.cn.ycbannerlib.BannerView
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil
+import kotlinx.android.synthetic.main.item_android_home_news.*
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.YCRefreshView
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
@@ -85,6 +87,19 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
         adapter.setOnItemClickListener { position ->
             val homeData: HomeData = adapter.allData[position] as HomeData
             AndroidDetailActivity.lunch(activity, homeData, homeData.collect, homeData.id)
+        }
+        adapter.setOnItemChildClickListener { view, position ->
+            if(adapter.allData.size>position && position>=0){
+                when (view.id){
+                    R.id.flLike ->{
+
+                    }
+                    R.id.ivMore ->{
+                        val data = adapter.allData[position]
+                        DoShareUtils.shareText(activity,data.title,data.link)
+                    }
+                }
+            }
         }
     }
 

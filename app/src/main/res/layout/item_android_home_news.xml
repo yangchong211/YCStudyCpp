@@ -5,8 +5,8 @@
     android:id="@+id/cardItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    android:background="@color/colorWhite">
 
     <LinearLayout
         android:id="@+id/llInfo"
@@ -42,7 +42,6 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="?android:attr/selectableItemBackground"
                 android:scaleType="center"
                 android:src="@drawable/ic_share"
                 android:visibility="visible" />
@@ -52,17 +51,14 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ivMore"
-                android:foreground="?attr/selectableItemBackground">
-
+                android:layout_toLeftOf="@+id/ivMore">
                 <ImageView
                     android:id="@+id/ivLike"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_gravity="center"
                     android:layout_toLeftOf="@+id/ivMore"
-                    android:background="@drawable/ic_like" />
-
+                    android:src="@drawable/ic_like" />
             </FrameLayout>
 
 

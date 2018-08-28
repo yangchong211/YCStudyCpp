@@ -112,7 +112,7 @@ interface RequestApi {
      * 网址导航
      */
     @GET("navi/json")
-    fun getNaviJson(): Observable<Response<MutableList<NaviBean>>>
+    fun getNaviJson(): Observable<ResponseBean<MutableList<NaviBean>>>
 
 
     /**

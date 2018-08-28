@@ -4,6 +4,8 @@ import android.graphics.Typeface
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -17,11 +19,13 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidKnowledgeFragment
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidProfileFragment
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidProjectFragment
 import cn.ycbjie.ycaudioplayer.model.bean.TabEntity
+import cn.ycbjie.ycaudioplayer.utils.app.DoShareUtils
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import kotlinx.android.synthetic.main.base_title_bar.*
 import java.lang.ref.WeakReference
 import java.util.ArrayList
 
@@ -68,6 +72,34 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     private var pageAdapter : BasePagerAdapter? = null
     private var index: Int = 0
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.kotlin_menu_main,menu)
+        menu?.add(0, 1, 0, "登录")
+        menu?.add(0, 3, 1,"分享此软件")
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.actionSearch -> {
+
+            }
+            R.id.actionUrlNav -> {
+                NavWebsiteActivity.lunch(this)
+            }
+            1 -> {
+
+            }
+            2 -> {
+
+            }
+            3->{
+                DoShareUtils.shareApp(this)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     /**
      * 定义函数
      * 1.与Java定义函数的区别在于：Kotlin在定义函数的时候要加个fun关键词，函数的返回值前后不同，Java的在前面，kotlin在后面
@@ -104,6 +136,8 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         mTvTitleLeft!!.typeface = Typeface.DEFAULT
         mLlTitleMenu!!.visibility = View.GONE
         mIvRightImg!!.visibility = View.VISIBLE
+
+        initToolBar()
         initFragment()
         initTabLayout()
     }
@@ -116,6 +150,15 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
 
     override fun initData() {
 
+    }
+
+    private fun initToolBar() {
+        ll_title_menu.visibility = View.GONE
+        toolbar_title.visibility = View.GONE
+        toolbar.run {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.title = "首页"
+        }
     }
 
     private fun initFragment() {

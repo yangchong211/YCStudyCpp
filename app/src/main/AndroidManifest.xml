@@ -121,6 +121,7 @@
         <activity android:name=".kotlin.view.activity.AndroidAboutActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidDetailActivity"/>
         <activity android:name=".kotlin.view.activity.KnowledgeTreeDetailActivity"/>
+        <activity android:name=".kotlin.view.activity.NavWebsiteActivity"/>
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>
@@ -150,6 +151,15 @@
                 <action android:name="cn.ycbjie.lock" />
             </intent-filter>
         </receiver>
+
+        <!-- 如果您项目中的所有页面都只需要以高或宽中的一个作为基准进行适配的话,
+        那就只需要填写高或宽中的一个设计图尺寸即可 -->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
 
     </application>
 

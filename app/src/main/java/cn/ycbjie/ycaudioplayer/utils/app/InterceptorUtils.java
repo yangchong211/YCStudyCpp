@@ -107,6 +107,7 @@ public class InterceptorUtils {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
+
                 if (!NetworkUtils.isConnected()) {
                     //无网络下强制使用缓存，无论缓存是否过期,此时该请求实际上不会被发送出去。
                     request = request.newBuilder()
@@ -114,6 +115,10 @@ public class InterceptorUtils {
                             .build();
                 }
                 Response response = chain.proceed(request);
+
+                String cookeHeader = response.header("Set-Cookie", "");
+                LogUtils.e("cookeHeader2-----------"+cookeHeader);
+
                 if (NetworkUtils.isConnected()) {
                     //有网络情况下，根据请求接口的设置，配置缓存。
                     // 这样在下次请求时，根据缓存决定是否真正发出请求。
@@ -170,6 +175,8 @@ public class InterceptorUtils {
                             .removeHeader("Pragma")
                             .build();
                 }
+                String cookeHeader = response.header("Set-Cookie", "");
+                LogUtils.e("cookeHeader1-----------"+cookeHeader);
                 return response;
             }
         };

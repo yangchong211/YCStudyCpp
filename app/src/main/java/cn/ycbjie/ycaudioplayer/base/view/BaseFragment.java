@@ -3,13 +3,13 @@ package cn.ycbjie.ycaudioplayer.base.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
+import cn.ycbjie.ycaudioplayer.base.density.BaseAutoFragment;
 import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 
@@ -23,7 +23,7 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
  * 修订历史：
  * ================================================
  */
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
+public abstract class BaseFragment<T extends BasePresenter> extends BaseAutoFragment {
 
     /**
      * 将代理类通用行为抽出来

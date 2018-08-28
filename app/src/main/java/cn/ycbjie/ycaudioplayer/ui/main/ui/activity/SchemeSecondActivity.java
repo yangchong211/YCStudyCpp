@@ -113,7 +113,7 @@ public class SchemeSecondActivity extends AppCompatActivity {
     }
 
 
-    public void readGoActivity(Intent intent, Context context) {
+    private void readGoActivity(Intent intent, Context context) {
         // 如果app 运行中，直接打开页面，没有运行中就先打开主界面，在打开
         if (AppToolUtils.isAppRunning(context, context.getPackageName())) {
             openActivity(intent, context);
@@ -122,12 +122,13 @@ public class SchemeSecondActivity extends AppCompatActivity {
         }
     }
 
-    public void openActivity(Intent intent, Context context) {
+    private void openActivity(Intent intent, Context context) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public void reStartActivity(Intent intent, Context context) {
+
+    private void reStartActivity(Intent intent, Context context) {
         Intent[] intents = new Intent[2];
         Intent mainIntent = new Intent(context, MainActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

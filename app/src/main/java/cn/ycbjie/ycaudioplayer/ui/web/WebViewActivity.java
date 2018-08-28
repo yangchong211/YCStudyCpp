@@ -43,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
@@ -426,8 +427,13 @@ public class WebViewActivity extends BaseActivity {
         // 在加载资源时通知主机应用程序发生SSL错误。
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            if (BuildConfig.IS_DEBUG) {
+                handler.proceed();
+                return;
+            }
             super.onReceivedSslError(view, handler, error);
             LogUtils.e("WebViewActivity-----onReceivedSslError-------" + error.getUrl());
+
         }
     }
 
