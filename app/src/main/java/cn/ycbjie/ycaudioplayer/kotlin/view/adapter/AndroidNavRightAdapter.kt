@@ -37,16 +37,9 @@ class AndroidNavRightAdapter: RecyclerArrayAdapter<NaviBean> {
     }
 
     private inner class MyViewHolder internal constructor(parent: ViewGroup) :
-            BaseViewHolder<NaviBean>(parent, R.layout.item_project_list) {
+            BaseViewHolder<NaviBean>(parent, R.layout.item_nav_web_kind) {
 
-        private val ivHead: ImageView = getView(R.id.ivHead)
-        private val tvName: TextView = getView(R.id.tvName)
-        private val ivMore: ImageView = getView(R.id.ivMore)
-        private val flLike: FrameLayout = getView(R.id.flLike)
-        private val ivLike: ImageView = getView(R.id.ivLike)
-        private val ivImage: ImageView = getView(R.id.ivImage)
-        private val tvContent: TextView = getView(R.id.tvContent)
-        private val tvTime: TextView = getView(R.id.tvTime)
+        private val tvText: TextView = getView(R.id.tvText)
 
         init {
 
@@ -55,7 +48,7 @@ class AndroidNavRightAdapter: RecyclerArrayAdapter<NaviBean> {
         @SuppressLint("SetTextI18n")
         override fun setData(item: NaviBean) {
             super.setData(item)
-
+            tvText.text = item.name
         }
     }
 

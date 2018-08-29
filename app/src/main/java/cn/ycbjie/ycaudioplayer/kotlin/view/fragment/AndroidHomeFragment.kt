@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
 import cn.ycbjie.ycaudioplayer.kotlin.base.BaseItemView
+import cn.ycbjie.ycaudioplayer.kotlin.base.KotlinConstant
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
@@ -19,12 +20,12 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
 import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
 import cn.ycbjie.ycaudioplayer.utils.app.DoShareUtils
 import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
 import com.yc.cn.ycbannerlib.BannerView
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil
-import kotlinx.android.synthetic.main.item_android_home_news.*
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.YCRefreshView
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
@@ -92,7 +93,20 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
             if(adapter.allData.size>position && position>=0){
                 when (view.id){
                     R.id.flLike ->{
-
+                        if (SPUtils.getInstance().getInt(KotlinConstant.USER_ID)==0){
+                            ToastUtil.showToast(activity,getString(R.string.collect_fail_pls_login))
+                        }else{
+                            val homeData = adapter.allData[position]
+                            //var homdata: HomeData = datas[position].item as HomeData
+                            val selectId = homeData.id
+                            if (homeData.collect) {
+                                presenter?.unCollectArticle(selectId)
+                                addCollectStatus(homeData,position)
+                            } else {
+                                removeCollectStatus(homeData,position)
+                                presenter?.collectInArticle(selectId)
+                            }
+                        }
                     }
                     R.id.ivMore ->{
                         val data = adapter.allData[position]
@@ -205,6 +219,19 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
     }
 
 
+    private fun addCollectStatus(homeData: HomeData, position: Int) {
+        homeData.collect = false
+        adapter.notifyItemChanged(position)
+        //adapter.notifyDataSetChanged()
+    }
+
+
+    private fun removeCollectStatus(homeData: HomeData, position: Int) {
+        homeData.collect = true
+        adapter.notifyItemChanged(position)
+        //adapter.notifyDataSetChanged()
+    }
+
     override fun setDataView(bean: ResponseBean<HomeListBean>) {
         if(bean.data!=null){
             recyclerView?.showRecycler()
@@ -221,5 +248,22 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
     override fun setDataErrorView() {
         recyclerView?.showError()
     }
+
+    override fun unCollectArticleSuccess() {
+        ToastUtil.showToast(activity,"取消收藏成功")
+    }
+
+    override fun unCollectArticleFail(t: Throwable) {
+        ToastUtil.showToast(activity,t.message)
+    }
+
+    override fun collectInArticleSuccess() {
+        ToastUtil.showToast(activity,"收藏成功")
+    }
+
+    override fun collectInArticleFail(t: Throwable) {
+        ToastUtil.showToast(activity,t.message)
+    }
+
 
 }

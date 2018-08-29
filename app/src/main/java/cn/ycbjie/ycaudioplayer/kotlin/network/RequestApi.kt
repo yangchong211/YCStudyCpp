@@ -132,7 +132,7 @@ interface RequestApi {
      * 收藏站内文章
      */
     @POST("lg/collect/{id}/json")
-    fun collectInArticle(@Path("id") id: Int): Observable<Response<JSONObject>>
+    fun collectInArticle(@Path("id") id: Int): Observable<ResponseBean<JSONObject>>
 
 
     /**
@@ -147,7 +147,7 @@ interface RequestApi {
      * 取消收藏
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun unCollectArticle(@Path("id") id: Int): Observable<Response<JSONObject>>
+    fun unCollectArticle(@Path("id") id: Int): Observable<ResponseBean<JSONObject>>
 
     /**
      * 收藏网站

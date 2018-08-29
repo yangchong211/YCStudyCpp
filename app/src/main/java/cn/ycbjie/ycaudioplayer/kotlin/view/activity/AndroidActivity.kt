@@ -153,11 +153,13 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     }
 
     private fun initToolBar() {
+        mTvTitleLeft?.text = "首页"
         ll_title_menu.visibility = View.GONE
         toolbar_title.visibility = View.GONE
         toolbar.run {
             setSupportActionBar(toolbar)
-            supportActionBar!!.title = "首页"
+            supportActionBar?.title = ""
+            //setTitleTextColor(Color.WHITE)
         }
     }
 
@@ -240,22 +242,27 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
      * 控制流(Control Flow)：Kotlin的控制流有if``when``for``while四种
      */
     private fun selectByIndex(position: Int) {
+        mTvTitleLeft?.visibility = View.VISIBLE
         when (position){
             0 ->{
                 ctlTable?.currentTab = 0
                 mTvTitleLeft?.text = "首页"
+                //supportActionBar!!.title = "首页"
             }
             1 ->{
                 ctlTable?.currentTab = 1
-                mTvTitleLeft?.text = "项目"
+                mTvTitleLeft?.text = "体系"
+                //supportActionBar!!.title = "项目"
             }
             2 ->{
                 ctlTable?.currentTab = 2
-                mTvTitleLeft?.text = "博客"
+                mTvTitleLeft?.text = "项目"
+                //supportActionBar!!.title = "博客"
             }
             3 ->{
                 ctlTable?.currentTab = 3
-                mTvTitleLeft?.text = "我的"
+                mTvTitleLeft?.text = "用户"
+                //supportActionBar!!.title = "我的"
             }
             else -> {
                 // 默认，相当于switch中default

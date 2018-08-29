@@ -3,8 +3,6 @@ package cn.ycbjie.ycaudioplayer.ui.me.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +70,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     TextView btnExit;
     @Bind(R.id.tv_author)
     TextView tvAuthor;
+    @Bind(R.id.tv_kotlin)
+    TextView tvKotlin;
     private MainActivity activity;
 
     @Override
@@ -106,6 +106,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         rlMeFeedBack.setOnClickListener(this);
         rlMePhone.setOnClickListener(this);
         btnExit.setOnClickListener(this);
+        tvKotlin.setOnClickListener(this);
     }
 
     @Override
@@ -136,8 +137,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.btn_exit:
+                exit();
+                break;
+            case R.id.tv_kotlin:
                 ActivityUtils.startActivity(AndroidActivity.class);
-                //exit();
                 break;
             default:
                 break;

@@ -43,6 +43,7 @@ public class DensityUtils {
 
     public static void setDensity(@NonNull Application application) {
         //获取application的DisplayMetrics
+        //DisplayMetrics 类提供了一种关于显示的通用信息，如显示大小，分辨率和字体。
         appDisplayMetrics = application.getResources().getDisplayMetrics();
         //获取状态栏高度
         barHeight = StatusBarHeightUtils.getStatusBarHeight(application);

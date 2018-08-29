@@ -23,5 +23,5 @@ object KotlinConstant {
     const val INTENT_IS_COLLECT = "isCollect"
     const val COLLECT_STATUS = "collectStatus"
     const val COLLECT_ID = "collectId"
-
+    const val USER_ID = "userId"
 }

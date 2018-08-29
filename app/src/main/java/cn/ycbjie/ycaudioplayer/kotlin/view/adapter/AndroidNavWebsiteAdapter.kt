@@ -3,12 +3,15 @@ package cn.ycbjie.ycaudioplayer.kotlin.view.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.support.v7.widget.ActionMenuView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.NaviBean
+import cn.ycbjie.ycaudioplayer.kotlin.view.weight.FlowLayout
 import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
@@ -25,11 +28,13 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
  */
 class AndroidNavWebsiteAdapter: RecyclerArrayAdapter<NaviBean> {
 
-
+    var layoutInflater: LayoutInflater? = null
+    var itemClickLister: ItemClickListener? = null
     private var activity: Activity?
 
     constructor(activity: Activity?) : super(activity){
         this.activity = activity
+        layoutInflater = LayoutInflater.from(activity)
     }
 
     override fun OnCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<NaviBean> {
@@ -37,28 +42,46 @@ class AndroidNavWebsiteAdapter: RecyclerArrayAdapter<NaviBean> {
     }
 
     private inner class MyViewHolder internal constructor(parent: ViewGroup) :
-            BaseViewHolder<NaviBean>(parent, R.layout.item_project_list) {
+            BaseViewHolder<NaviBean>(parent, R.layout.item_web_navi) {
 
-        private val ivHead: ImageView = getView(R.id.ivHead)
-        private val tvName: TextView = getView(R.id.tvName)
-        private val ivMore: ImageView = getView(R.id.ivMore)
-        private val flLike: FrameLayout = getView(R.id.flLike)
-        private val ivLike: ImageView = getView(R.id.ivLike)
-        private val ivImage: ImageView = getView(R.id.ivImage)
-        private val tvContent: TextView = getView(R.id.tvContent)
-        private val tvTime: TextView = getView(R.id.tvTime)
+        private val tvTitle: TextView = getView(R.id.tvTitle)
+        private val flowLayout: FlowLayout = getView(R.id.flowLayout)
 
         init {
-
+            addOnClickListener(R.id.flowLayout)
         }
 
         @SuppressLint("SetTextI18n")
         override fun setData(item: NaviBean) {
             super.setData(item)
+            tvTitle.text = item.name
+            val articles: MutableList<HomeData> = item.articles!!
+            //addOnClickListener(R.id.flowLayout)
+            val views = mutableListOf<View>()
+            for (tag in articles) {
+                var textView = layoutInflater!!.inflate(R.layout.tag_view_flowlayout, null) as TextView
+                textView.text = tag.title
+                textView.id = tag.id
+                val margin = ViewGroup.MarginLayoutParams(ActionMenuView.LayoutParams.WRAP_CONTENT, ActionMenuView.LayoutParams.WRAP_CONTENT)
+                margin.rightMargin = 10
+                margin.topMargin = 10
+                margin.leftMargin = 10
+                margin.bottomMargin = 10
+                textView.layoutParams = margin
+                textView.setTextColor(itemView.context.resources.getColor(R.color.blackText3))
+                views.add(textView)
 
+                textView.setOnClickListener({
+                    itemClickLister?.itemClick(tag)
+                })
+            }
+            flowLayout.addItems(views)
         }
     }
 
+    interface ItemClickListener {
+        fun itemClick(data: HomeData)
+    }
 
 }
 

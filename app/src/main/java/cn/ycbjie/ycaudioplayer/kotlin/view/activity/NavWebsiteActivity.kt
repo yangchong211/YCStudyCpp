@@ -3,6 +3,7 @@ package cn.ycbjie.ycaudioplayer.kotlin.view.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -11,10 +12,14 @@ import android.view.View
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
 import cn.ycbjie.ycaudioplayer.kotlin.contract.NavWebsiteContract
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.NaviBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.NavWebsitePresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidNavRightAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidNavWebsiteAdapter
+import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectAdapter
+import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
+import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
 import com.blankj.utilcode.util.LogUtils
 import kotlinx.android.synthetic.main.activity_nav_website.*
 import kotlinx.android.synthetic.main.base_title_bar.*
@@ -76,11 +81,12 @@ class NavWebsiteActivity : BaseActivity<NavWebsitePresenter>() , NavWebsiteContr
     }
 
     override fun initView() {
+        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         drawerLayout.setScrimColor(Color.TRANSPARENT)
         initToolBar()
+        initListsAdapter()
         initKindsAdapter()
-        initContentAdapter()
     }
 
     override fun initListener() {
@@ -98,6 +104,7 @@ class NavWebsiteActivity : BaseActivity<NavWebsitePresenter>() , NavWebsiteContr
         toolbar.run {
             title = "网址导航"
             setSupportActionBar(toolbar)
+            setTitleTextColor(Color.WHITE)
             supportActionBar?.setHomeButtonEnabled(true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
@@ -112,33 +119,43 @@ class NavWebsiteActivity : BaseActivity<NavWebsitePresenter>() , NavWebsiteContr
         }
     }
 
+
+    private fun initListsAdapter() {
+        listsAdapter = AndroidNavWebsiteAdapter(this)
+        rvList.adapter = listsAdapter
+        rvList.layoutManager = LinearLayoutManager(this)
+
+        /*rvList.run {
+            adapter = listsAdapter
+            layoutManager = LinearLayoutManager(this@NavWebsiteActivity)
+        }*/
+
+        listsAdapter.setOnItemClickListener { position ->
+            if (position>=0 && listsAdapter.allData.size>position){
+                //WebViewActivity.lunch(this@NaviWebsiteActivity, data.link!!, data.title!!)
+            }
+        }
+
+        listsAdapter.itemClickLister = object : AndroidNavWebsiteAdapter.ItemClickListener {
+            override fun itemClick(data: HomeData) {
+                WebViewActivity.lunch(this@NavWebsiteActivity, data.link!!, data.title!!)
+            }
+        }
+    }
+
+
     private fun initKindsAdapter() {
+        kindsAdapter = AndroidNavRightAdapter(this)
         rvNavList.run {
             adapter = kindsAdapter
             layoutManager = LinearLayoutManager(this@NavWebsiteActivity)
         }
         kindsAdapter.setOnItemClickListener { position ->
             if (position>=0 && kindsAdapter.allData.size>position){
+
                 rvList.scrollToPosition(position)
                 val mLayoutManager = rvList.layoutManager as LinearLayoutManager
                 mLayoutManager.scrollToPositionWithOffset(position, 0)
-            }
-        }
-    }
-
-
-    private fun initContentAdapter() {
-        rvList.adapter = listsAdapter
-        rvList.layoutManager = LinearLayoutManager(this)
-
-        rvList.run {
-            adapter = listsAdapter
-            layoutManager = LinearLayoutManager(this@NavWebsiteActivity)
-        }
-
-        listsAdapter.setOnItemClickListener { position ->
-            if (position>=0 && listsAdapter.allData.size>position){
-
             }
         }
     }

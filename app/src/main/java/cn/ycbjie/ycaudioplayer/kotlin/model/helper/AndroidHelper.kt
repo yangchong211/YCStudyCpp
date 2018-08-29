@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import network.request.RequestApi
 import network.response.ResponseBean
+import org.json.JSONObject
 import retrofit2.Response
 
 
@@ -85,6 +86,28 @@ class AndroidHelper private constructor() {
     fun getNaviJson(): Observable<ResponseBean<MutableList<NaviBean>>> {
         return mApiService.getNaviJson()
     }
+
+    /**
+     * 取消收藏
+     */
+    fun unCollectArticle(selectId: Int): Observable<ResponseBean<JSONObject>> {
+        return mApiService.unCollectArticle(selectId)
+    }
+
+    /**
+     * 取消收藏
+     */
+    fun collectInArticle(selectId: Int): Observable<ResponseBean<JSONObject>> {
+        return mApiService.collectInArticle(selectId)
+    }
+
+    /**
+     * 收藏网站
+     */
+    fun collectWebsite(name: String,link: String): Observable<Response<JSONObject>> {
+        return mApiService.collectWebsite(name,link)
+    }
+
 
 
 }

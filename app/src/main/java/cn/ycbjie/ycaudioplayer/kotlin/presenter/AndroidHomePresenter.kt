@@ -1,19 +1,24 @@
 package cn.ycbjie.ycaudioplayer.kotlin.presenter
 
 
+import cn.ycbjie.ycaudioplayer.db.dl.TaskViewHolderImp.id
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.helper.AndroidHelper
+import cn.ycbjie.ycaudioplayer.kotlin.network.ResponseTransformer
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import network.schedules.BaseSchedulerProvider
+import network.schedules.SchedulerProvider
 
 
 class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
     private var mView: AndroidHomeContract.View
+    private var scheduler: BaseSchedulerProvider? = null
 
     private val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
@@ -21,6 +26,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
     constructor(androidView: AndroidHomeContract.View){
         this.mView = androidView
+        scheduler = SchedulerProvider.getInstatnce()
     }
 
 
@@ -66,6 +72,38 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
                     }, { t ->
                         LogUtils.e("getBanner-----"+"onError"+t.localizedMessage)
                     }
+                )
+        compositeDisposable.add(disposable)
+    }
+
+    override fun unCollectArticle(selectId: Int) {
+        val instance = AndroidHelper.instance()
+        var disposable = instance.unCollectArticle(selectId)
+                .compose(ResponseTransformer.handleResult())
+                .compose(scheduler?.applySchedulers())
+                .subscribe(
+                        {
+                            mView?.unCollectArticleSuccess()
+                        }
+                        ,
+                        {t: Throwable ->
+                            mView?.unCollectArticleFail(t)
+                        }
+                )
+        compositeDisposable.add(disposable)
+    }
+
+    override fun collectInArticle(selectId: Int) {
+        val instance = AndroidHelper.instance()
+        var disposable = instance.collectInArticle(id)
+                .compose(ResponseTransformer.handleResult())
+                .compose(scheduler?.applySchedulers())
+                .subscribe(
+                        {
+                            mView?.collectInArticleSuccess()
+                        }, { t: Throwable ->
+                    mView?.collectInArticleFail(t)
+                }
                 )
         compositeDisposable.add(disposable)
     }

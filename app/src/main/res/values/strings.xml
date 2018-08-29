@@ -103,7 +103,7 @@
     <string name="app_developer_blog">简书地址：https://blog.csdn.net/m0_37700275/article/details/80863685</string>
     <string name="app_developer_git">gitHub：https://github.com/yangchong211</string>
 
-
+    <string name="collect_fail_pls_login">收藏失败，请先登录</string>
     <string name="select_kind">选择分类</string>
     <string name="kinds">分类：</string>
     <string name="kinds_two">分类</string>

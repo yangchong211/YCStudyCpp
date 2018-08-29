@@ -40,7 +40,7 @@
                 tools:ignore="RtlHardcoded" />
         </FrameLayout>
 
-        <com.mg.axechen.wanandroid.FlowLayout
+        <cn.ycbjie.ycaudioplayer.kotlin.view.weight.FlowLayout
             android:id="@+id/flowLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

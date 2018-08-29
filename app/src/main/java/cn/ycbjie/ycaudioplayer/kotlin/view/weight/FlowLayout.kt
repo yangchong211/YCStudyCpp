@@ -1,5 +1,4 @@
-package com.mg.axechen.wanandroid
-
+package cn.ycbjie.ycaudioplayer.kotlin.view.weight
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View

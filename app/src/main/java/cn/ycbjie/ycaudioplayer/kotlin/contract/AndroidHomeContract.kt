@@ -13,11 +13,17 @@ interface AndroidHomeContract {
         fun setNetWorkErrorView()
         fun setDataView(bean: ResponseBean<HomeListBean>)
         fun setBannerView(bean: ResponseBean<List<BannerBean>>?)
+        fun unCollectArticleSuccess()
+        fun unCollectArticleFail(t: Throwable)
+        fun collectInArticleSuccess()
+        fun collectInArticleFail(t: Throwable)
     }
 
     interface Presenter : BasePresenter {
         fun getHomeList(page: Int)
         fun getBannerData(isRefresh: Boolean)
+        fun unCollectArticle(selectId: Int)
+        fun collectInArticle(selectId: Int)
     }
 
 }

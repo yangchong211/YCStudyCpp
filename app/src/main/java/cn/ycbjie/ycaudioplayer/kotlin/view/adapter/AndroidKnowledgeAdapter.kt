@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
-import com.mg.axechen.wanandroid.FlowLayout
+import cn.ycbjie.ycaudioplayer.kotlin.view.weight.FlowLayout
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder
 
