@@ -70,7 +70,8 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     private var ctlTable : CommonTabLayout? =null
     private var fragments = mutableListOf<Fragment>()
     private var pageAdapter : BasePagerAdapter? = null
-    private var index: Int = 0
+    private var index: Int = 0      //定义具体的类型
+    private var a = 0           //自动识别是int类型，通常不需要指定变量的类型
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.kotlin_menu_main,menu)
