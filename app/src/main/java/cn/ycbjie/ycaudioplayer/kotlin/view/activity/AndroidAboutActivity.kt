@@ -4,10 +4,12 @@ import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import cn.ycbjie.ycaudioplayer.R
+import cn.ycbjie.ycaudioplayer.R.id.*
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPresenter
 import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
 import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
+import com.blankj.utilcode.util.LogUtils
 import kotlinx.android.synthetic.main.activity_android_about.*
 
 /**
@@ -20,6 +22,19 @@ import kotlinx.android.synthetic.main.activity_android_about.*
  * </pre>
  */
 class AndroidAboutActivity : BaseActivity<AndroidPresenter>() {
+
+
+    object DataProviderManager {
+        init {
+            //对应java中static代码块
+            LogUtils.e("DataProviderManager"+"init")
+        }
+        fun registerDataProvider(provider: String) {
+            // ...
+            LogUtils.e("DataProviderManager$provider")
+        }
+    }
+
 
     private val HOME_URL = "http://www.wanandroid.com/index"
     private val OPEN_API = "http://www.wanandroid.com/blog/show/2"
@@ -38,6 +53,7 @@ class AndroidAboutActivity : BaseActivity<AndroidPresenter>() {
     }
 
     override fun initView() {
+        DataProviderManager.registerDataProvider("单利")
         YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
     }
 
