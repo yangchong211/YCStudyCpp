@@ -41,7 +41,10 @@ class SchedulerProvider : BaseSchedulerProvider {
      * 切换线程操作
      */
     override fun <T> applySchedulers(): ObservableTransformer<T, T> {
-        return ObservableTransformer { obserable -> obserable.observeOn(ui()).subscribeOn(io()) }
+        return ObservableTransformer { obserable ->
+            obserable.observeOn(ui())
+                .subscribeOn(io())
+        }
     }
 
 }

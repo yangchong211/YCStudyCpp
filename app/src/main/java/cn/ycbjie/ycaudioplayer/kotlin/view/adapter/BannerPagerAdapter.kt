@@ -12,7 +12,7 @@ import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil
 import com.yc.cn.ycbannerlib.banner.adapter.AbsStaticPagerAdapter
 
 
-class BannerPagerAdapter(private val ctx: Activity?, private val list: MutableList<BannerBean>) : AbsStaticPagerAdapter() {
+class BannerPagerAdapter constructor(private val ctx: Activity?, private val list: MutableList<BannerBean>) : AbsStaticPagerAdapter() {
 
     override fun getView(container: ViewGroup, position: Int): View {
         val imageView = ImageView(ctx)

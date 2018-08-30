@@ -33,7 +33,6 @@ class AndroidAboutActivity : BaseActivity<AndroidPresenter>() {
         }
     }
 
-
     override fun getContentView(): Int {
         return R.layout.activity_android_about
     }

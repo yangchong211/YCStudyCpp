@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment
+import cn.ycbjie.ycaudioplayer.kotlin.util.KotlinUtils
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidAboutActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidLoginActivity
 import com.blankj.utilcode.util.ActivityUtils
@@ -18,7 +19,7 @@ class AndroidProfileFragment : BaseLazyFragment(), View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     override fun initView(view: View) {
-        tvVersionName.text = "v" + AppUtils.getAppVersionCode()
+        tvVersionName.text = "V" + KotlinUtils.getVersionCode(activity)
     }
 
     override fun initListener() {
