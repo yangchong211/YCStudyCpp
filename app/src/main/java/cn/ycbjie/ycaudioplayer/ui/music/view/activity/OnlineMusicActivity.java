@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -168,6 +170,64 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LineMusicAdapter(this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mOffset = 0;
+                initData();
+            }
+        });
+        adapter.setMore(R.layout.view_recycle_more, new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                if (NetworkUtils.isConnected()) {
+                    if (adapter.getAllData().size() > 0) {
+                        mOffset++;
+                        getData(mOffset);
+                    } else {
+                        adapter.pauseMore();
+                    }
+                } else {
+                    adapter.pauseMore();
+                    ToastUtils.showShort("没有网络");
+                }
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+        adapter.setNoMore(R.layout.view_recycle_no_more, new RecyclerArrayAdapter.OnNoMoreListener() {
+            @Override
+            public void onNoMoreShow() {
+                if (NetworkUtils.isConnected()) {
+                    adapter.resumeMore();
+                } else {
+                    ToastUtils.showShort("没有网络");
+                }
+            }
+
+            @Override
+            public void onNoMoreClick() {
+                if (NetworkUtils.isConnected()) {
+                    adapter.resumeMore();
+                } else {
+                    ToastUtils.showShort("没有网络");
+                }
+            }
+        });
+        adapter.setError(R.layout.view_recycle_error, new RecyclerArrayAdapter.OnErrorListener() {
+            @Override
+            public void onErrorShow() {
+                adapter.resumeMore();
+            }
+
+            @Override
+            public void onErrorClick() {
+                adapter.resumeMore();
+            }
+        });
     }
 
 
@@ -213,15 +273,15 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST,
                 mListInfo.getType(), MUSIC_LIST_SIZE, String.valueOf(offset))
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<OnlineMusicList>() {
                     @Override
                     public void accept(OnlineMusicList onlineMusicList) throws Exception {
                         if (onlineMusicList == null || onlineMusicList.getSong_list() == null || onlineMusicList.getSong_list().size() == 0) {
                             return;
                         }
-                        //addHeader(onlineMusicList);
-                        //adapter.addAll(onlineMusicList.getSong_list());
+                        addHeader(onlineMusicList);
+                        adapter.addAll(onlineMusicList.getSong_list());
                         recyclerView.showRecycler();
                     }
                 }, new Consumer<Throwable>() {

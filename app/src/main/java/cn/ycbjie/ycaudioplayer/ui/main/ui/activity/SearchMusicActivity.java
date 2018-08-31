@@ -240,7 +240,7 @@ public class SearchMusicActivity extends BaseActivity {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,query)
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<SearchMusic>() {
                     @Override
                     public void accept(SearchMusic searchMusic) throws Exception {

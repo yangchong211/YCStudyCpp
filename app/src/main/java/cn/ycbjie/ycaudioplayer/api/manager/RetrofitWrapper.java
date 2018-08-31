@@ -53,6 +53,12 @@ public class RetrofitWrapper {
     }
 
 
+    public <T> T create(final Class<T> service) {
+        return mRetrofit.create(service);
+    }
+
+
+
     private RetrofitWrapper(String url) {
         builder = new OkHttpClient.Builder();
 
@@ -112,11 +118,6 @@ public class RetrofitWrapper {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(build)
                 .build();
-    }
-
-
-    public <T> T create(final Class<T> service) {
-        return mRetrofit.create(service);
     }
 
 

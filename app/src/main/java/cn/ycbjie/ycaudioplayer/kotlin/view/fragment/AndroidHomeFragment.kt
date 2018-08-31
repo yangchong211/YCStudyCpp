@@ -15,6 +15,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.HomeData
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidHomePresenter
+import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.activity.AndroidDetailActivity
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidHomeAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.BannerPagerAdapter
@@ -38,7 +39,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
 
 
     private var recyclerView : YCRefreshView ?=null
-    private var activity: Activity? = null
+    private var activity: AndroidActivity ? = null
     private var presenter: AndroidHomePresenter? = null
     private var page: Int = 0
     private lateinit var adapter: AndroidHomeAdapter
@@ -51,7 +52,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         //as 是一个中缀操作符，as是不安全的转换操作符，如果as转换失败，会抛出一个异常，这就是不安全的。
-        activity = context as Activity?
+        activity = context as AndroidActivity?
         //activity = context as? Activity
     }
 
@@ -72,9 +73,6 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
         if (mBanner!=null){
             mBanner?.pause()
         }
-
-
-
     }
 
 

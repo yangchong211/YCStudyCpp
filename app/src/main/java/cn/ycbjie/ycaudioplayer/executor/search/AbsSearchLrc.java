@@ -36,7 +36,7 @@ public abstract class AbsSearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.startSearchMusic(OnLineMusicModel.METHOD_SEARCH_MUSIC,title + "-" + artist)
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<SearchMusic>() {
                     @Override
                     public void accept(SearchMusic searchMusic) throws Exception {
@@ -54,7 +54,7 @@ public abstract class AbsSearchLrc implements IExecutor<String> {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getLrc(OnLineMusicModel.METHOD_LRC,songId)
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<MusicLrc>() {
                     @Override
                     public void accept(MusicLrc musicLrc) throws Exception {

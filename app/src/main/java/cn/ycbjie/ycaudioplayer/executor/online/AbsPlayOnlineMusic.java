@@ -76,7 +76,7 @@ public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getMusicDownloadInfo(OnLineMusicModel.METHOD_DOWNLOAD_MUSIC,songId)
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<DownloadInfo>() {
                     @Override
                     public void accept(DownloadInfo downloadInfo) throws Exception {

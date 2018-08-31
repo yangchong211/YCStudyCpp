@@ -103,7 +103,7 @@ public class ArtistInfoActivity extends BaseActivity implements View.OnClickList
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getArtistInfo(OnLineMusicModel.METHOD_ARTIST_INFO, tingUid)
                 .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ArtistInfo>() {
                     @Override
                     public void accept(ArtistInfo artistInfo) throws Exception {
