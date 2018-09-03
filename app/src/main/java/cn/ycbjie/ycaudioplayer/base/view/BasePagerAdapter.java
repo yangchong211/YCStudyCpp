@@ -14,6 +14,11 @@ import java.util.List;
  * 创建日期：2017/6/21
  * 描    述：指示器adapter的公共类
  * 修订历史：
+ *          说明：使用FragmentPagerAdapter+ViewPager时，
+ *          切换回上一个Fragment页面时（已经初始化完毕），
+ *          不会回调任何生命周期方法以及onHiddenChanged()，
+ *          只有setUserVisibleHint(boolean isVisibleToUser)会被回调，
+ *          所以如果你想进行一些懒加载，需要在这里处理。
  * ================================================
  */
 public class BasePagerAdapter extends FragmentPagerAdapter {

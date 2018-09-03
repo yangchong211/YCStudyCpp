@@ -17,6 +17,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.net.Proxy;
 
+import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -101,7 +102,34 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
      */
     private boolean isDraggingProgress;
     private AudioManager mAudioManager;
+    private static final String TAG = "DetailAudioFragment";
+    private String type;
 
+    /**
+     * 使用FragmentPagerAdapter+ViewPager时，
+     * 切换回上一个Fragment页面时（已经初始化完毕），
+     * 不会回调任何生命周期方法以及onHiddenChanged()，
+     * 只有setUserVisibleHint(boolean isVisibleToUser)会被回调，
+     * 所以如果你想进行一些懒加载，需要在这里处理。
+     * @param isVisibleToUser               是否显示
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.e(TAG+"setUserVisibleHint",isVisibleToUser);
+    }
+
+    /**
+     * 当使用add()+show()，hide()跳转新的Fragment时，旧的Fragment回调onHiddenChanged()，
+     * 不会回调onStop()等生命周期方法，
+     * 而新的Fragment在创建时是不会回调onHiddenChanged()，这点要切记
+     * @param hidden                        是否显示
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtils.e(TAG+"onHiddenChanged",hidden);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -115,9 +143,12 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         activity = null;
     }
 
-    private static final String TAG = "DetailAudioFragment";
-    private String type;
-
+    /**
+     * 对Fragment传递数据，建议使用setArguments(Bundle args)，而后在onCreate中使用getArguments()取出，
+     * 在 “内存重启”前，系统会帮你保存数据，不会造成数据的丢失。和Activity的Intent恢复机制类似。
+     * @param type                          type
+     * @return                              PlayMusicFragment实例对象
+     */
     public static PlayMusicFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString(TAG, type);
@@ -166,6 +197,8 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
         type = getArguments().getString(TAG);
         initPlayMode();
         initVolume();
+        getFragmentManager();
+        getChildFragmentManager();
     }
 
 
