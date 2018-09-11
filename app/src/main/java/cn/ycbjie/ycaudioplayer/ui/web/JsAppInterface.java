@@ -87,7 +87,7 @@ class JsAppInterface {
         Class<?> clazz ;
         try {
             clazz = Class.forName("cn.ycbjie.ycaudioplayer.ui.web.JsMethodUtils");
-            Constructor constructor = clazz.getDeclaredConstructor(Context.class, WebView.class);
+            Constructor<?> constructor = clazz.getDeclaredConstructor(Context.class, WebView.class);
             //设置安全检查，访问私有构造函数必须
             constructor.setAccessible(true);
             Object[] obj = new Object[]{mContext, mWebView};
@@ -145,7 +145,7 @@ class JsAppInterface {
 
 
     static String getH5CallBackJson(int code, String data, String msg) {
-        return JsonUtils.getJson().toJson(new CallBackModel(code, data, msg));
+        return JsonUtils.getJson().toJson(new CallBackModel<>(code, data, msg));
     }
 
 
