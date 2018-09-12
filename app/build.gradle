@@ -40,17 +40,6 @@ android {
         //flavorDimensions "versionCode"
     }
 
-    //创建productFlavors，差异化打包
-    /*productFlavors {
-        ceshi{
-            applicationId "ceshi.cn.ycbjie.ycaudioplayer"
-            manifestPlaceholders = [APP_NAME: "@string/app_name_ceshi"]
-        }
-        shengchan{
-            applicationId "shengchan.cn.ycbjie.ycaudioplayer"
-            manifestPlaceholders = [APP_NAME: "@string/app_name_shengchan"]
-        }
-    }*/
 
     //签名配置，SigningConfig类型
     //Plugin requires 'APK Signature Scheme v2 Enabled' for debug.

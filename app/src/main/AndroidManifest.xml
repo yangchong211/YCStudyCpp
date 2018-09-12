@@ -123,6 +123,7 @@
         <activity android:name=".kotlin.view.activity.KnowledgeTreeDetailActivity"/>
         <activity android:name=".kotlin.view.activity.NavWebsiteActivity"/>
 
+        <service android:name=".service.InitializeService"/>
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>
         <service android:name=".service.AppLogService"/>
