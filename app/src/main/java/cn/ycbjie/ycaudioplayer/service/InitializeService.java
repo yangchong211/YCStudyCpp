@@ -7,11 +7,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.Utils;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import java.net.Proxy;
 
 import cn.ycbjie.ycaudioplayer.BuildConfig;
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
+import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
@@ -54,6 +63,8 @@ public class InitializeService extends IntentService {
         //初始化配置信息
         BaseConfig.INSTANCE.initConfig();
         initUtils();
+        initBugly();
+        initDownLoadLib();
     }
 
     /**
@@ -97,6 +108,51 @@ public class InitializeService extends IntentService {
                 break;
         }
     }
+
+
+
+    /**
+     * 初始化腾讯bug管理平台
+     */
+    private void initBugly() {
+        /* Bugly SDK初始化
+        * 参数1：上下文对象
+        * 参数2：APPID，平台注册时得到,注意替换成你的appId
+        * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
+        * 注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
+        */
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+        // 设置版本号
+        strategy.setAppVersion(AppUtils.getAppVersionName());
+        // 设置版本名称
+        String appPackageName = AppUtils.getAppPackageName();
+        strategy.setAppPackageName(appPackageName);
+        // 获取当前进程名
+        String processName = AppToolUtils.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        strategy.setUploadProcess(processName == null || processName.equals(appPackageName));
+        //Bugly会在启动20s后联网同步数据
+        strategy.setAppReportDelay(20000);
+        //正式版
+        CrashReport.initCrashReport(getApplicationContext(), "521262bdd7", false, strategy);
+    }
+
+
+
+    /**
+     * 初始化下载库
+     */
+    private void initDownLoadLib() {
+        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
+                .connectionCreator(new FileDownloadUrlConnection
+                        .Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000)
+                        .readTimeout(15_000)
+                        .proxy(Proxy.NO_PROXY)
+                ))
+                .commit();
+    }
+
 
 
 }
