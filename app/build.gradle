@@ -297,7 +297,7 @@ dependencies {
     }
     compile 'me.yokeyword:fragmentation:1.3.3'
     compile 'com.meituan.android.walle:library:1.1.6'
-    compile 'me.jessyan:autosize:0.8.0'
+    compile 'me.jessyan:autosize:0.9.5'
 
     compile 'org.yczbj:YCRefreshViewLib:2.5.6'
     compile 'cn.yc:YCCountDownViewLib:1.0'
@@ -306,8 +306,8 @@ dependencies {
     compile 'cn.yc:YCBannerLib:1.3.2'
     compile 'cn.yc:YCVideoPlayerLib:2.4.8'
     compile 'cn.yc:YCBaseAdapterLib:1.3.2'
-    compile 'cn.yc:YCStatusBarLib:1.3'
-    compile 'cn.yc:YCProgressLib:1.2'
+    compile 'cn.yc:YCStatusBarLib:1.3.1'
+    compile 'cn.yc:YCProgressLib:1.2.5'
     compile 'cn.yc:YCThreadPoolLib:1.3.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

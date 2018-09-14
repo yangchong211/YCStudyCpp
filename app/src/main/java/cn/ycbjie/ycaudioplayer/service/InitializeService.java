@@ -65,6 +65,7 @@ public class InitializeService extends IntentService {
         initUtils();
         initBugly();
         initDownLoadLib();
+        initThreadPool();
     }
 
     /**
