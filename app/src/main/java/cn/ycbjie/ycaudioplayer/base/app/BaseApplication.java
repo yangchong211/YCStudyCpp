@@ -20,14 +20,15 @@ import me.jessyan.autosize.external.ExternalAdaptInfo;
 import me.jessyan.autosize.external.ExternalAdaptManager;
 import me.jessyan.autosize.internal.CustomAdapt;
 
+
 /**
- * ================================================
- * 作    者：杨充
- * 版    本：1.0
- * 创建日期：2016/8/18
- * 描    述：BaseApplication
- * 修订历史：
- * ================================================
+ * <pre>
+ *     @author yangchong
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2016/8/18
+ *     desc  : BaseApplication
+ *     revise:
+ * </pre>
  */
 public class BaseApplication extends Application {
 
@@ -68,6 +69,7 @@ public class BaseApplication extends Application {
         BaseLifecycleCallback.getInstance().init(this);
         BaseAppHelper.get().init(this);
         initAutoSizeConfig();
+        initThreadPool();
         InitializeService.start(this);
     }
 

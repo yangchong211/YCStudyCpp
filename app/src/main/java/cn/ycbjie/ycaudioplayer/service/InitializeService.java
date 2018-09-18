@@ -24,11 +24,12 @@ import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
+
 /**
  * <pre>
  *     @author yangchong
- *     blog  : www.pedaily.cn
- *     time  : 2018/01/22
+ *     blog  : https://github.com/yangchong211
+ *     time  : 2016/8/18
  *     desc  : 初始化工作，子线程
  *     revise:
  * </pre>
@@ -65,7 +66,6 @@ public class InitializeService extends IntentService {
         initUtils();
         initBugly();
         initDownLoadLib();
-        initThreadPool();
     }
 
     /**
