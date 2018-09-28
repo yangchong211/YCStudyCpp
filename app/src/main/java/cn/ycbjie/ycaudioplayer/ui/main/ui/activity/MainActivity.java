@@ -111,16 +111,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private long firstClickTime = 0;
     private long time;
 
-
-    /*@Override
-    public void onBackPressed() {
-        if (mPlayFragment != null && isPlayFragmentShow) {
-            hidePlayingFragment();
-            return;
-        }
-        super.onBackPressed();
-    }*/
-
     /**
      * 是当某个按键被按下是触发。所以也有人在点击返回键的时候去执行该方法来做判断
      */

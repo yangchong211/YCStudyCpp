@@ -3,7 +3,7 @@ package cn.ycbjie.ycaudioplayer.kotlin.presenter
 
 import cn.ycbjie.ycaudioplayer.db.dl.TaskViewHolderImp.id
 import cn.ycbjie.ycaudioplayer.kotlin.contract.AndroidHomeContract
-import cn.ycbjie.ycaudioplayer.kotlin.model.helper.AndroidHelper
+import cn.ycbjie.ycaudioplayer.kotlin.model.model.HomeModel
 import cn.ycbjie.ycaudioplayer.kotlin.network.ResponseTransformer
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
@@ -14,7 +14,6 @@ import io.reactivex.schedulers.Schedulers
 import network.schedules.BaseSchedulerProvider
 import network.schedules.SchedulerProvider
 
-
 class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
     private var mView: AndroidHomeContract.View
@@ -22,6 +21,10 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
     private val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
+    }
+
+    private val model: HomeModel by lazy {
+        HomeModel()
     }
 
     constructor(androidView: AndroidHomeContract.View){
@@ -40,8 +43,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
 
 
     override fun getHomeList(page: Int) {
-        val instance = AndroidHelper.instance()
-        val disposable: Disposable = instance.getHomeList(page)
+        val disposable: Disposable = model.getHomeList(page)
                 //网络请求在子线程，所以是在io线程，避免阻塞线程
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,8 +63,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
     }
 
     override fun getBannerData(isRefresh: Boolean) {
-        val instance = AndroidHelper.instance()
-        val disposable: Disposable = instance.getBanner()
+        val disposable: Disposable = model.getBannerData()
                 //网络请求在子线程，所以是在io线程，避免阻塞线程
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,8 +78,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
     }
 
     override fun unCollectArticle(selectId: Int) {
-        val instance = AndroidHelper.instance()
-        var disposable = instance.unCollectArticle(selectId)
+        var disposable = model.unCollectArticle(selectId)
                 .compose(ResponseTransformer.handleResult())
                 .compose(scheduler?.applySchedulers())
                 .subscribe(
@@ -94,8 +94,7 @@ class AndroidHomePresenter : AndroidHomeContract.Presenter {
     }
 
     override fun collectInArticle(selectId: Int) {
-        val instance = AndroidHelper.instance()
-        var disposable = instance.collectInArticle(id)
+        var disposable = model.collectInArticle(id)
                 .compose(ResponseTransformer.handleResult())
                 .compose(scheduler?.applySchedulers())
                 .subscribe(

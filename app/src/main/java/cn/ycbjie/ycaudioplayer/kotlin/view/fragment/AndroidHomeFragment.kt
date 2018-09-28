@@ -1,12 +1,10 @@
 package cn.ycbjie.ycaudioplayer.kotlin.view.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment
 import cn.ycbjie.ycaudioplayer.kotlin.base.BaseItemView
@@ -26,7 +24,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
-import com.tencent.bugly.proguard.v
 import com.yc.cn.ycbannerlib.BannerView
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil
 import network.response.ResponseBean

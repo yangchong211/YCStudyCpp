@@ -11,6 +11,7 @@ import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
 import cn.ycbjie.ycaudioplayer.service.InitializeService;
+import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeAboutActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 import me.jessyan.autosize.AutoAdaptStrategy;
@@ -188,7 +189,7 @@ public class BaseApplication extends Application {
         AutoSizeConfig.getInstance().getExternalAdaptManager()
                 //加入的 Activity 将会放弃屏幕适配, 一般用于三方库的 Activity, 详情请看方法注释
                 //如果不想放弃三方库页面的适配, 请用 addExternalAdaptInfoOfActivity 方法, 建议对三方库页面进行适配, 让自己的 App 更完美一点
-                .addCancelAdaptOfActivity(MeSettingActivity.class)
+                .addCancelAdaptOfActivity(MeAboutActivity.class)
                 //为指定的 Activity 提供自定义适配参数, AndroidAutoSize 将会按照提供的适配参数进行适配, 详情请看方法注释
                 //一般用于三方库的 Activity, 因为三方库的设计图尺寸可能和项目自身的设计图尺寸不一致, 所以要想完美适配三方库的页面
                 //就需要提供三方库的设计图尺寸, 以及适配的方向 (以宽为基准还是高为基准?)

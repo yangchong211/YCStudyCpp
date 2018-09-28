@@ -116,6 +116,7 @@
         <activity android:name=".ui.home.ui.activity.LocalOfficeActivity"/>
         <activity android:name=".ui.home.ui.activity.LocalZipFileActivity"/>
         <activity android:name=".ui.web.WebViewActivity"/>
+        <activity android:name=".ui.me.view.activity.MeAboutActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidLoginActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidAboutActivity"/>
