@@ -96,11 +96,11 @@
     <!-- 关于软件-->
     <string name="app_introduce">软件简述</string>
     <string name="app_introduce_content">WanAndroid安卓客户端是根据张鸿洋老师的WanAndroid开放API开发。WanAndroid项目收集了来自CSDN、掘金、简书等平台的热门Android技术博客，建立了丰富的安卓知识体系。是一个安卓开发者用于学习和技术积累的优良平台。欢迎各位Android开发者开发一个属于自己的WanAndroid项目！</string>
-    <string name="app_home">WanAndroid主页：http://www.wanandroid.com/index</string>
+    <string name="app_home">WanAndroid主页：http://www.wanandroid.com</string>
     <string name="app_open_api">开放API地址：http://www.wanandroid.com/blog/show/2</string>
-    <string name="app_git_src">本项目地址：https://github.com/AxeChen/WanAndroid</string>
-    <string name="app_developer">关于开发者</string>
-    <string name="app_developer_blog">简书地址：https://blog.csdn.net/m0_37700275/article/details/80863685</string>
+    <string name="app_git_src">本项目地址：https://github.com/yangchong211/YCAudioPlayer</string>
+    <string name="app_developer">关于开发者：杨充</string>
+    <string name="app_developer_blog">CSDN地址：https://blog.csdn.net/m0_37700275/article/list/1</string>
     <string name="app_developer_git">gitHub：https://github.com/yangchong211</string>
 
     <string name="collect_fail_pls_login">收藏失败，请先登录</string>

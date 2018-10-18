@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
-import cn.ycbjie.ycstatusbarlib.StatusBarHeightUtils;
+import cn.ycbjie.ycstatusbarlib.StatusBarUtils;
 
 /**
  * <pre>
@@ -46,7 +46,7 @@ public class DensityUtils {
         //DisplayMetrics 类提供了一种关于显示的通用信息，如显示大小，分辨率和字体。
         appDisplayMetrics = application.getResources().getDisplayMetrics();
         //获取状态栏高度
-        barHeight = StatusBarHeightUtils.getStatusBarHeight(application);
+        barHeight = StatusBarUtils.getStatusBarHeight(application);
 
         if (appDensity == 0) {
             //初始化的时候赋值
