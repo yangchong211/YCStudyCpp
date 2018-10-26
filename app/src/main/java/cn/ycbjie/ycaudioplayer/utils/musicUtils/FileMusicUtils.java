@@ -25,7 +25,7 @@ public class FileMusicUtils {
 
     private static String getAppDir() {
         //注意这个地方需要保存到指定的文件夹中
-        return FileSaveUtils.getLocalRootSavePathDir("music");
+        return FileSaveUtils.getLocalRootSavePathDir(FileSaveUtils.music);
     }
 
     public static String getMusicDir() {

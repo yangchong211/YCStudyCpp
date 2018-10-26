@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import java.io.File;
 
@@ -50,7 +50,7 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
         if (!TextUtils.isEmpty(mOnlineMusic.getLrclink()) && !lrcFile.exists()) {
             downloadLrc(mOnlineMusic.getLrclink(), FileMusicUtils.getLrcDir(), lrcFileName);
         }else {
-            ToastUtil.showToast(mActivity,"无法下载歌词");
+            ToastUtils.showToast("无法下载歌词");
         }
 
         // 下载封面
@@ -63,7 +63,7 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
         if (!albumFile.exists() && !TextUtils.isEmpty(picUrl)) {
             downloadFile(picUrl, FileMusicUtils.getAlbumDir(), albumFileName);
         }else {
-            ToastUtil.showToast(mActivity,"无法下载封面");
+            ToastUtils.showRoundRectToast("无法下载封面");
         }
 
         // 获取歌曲下载链接
@@ -118,7 +118,7 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        ToastUtil.showToast(mActivity,"下载完成");
+                        ToastUtils.showToast("下载完成");
                     }
 
                     @Override
@@ -163,7 +163,7 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        ToastUtil.showToast(mActivity,"下载完成");
+                        ToastUtils.showRoundRectToast("下载完成");
                     }
 
                     @Override

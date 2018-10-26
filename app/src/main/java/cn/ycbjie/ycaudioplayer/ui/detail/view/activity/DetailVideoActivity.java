@@ -19,11 +19,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.dialogFragment.BottomDialogFragment;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -269,9 +268,9 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
             @Override
             public void onPlayOrPauseClick(boolean isPlaying) {
                 if (isPlaying) {
-                    ToastUtil.showToast(DetailVideoActivity.this, "暂停视频");
+                    ToastUtils.showRoundRectToast( "暂停视频");
                 } else {
-                    ToastUtil.showToast(DetailVideoActivity.this, "开始播放");
+                    ToastUtils.showRoundRectToast("开始播放");
                     if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
                         getPlayService().pause();
                         videoPlayer.seekTo(BaseConfig.INSTANCE.getPosition());
@@ -290,7 +289,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
                         showPlayingFragment();
                         break;
                     case ConstantKeys.VideoControl.SHARE:
-                        ToastUtil.showToast(DetailVideoActivity.this, "分享内容");
+                        ToastUtils.showRoundRectToast("分享内容");
                         break;
                     default:
                         break;
@@ -547,7 +546,7 @@ public class DetailVideoActivity extends BaseActivity implements DetailVideoCont
                 mAdapter.setOnItemClickListener(new DialogListAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        ToastUtil.showToast(DetailVideoActivity.this, "被点击呢" + position);
+                        ToastUtils.showRoundRectToast("被点击呢" + position);
                     }
                 });
                 View.OnClickListener listener = new View.OnClickListener() {

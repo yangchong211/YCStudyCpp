@@ -9,10 +9,6 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
 
 import static android.content.Context.AUDIO_SERVICE;
 
-/**
- * Created by yc on 2018/2/6.
- */
-
 public class AudioSoundManager  {
 
 

@@ -11,7 +11,7 @@ import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.ycutilslib.activityManager.AppManager;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -74,7 +74,7 @@ class JsMethodUtils {
                 if (cmb != null) {
                     cmb.setPrimaryClip(myClip);
                 }
-                ToastUtil.showToast(mContext,"复制成功");
+                ToastUtils.showRoundRectToast("复制成功");
             } else {
                 code = -2;//
             }

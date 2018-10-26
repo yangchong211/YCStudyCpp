@@ -24,15 +24,12 @@ import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.music.model.ArtistInfo;
 import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * Created by yc on 2018/2/7.
- */
 
 public class ArtistInfoActivity extends BaseActivity implements View.OnClickListener {
 
@@ -55,7 +52,7 @@ public class ArtistInfoActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initIntentData();
     }
 

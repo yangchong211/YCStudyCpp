@@ -3,28 +3,43 @@ package cn.ycbjie.ycaudioplayer.ui.music.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.flyco.tablayout.SegmentTabLayout;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import java.io.File;
 import java.util.Locale;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 public class MusicInfoActivity extends BaseActivity {
 
-
+    @Bind(R.id.iv_menu)
+    ImageView ivMenu;
+    @Bind(R.id.stl_layout)
+    SegmentTabLayout stlLayout;
+    @Bind(R.id.ll_other)
+    LinearLayout llOther;
+    @Bind(R.id.fl_search)
+    FrameLayout flSearch;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.iv_music_info_cover)
@@ -81,14 +96,19 @@ public class MusicInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initToolBar();
         initIntentData();
         initViewData();
     }
 
     private void initToolBar() {
+        ivMenu.setVisibility(View.GONE);
+        flSearch.setVisibility(View.GONE);
+        llOther.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         toolbar.setTitle("歌曲详情信息");
+        toolbar.setTitleTextColor(this.getResources().getColor(R.color.white));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -100,8 +120,8 @@ public class MusicInfoActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        }else if(item.getItemId() == R.id.action_save){
-            ToastUtil.showToast(this,"保存信息功能");
+        } else if (item.getItemId() == R.id.action_save) {
+            ToastUtils.showRoundRectToast("保存信息功能");
             return true;
         }
         return super.onOptionsItemSelected(item);

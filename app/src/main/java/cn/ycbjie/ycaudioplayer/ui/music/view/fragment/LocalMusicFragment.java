@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,6 @@ import android.view.View;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -36,6 +36,9 @@ import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.view.adapter.LocalMusicAdapter;
 import cn.ycbjie.ycaudioplayer.ui.music.view.activity.MusicInfoActivity;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareComment;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDetailBean;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDialog;
 
 
 /**
@@ -161,7 +164,7 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
                 if(NetworkUtils.isConnected()){
                     onLazyLoad();
                 }else {
-                    ToastUtil.showToast(activity,"没有网络");
+                    com.pedaily.yc.ycdialoglib.toast.ToastUtils.showRoundRectToast("没有网络");
                 }
             }
         });
@@ -189,12 +192,17 @@ public class LocalMusicFragment extends BaseLazyFragment implements View.OnClick
      * 分享
      */
     private void shareMusic(AudioBean localMusic) {
-        File file = new File(localMusic.getPath());
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("audio/*");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        startActivity(Intent.createChooser(intent, getString(R.string.share)));
+        String title = localMusic.getTitle();
+        String artist = localMusic.getArtist();
+        ShareDetailBean shareDetailBean = new ShareDetailBean();
+        shareDetailBean.setShareType(ShareComment.ShareType.SHARE_GOODS);
+        shareDetailBean.setContent(artist);
+        shareDetailBean.setTitle(title);
+        shareDetailBean.setImage("");
+        ShareDialog shareDialog = new ShareDialog(activity,shareDetailBean);
+        shareDialog.show(activity.getSupportFragmentManager());
     }
+
 
     /**
      * 设置为铃声

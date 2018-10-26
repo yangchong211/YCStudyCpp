@@ -21,7 +21,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.AndroidProjectFragment
 import cn.ycbjie.ycaudioplayer.model.bean.TabEntity
 import cn.ycbjie.ycaudioplayer.utils.app.DoShareUtils
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -83,7 +83,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.actionSearch -> {
-
+                AndroidSearchActivity.lunch(this)
             }
             R.id.actionUrlNav -> {
                 NavWebsiteActivity.lunch(this)
@@ -125,7 +125,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
      *      能不用!!操作符就不要用。。。
      */
     override fun initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         mTvTitleLeft = findViewById(R.id.tv_title_left)
         mLlTitleMenu = findViewById(R.id.ll_title_menu)
         mToolbarTitle = findViewById(R.id.toolbar_title)

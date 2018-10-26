@@ -16,10 +16,8 @@ import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 

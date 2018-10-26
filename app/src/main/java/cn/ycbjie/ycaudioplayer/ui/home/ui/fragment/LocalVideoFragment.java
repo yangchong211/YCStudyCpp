@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.yczbj.ycvideoplayerlib.VideoPlayer;
 import org.yczbj.ycvideoplayerlib.VideoPlayerController;
@@ -89,7 +89,7 @@ public class LocalVideoFragment extends BaseFragment {
         String path = videoBean.getPath();
         String title = videoBean.getTitle();
         if(path==null ||path.length()==0){
-            ToastUtil.showToast(activity,"视频地址不能为空");
+            ToastUtils.showRoundRectToast("视频地址不能为空");
             return;
         }
         //设置播放类型

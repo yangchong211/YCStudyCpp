@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
 import java.util.ArrayList
 
 import butterknife.Bind
@@ -20,6 +19,7 @@ import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadedAdapter
 import cn.ycbjie.ycaudioplayer.ui.me.view.adapter.CacheDownloadingAdapter
 import cn.ycbjie.ycaudioplayer.utils.dialog.DialogUtils
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils
 
 /**
  * <pre>
@@ -69,7 +69,9 @@ class ClassCacheActivity : BaseActivity<AndroidPresenter>(), View.OnClickListene
     override fun initListener() {
         flTitleMenu!!.setOnClickListener(this)
         tvTitleRight!!.setOnClickListener(this)
-        cacheDownloadingAdapter!!.setOnListItemClickListener { view, position -> ToastUtil.showToast(this@ClassCacheActivity, "点击事件$position") }
+        cacheDownloadingAdapter!!.setOnListItemClickListener { view, position ->
+            ToastUtils.showRoundRectToast("点击事件$position")
+        }
         cacheDownloadingAdapter!!.setOnMoreClickListener { position -> showDialogAnim(position) }
         cacheDownloadingAdapter!!.setOnCompleteListener { model, position ->
             if (model != null) {
@@ -152,9 +154,9 @@ class ClassCacheActivity : BaseActivity<AndroidPresenter>(), View.OnClickListene
         names.add("取消收藏")
         DialogUtils.showDialog(this, { parent, view, position, id ->
             when (position) {
-                0 -> ToastUtil.showToast(this@ClassCacheActivity, "下载$index")
-                1 -> ToastUtil.showToast(this@ClassCacheActivity, "分享$index")
-                2 -> ToastUtil.showToast(this@ClassCacheActivity, "取消收藏$index")
+                0 -> ToastUtils.showRoundRectToast("下载$index")
+                1 -> ToastUtils.showRoundRectToast( "分享$index")
+                2 -> ToastUtils.showRoundRectToast( "取消收藏$index")
                 else -> {
                 }
             }

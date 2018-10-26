@@ -181,7 +181,7 @@ public class AppLogService extends Service {
         //本服务产生的日志，记录日志服务开启失败信息
         String LOG_SERVICE_LOG_PATH = LOG_PATH_MEMORY_DIR + File.separator + logServiceLogName;
         //日志文件在sdcard中的路径
-        LOG_PATH_SDCARD_DIR = FileSaveUtils.getLocalRootSavePathDir("logger")+ File.separator + "log";
+        LOG_PATH_SDCARD_DIR = FileSaveUtils.getLocalRootSavePathDir(FileSaveUtils.logger)+ File.separator + "log";
         createLogDir();
 
         try {

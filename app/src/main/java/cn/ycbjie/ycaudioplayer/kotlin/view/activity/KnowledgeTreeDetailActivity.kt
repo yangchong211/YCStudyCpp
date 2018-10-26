@@ -13,7 +13,7 @@ import cn.ycbjie.ycaudioplayer.base.view.BasePagerAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.KnowledgeTreeDetailPresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.fragment.KnowledgeListFragment
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar
 import kotlinx.android.synthetic.main.base_tab_layout.*
 
 /**
@@ -54,7 +54,7 @@ class KnowledgeTreeDetailActivity : BaseActivity<KnowledgeTreeDetailPresenter>()
     }
 
     override fun initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         getIntentData()
         initActionBar()
         initTabs()

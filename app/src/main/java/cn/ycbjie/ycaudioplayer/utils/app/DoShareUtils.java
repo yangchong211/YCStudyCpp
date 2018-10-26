@@ -2,7 +2,9 @@ package cn.ycbjie.ycaudioplayer.utils.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -63,6 +65,23 @@ public class DoShareUtils {
     }
 
 
+
+    /**
+     * 分享单张图片
+     */
+    public static void shareImage(Context context, Bitmap bitmap) {
+        String s = MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                bitmap, null, null);
+        Uri uri = Uri.parse(s);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        //设置分享行为
+        intent.setType("image/*");
+        //设置分享内容的类型
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent = Intent.createChooser(intent, "分享到");
+        context.startActivity(intent);
+    }
 
 
     /**

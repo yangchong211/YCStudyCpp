@@ -85,7 +85,7 @@ public class InitializeService extends IntentService {
             //String property = System.getProperty("file.separator");
             //String cacheDir = this.getCacheDir() + property + "yc" + property;
             //设置log日志的文件路径
-            String logger = FileSaveUtils.getLocalRootSavePathDir("logger");
+            String logger = FileSaveUtils.getLocalRootSavePathDir(FileSaveUtils.logger);
             ///storage/emulated/0/yc/logger/
             Log.e("日志存储地址" ,logger);
             //设置存储的路径

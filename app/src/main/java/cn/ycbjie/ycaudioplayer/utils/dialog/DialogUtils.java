@@ -3,7 +3,8 @@ package cn.ycbjie.ycaudioplayer.utils.dialog;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
-import com.pedaily.yc.ycdialoglib.selectDialog.CustomSelectDialog;
+
+import com.pedaily.yc.ycdialoglib.dialog.CustomSelectDialog;
 
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 

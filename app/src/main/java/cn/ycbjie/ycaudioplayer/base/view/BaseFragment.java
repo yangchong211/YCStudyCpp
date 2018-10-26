@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ns.yc.ycutilslib.activityManager.AppManager;
+
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.density.BaseAutoFragment;
 import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
+import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
 
 
 /**
@@ -129,7 +132,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseAutoFrag
     protected PlayService getPlayService() {
         PlayService playService = BaseAppHelper.get().getPlayService();
         if (playService == null) {
-            throw new NullPointerException("play service is null");
+            //throw new NullPointerException("play service is null");
+            startActivity(new Intent(getActivity(), GuideActivity.class));
+            AppManager.getAppManager().finishAllActivity();
         }
         return playService;
     }

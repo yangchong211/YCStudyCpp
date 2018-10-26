@@ -8,10 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ServiceUtils;
 import com.blankj.utilcode.util.SizeUtils;
@@ -30,14 +27,12 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.ns.yc.ycutilslib.managerLeak.InputMethodManagerLeakUtils;
-import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.dialogFragment.BottomDialogFragment;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
@@ -58,7 +53,7 @@ import cn.ycbjie.ycaudioplayer.ui.home.ui.fragment.HomeFragment;
 import cn.ycbjie.ycaudioplayer.utils.app.AppToolUtils;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 import static com.meituan.android.walle.WalleChannelReader.*;
 
@@ -123,7 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }else {
                 //双击返回桌面
                 if ((System.currentTimeMillis() - time > 1000)) {
-                    ToastUtil.showToast(MainActivity.this, "再按一次返回桌面");
+                    ToastUtils.showRoundRectToast("再按一次返回桌面");
                     time = System.currentTimeMillis();
                 } else {
                     moveTaskToBack(true);
@@ -171,7 +166,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (!checkServiceAlive()) {
             return;
         }
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initFragment();
         initTabLayout();
         initPlayServiceListener();
@@ -211,7 +206,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //当在播放音频详细页面切换歌曲的时候，需要刷新底部控制器，和音频详细页面的数据
         List<AudioBean> musicList = BaseAppHelper.get().getMusicList();
         if(musicList.size()>0){
-            onChangeImpl(musicList.get(0));
+            int mPlayPosition;
+            if (getPlayService().getPlayingMusic() != null &&
+                    getPlayService().getPlayingMusic().getType() == AudioBean.Type.LOCAL) {
+                mPlayPosition = getPlayService().getPlayingPosition();
+            } else {
+                mPlayPosition = 0;
+            }
+            onChangeImpl(musicList.get(mPlayPosition));
         }else {
             onChangeImpl(getPlayService().getPlayingMusic());
         }
@@ -242,9 +244,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.iv_play_bar_play:
                 if(getPlayService().isDefault()){
                     if(BaseAppHelper.get().getMusicList().size()>0){
-                        getPlayService().play(BaseAppHelper.get().getMusicList().get(0));
+                        int mPlayPosition;
+                        if (getPlayService().getPlayingMusic() != null &&
+                                getPlayService().getPlayingMusic().getType() == AudioBean.Type.LOCAL) {
+                            mPlayPosition = getPlayService().getPlayingPosition();
+                        } else {
+                            mPlayPosition = 0;
+                        }
+                        getPlayService().play(BaseAppHelper.get().getMusicList().get(mPlayPosition));
                     }else {
-                        ToastUtil.showToast(this,"请检查是否有音乐");
+                        ToastUtils.showToast("请检查是否有音乐");
                     }
                 }else {
                     getPlayService().playPause();
@@ -591,7 +600,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                                 break;
                             case R.id.tv_collect:
-                                ToastUtil.showToast(MainActivity.this, "收藏，后期在做");
+                                ToastUtils.showRoundRectToast("收藏，后期在做");
                                 break;
                             case R.id.iv_close:
                                 dialog.dismissDialogFragment();

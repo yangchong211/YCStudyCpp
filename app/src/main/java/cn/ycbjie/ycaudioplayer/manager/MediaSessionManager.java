@@ -38,7 +38,9 @@ public class MediaSessionManager {
     }
 
     public void updatePlaybackState() {
-        int state = (mPlayService.isPlaying() || mPlayService.isPreparing()) ? PlaybackStateCompat.STATE_PLAYING : PlaybackStateCompat.STATE_PAUSED;
+        int state = (mPlayService.isPlaying() ||
+                mPlayService.isPreparing()) ? PlaybackStateCompat.STATE_PLAYING :
+                PlaybackStateCompat.STATE_PAUSED;
         mMediaSession.setPlaybackState(
                 new PlaybackStateCompat.Builder()
                         .setActions(MEDIA_SESSION_ACTIONS)
@@ -58,12 +60,12 @@ public class MediaSessionManager {
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, music.getAlbum())
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, music.getArtist())
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, music.getDuration())
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, CoverLoader.getInstance().loadThumbnail(music));
-
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART,
+                        CoverLoader.getInstance().loadThumbnail(music));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, BaseAppHelper.get().getMusicList().size());
+            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS,
+                    BaseAppHelper.get().getMusicList().size());
         }
-
         mMediaSession.setMetadata(metaData.build());
     }
 

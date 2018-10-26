@@ -1,10 +1,8 @@
 package cn.ycbjie.ycaudioplayer.kotlin.model.helper
 
 import cn.ycbjie.ycaudioplayer.api.manager.RetrofitWrapper
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.BannerBean
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.NaviBean
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.ProjectListBean
-import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
+import cn.ycbjie.ycaudioplayer.kotlin.model.bean.*
+import cn.ycbjie.ycaudioplayer.kotlin.util.AndroidUtils.Companion.name
 import com.mg.axechen.wanandroid.javabean.HomeListBean
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -104,8 +102,23 @@ class AndroidHelper private constructor() {
     /**
      * 收藏网站
      */
-    fun collectWebsite(name: String,link: String): Observable<Response<JSONObject>> {
+    fun collectWebsite(name: String,link: String): Observable<ResponseBean<JSONObject>> {
         return mApiService.collectWebsite(name,link)
+    }
+
+    /**
+     * 获取热词
+     */
+    fun getRecommendSearchTag(): Observable<ResponseBean<MutableList<SearchTag>>> {
+        return mApiService.getRecommendSearchTag()
+    }
+
+
+    /**
+     * 搜索
+     */
+    fun search(page: Int, text: String): Observable<ResponseBean<ProjectListBean>> {
+        return mApiService.search(page, text)
     }
 
 

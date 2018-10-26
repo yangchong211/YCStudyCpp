@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+
 import com.blankj.utilcode.util.Utils;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
+
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
@@ -67,6 +70,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         Utils.init(this);
+        ToastUtils.init(this);
         BaseLifecycleCallback.getInstance().init(this);
         BaseAppHelper.get().init(this);
         initAutoSizeConfig();

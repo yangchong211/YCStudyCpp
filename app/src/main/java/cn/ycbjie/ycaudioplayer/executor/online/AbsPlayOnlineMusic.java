@@ -6,11 +6,9 @@ import android.text.TextUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import java.io.File;
-
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
@@ -119,7 +117,7 @@ public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        ToastUtil.showToast(mActivity,"下载完成");
+                        ToastUtils.showRoundRectToast("下载完成");
                     }
 
                     @Override
@@ -164,7 +162,7 @@ public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
 
                     @Override
                     protected void completed(BaseDownloadTask task) {
-                        ToastUtil.showToast(mActivity,"下载完成");
+                        ToastUtils.showToast("下载完成");
                     }
 
                     @Override

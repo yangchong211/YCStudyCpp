@@ -27,7 +27,7 @@ import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.OfficeBean;
 import cn.ycbjie.ycaudioplayer.ui.home.ui.adapter.LocalOfficeAdapter;
 import cn.ycbjie.ycaudioplayer.utils.scan.FileOfficeScanManager;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 import cn.ycbjie.ycthreadpoollib.callback.AsyncCallback;
 
@@ -58,7 +58,7 @@ public class LocalOfficeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initActionBar();
         initRecyclerView();
     }

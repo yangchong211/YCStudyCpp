@@ -23,7 +23,7 @@ import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.mg.axechen.wanandroid.javabean.HomeListBean
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils
 import com.yc.cn.ycbannerlib.BannerView
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil
 import network.response.ResponseBean
@@ -94,7 +94,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                 when (view.id){
                     R.id.flLike ->{
                         if (SPUtils.getInstance().getInt(KotlinConstant.USER_ID)==0){
-                            ToastUtil.showToast(activity,getString(R.string.collect_fail_pls_login))
+                            ToastUtils.showToast(getString(R.string.collect_fail_pls_login))
                         }else{
                             val homeData = adapter.allData[position]
                             //var homdata: HomeData = datas[position].item as HomeData
@@ -140,7 +140,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                 presenter?.getHomeList(page)
             } else {
                 recyclerView?.setRefreshing(false)
-                ToastUtil.showToast(activity, "没有网络")
+                ToastUtils.showToast( "没有网络")
             }
         })
         //加载更多
@@ -155,7 +155,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                     }
                 } else {
                     adapter.pauseMore()
-                    ToastUtil.showToast(activity, "网络不可用")
+                    ToastUtils.showToast( "网络不可用")
                 }
             }
 
@@ -169,7 +169,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                 if (NetworkUtils.isConnected()) {
                     adapter.resumeMore()
                 } else {
-                    ToastUtil.showToast(activity, "网络不可用")
+                    ToastUtils.showToast( "网络不可用")
                 }
             }
 
@@ -177,7 +177,7 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
                 if (NetworkUtils.isConnected()) {
                     adapter.resumeMore()
                 } else {
-                    ToastUtil.showToast(activity, "网络不可用")
+                    ToastUtils.showToast( "网络不可用")
                 }
             }
         })
@@ -250,19 +250,19 @@ class AndroidHomeFragment : BaseFragment<AndroidHomePresenter>() , AndroidHomeCo
     }
 
     override fun unCollectArticleSuccess() {
-        ToastUtil.showToast(activity,"取消收藏成功")
+        ToastUtils.showToast("取消收藏成功")
     }
 
     override fun unCollectArticleFail(t: Throwable) {
-        ToastUtil.showToast(activity,t.message)
+        ToastUtils.showToast(t.message)
     }
 
     override fun collectInArticleSuccess() {
-        ToastUtil.showToast(activity,"收藏成功")
+        ToastUtils.showToast("收藏成功")
     }
 
     override fun collectInArticleFail(t: Throwable) {
-        ToastUtil.showToast(activity,t.message)
+        ToastUtils.showToast(t.message)
     }
 
 

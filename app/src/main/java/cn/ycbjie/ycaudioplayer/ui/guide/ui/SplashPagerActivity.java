@@ -23,8 +23,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
-
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * <pre>
@@ -48,7 +47,7 @@ public class SplashPagerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        YCAppBar.translucentStatusBar(this, true);
+        StateAppBar.translucentStatusBar(this, true);
     }
 
 

@@ -1,11 +1,20 @@
 package cn.ycbjie.ycaudioplayer.utils.file;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.blankj.utilcode.util.SDCardUtils;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +35,9 @@ public class FileSaveUtils {
      */
     private final static String APP_ROOT_SAVE_PATH = "ycPlayer";
     private final static String property = File.separator;
+    public final static String music = "music";
+    public final static String image = "image";
+    public final static String logger = "logger";
 
 
     /**
@@ -62,5 +74,47 @@ public class FileSaveUtils {
     }
 
 
+    /**
+     * 保存bitmap到本地
+     */
+    public static String saveBitmap(final Context context, Bitmap mBitmap, String savePath, boolean isScanner) {
+        if (mBitmap.isRecycled()) {
+            return null;
+        }
+        if (TextUtils.isEmpty(savePath)) {
+            savePath = getLocalRootSavePathDir(music);
+        }
+        try {
+            File filePic = new File(savePath);
+            if (!filePic.exists()) {
+                //noinspection ResultOfMethodCallIgnored
+                filePic.getParentFile().mkdirs();
+                //noinspection ResultOfMethodCallIgnored
+                filePic.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            if (isScanner) {
+                scanner(context, savePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return savePath;
+    }
+
+    private static void scanner(Context context, String filePath) {
+        MediaScannerConnection.scanFile(context,
+                new String[]{filePath}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("ExternalStorage", "Scanned " + path + ":");
+                        Log.i("ExternalStorage", "-> uri=" + uri);
+                    }
+                });
+    }
 
 }

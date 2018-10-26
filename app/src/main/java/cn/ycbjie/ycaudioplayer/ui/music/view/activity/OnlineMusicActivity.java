@@ -22,8 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 
@@ -44,17 +42,13 @@ import cn.ycbjie.ycaudioplayer.ui.music.model.OnLineSongListInfo;
 import cn.ycbjie.ycaudioplayer.ui.music.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.ImageUtils;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * Created by yc on 2018/1/29.
- *
- */
 
 public class OnlineMusicActivity extends BaseActivity implements View.OnClickListener {
 
@@ -96,7 +90,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
         if (!checkServiceAlive()) {
             return;
         }
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initIntentData();
         initToolBar();
         initRecyclerView();
@@ -128,23 +122,6 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initListener() {
         llTitleMenu.setOnClickListener(this);
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                if(adapter.getAllData().size()>position && position>-1){
-                    OnlineMusicList.SongListBean onlineMusic = adapter.getAllData().get(position);
-                    playMusic(onlineMusic);
-                    ToastUtils.showShort(onlineMusic.getTitle()+"点击呢！！！");
-                }
-            }
-        });
-        adapter.setOnMoreClickListener(new OnMoreClickListener() {
-            @Override
-            public void onMoreClick(int position) {
-                //这个地方需要+1
-                showMoreDialog(position + 1);
-            }
-        });
     }
 
 
@@ -226,6 +203,23 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onErrorClick() {
                 adapter.resumeMore();
+            }
+        });
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if(adapter.getAllData().size()>position && position>-1){
+                    OnlineMusicList.SongListBean onlineMusic = adapter.getAllData().get(position);
+                    playMusic(onlineMusic);
+                    ToastUtils.showShort(onlineMusic.getTitle()+"点击呢！！！");
+                }
+            }
+        });
+        adapter.setOnMoreClickListener(new OnMoreClickListener() {
+            @Override
+            public void onMoreClick(int position) {
+                //这个地方需要+1
+                showMoreDialog(position + 1);
             }
         });
     }
@@ -403,7 +397,8 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
      * @param onlineMusic 实体类
      */
     private void share(OnlineMusicList.SongListBean onlineMusic) {
-        new AbsShareOnlineMusic(this, onlineMusic.getTitle(), onlineMusic.getSong_id()) {
+        new AbsShareOnlineMusic(this, onlineMusic.getTitle(), onlineMusic.getSong_id()
+                ,onlineMusic.getAlbum_1000_1000()) {
             @Override
             public void onPrepare() {
                 LoadDialog.show(OnlineMusicActivity.this, "下载中……");
@@ -449,13 +444,13 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onExecuteSuccess(Void aVoid) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                ToastUtil.showToast(OnlineMusicActivity.this, "下载成功" + onlineMusic.getTitle());
+                com.pedaily.yc.ycdialoglib.toast.ToastUtils.showToast("下载成功" + onlineMusic.getTitle());
             }
 
             @Override
             public void onExecuteFail(Exception e) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                ToastUtil.showToast(OnlineMusicActivity.this, "下载失败");
+                com.pedaily.yc.ycdialoglib.toast.ToastUtils.showToast("下载失败");
             }
         }.execute();
     }

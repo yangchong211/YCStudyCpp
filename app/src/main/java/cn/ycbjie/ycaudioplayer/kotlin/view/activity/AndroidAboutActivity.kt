@@ -3,14 +3,15 @@ package cn.ycbjie.ycaudioplayer.kotlin.view.activity
 import android.content.Intent
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
+import android.view.View
 import cn.ycbjie.ycaudioplayer.R
-import cn.ycbjie.ycaudioplayer.R.id.*
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.AndroidPresenter
 import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar
 import com.blankj.utilcode.util.LogUtils
 import kotlinx.android.synthetic.main.activity_android_about.*
+import kotlinx.android.synthetic.main.base_title_bar.*
 
 /**
  * <pre>
@@ -54,7 +55,16 @@ class AndroidAboutActivity : BaseActivity<AndroidPresenter>() {
 
     override fun initView() {
         DataProviderManager.registerDataProvider("单利")
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
+        initToolBar()
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
+    }
+
+    private fun initToolBar() {
+        toolbar_title.visibility = View.VISIBLE
+        toolbar_title.text = "关于我"
+        ll_title_menu.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun initListener() {

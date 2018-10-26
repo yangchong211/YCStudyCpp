@@ -4,7 +4,6 @@
         <item name="colorPrimary">@color/redTab</item>
         <item name="colorPrimaryDark">@color/redTab</item>
         <item name="colorAccent">@color/redTab</item>
-        <item name="playBarBackground">@drawable/play_bar_bg_selector</item>
     </style>
     <style name="AppBaseThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/nightColor</item>
@@ -23,6 +22,8 @@
         <item name="android:textColorSecondary">@color/colorWhite</item>
         <!--设置不覆盖锚点-->
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <!--设置字体大小-->
+        <item name="android:textSize">18sp</item>
     </style>
     <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>

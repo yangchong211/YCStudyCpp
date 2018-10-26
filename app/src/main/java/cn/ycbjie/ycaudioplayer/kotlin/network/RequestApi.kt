@@ -49,7 +49,7 @@ interface RequestApi {
     fun userLogin(
             @Query("username") userName: String,
             @Query("password") password: String
-    ): Observable<Response<LoginBean>>
+    ): Observable<ResponseBean<LoginBean>>
 
     /**
      * 用户注册
@@ -59,7 +59,7 @@ interface RequestApi {
             @Query("username") userName: String,
             @Query("password") password: String,
             @Query("repassword") rePassword: String
-    ): Observable<Response<JSONObject>>
+    ): Observable<ResponseBean<JSONObject>>
 
     /**
      * 获取知识树
@@ -99,14 +99,14 @@ interface RequestApi {
      * 获取热词
      */
     @GET("hotkey/json")
-    fun getRecommendSearchTag(): Observable<Response<MutableList<SearchTag>>>
+    fun getRecommendSearchTag(): Observable<ResponseBean<MutableList<SearchTag>>>
 
     /**
      * 搜索
      */
     @POST("article/query/{page}/json")
     fun search(@Path("page") page: Int,
-               @Query("k") text: String): Observable<Response<ProjectListBean>>
+               @Query("k") text: String): Observable<ResponseBean<ProjectListBean>>
 
     /**
      * 网址导航
@@ -119,13 +119,13 @@ interface RequestApi {
      * 获取收藏的文章列表
      */
     @GET("lg/collect/list/{page}/json")
-    fun getCollectArticleList(@Path("page") page: Int): Observable<Response<ProjectListBean>>
+    fun getCollectArticleList(@Path("page") page: Int): Observable<ResponseBean<ProjectListBean>>
 
     /**
      * 获取收藏的网站列表
      */
     @GET("lg/collect/usertools/json")
-    fun getCollectWebList(): Observable<Response<MutableList<SearchTag>>>
+    fun getCollectWebList(): Observable<ResponseBean<MutableList<SearchTag>>>
 
 
     /**
@@ -141,7 +141,7 @@ interface RequestApi {
     @POST("lg/collect/add/json")
     fun collectOutArticle(@Query("title") title: String,
                           @Query("author") author: String,
-                          @Query("link") link: String): Observable<Response<JSONObject>>
+                          @Query("link") link: String): Observable<ResponseBean<JSONObject>>
 
     /**
      * 取消收藏
@@ -154,13 +154,13 @@ interface RequestApi {
      */
     @POST("lg/collect/addtool/json")
     fun collectWebsite(@Query("name") name: String,
-                       @Query("link") link: String): Observable<Response<JSONObject>>
+                       @Query("link") link: String): Observable<ResponseBean<JSONObject>>
 
     /**
      * 取消网站收藏
      */
     @POST("lg/collect/deletetool/json")
-    fun unCollectWebsite(@Query("id") id: Int): Observable<Response<JSONObject>>
+    fun unCollectWebsite(@Query("id") id: Int): Observable<ResponseBean<JSONObject>>
 
     /**
      * 编辑收藏的网站
@@ -168,5 +168,5 @@ interface RequestApi {
     @POST("lg/collect/updatetool/json")
     fun updateWebsite(@Query("id") id: String,
                       @Query("name") name: String,
-                      @Query("link") link: String): Observable<Response<JSONObject>>
+                      @Query("link") link: String): Observable<ResponseBean<JSONObject>>
 }

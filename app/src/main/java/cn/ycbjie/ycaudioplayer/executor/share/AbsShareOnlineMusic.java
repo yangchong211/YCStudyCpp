@@ -2,11 +2,15 @@ package cn.ycbjie.ycaudioplayer.executor.share;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.executor.inter.IExecutor;
 import cn.ycbjie.ycaudioplayer.model.bean.DownloadInfo;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareComment;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDetailBean;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -27,11 +31,13 @@ public abstract class AbsShareOnlineMusic implements IExecutor<Void> {
     private Context mContext;
     private String mTitle;
     private String mSongId;
+    private String mImage;
 
-    protected AbsShareOnlineMusic(Context context, String title, String songId) {
+    protected AbsShareOnlineMusic(Context context, String title, String songId,String image) {
         mContext = context;
         mTitle = title;
         mSongId = songId;
+        mImage = image;
     }
 
     @Override
@@ -53,14 +59,26 @@ public abstract class AbsShareOnlineMusic implements IExecutor<Void> {
                             onExecuteFail(null);
                             return;
                         }
+                        String file_link = downloadInfo.getBitrate().getFile_link();
                         onExecuteSuccess(null);
-                        Intent intent = new Intent(Intent.ACTION_SEND);
+
+                        ShareDetailBean shareDetailBean = new ShareDetailBean();
+                        shareDetailBean.setShareType(ShareComment.ShareType.SHARE_GOODS);
+                        shareDetailBean.setContent("歌曲分享");
+                        shareDetailBean.setTitle(mTitle);
+                        shareDetailBean.setImage(mImage);
+                        shareDetailBean.setUrl(file_link);
+                        ShareDialog shareDialog = new ShareDialog(mContext,shareDetailBean);
+                        shareDialog.show(((FragmentActivity)mContext).getSupportFragmentManager());
+
+
+                        /*Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
                         intent.putExtra(Intent.EXTRA_TEXT, mContext.getString(R.string.share_music,
                                 mContext.getString(R.string.app_name), mTitle,
-                                downloadInfo.getBitrate().getFile_link()));
+                                file_link));
                         mContext.startActivity(Intent.createChooser(intent,
-                                mContext.getString(R.string.share)));
+                                mContext.getString(R.string.share)));*/
                     }
                 });
     }

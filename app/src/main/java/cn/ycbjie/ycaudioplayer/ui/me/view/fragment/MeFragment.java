@@ -34,10 +34,10 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
 import cn.ycbjie.ycaudioplayer.utils.app.QuitTimer;
-
-/**
- * Created by yc on 2018/1/24.
- */
+import cn.ycbjie.ycaudioplayer.utils.share.ShareComment;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDetailBean;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDialog;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareTypeBean;
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -119,7 +119,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_me_collect:
-
+                ShareDetailBean shareDetailBean = new ShareDetailBean();
+                shareDetailBean.setShareType(ShareComment.ShareType.SHARE_GOODS);
+                shareDetailBean.setContent("商品详情页分享");
+                shareDetailBean.setTitle("分享");
+                shareDetailBean.setImage("https://upload-images.jianshu.io/upload_images/4432347-fb25131b5629346a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240");
+                ShareDialog shareDialog = new ShareDialog(activity,shareDetailBean);
+                shareDialog.show(getChildFragmentManager());
                 break;
             case R.id.rl_me_question:
 

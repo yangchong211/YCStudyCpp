@@ -19,8 +19,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectTreeAdapter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_android_project.*
 import network.response.ResponseBean
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
@@ -116,7 +115,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
                     }
                 } else {
                     listsAdapter.pauseMore()
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("没有网络")
                 }
 
             }
@@ -130,7 +129,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
                     }
                 } else {
                     listsAdapter.pauseMore()
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("没有网络")
                 }
             }
         })
@@ -141,7 +140,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
                 if (NetworkUtils.isConnected()) {
                     listsAdapter.resumeMore()
                 } else {
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("没有网络")
                 }
             }
 
@@ -149,7 +148,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
                 if (NetworkUtils.isConnected()) {
                     listsAdapter.resumeMore()
                 } else {
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("没有网络")
                 }
             }
         })
@@ -194,7 +193,7 @@ class AndroidProjectFragment : BaseLazyFragment()  , AndroidProjectContract.View
                 presenter?.getProjectTreeList(selectProject!!.id, true)
             } else {
                 rvList.setRefreshing(false)
-                ToastUtil.showToast(activity, "网络不可用")
+                ToastUtils.showRoundRectToast( "网络不可用")
             }
         }
     }

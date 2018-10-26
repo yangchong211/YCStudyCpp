@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
@@ -104,7 +104,7 @@ public class OnLineMusicFragment extends BaseLazyFragment {
                 if(NetworkUtils.isConnected()){
                     onLazyLoad();
                 }else {
-                    ToastUtil.showToast(activity,"没有网络");
+                    ToastUtils.showRoundRectToast("没有网络");
                 }
             }
         });

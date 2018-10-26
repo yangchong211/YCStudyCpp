@@ -11,12 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
-
-import org.reactivestreams.Subscriber;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -183,7 +179,7 @@ public class SearchMusicActivity extends BaseActivity {
      * @param song           实体类
      */
     private void share(SearchMusic.Song song) {
-        new AbsShareOnlineMusic(this, song.getSongname(), song.getSongid()) {
+        new AbsShareOnlineMusic(this, song.getSongname(), song.getSongid(),"") {
             @Override
             public void onPrepare() {
                 LoadDialog.show(SearchMusicActivity.this,"下载中……");
@@ -217,13 +213,13 @@ public class SearchMusicActivity extends BaseActivity {
             @Override
             public void onExecuteSuccess(Void aVoid) {
                 LoadDialog.dismiss(SearchMusicActivity.this);
-                ToastUtil.showToast(SearchMusicActivity.this,"下载成功"+song.getSongname());
+                ToastUtils.showRoundRectToast("下载成功"+song.getSongname());
             }
 
             @Override
             public void onExecuteFail(Exception e) {
                 LoadDialog.dismiss(SearchMusicActivity.this);
-                ToastUtil.showToast(SearchMusicActivity.this,"下载失败");
+                ToastUtils.showRoundRectToast("下载失败");
             }
         }.execute();
     }

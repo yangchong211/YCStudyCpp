@@ -24,8 +24,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.pedaily.yc.ycdialoglib.bottomLayout.BottomDialogFragment;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.dialogFragment.BottomDialogFragment;
 
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
@@ -379,7 +378,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
                                 switchPlayMode();
                                 break;
                             case R.id.tv_collect:
-                                ToastUtil.showToast(activity, "收藏，后期在做");
+                                ToastUtils.showLong("收藏，后期在做");
                                 break;
                             case R.id.iv_close:
                                 dialog.dismissDialogFragment();

@@ -24,4 +24,5 @@ object KotlinConstant {
     const val COLLECT_STATUS = "collectStatus"
     const val COLLECT_ID = "collectId"
     const val USER_ID = "userId"
+    const val HISTORY_SEARCH = "historySearch"
 }

@@ -13,7 +13,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.utils.app.RestartAppUtils;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 
 public class DebugActivity extends BaseActivity implements View.OnClickListener {
@@ -47,7 +47,7 @@ public class DebugActivity extends BaseActivity implements View.OnClickListener 
     @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
-        YCAppBar.setStatusBarColor(this,
+        StateAppBar.setStatusBarColor(this,
                 ContextCompat.getColor(this, R.color.redTab));
         toolbarTitle.setText("设置Debug模式");
     }

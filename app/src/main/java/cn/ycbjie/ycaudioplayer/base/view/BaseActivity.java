@@ -18,7 +18,7 @@ import cn.ycbjie.ycaudioplayer.base.mvp.BasePresenter;
 import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.guide.ui.GuideActivity;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * ================================================
@@ -46,16 +46,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends BaseAutoActi
         ButterKnife.bind(this);
         //避免切换横竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        YCAppBar.setStatusBarColor(this,R.color.redTab);
+        StateAppBar.setStatusBarColor(this,R.color.redTab);
         if (mPresenter != null){
             mPresenter.subscribe();
         }
         initView();
         initListener();
-        initData();
         if(!NetworkUtils.isConnected()){
             ToastUtils.showShort("请检查网络是否连接");
         }
+        initData();
     }
 
 
@@ -141,7 +141,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends BaseAutoActi
         PlayService playService = BaseAppHelper.get().getPlayService();
         if (playService == null) {
             //待解决：当长期处于后台，如何保活？避免service被杀死……
-            throw new NullPointerException("play service is null");
+            //throw new NullPointerException("play service is null");
+            checkServiceAlive();
         }
         return playService;
     }

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import com.yc.cn.ycbannerlib.BannerView;
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
 
@@ -258,7 +258,7 @@ public class StudyFragment extends BaseFragment {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showToast(activity,"没有更多呢！");
+                                ToastUtils.showRoundRectToast("没有更多呢！");
                             }
                         },1000);
                     }

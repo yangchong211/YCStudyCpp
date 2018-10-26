@@ -37,7 +37,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.ns.yc.ycutilslib.webView.ScrollWebView;
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 
 /**
@@ -188,7 +188,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab));
         initIntentData();
         initToolBar();
         initWebView();
@@ -387,7 +387,7 @@ public class WebViewActivity extends BaseActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 LogUtils.e("服务器异常" + error.getDescription().toString());
             }
-            ToastUtil.showToast(WebViewActivity.this, "服务器异常6.0之后");
+            ToastUtils.showRoundRectToast("服务器异常6.0之后");
             //当加载错误时，就让它加载本地错误网页文件
             //mWebView.loadUrl("file:///android_asset/errorpage/error.html");
 
@@ -403,7 +403,7 @@ public class WebViewActivity extends BaseActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 LogUtils.e("服务器异常" + "----");
             }
-            ToastUtil.showToast(WebViewActivity.this, "服务器异常6.0之前");
+            ToastUtils.showRoundRectToast("服务器异常6.0之前");
             //当加载错误时，就让它加载本地错误网页文件
             //mWebView.loadUrl("file:///android_asset/errorpage/error.html");
 
@@ -625,7 +625,7 @@ public class WebViewActivity extends BaseActivity {
                         recreate();
                     } else {
                         //没有网络，不处理
-                        ToastUtil.showToast(WebViewActivity.this, "请检查是否连上网络");
+                        ToastUtils.showRoundRectToast("请检查是否连上网络");
                     }
                 }
             });

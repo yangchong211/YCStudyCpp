@@ -16,9 +16,6 @@ import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
-/**
- * Created by yc on 2018/1/25.
- */
 
 public class NotificationUtils {
 
@@ -82,7 +79,7 @@ public class NotificationUtils {
 
 
         Notification.Builder mBuilder = new Notification.Builder(context)
-                //.setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
                 //设置通知的图标
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
@@ -90,9 +87,9 @@ public class NotificationUtils {
                 //设置状态栏的标题
                 //.setTicker("有新消息呢")
                 //设置标题
-                //.setContentTitle("这个是标题2")
+                .setContentTitle("这个是标题2")
                 //消息内容
-                //.setContentText("这个是内容2")
+                .setContentText("这个是内容2")
                 //在右边显示一个数量,等价于setContentInfo函数.如果有设置setContentInfo函数,那么本函数会给覆盖
                 //.setNumber(12)
                 //是否提示一次.true - 如果Notification已经存在状态栏即使在调用notify函数也不会更新
@@ -106,7 +103,7 @@ public class NotificationUtils {
                 //让通知左右滑的时候不能取消通知
                 .setOngoing(true)
                 //设置该通知的优先级
-                //.setPriority(Notification.PRIORITY_DEFAULT)
+                .setPriority(Notification.PRIORITY_DEFAULT)
                 //设置通知时间，默认为系统发出通知的时间，通常不用设置
                 //.setWhen(System.currentTimeMillis())
                 //打开程序后图标消失

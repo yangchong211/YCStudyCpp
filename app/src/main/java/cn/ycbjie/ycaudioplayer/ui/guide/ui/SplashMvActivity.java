@@ -14,7 +14,7 @@ import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar;
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 /**
  * Created by yc on 2018/2/1.
@@ -59,7 +59,7 @@ public class SplashMvActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        YCAppBar.translucentStatusBar(this, true);
+        StateAppBar.translucentStatusBar(this, true);
         initTimer();
     }
 

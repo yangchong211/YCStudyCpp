@@ -11,8 +11,7 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.TreeBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.KnowledgeListPresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.KnowledgeListAdapter
 import com.blankj.utilcode.util.NetworkUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.pedaily.yc.ycdialoglib.customToast.ToastUtil
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils
 import kotlinx.android.synthetic.main.base_easy_recycle.*
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter
 
@@ -92,7 +91,7 @@ class KnowledgeListFragment : BaseLazyFragment()  , KnowledgeListContract.View{
                     }
                 } else {
                     listsAdapter.pauseMore()
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("网络不可用")
                 }
 
             }
@@ -106,7 +105,7 @@ class KnowledgeListFragment : BaseLazyFragment()  , KnowledgeListContract.View{
                     }
                 } else {
                     listsAdapter.pauseMore()
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("网络不可用")
                 }
             }
         })
@@ -117,7 +116,7 @@ class KnowledgeListFragment : BaseLazyFragment()  , KnowledgeListContract.View{
                 if (NetworkUtils.isConnected()) {
                     listsAdapter.resumeMore()
                 } else {
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("网络不可用")
                 }
             }
 
@@ -125,7 +124,7 @@ class KnowledgeListFragment : BaseLazyFragment()  , KnowledgeListContract.View{
                 if (NetworkUtils.isConnected()) {
                     listsAdapter.resumeMore()
                 } else {
-                    ToastUtils.showShort("没有网络")
+                    ToastUtils.showRoundRectToast("网络不可用")
                 }
             }
         })
@@ -148,7 +147,7 @@ class KnowledgeListFragment : BaseLazyFragment()  , KnowledgeListContract.View{
                 onLazyLoad()
             } else {
                 recyclerView.setRefreshing(false)
-                ToastUtil.showToast(activity, "网络不可用")
+                ToastUtils.showRoundRectToast("网络不可用")
             }
         }
     }

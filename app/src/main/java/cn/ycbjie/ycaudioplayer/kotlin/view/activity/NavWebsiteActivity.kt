@@ -17,9 +17,8 @@ import cn.ycbjie.ycaudioplayer.kotlin.model.bean.NaviBean
 import cn.ycbjie.ycaudioplayer.kotlin.presenter.NavWebsitePresenter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidNavRightAdapter
 import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidNavWebsiteAdapter
-import cn.ycbjie.ycaudioplayer.kotlin.view.adapter.AndroidProjectAdapter
 import cn.ycbjie.ycaudioplayer.ui.web.WebViewActivity
-import cn.ycbjie.ycstatusbarlib.bar.YCAppBar
+import cn.ycbjie.ycstatusbarlib.bar.StateAppBar
 import com.blankj.utilcode.util.LogUtils
 import kotlinx.android.synthetic.main.activity_nav_website.*
 import kotlinx.android.synthetic.main.base_title_bar.*
@@ -81,7 +80,7 @@ class NavWebsiteActivity : BaseActivity<NavWebsitePresenter>() , NavWebsiteContr
     }
 
     override fun initView() {
-        YCAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
+        StateAppBar.setStatusBarColor(this, ContextCompat.getColor(this, R.color.redTab))
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         drawerLayout.setScrimColor(Color.TRANSPARENT)
         initToolBar()
