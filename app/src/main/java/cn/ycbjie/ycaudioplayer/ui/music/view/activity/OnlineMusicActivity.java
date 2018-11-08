@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ns.yc.ycutilslib.loadingDialog.LoadDialog;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
+
 import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 
@@ -69,6 +71,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
     private static final String MUSIC_LIST_SIZE = "10";
     private boolean isPlayFragmentShow = false;
     private PlayMusicFragment mPlayFragment;
+    private String type = "1";
 
     @Override
     public void onBackPressed() {
@@ -116,7 +119,11 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
 
 
     private void initIntentData() {
-        mListInfo = (OnLineSongListInfo) getIntent().getSerializableExtra("music_list_type");
+        if (getIntent()!=null){
+            mListInfo = (OnLineSongListInfo) getIntent()
+                    .getSerializableExtra("music_list_type");
+            type = mListInfo.getType();
+        }
     }
 
 
@@ -167,7 +174,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                     }
                 } else {
                     adapter.pauseMore();
-                    ToastUtils.showShort("没有网络");
+                    ToastUtils.showRoundRectToast("没有网络");
                 }
             }
 
@@ -182,7 +189,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                 if (NetworkUtils.isConnected()) {
                     adapter.resumeMore();
                 } else {
-                    ToastUtils.showShort("没有网络");
+                    ToastUtils.showRoundRectToast("没有网络");
                 }
             }
 
@@ -191,7 +198,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                 if (NetworkUtils.isConnected()) {
                     adapter.resumeMore();
                 } else {
-                    ToastUtils.showShort("没有网络");
+                    ToastUtils.showRoundRectToast("没有网络");
                 }
             }
         });
@@ -212,7 +219,6 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                 if(adapter.getAllData().size()>position && position>-1){
                     OnlineMusicList.SongListBean onlineMusic = adapter.getAllData().get(position);
                     playMusic(onlineMusic);
-                    ToastUtils.showShort(onlineMusic.getTitle()+"点击呢！！！");
                 }
             }
         });
@@ -266,7 +272,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
     private void getData(final int offset) {
         OnLineMusicModel model = OnLineMusicModel.getInstance();
         model.getSongListInfo(OnLineMusicModel.METHOD_GET_MUSIC_LIST,
-                mListInfo.getType(), MUSIC_LIST_SIZE, String.valueOf(offset))
+                type, MUSIC_LIST_SIZE, String.valueOf(offset))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<OnlineMusicList>() {
@@ -291,7 +297,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                         if (offset == 0) {
                             recyclerView.showError();
                         } else {
-                            ToastUtils.showShort(R.string.load_fail);
+                            ToastUtils.showRoundRectToast(Utils.getApp().getResources().getString(R.string.load_fail));
                         }
                     }
                 }, new Action() {
@@ -393,13 +399,12 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             public void onExecuteSuccess(AudioBean music) {
                 getPlayService().play(music);
                 showPlayingFragment();
-                ToastUtils.showShort("正在播放" + music.getTitle());
-
+                ToastUtils.showRoundRectToast("正在播放" + music.getTitle());
             }
 
             @Override
             public void onExecuteFail(Exception e) {
-                ToastUtils.showShort(R.string.unable_to_play);
+                ToastUtils.showRoundRectToast(Utils.getApp().getResources().getString(R.string.unable_to_play));
             }
         }.execute();
     }
@@ -458,13 +463,13 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onExecuteSuccess(Void aVoid) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                com.pedaily.yc.ycdialoglib.toast.ToastUtils.showToast("下载成功" + onlineMusic.getTitle());
+                ToastUtils.showRoundRectToast("下载成功" + onlineMusic.getTitle());
             }
 
             @Override
             public void onExecuteFail(Exception e) {
                 LoadDialog.dismiss(OnlineMusicActivity.this);
-                com.pedaily.yc.ycdialoglib.toast.ToastUtils.showToast("下载失败");
+                ToastUtils.showRoundRectToast("下载失败");
             }
         }.execute();
     }

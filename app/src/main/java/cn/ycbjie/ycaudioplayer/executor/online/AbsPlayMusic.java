@@ -15,7 +15,6 @@ import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 public abstract class AbsPlayMusic implements IExecutor<AudioBean> {
 
     private Activity mActivity;
-    protected AudioBean music;
     int mCounter = 0;
 
     AbsPlayMusic(Activity activity) {
@@ -57,7 +56,7 @@ public abstract class AbsPlayMusic implements IExecutor<AudioBean> {
      */
     abstract void getPlayInfo();
 
-    void checkCounter() {
+    void checkCounter(AudioBean music) {
         onExecuteSuccess(music);
     }
 }

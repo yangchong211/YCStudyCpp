@@ -11,9 +11,6 @@ import cn.ycbjie.ycaudioplayer.model.action.MusicPlayAction;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
-/**
- * Created by yc on 2018/1/25.
- */
 
 public class NotificationStatusBarReceiver extends BroadcastReceiver {
 

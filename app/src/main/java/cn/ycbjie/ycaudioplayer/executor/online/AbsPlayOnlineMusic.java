@@ -15,6 +15,7 @@ import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.model.OnlineMusicList;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,11 +27,18 @@ public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
 
     private OnlineMusicList.SongListBean mOnlineMusic;
     private Activity mActivity;
+    private AudioBean music;
 
     public AbsPlayOnlineMusic(Activity activity, OnlineMusicList.SongListBean onlineMusic) {
         super(activity);
         this.mActivity = activity;
         mOnlineMusic = onlineMusic;
+
+    }
+
+    @Override
+    public void onPrepare() {
+
     }
 
     @Override
@@ -84,7 +92,19 @@ public abstract class AbsPlayOnlineMusic extends AbsPlayMusic {
                         }
                         music.setPath(downloadInfo.getBitrate().getFile_link());
                         music.setDuration(downloadInfo.getBitrate().getFile_duration() * 1000);
-                        checkCounter();
+                        checkCounter(music);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        if (throwable instanceof RuntimeException) {
+                            onExecuteFail(null);
+                        }
+                    }
+                },new Action() {
+                    @Override
+                    public void run() throws Exception {
+
                     }
                 });
     }

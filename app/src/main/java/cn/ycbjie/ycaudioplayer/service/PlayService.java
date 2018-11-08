@@ -157,7 +157,7 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        NotificationUtils.init(this);
+        NotificationUtils.get().init(this);
         createMediaPlayer();
         initMediaSessionManager();
         initAudioFocusManager();
@@ -187,7 +187,7 @@ public class PlayService extends Service {
         //注销广播接收者
         unregisterReceiver(mAudioReceiver);
         //结束notification通知
-        NotificationUtils.cancelAll();
+        NotificationUtils.get().cancelAll();
         //设置service为null
         BaseAppHelper.get().setPlayService(null);
     }
@@ -436,7 +436,7 @@ public class PlayService extends Service {
                     mListener.onPlayerStart();
                 }
                 //当点击播放按钮时(播放详情页面或者底部控制栏)，同步通知栏中播放按钮状态
-                NotificationUtils.showPlay(mPlayingMusic);
+                NotificationUtils.get().showPlay(mPlayingMusic);
                 //注册监听来电/耳机拔出时暂停播放广播
                 if(!mReceiverTag){
                     mReceiverTag = true;
@@ -464,7 +464,7 @@ public class PlayService extends Service {
                 mListener.onPlayerPause();
             }
             //当点击暂停按钮时(播放详情页面或者底部控制栏)，同步通知栏中暂停按钮状态
-            NotificationUtils.showPause(mPlayingMusic);
+            NotificationUtils.get().showPause(mPlayingMusic);
             //注销监听来电/耳机拔出时暂停播放广播
             //判断广播是否注册
             if (mReceiverTag) {
@@ -562,7 +562,7 @@ public class PlayService extends Service {
                 mListener.onChange(mPlayingMusic);
             }
             //更新通知栏
-            NotificationUtils.showPlay(mPlayingMusic);
+            NotificationUtils.get().showPlay(mPlayingMusic);
 
             //更新
             mMediaSessionManager.updateMetaData(mPlayingMusic);

@@ -30,8 +30,11 @@ import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
@@ -45,6 +48,7 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.CoverLoader;
 import cn.ycbjie.ycaudioplayer.utils.musicUtils.FileMusicUtils;
 import cn.ycbjie.ycaudioplayer.weight.lrcView.YCLrcCustomView;
+import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 
 public class PlayMusicFragment extends BaseFragment implements View.OnClickListener, OnPlayerEventListener {
@@ -112,7 +116,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.e(TAG+"setUserVisibleHint",isVisibleToUser);
+        LogUtils.e(TAG+"setUserVisibleHint"+isVisibleToUser);
     }
 
     /**
@@ -124,7 +128,10 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.e(TAG+"onHiddenChanged",hidden);
+        LogUtils.e(TAG+"onHiddenChanged"+hidden);
+        if (!hidden){
+            initData();
+        }
     }
 
     @Override
@@ -160,12 +167,14 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     private void onBackPressed() {
         getActivity().onBackPressed();
         ivBack.setEnabled(false);
-        new Handler().postDelayed(new Runnable() {
+        PoolThread executor = BaseApplication.getInstance().getExecutor();
+        executor.setDelay(300, TimeUnit.MILLISECONDS);
+        executor.execute(new Runnable() {
             @Override
             public void run() {
                 ivBack.setEnabled(true);
             }
-        }, 300);
+        });
     }
 
     @Override

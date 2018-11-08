@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import cn.ycbjie.ycaudioplayer.R;
@@ -19,19 +20,29 @@ import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 
 public class NotificationUtils {
 
-    /**
-     * NotificationManager的引用
-     */
-    private static NotificationManager notificationManager;
-    private static PlayService playService;
-    private static final int NOTIFICATION_ID = 0x1314;
+
+    private PlayService playService;
+    private NotificationManager notificationManager;
+    private static final int NOTIFICATION_ID = 0x111;
+
+    public static NotificationUtils get() {
+        return SingletonHolder.instance;
+    }
+
+    private static class SingletonHolder {
+        private static NotificationUtils instance = new NotificationUtils();
+    }
+
+    private NotificationUtils() {
+
+    }
 
     /**
      * 1.创建一个NotificationManager的引用
      * @param playService           PlayService对象
      */
-    public static void init(PlayService playService) {
-        NotificationUtils.playService = playService;
+    public void init(PlayService playService) {
+        this.playService = playService;
         notificationManager = (NotificationManager) playService.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
@@ -39,9 +50,12 @@ public class NotificationUtils {
      * 开始播放
      * @param music             music
      */
-    public static void showPlay(AudioBean music) {
-        //这个方法是启动Notification到前台
+    public void showPlay(AudioBean music) {
+        if (music == null) {
+            return;
+        }
         playService.startForeground(NOTIFICATION_ID, buildNotification(playService, music, true));
+        //这个方法是启动Notification到前台
     }
 
 
@@ -49,41 +63,38 @@ public class NotificationUtils {
      * 暂停
      * @param music             music
      */
-    public static void showPause(AudioBean music) {
+    public void showPause(AudioBean music) {
         //这个方法是停止Notification
+        if (music == null) {
+            return;
+        }
         playService.stopForeground(false);
         notificationManager.notify(NOTIFICATION_ID, buildNotification(playService, music, false));
+
     }
 
 
     /**
      * 结束所有的
      */
-    public static void cancelAll() {
+    public void cancelAll() {
         notificationManager.cancelAll();
     }
 
-    /**
-     * 2.创建Notification对象，定义Notification的各种属性
-     * @return                      Notification对象
-     */
-    private static Notification buildNotification(PlayService context , AudioBean music , boolean isPlaying){
+    private Notification buildNotification(Context context, AudioBean music, boolean isPlaying) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        Notification.Builder mBuilder = new Notification.Builder(context)
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setContentIntent(pendingIntent)
                 .setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
                 //设置通知的图标
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pendingIntent)
-                .setContent(getCustomViews(context,music,isPlaying))
+                .setCustomContentView(getCustomViews(context, music, isPlaying))
                 //设置状态栏的标题
                 //.setTicker("有新消息呢")
                 //设置标题
@@ -108,7 +119,7 @@ public class NotificationUtils {
                 //.setWhen(System.currentTimeMillis())
                 //打开程序后图标消失
                 .setAutoCancel(false);
-        return mBuilder.build();
+        return builder.build();
     }
 
 
@@ -118,7 +129,7 @@ public class NotificationUtils {
      * @param music
      * @return                          RemoteViews
      */
-    private static RemoteViews getCustomViews(PlayService context, AudioBean music, boolean isPlaying) {
+    private RemoteViews getCustomViews(Context context, AudioBean music, boolean isPlaying) {
         String title = music.getTitle();
         String subtitle = FileMusicUtils.getArtistAndAlbum(music.getArtist(), music.getAlbum());
         Bitmap cover = CoverLoader.getInstance().loadThumbnail(music);
@@ -144,12 +155,12 @@ public class NotificationUtils {
         // 设置 点击通知栏的播放暂停按钮时要执行的意图
         remoteViews.setOnClickPendingIntent(R.id.btn_start, getReceiverPendingIntent(context, MusicPlayAction.TYPE_START_PAUSE,3));
         // 设置 点击通知栏的根容器时要执行的意图
-        //remoteViews.setOnClickPendingIntent(R.id.ll_root, getActivityPendingIntent(context));
+        remoteViews.setOnClickPendingIntent(R.id.ll_root, getActivityPendingIntent(context));
         return remoteViews;
     }
 
 
-    private static PendingIntent getActivityPendingIntent(PlayService context) {
+    private PendingIntent getActivityPendingIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(Constant.EXTRA_NOTIFICATION, true);
         intent.setAction(Intent.ACTION_VIEW);
@@ -161,7 +172,7 @@ public class NotificationUtils {
     }
 
 
-    private static PendingIntent getReceiverPendingIntent(PlayService context, String type , int code) {
+    private PendingIntent getReceiverPendingIntent(Context context, String type , int code) {
         Intent intent = new Intent(NotificationStatusBarReceiver.ACTION_STATUS_BAR);
         intent.putExtra(NotificationStatusBarReceiver.EXTRA, type);
         return PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_UPDATE_CURRENT);
