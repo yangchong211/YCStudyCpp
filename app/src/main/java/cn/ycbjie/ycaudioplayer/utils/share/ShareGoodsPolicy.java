@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import cn.ycbjie.ycaudioplayer.utils.app.DoShareUtils;
 import cn.ycbjie.ycaudioplayer.utils.file.FileSaveUtils;
+import cn.ycbjie.ycaudioplayer.utils.share.bitmap.GoodShareBitmap;
+import cn.ycbjie.ycaudioplayer.utils.share.bitmap.GoodShareCircleBitmap;
 
 /**
  * <pre>
@@ -35,8 +37,8 @@ public class ShareGoodsPolicy extends BaseSharePolicy {
     @Override
     void shareFriendCircle(ShareTypeBean shareTypeBean, final Context context) {
         super.shareFriendCircle(shareTypeBean, context);
-        GoodShareBitmap goodShareBitmap = new GoodShareBitmap(context);
-        goodShareBitmap.setData(shareTypeBean,new GoodShareBitmap.onLoadFinishListener() {
+        GoodShareCircleBitmap goodShareCircleBitmap = new GoodShareCircleBitmap(context);
+        goodShareCircleBitmap.setData(shareTypeBean,new GoodShareCircleBitmap.onLoadFinishListener() {
             @Override
             public void listener(Bitmap bmp, boolean isSuccess) {
                 if (bmp!=null && isSuccess){

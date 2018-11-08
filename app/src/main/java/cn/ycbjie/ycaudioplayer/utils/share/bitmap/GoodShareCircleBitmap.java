@@ -1,4 +1,4 @@
-package cn.ycbjie.ycaudioplayer.utils.share;
+package cn.ycbjie.ycaudioplayer.utils.share.bitmap;
 
 
 import android.content.Context;
@@ -12,6 +12,8 @@ import java.util.concurrent.Callable;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.utils.app.ImageUtil;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareDetailBean;
+import cn.ycbjie.ycaudioplayer.utils.share.ShareTypeBean;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
 import cn.ycbjie.ycthreadpoollib.callback.AsyncCallback;
 
@@ -24,30 +26,33 @@ import cn.ycbjie.ycthreadpoollib.callback.AsyncCallback;
  *     revise:
  * </pre>
  */
-public class GoodShareBitmap {
+public class GoodShareCircleBitmap {
 
     private Context mContext;
-    private ImageView mIvImg;
+    private ImageView mIvImage;
     private TextView mTvTitle;
+    private ImageView mIvCode;
     private final View view;
 
 
-    public GoodShareBitmap(Context context){
+    public GoodShareCircleBitmap(Context context){
         mContext = context;
-        view = View.inflate(context, R.layout.view_share_goods, null);
+        view = View.inflate(context, R.layout.view_share_circle_goods, null);
         bindView(view);
     }
 
     private void bindView(View view) {
-        mIvImg = view.findViewById(R.id.iv_img);
+        mIvImage = view.findViewById(R.id.iv_image);
         mTvTitle = view.findViewById(R.id.tv_title);
+        mIvCode = view.findViewById(R.id.iv_code);
     }
 
     public void setData(ShareTypeBean shareTypeBean , final onLoadFinishListener listener){
         ShareDetailBean detailBean = (ShareDetailBean) shareTypeBean;
         this.mListener = listener;
         mTvTitle.setText(detailBean.getTitle());
-        ImageUtil.loadImgByPicasso(mContext,detailBean.getImage(),R.drawable.image_default,mIvImg);
+        ImageUtil.loadImgByPicasso(mContext,detailBean.getImage(),R.drawable.image_default,mIvImage);
+        mIvCode.setBackgroundResource(R.drawable.icon_mine_wx);
         PoolThread executor = BaseApplication.getInstance().getExecutor();
         executor.setName("getBitmapFromView");
         executor.async(new Callable<Bitmap>() {

@@ -5,6 +5,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 
+import java.util.concurrent.TimeUnit;
+
+import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
+import cn.ycbjie.ycthreadpoollib.PoolThread;
+
 
 /**
  * <pre>
@@ -20,25 +25,26 @@ public class KillSelfService extends Service {
     /**
      * 关闭应用后多久重新启动
      */
-    private Handler handler;
     private String PackageName;
 
     public KillSelfService() {
-        handler = new Handler();
     }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
         long stopDelayed = intent.getLongExtra("Delayed", 2000);
         PackageName = intent.getStringExtra("PackageName");
-        handler.postDelayed(new Runnable() {
+        PoolThread executor = BaseApplication.getInstance().getExecutor();
+        executor.setName("KillSelfService");
+        executor.setDelay(stopDelayed, TimeUnit.MILLISECONDS);
+        executor.execute(new Runnable() {
             @Override
             public void run() {
                 Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(PackageName);
                 startActivity(LaunchIntent);
                 KillSelfService.this.stopSelf();
             }
-        },stopDelayed);
+        });
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -47,12 +53,4 @@ public class KillSelfService extends Service {
         return null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(handler!=null){
-            handler.removeCallbacksAndMessages(null);
-            handler = null;
-        }
-    }
 }

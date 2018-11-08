@@ -71,7 +71,6 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
     private var fragments = mutableListOf<Fragment>()
     private var pageAdapter : BasePagerAdapter? = null
     private var index: Int = 0      //定义具体的类型
-    private var a = 0           //自动识别是int类型，通常不需要指定变量的类型
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.kotlin_menu_main,menu)
@@ -217,7 +216,7 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
         })
     }
 
-    class PagerChangeListener(activity: AndroidActivity) : ViewPager.OnPageChangeListener {
+    class PagerChangeListener constructor(activity: AndroidActivity) : ViewPager.OnPageChangeListener {
         private var weakActivity: WeakReference<AndroidActivity>? = null
         init {
             this.weakActivity = WeakReference(activity)
@@ -312,26 +311,5 @@ class AndroidActivity : BaseActivity<AndroidPresenter>(){
      *
      */
 
-//    val y = 1
-//    val x: String = y as String
-//    // 上面的代码表示将y强转为String类型，如果y为null，那么将不能转换成String，
-//    // 因为String是不可空的类型，那么就会抛出一个异常，所以如果y的类型是可空类型的话，
-//    // 那么强转的类型就必须是可空的
-//    val x1: String? = y as String?
-//    init {
-//        //test()
-//    }
-//
-//    private fun test(){
-//        //for (item in collection) print(item)
-//        var i = 5
-//        if (i in 1..10) { // 等同于 1 <= i && i <= 10
-//            println(i)
-//        }
-//
-//        if(x is String){
-//
-//        }
-//    }
 
 }

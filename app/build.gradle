@@ -315,7 +315,8 @@ repositories {
     mavenCentral()
 }
 
-
+//美团瓦力打包配置插件
+//关于使用脚本打包，可以参考：https://github.com/Jay-Goo/ProtectedApkResignerForWalle
 walle {
     // 指定渠道包的输出路径
     // app/build/outputs/channels路径
@@ -333,6 +334,7 @@ static String[] getSigningProperties(boolean isDebug) {
     File propFile = new File('sign.properties')
     if(propFile.canRead()){
         if (propFile.exists()) {
+            println 'YCAudioPlayer signing.properties is found'
             Properties props = new Properties()
             props.load(new FileInputStream(propFile))
             if (props != null && props.containsKey('STORE_FILE')

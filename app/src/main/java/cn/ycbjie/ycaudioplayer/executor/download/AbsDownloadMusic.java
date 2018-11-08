@@ -105,6 +105,8 @@ public abstract class AbsDownloadMusic implements IExecutor<Void> {
         } catch (Throwable th) {
             th.printStackTrace();
             ToastUtils.showShort("下载失败");
+        } finally {
+
         }
     }
 

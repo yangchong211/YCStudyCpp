@@ -18,8 +18,11 @@ import javax.net.ssl.X509TrustManager;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.api.http.HttpInterceptor;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
+import cn.ycbjie.ycaudioplayer.ui.advert.model.api.AdvertApi;
+import cn.ycbjie.ycaudioplayer.ui.advert.model.bean.AdvertCommon;
 import cn.ycbjie.ycaudioplayer.utils.app.InterceptorUtils;
 import cn.ycbjie.ycaudioplayer.utils.app.JsonUtils;
+import io.reactivex.Observable;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -39,8 +42,6 @@ public class RetrofitWrapper {
 
     private static RetrofitWrapper instance;
     private Retrofit mRetrofit;
-    private final OkHttpClient.Builder builder;
-
 
     public  static RetrofitWrapper getInstance(String url){
         if(instance==null){
@@ -60,12 +61,29 @@ public class RetrofitWrapper {
 
 
     private RetrofitWrapper(String url) {
-        builder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient = getOkHttpClient();
+        //获取实例
+        mRetrofit = new Retrofit
+                //设置OKHttpClient,如果不设置会提供一个默认的
+                .Builder()
+                //设置baseUrl
+                .baseUrl(url)
+                //添加Gson转换器
+                .addConverterFactory(GsonConverterFactory.create(JsonUtils.getJson()))
+                //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+
+    private OkHttpClient getOkHttpClient(){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         //拦截日志，依赖
         builder.addInterceptor(new HttpInterceptor());
         builder.addInterceptor(InterceptorUtils.getHttpLoggingInterceptor(true));
-        OkHttpClient build = builder.build();
+
 
         //拦截日志，自定义拦截日志
         //builder.addInterceptor(new LogInterceptor("YC"));
@@ -94,9 +112,9 @@ public class RetrofitWrapper {
         //InterceptorUtils.addCookie(builder);
 
         // Install the all-trusting trust manager
-        initSSL();
+        initSSL(builder);
         //设置读取超时时间，连接超时时间，写入超时时间值
-        initTimeOut();
+        initTimeOut(builder);
         if(BuildConfig.IS_DEBUG){
             //不需要错误重连
             builder.retryOnConnectionFailure(false);
@@ -104,24 +122,10 @@ public class RetrofitWrapper {
             //错误重连
             builder.retryOnConnectionFailure(true);
         }
-
-
-        //获取实例
-        mRetrofit = new Retrofit
-                //设置OKHttpClient,如果不设置会提供一个默认的
-                .Builder()
-                //设置baseUrl
-                .baseUrl(url)
-                //添加Gson转换器
-                .addConverterFactory(GsonConverterFactory.create(JsonUtils.getJson()))
-                //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(build)
-                .build();
+        return builder.build();
     }
 
-
-    private void initSSL() {
+    private void initSSL(OkHttpClient.Builder builder) {
         try {
             final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 @SuppressLint("TrustAllX509TrustManager")
@@ -158,7 +162,7 @@ public class RetrofitWrapper {
     }
 
 
-    private void initTimeOut() {
+    private void initTimeOut(OkHttpClient.Builder builder) {
         builder.readTimeout(20000, TimeUnit.SECONDS);
         builder.connectTimeout(10000, TimeUnit.SECONDS);
         builder.writeTimeout(20000, TimeUnit.SECONDS);

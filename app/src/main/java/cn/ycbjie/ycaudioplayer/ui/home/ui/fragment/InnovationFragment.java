@@ -12,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.pedaily.yc.ycdialoglib.popupWindow.CustomPopupWindow;
+import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import com.yc.cn.ycbannerlib.BannerView;
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
 
@@ -191,6 +194,44 @@ public class InnovationFragment extends BaseLazyFragment {
 
             @Override
             public void onBindView(View headerView) {
+                final TextView tv_content = headerView.findViewById(R.id.tv_content);
+                tv_content.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        tv_content.setBackgroundColor(activity.getResources().getColor(R.color.alpha_40_black));
+                        View contentView = LayoutInflater.from(activity)
+                                .inflate(R.layout.pop_layout_copy,null);
+                        TextView tv_copy = contentView.findViewById(R.id.tv_copy);
+                        final CustomPopupWindow popWindow = new CustomPopupWindow.PopupWindowBuilder(activity)
+                                //.setView(R.layout.pop_layout)
+                                .setView(contentView)
+                                .setFocusable(true)
+                                //弹出popWindow时，背景是否变暗
+                                .enableBackgroundDark(false)
+                                //控制亮度
+                                .setBgDarkAlpha(0.0f)
+                                .setOutsideTouchable(true)
+                                //.setAnimationStyle(R.style.popWindowStyle)
+                                .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss() {
+                                        //对话框销毁时
+                                        tv_content.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                                    }
+                                })
+                                .create()
+                                .showAsDropDown(tv_content, 0, 10);
+
+                        tv_copy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popWindow.dismiss();
+                                ToastUtils.showRoundRectToast("复制内容");
+                            }
+                        });
+                        return false;
+                    }
+                });
 
             }
         });

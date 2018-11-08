@@ -26,18 +26,35 @@ public class StudyAdapter extends RecyclerArrayAdapter<String> {
 
     private class VideoPlayerViewHolder extends BaseViewHolder<String> {
 
-        ImageView iv_movie_photo;
-        TextView tv_movie_title , tv_movie_directors ,tv_movie_casts,tv_movie_genres ,tv_movie_rating_rate;
-        View view_color;
+        TextView tv_title;
 
         VideoPlayerViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_study_news);
+            tv_title = getView(R.id.tv_title);
         }
 
         @Override
         public void setData(String data) {
             super.setData(data);
-
+            tv_title.setText(data);
+            if (mItemLongClickListener!=null){
+                tv_title.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return mItemLongClickListener.onLongClick(tv_title,getAdapterPosition());
+                    }
+                });
+            }
         }
     }
+
+    public void setOnLongClickListener(OnLongClickListener listener){
+        this.mItemLongClickListener = listener;
+    }
+    private OnLongClickListener mItemLongClickListener;
+
+    public interface OnLongClickListener {
+        boolean onLongClick(View view , int position);
+    }
+
 }

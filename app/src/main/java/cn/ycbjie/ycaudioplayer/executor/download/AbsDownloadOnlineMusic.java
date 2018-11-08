@@ -136,10 +136,10 @@ public abstract class AbsDownloadOnlineMusic extends AbsDownloadMusic {
     }
 
 
-    private void downloadFile(String lrclink, String lrcDir, String lrcFileName) {
+    private void downloadFile(String picUrl, String picUrlDir, String lrcFileName) {
         FileDownloader.getImpl()
-                .create(lrclink)
-                .setPath(lrcDir)
+                .create(picUrl)
+                .setPath(picUrlDir)
                 .setListener(new FileDownloadListener() {
                     @Override
                     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {

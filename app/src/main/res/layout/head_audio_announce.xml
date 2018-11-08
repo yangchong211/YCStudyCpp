@@ -12,6 +12,7 @@
         android:gravity="center_vertical"
         android:padding="10dp">
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,7 +90,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_btn_bg"
+            android:background="@drawable/shape_btn_bg1"
             android:gravity="center"
             android:padding="10dp"
             android:textSize="14sp"

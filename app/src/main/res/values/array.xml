@@ -43,7 +43,7 @@
 
     <!--首页底部导航栏文字-->
     <string-array name="button_view_title">
-        <item>饺子播放器</item>
+        <item>玩Android</item>
         <item>封装播放器</item>
         <item>仿优酷[Vp]</item>
         <item>仿优酷[Jz]</item>

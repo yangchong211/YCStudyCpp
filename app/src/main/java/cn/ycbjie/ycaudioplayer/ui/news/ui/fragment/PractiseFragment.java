@@ -172,6 +172,7 @@ public class PractiseFragment extends BaseLazyFragment {
         buttonAdapter = new BaseDelegateAdapter(activity,
                 linearLayoutHelper, R.layout.view_vlayout_button, 1, Constant.ViewType.TYPE_VIEW);
         mAdapters.add(buttonAdapter);
+
     }
 
     private void initListHotView() {

@@ -26,6 +26,7 @@ import org.yczbj.ycrefreshviewlib.YCRefreshView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
@@ -277,6 +278,7 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
                         addHeader(onlineMusicList);
                         adapter.addAll(onlineMusicList.getSong_list());
                         recyclerView.showRecycler();
+                        setOnLineMusic(onlineMusicList);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -298,6 +300,18 @@ public class OnlineMusicActivity extends BaseActivity implements View.OnClickLis
 
                     }
                 });
+    }
+
+    private void setOnLineMusic(OnlineMusicList onlineMusicList) {
+        List<OnlineMusicList.SongListBean> song_list = onlineMusicList.getSong_list();
+        for (int a=0 ; a<song_list.size() ; a++){
+            AudioBean audioBean = new AudioBean();
+            audioBean.setId(song_list.get(a).getSong_id());
+            audioBean.setTitle(song_list.get(a).getTitle());
+            audioBean.setArtist(song_list.get(a).getArtist_name());
+            audioBean.setAlbum(song_list.get(a).getAlbum_800_800());
+            audioBean.setDuration(song_list.get(a).getFile_duration()*1000);
+        }
     }
 
 

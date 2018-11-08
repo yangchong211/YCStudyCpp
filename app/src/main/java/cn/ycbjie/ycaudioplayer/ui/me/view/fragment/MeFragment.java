@@ -70,8 +70,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     TextView btnExit;
     @Bind(R.id.tv_author)
     TextView tvAuthor;
-    @Bind(R.id.tv_kotlin)
-    TextView tvKotlin;
     private MainActivity activity;
 
     @Override
@@ -106,7 +104,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         rlMeFeedBack.setOnClickListener(this);
         rlMePhone.setOnClickListener(this);
         btnExit.setOnClickListener(this);
-        tvKotlin.setOnClickListener(this);
     }
 
     @Override
@@ -144,9 +141,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.btn_exit:
                 exit();
-                break;
-            case R.id.tv_kotlin:
-                ActivityUtils.startActivity(AndroidActivity.class);
                 break;
             default:
                 break;

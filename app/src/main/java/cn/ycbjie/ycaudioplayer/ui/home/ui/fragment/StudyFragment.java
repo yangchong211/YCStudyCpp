@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
+import com.pedaily.yc.ycdialoglib.popupWindow.CustomPopupWindow;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import com.yc.cn.ycbannerlib.BannerView;
 import com.yc.cn.ycbannerlib.banner.util.SizeUtil;
@@ -85,10 +87,49 @@ public class StudyFragment extends BaseFragment {
     public void initData() {
         List<String> data = new ArrayList<>();
         for(int a=0 ; a<10 ; a++){
-            data.add("假数据"+a);
+            data.add("吴文杰是个大神级别的人物"+a);
         }
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
+        adapter.setOnLongClickListener(new StudyAdapter.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view, int position) {
+                //设置点击是view置灰色
+                view.setBackgroundColor(activity.getResources().getColor(R.color.alpha_20_black));
+                int measuredHeight = view.getMeasuredHeight();
+                int measuredWidth = view.getMeasuredWidth();
+                View contentView = LayoutInflater.from(activity)
+                        .inflate(R.layout.pop_layout_copy,null);
+                TextView tv_copy = contentView.findViewById(R.id.tv_copy);
+                final CustomPopupWindow popWindow = new CustomPopupWindow.PopupWindowBuilder(activity)
+                        //.setView(R.layout.pop_layout)
+                        .setView(contentView)
+                        .setFocusable(true)
+                        //弹出popWindow时，背景是否变暗
+                        .enableBackgroundDark(false)
+                        //控制亮度
+                        .setBgDarkAlpha(0.0f)
+                        .setOutsideTouchable(true)
+                        //.setAnimationStyle(R.style.popWindowStyle)
+                        .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                //对话框销毁时，设置view恢复为白色
+                                view.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                            }
+                        })
+                        .create()
+                        .showAsDropDown(view, measuredWidth/2, - (int) (2.5*measuredHeight));
+                tv_copy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popWindow.dismiss();
+                        ToastUtils.showRoundRectToast("复制内容");
+                    }
+                });
+                return true;
+            }
+        });
     }
 
 

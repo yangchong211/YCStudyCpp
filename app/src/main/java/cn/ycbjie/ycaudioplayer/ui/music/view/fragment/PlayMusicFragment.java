@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -25,13 +26,10 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.pedaily.yc.ycdialoglib.dialogFragment.BottomDialogFragment;
-
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
-
 import java.io.File;
 import java.util.List;
-
 import butterknife.Bind;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
@@ -41,7 +39,6 @@ import cn.ycbjie.ycaudioplayer.executor.search.AbsSearchLrc;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnPlayerEventListener;
 import cn.ycbjie.ycaudioplayer.model.enums.PlayModeEnum;
-import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
 import cn.ycbjie.ycaudioplayer.ui.music.view.adapter.DialogMusicListAdapter;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
@@ -94,7 +91,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     YCLrcCustomView lrcView;
     @Bind(R.id.sb_volume)
     SeekBar sbVolume;
-    private MainActivity activity;
+    private FragmentActivity activity;
     private int mLastProgress;
     /**
      * 是否拖进度，默认是false
@@ -133,7 +130,7 @@ public class PlayMusicFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (MainActivity) context;
+        activity = (FragmentActivity) context;
     }
 
     @Override
