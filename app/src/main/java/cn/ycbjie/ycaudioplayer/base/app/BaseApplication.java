@@ -7,13 +7,19 @@ import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import java.net.Proxy;
 
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.callback.BaseLifecycleCallback;
+import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
 import cn.ycbjie.ycaudioplayer.inter.callback.LogCallback;
-import cn.ycbjie.ycaudioplayer.service.InitializeService;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeAboutActivity;
 import cn.ycbjie.ycaudioplayer.ui.me.view.activity.MeSettingActivity;
 import cn.ycbjie.ycthreadpoollib.PoolThread;
@@ -75,7 +81,24 @@ public class BaseApplication extends Application {
         BaseAppHelper.get().init(this);
         initAutoSizeConfig();
         initThreadPool();
-        InitializeService.start(this);
+        //初始化配置信息
+        BaseConfig.INSTANCE.initConfig();
+        initDownLoadLib();
+    }
+
+
+    /**
+     * 初始化下载库
+     */
+    private void initDownLoadLib() {
+        FileDownloader.setupOnApplicationOnCreate(BaseApplication.getInstance())
+                .connectionCreator(new FileDownloadUrlConnection
+                        .Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000)
+                        .readTimeout(15_000)
+                        .proxy(Proxy.NO_PROXY)
+                ))
+                .commit();
     }
 
 

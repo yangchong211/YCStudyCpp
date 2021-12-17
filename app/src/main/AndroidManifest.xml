@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -17,21 +18,24 @@
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!--给aidl多进程通信，服务加入权限验证功能-->
-    <permission android:name="aidl.AppInfoService"
-        android:protectionLevel="normal"/>
+<!--    <permission android:name="aidl.AppInfoService"-->
+<!--        android:protectionLevel="normal"/>-->
 
     <!--编译报错：Manifest merger failed : Attribute application@label value=(@string/app_name)-->
     <!--该错误的原因是工程A和工程B中的AndroidManifest.xml文件中都使用了app name，合并manifest的过程出现了问题。-->
@@ -40,8 +44,8 @@
     <application
         android:name=".base.app.BaseApplication"
         android:allowBackup="true"
-        android:icon="${app_player_icon}"
-        android:label="${app_player_name}"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:replace="android:icon,android:label"
@@ -125,18 +129,9 @@
         <activity android:name=".kotlin.view.activity.NavWebsiteActivity"/>
         <activity android:name=".kotlin.view.activity.AndroidSearchActivity"/>
 
-        <service android:name=".service.InitializeService"/>
         <service android:name=".service.PlayService" />
         <service android:name=".service.KillSelfService"/>
         <service android:name=".service.AppLogService"/>
-        <service android:name=".service.AppInfoService"
-            android:process=":remote"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="cn.ycbjie.ycaudioplayer.service.aidl.AppInfoService"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </service>
 
 
         <receiver android:name=".receiver.NotificationStatusBarReceiver">

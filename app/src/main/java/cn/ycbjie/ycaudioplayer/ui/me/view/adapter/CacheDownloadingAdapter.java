@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.db.dl.TaskFileDownloadListener;
@@ -32,7 +33,6 @@ import cn.ycbjie.ycaudioplayer.db.dl.TasksManagerModel;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnCompleteListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
-import cn.ycbjie.ycaudioplayer.utils.binding.Bind;
 import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 /**
@@ -159,17 +159,17 @@ public class CacheDownloadingAdapter extends RecyclerView.Adapter<CacheDownloadi
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements TaskViewHolderImp {
 
-        @Bind(R.id.iv_download)
+        @BindView(R.id.iv_download)
         ImageView ivDownload;
-        @Bind(R.id.tv_state)
+        @BindView(R.id.tv_state)
         TextView tvState;
-        @Bind(R.id.ll_download)
+        @BindView(R.id.ll_download)
         LinearLayout llDownload;
-        @Bind(R.id.pb)
+        @BindView(R.id.pb)
         ProgressBar pb;
-        @Bind(R.id.iv_more)
+        @BindView(R.id.iv_more)
         ImageView ivMore;
-        @Bind(R.id.iv_check)
+        @BindView(R.id.iv_check)
         ImageView ivCheck;
 
         private int position;

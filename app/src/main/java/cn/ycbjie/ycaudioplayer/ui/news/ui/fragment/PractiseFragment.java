@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseDelegateAdapter;
@@ -27,9 +27,9 @@ import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 
 public class PractiseFragment extends BaseLazyFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.refresh_view)
+    @BindView(R.id.refresh_view)
     SwipeRefreshLayout refreshView;
 
     /**

@@ -22,7 +22,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.db.dl.TaskViewHolderImp;
@@ -165,17 +165,17 @@ public class DialogListAdapter extends RecyclerView.Adapter<DialogListAdapter.Vi
         private int position;
         public int id;
 
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_time)
+        @BindView(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.iv_download)
+        @BindView(R.id.iv_download)
         ImageView ivDownload;
-        @Bind(R.id.circle_pb)
+        @BindView(R.id.circle_pb)
         CircleProgressbar circlePb;
-        @Bind(R.id.tv_state)
+        @BindView(R.id.tv_state)
         TextView tvState;
-        @Bind(R.id.ll_download)
+        @BindView(R.id.ll_download)
         LinearLayout llDownload;
 
 

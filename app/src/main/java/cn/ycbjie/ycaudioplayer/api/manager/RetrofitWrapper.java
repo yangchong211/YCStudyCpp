@@ -93,14 +93,14 @@ public class RetrofitWrapper {
 
         //添加网络缓存缓存
         //创建Cache
-        if(BuildConfig.IS_DEBUG){
-            File httpCacheDirectory = new File("OkHttpCache");
-            Cache cache = new Cache(httpCacheDirectory, Constant.CACHE_MAXSIZE);
-            builder.cache(cache);
-            //添加网络拦截器
-            builder.addNetworkInterceptor(InterceptorUtils.getCacheInterceptor());
-            builder.addInterceptor(InterceptorUtils.getCacheInterceptor());
-        }
+//        if(BuildConfig.IS_DEBUG){
+//            File httpCacheDirectory = new File("OkHttpCache");
+//            Cache cache = new Cache(httpCacheDirectory, Constant.CACHE_MAXSIZE);
+//            builder.cache(cache);
+//            //添加网络拦截器
+//            builder.addNetworkInterceptor(InterceptorUtils.getCacheInterceptor());
+//            builder.addInterceptor(InterceptorUtils.getCacheInterceptor());
+//        }
 
 
         //添加统一请求拦截器
@@ -115,13 +115,8 @@ public class RetrofitWrapper {
         initSSL(builder);
         //设置读取超时时间，连接超时时间，写入超时时间值
         initTimeOut(builder);
-        if(BuildConfig.IS_DEBUG){
-            //不需要错误重连
-            builder.retryOnConnectionFailure(false);
-        }else {
-            //错误重连
-            builder.retryOnConnectionFailure(true);
-        }
+        //错误重连
+        builder.retryOnConnectionFailure(true);
         return builder.build();
     }
 

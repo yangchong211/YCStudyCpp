@@ -31,7 +31,7 @@ import org.yczbj.ycrefreshviewlib.item.SpaceViewItemLine;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
@@ -46,7 +46,7 @@ import cn.ycbjie.ycaudioplayer.ui.home.ui.adapter.StudyAdapter;
 
 public class StudyFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
     private MainActivity activity;
     private StudyAdapter adapter;

@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 import java.util.List;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
@@ -36,21 +36,21 @@ public class OnLineMusicAdapter extends RecyclerArrayAdapter<OnLineSongListInfo>
 
     public class ViewHolder extends BaseViewHolder<OnLineSongListInfo> {
 
-        @Bind(R.id.tv_profile)
+        @BindView(R.id.tv_profile)
         TextView tvProfile;
-        @Bind(R.id.ll_title)
+        @BindView(R.id.ll_title)
         LinearLayout llTitle;
-        @Bind(R.id.iv_cover)
+        @BindView(R.id.iv_cover)
         ImageView ivCover;
-        @Bind(R.id.tv_music_1)
+        @BindView(R.id.tv_music_1)
         TextView tvMusic1;
-        @Bind(R.id.tv_music_2)
+        @BindView(R.id.tv_music_2)
         TextView tvMusic2;
-        @Bind(R.id.tv_music_3)
+        @BindView(R.id.tv_music_3)
         TextView tvMusic3;
-        @Bind(R.id.v_divider)
+        @BindView(R.id.v_divider)
         View vDivider;
-        @Bind(R.id.fl_music)
+        @BindView(R.id.fl_music)
         FrameLayout flMusic;
 
         ViewHolder(ViewGroup parent) {

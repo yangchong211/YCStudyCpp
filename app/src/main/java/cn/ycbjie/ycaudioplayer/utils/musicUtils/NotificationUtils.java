@@ -1,8 +1,11 @@
 package cn.ycbjie.ycaudioplayer.utils.musicUtils;
 
+import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +19,8 @@ import cn.ycbjie.ycaudioplayer.receiver.NotificationStatusBarReceiver;
 import cn.ycbjie.ycaudioplayer.service.PlayService;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 import cn.ycbjie.ycaudioplayer.model.bean.AudioBean;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 public class NotificationUtils {
@@ -43,7 +48,7 @@ public class NotificationUtils {
      */
     public void init(PlayService playService) {
         this.playService = playService;
-        notificationManager = (NotificationManager) playService.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) playService.getSystemService(NOTIFICATION_SERVICE);
     }
 
     /**
@@ -89,37 +94,61 @@ public class NotificationUtils {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+
+        HHNotificationUtils notificationUtils = new HHNotificationUtils(context);
+        notificationUtils
                 .setContentIntent(pendingIntent)
-                .setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
-                //设置通知的图标
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setCustomContentView(getCustomViews(context, music, isPlaying))
-                //设置状态栏的标题
-                //.setTicker("有新消息呢")
-                //设置标题
-                .setContentTitle("这个是标题2")
-                //消息内容
-                .setContentText("这个是内容2")
-                //在右边显示一个数量,等价于setContentInfo函数.如果有设置setContentInfo函数,那么本函数会给覆盖
-                //.setNumber(12)
-                //是否提示一次.true - 如果Notification已经存在状态栏即使在调用notify函数也不会更新
-                //.setOnlyAlertOnce(true)
-                //滚动条,indeterminate true - 不确定的,不会显示进度,false - 根据max和progress情况显示进度条
-                //.setProgress (100, 50, true)
-                //设置默认的提示音
-                //.setDefaults(Notification.DEFAULT_ALL)
-                //设置该通知的优先级
-                //.setPriority(Notification.PRIORITY_DEFAULT)
-                //让通知左右滑的时候不能取消通知
-                .setOngoing(true)
-                //设置该通知的优先级
                 .setPriority(Notification.PRIORITY_DEFAULT)
-                //设置通知时间，默认为系统发出通知的时间，通常不用设置
-                //.setWhen(System.currentTimeMillis())
-                //打开程序后图标消失
-                .setAutoCancel(false);
-        return builder.build();
+                .setContent(getCustomViews(context, music, isPlaying))
+                .setOngoing(true);
+        Notification notification = notificationUtils.getNotification(music.getTitle(), music.getArtist(), R.drawable.default_cover);
+        return notification;
+
+//        String CHANNEL_ONE_ID = "CHANNEL_ONE_ID";
+//        String CHANNEL_ONE_NAME= "CHANNEL_ONE_ID";
+//        NotificationChannel notificationChannel= null;
+//        //进行8.0的判断
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            notificationChannel= new NotificationChannel(CHANNEL_ONE_ID,
+//                    CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH);
+//            notificationChannel.enableLights(true);
+//            notificationChannel.setShowBadge(true);
+//            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+//            NotificationManager manager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+//            manager.createNotificationChannel(notificationChannel);
+//        }
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+//                .setContentIntent(pendingIntent)
+//                .setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
+//                //设置通知的图标
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setCustomContentView(getCustomViews(context, music, isPlaying))
+//                //设置状态栏的标题
+//                //.setTicker("有新消息呢")
+//                //设置标题
+//                .setContentTitle("这个是标题2")
+//                //消息内容
+//                .setContentText("这个是内容2")
+//                //在右边显示一个数量,等价于setContentInfo函数.如果有设置setContentInfo函数,那么本函数会给覆盖
+//                //.setNumber(12)
+//                //是否提示一次.true - 如果Notification已经存在状态栏即使在调用notify函数也不会更新
+//                //.setOnlyAlertOnce(true)
+//                //滚动条,indeterminate true - 不确定的,不会显示进度,false - 根据max和progress情况显示进度条
+//                //.setProgress (100, 50, true)
+//                //设置默认的提示音
+//                //.setDefaults(Notification.DEFAULT_ALL)
+//                //设置该通知的优先级
+//                //.setPriority(Notification.PRIORITY_DEFAULT)
+//                //让通知左右滑的时候不能取消通知
+//                .setOngoing(true)
+//                //设置该通知的优先级
+//                .setPriority(Notification.PRIORITY_DEFAULT)
+//                //设置通知时间，默认为系统发出通知的时间，通常不用设置
+//                //.setWhen(System.currentTimeMillis())
+//                //打开程序后图标消失
+//                .setAutoCancel(false);
+//        return builder.build();
     }
 
 

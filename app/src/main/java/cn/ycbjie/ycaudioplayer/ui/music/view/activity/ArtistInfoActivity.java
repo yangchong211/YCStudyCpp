@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.api.http.OnLineMusicModel;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -33,15 +33,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ArtistInfoActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.ll_artist_info)
+    @BindView(R.id.ll_artist_info)
     LinearLayout llArtistInfo;
-    @Bind(R.id.sv_artist_info)
+    @BindView(R.id.sv_artist_info)
     ScrollView svArtistInfo;
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout llTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     private String tingUid;
 

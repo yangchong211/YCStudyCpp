@@ -70,7 +70,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseAutoFrag
         if (mPresenter != null){
             mPresenter.unSubscribe();
         }
-        ButterKnife.unbind(this);
         initLeakCanary();             //测试内存泄漏，正式一定要隐藏
     }
 

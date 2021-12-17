@@ -9,7 +9,7 @@ import android.widget.TextView;
 import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 
@@ -28,25 +28,25 @@ public class InnovationAdapter extends RecyclerArrayAdapter<String> {
 
     public class VideoPlayerViewHolder extends BaseViewHolder<String> {
 
-        @Bind(R.id.iv_image)
+        @BindView(R.id.iv_image)
         ImageView ivImage;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_count)
+        @BindView(R.id.tv_count)
         TextView tvCount;
-        @Bind(R.id.tv_author)
+        @BindView(R.id.tv_author)
         TextView tvAuthor;
-        @Bind(R.id.tv_school)
+        @BindView(R.id.tv_school)
         TextView tvSchool;
-        @Bind(R.id.tv_content)
+        @BindView(R.id.tv_content)
         TextView tvContent;
-        @Bind(R.id.tv_place)
+        @BindView(R.id.tv_place)
         TextView tvPlace;
-        @Bind(R.id.fl_video)
+        @BindView(R.id.fl_video)
         FrameLayout flVideo;
-        @Bind(R.id.fl_audio)
+        @BindView(R.id.fl_audio)
         FrameLayout flAudio;
-        @Bind(R.id.fl_innovation)
+        @BindView(R.id.fl_innovation)
         FrameLayout flInnovation;
 
         VideoPlayerViewHolder(ViewGroup parent) {

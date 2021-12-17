@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -73,23 +73,23 @@ import cn.ycbjie.ycthreadpoollib.PoolThread;
 public class DetailVideoActivity extends BaseActivity implements DetailVideoContract.View, View.OnClickListener {
 
 
-    @Bind(R.id.rl_video_detail)
+    @BindView(R.id.rl_video_detail)
     RelativeLayout rlVideoDetail;
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
-    @Bind(R.id.tv_title_left)
+    @BindView(R.id.tv_title_left)
     TextView tvTitleLeft;
-    @Bind(R.id.view_left)
+    @BindView(R.id.view_left)
     View viewLeft;
-    @Bind(R.id.tv_title_right)
+    @BindView(R.id.tv_title_right)
     TextView tvTitleRight;
-    @Bind(R.id.view_right)
+    @BindView(R.id.view_right)
     View viewRight;
-    @Bind(R.id.ll_left)
+    @BindView(R.id.ll_left)
     LinearLayout llLeft;
-    @Bind(R.id.ll_right)
+    @BindView(R.id.ll_right)
     LinearLayout llRight;
 
     private boolean isPlayFragmentShow = false;

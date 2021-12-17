@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -55,11 +55,11 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class GuideActivity extends BaseActivity implements GuideContract.View ,EasyPermissions.PermissionCallbacks {
 
-    @Bind(R.id.iv_splash)
+    @BindView(R.id.iv_splash)
     ImageView ivSplash;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tvTime;
-    @Bind(R.id.cdv_time)
+    @BindView(R.id.cdv_time)
     CountDownView cdvTime;
 
     protected Handler mHandler = new Handler(Looper.getMainLooper());

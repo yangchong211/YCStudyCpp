@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
@@ -18,9 +18,9 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class SplashAdActivity extends BaseActivity {
 
 
-    @Bind(R.id.fl_ad)
+    @BindView(R.id.fl_ad)
     FrameLayout flAd;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tvTime;
     private TimeCount timeCount;
     private GLSurfaceView mGLSurfaceView;

@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import java.util.ArrayList
 
-import butterknife.Bind
+import butterknife.BindView
 import cn.ycbjie.ycaudioplayer.R
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity
 import cn.ycbjie.ycaudioplayer.db.dl.TasksManager
@@ -33,19 +33,19 @@ import com.pedaily.yc.ycdialoglib.toast.ToastUtils
 
 class ClassCacheActivity : BaseActivity<AndroidPresenter>(), View.OnClickListener {
 
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     private var flTitleMenu: FrameLayout? = null
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     private var toolbarTitle: TextView? = null
-    @Bind(R.id.tv_title_right)
+    @BindView(R.id.tv_title_right)
     private var tvTitleRight: TextView? = null
-    @Bind(R.id.tv_start_title)
+    @BindView(R.id.tv_start_title)
     internal var tvStartTitle: TextView? = null
-    @Bind(R.id.recyclerView_start)
+    @BindView(R.id.recyclerView_start)
     private var recyclerViewStart: RecyclerView? = null
-    @Bind(R.id.tv_complete_title)
+    @BindView(R.id.tv_complete_title)
     internal var tvCompleteTitle: TextView? = null
-    @Bind(R.id.recyclerView_complete)
+    @BindView(R.id.recyclerView_complete)
     private var recyclerViewComplete: RecyclerView? = null
 
     private var cacheDownloadingAdapter: CacheDownloadingAdapter? = null

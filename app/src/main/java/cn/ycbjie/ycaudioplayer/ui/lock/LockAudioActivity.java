@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
@@ -48,35 +48,35 @@ import cn.ycbjie.ycthreadpoollib.PoolThread;
 public class LockAudioActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.iv_play_page_bg)
+    @BindView(R.id.iv_play_page_bg)
     ImageView ivPlayPageBg;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tvTime;
-    @Bind(R.id.tv_date)
+    @BindView(R.id.tv_date)
     TextView tvDate;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView tvName;
-    @Bind(R.id.tv_author)
+    @BindView(R.id.tv_author)
     TextView tvAuthor;
-    @Bind(R.id.iv_image)
+    @BindView(R.id.iv_image)
     ImageView ivImage;
-    @Bind(R.id.tv_current_time)
+    @BindView(R.id.tv_current_time)
     TextView tvCurrentTime;
-    @Bind(R.id.sb_progress)
+    @BindView(R.id.sb_progress)
     SeekBar sbProgress;
-    @Bind(R.id.tv_total_time)
+    @BindView(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.iv_prev)
+    @BindView(R.id.iv_prev)
     ImageView ivPrev;
-    @Bind(R.id.iv_play)
+    @BindView(R.id.iv_play)
     ImageView ivPlay;
-    @Bind(R.id.iv_next)
+    @BindView(R.id.iv_next)
     ImageView ivNext;
-    @Bind(R.id.ll_content)
+    @BindView(R.id.ll_content)
     LinearLayout llContent;
-    @Bind(R.id.slide_layout)
+    @BindView(R.id.slide_layout)
     SlitherFinishLayout slideLayout;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
     private PlayService playService;
     private int mLastProgress;

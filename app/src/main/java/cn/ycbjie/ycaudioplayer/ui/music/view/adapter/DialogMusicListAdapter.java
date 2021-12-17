@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnListItemClickListener;
@@ -78,13 +78,13 @@ public class DialogMusicListAdapter extends RecyclerView.Adapter<DialogMusicList
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.v_playing)
+        @BindView(R.id.v_playing)
         View vPlaying;
-        @Bind(R.id.iv_del)
+        @BindView(R.id.iv_del)
         ImageView ivDel;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_author)
+        @BindView(R.id.tv_author)
         TextView tvAuthor;
 
         ViewHolder(View itemView) {

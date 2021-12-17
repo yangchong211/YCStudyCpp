@@ -16,7 +16,7 @@ import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.db.dl.TasksManager;
@@ -41,19 +41,19 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
 
 public class ClassDlCacheActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout flTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.tv_title_right)
+    @BindView(R.id.tv_title_right)
     TextView tvTitleRight;
-    @Bind(R.id.tv_start_title)
+    @BindView(R.id.tv_start_title)
     TextView tvStartTitle;
-    @Bind(R.id.recyclerView_start)
+    @BindView(R.id.recyclerView_start)
     RecyclerView recyclerViewStart;
-    @Bind(R.id.tv_complete_title)
+    @BindView(R.id.tv_complete_title)
     TextView tvCompleteTitle;
-    @Bind(R.id.recyclerView_complete)
+    @BindView(R.id.recyclerView_complete)
     RecyclerView recyclerViewComplete;
 
     private CacheDownloadingAdapter cacheDownloadingAdapter;

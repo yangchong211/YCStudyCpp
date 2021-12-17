@@ -16,7 +16,7 @@ import com.ns.yc.ycutilslib.switchButton.SwitchButton;
 
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.R;
@@ -30,49 +30,49 @@ import cn.ycbjie.ycthreadpoollib.callback.ThreadCallback;
 
 public class MeSettingActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.tv_title_left)
+    @BindView(R.id.tv_title_left)
     TextView tvTitleLeft;
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout llTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.iv_right_img)
+    @BindView(R.id.iv_right_img)
     ImageView ivRightImg;
-    @Bind(R.id.ll_search)
+    @BindView(R.id.ll_search)
     FrameLayout llSearch;
-    @Bind(R.id.tv_title_right)
+    @BindView(R.id.tv_title_right)
     TextView tvTitleRight;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.rl_set_go_star)
+    @BindView(R.id.rl_set_go_star)
     RelativeLayout rlSetGoStar;
-    @Bind(R.id.switch_pic)
+    @BindView(R.id.switch_pic)
     SwitchButton switchPic;
-    @Bind(R.id.switch_button)
+    @BindView(R.id.switch_button)
     SwitchButton switchButton;
-    @Bind(R.id.switch_night)
+    @BindView(R.id.switch_night)
     SwitchButton switchNight;
-    @Bind(R.id.tv_set_cache_size)
+    @BindView(R.id.tv_set_cache_size)
     TextView tvSetCacheSize;
-    @Bind(R.id.rl_set_clean_cache)
+    @BindView(R.id.rl_set_clean_cache)
     RelativeLayout rlSetCleanCache;
-    @Bind(R.id.rl_set_revise_pwd)
+    @BindView(R.id.rl_set_revise_pwd)
     RelativeLayout rlSetRevisePwd;
-    @Bind(R.id.tv_is_cert)
+    @BindView(R.id.tv_is_cert)
     TextView tvIsCert;
-    @Bind(R.id.rl_set_phone)
+    @BindView(R.id.rl_set_phone)
     RelativeLayout rlSetPhone;
-    @Bind(R.id.rl_set_about_us)
+    @BindView(R.id.rl_set_about_us)
     RelativeLayout rlSetAboutUs;
-    @Bind(R.id.rl_set_binding)
-    RelativeLayout rlSetBinding;
-    @Bind(R.id.rl_set_feedback)
+    @BindView(R.id.rl_set_binding)
+    RelativeLayout rlSetBindViewing;
+    @BindView(R.id.rl_set_feedback)
     RelativeLayout rlSetFeedback;
-    @Bind(R.id.tv_update_name)
+    @BindView(R.id.tv_update_name)
     TextView tvUpdateName;
-    @Bind(R.id.rl_set_update)
+    @BindView(R.id.rl_set_update)
     RelativeLayout rlSetUpdate;
-    @Bind(R.id.tv_exit)
+    @BindView(R.id.tv_exit)
     TextView tvExit;
 
     // 数组长度代表点击次数
@@ -90,11 +90,7 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initActionBar() {
-        if (BuildConfig.IS_DEBUG) {
-            toolbarTitle.setText("个人设置(3连击切换调试页面)");
-        } else {
-            toolbarTitle.setText("个人设置");
-        }
+        toolbarTitle.setText("个人设置");
     }
 
     @Override
@@ -115,16 +111,7 @@ public class MeSettingActivity extends BaseActivity implements View.OnClickListe
                 cleanCache();
                 break;
             case R.id.toolbar_title:
-                if (BuildConfig.IS_DEBUG) {
-                    // 数组依次先前移动一位
-                    System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-                    // 开机后运行时间
-                    mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-                    if (mHits[0] >= (mHits[mHits.length - 1] - 500)) {
-                        mHits = new long[3];
-                        //ActivityUtils.startActivity(DebugActivity.class);
-                    }
-                }
+
                 break;
             default:
                 break;

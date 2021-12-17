@@ -27,7 +27,7 @@ import org.yczbj.ycrefreshviewlib.adapter.RecyclerArrayAdapter;
 import java.io.File;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
@@ -53,7 +53,7 @@ import cn.ycbjie.ycaudioplayer.utils.share.ShareDialog;
 public class LocalMusicFragment extends BaseLazyFragment implements View.OnClickListener {
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
 
     private MainActivity activity;

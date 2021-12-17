@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'walle'
 apply plugin: 'kotlin-android-extensions'
 
 // 注：需要配置符号表时，使用bugly插件，使APP Crash堆栈的可读性更高，建议您配置符号表文件
@@ -41,82 +40,6 @@ android {
     }
 
 
-    //签名配置，SigningConfig类型
-    //Plugin requires 'APK Signature Scheme v2 Enabled' for debug.
-    //signingConfigs{ } 签名配置需要放到buildTypes{ }之前，否则会报上面错误
-    signingConfigs {
-        debug {
-            v1SigningEnabled true
-            v2SigningEnabled true
-            try {
-                def signP = getSigningProperties(true)
-                storeFile file(signP[0])
-                storePassword signP[1]
-                keyAlias signP[2]
-                keyPassword signP[3]
-            } catch (ex) {
-                ex.printStackTrace()
-            }
-        }
-
-        release {
-            v1SigningEnabled true
-            v2SigningEnabled true
-            try {
-                def signP = getSigningProperties(false)
-                storeFile file(signP[0])
-                storePassword signP[1]
-                keyAlias signP[2]
-                keyPassword signP[3]
-            } catch (ex) {
-                ex.printStackTrace()
-            }
-        }
-    }
-
-    //BuildType类型
-    buildTypes {
-        //会生成一个buildConfig
-        //如果需要修改网址，请修改 url.properties 文件
-        debug {
-            minifyEnabled false
-            buildConfigField "boolean", "IS_DEBUG", "true"
-            buildConfigField "int", "URL_CONFIG", "" + getUrl(0) + ""
-            buildConfigField "String", "BUILD_TIME", "\"" + releaseTime() + "\""
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
-            manifestPlaceholders = [
-                    app_player_name: "叮咚",
-                    app_player_icon: "@drawable/ic_nav_homepage"
-            ]
-        }
-        preview {
-            minifyEnabled false
-            buildConfigField "boolean", "IS_DEBUG", "true"
-            buildConfigField "int", "URL_CONFIG", "" + getUrl(1) + ""
-            buildConfigField "String", "BUILD_TIME", "\"" + releaseTime() + "\""
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [
-                    app_player_name: "叮咚",
-                    app_player_icon: "@drawable/ic_nav_scan"
-            ]
-        }
-        release {
-            minifyEnabled false
-            buildConfigField "boolean", "IS_DEBUG", "false"
-            buildConfigField "int", "URL_CONFIG", "" + getUrl(2) + ""
-            buildConfigField "String", "BUILD_TIME", "\"" + releaseTime() + "\""
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [
-                    app_player_name: "叮咚",
-                    app_player_icon: "@drawable/ic_launcher"
-            ]
-        }
-    }
-
-
     //yc 过滤掉不支持的平台
     //PackagingOptions类型
     packagingOptions {
@@ -133,119 +56,6 @@ android {
             checkReleaseBuilds false
             //移除lint检测的error
             abortOnError false
-        }
-    }
-
-
-    //配置评估监听
-    //思考，这个方法是做什么用的，什么时候调用？
-    gradle.addProjectEvaluationListener(new ProjectEvaluationListener() {
-        @Override
-        void beforeEvaluate(Project project) {
-            //项目配置评估前回调
-            gradle.println("YCAudioPlayer=========ProjectEvaluationListener:beforeEvaluate ${project.getName()}=========")
-        }
-
-        @Override
-        void afterEvaluate(Project project, ProjectState state) {
-            //项目配置评估后回调
-            //如果失败,则failure不为null
-            gradle.println("YCAudioPlayer=========ProjectEvaluationListener:afterEvaluate ${state.executed} ${state.failure}=========")
-            File apkDirs = new File("${project.buildDir}/outputs/channels") //删除之前生成的apk文件
-            if (apkDirs.exists()) {
-                println("YCAudioPlayer  apk 生成目录存在")
-                apkDirs.deleteDir()
-            } else {
-                println("YCAudioPlayer  apk 生成目录不存在")
-            }
-        }
-    })
-
-    //构建监听
-    gradle.addBuildListener(new BuildListener() {
-        @Override
-        void buildStarted(Gradle gradle) {
-            //init.gradle被执行前,构建已经发生,且buildStarted已经被回调,
-            // 因此后续加入的BuildListener都不会再调用buildStarted
-            gradle.println("YCAudioPlayer=========BuildListener:buildStarted=========")
-            defaultMapping=".app/mapping.txt"
-            if(!new File(defaultMapping).exists()){
-                gradle.println("YCAudioPlayer app目录下不存在mapping文件，开始创建新的空文件")
-                new File(defaultMapping).createNewFile()
-            }else{
-                gradle.println("YCAudioPlayer app目录下存在mapping文件，不在创建空文件")
-            }
-        }
-
-        @Override
-        void settingsEvaluated(Settings settings) {
-            //setting.gradle加载和评估配置阶段完成
-            gradle.println("YCAudioPlayer =========BuildListener:settingsEvaluated=========")
-        }
-
-        @Override
-        void projectsLoaded(Gradle gradle) {
-            //项目加载完成
-            gradle.println("YCAudioPlayer =========BuildListener:projectsLoaded=========")
-        }
-
-        @Override
-        void projectsEvaluated(Gradle gradle) {
-            //项目评估配置阶段结束
-            gradle.println("YCAudioPlayer =========BuildListener:projectsEvaluated=========")
-        }
-
-        @Override
-        void buildFinished(BuildResult result) {
-            //构建完成
-            gradle.println("YCAudioPlayer =========BuildListener:buildFinished=========")
-        }
-    })
-
-    project.afterEvaluate {
-        println("YCAudioPlayer start")
-    }
-
-    //当gradle构建完成调用该方法
-    gradle.buildFinished{
-        println("YCAudioPlayer buildFinished")
-
-        //打印git分支     例如：git:feature-3.0.1
-        //println("YCAudioPlayer git:"+rootProject.ext.gitBranch)
-        //打印输出文件的路径
-        //println("YCAudioPlayer parent path:" + outputFileNamePath)
-    }
-
-
-    sourceSets {
-        release {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java', 'src/release/java', 'src/main/aidl']
-            resources.srcDirs = ['src/main/java', 'src/main/aidl']
-            aidl.srcDirs = ['src/main/aidl']
-            //res.srcDirs = ['src/main/res']
-            jniLibs.srcDirs = ['src/main/jniLibs']
-            assets.srcDirs = ['src/main/assets']
-        }
-
-        preview {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java', 'src/release/java', 'src/main/aidl']
-            resources.srcDirs = ['src/main/java', 'src/main/aidl']
-            aidl.srcDirs = ['src/main/aidl']
-            //res.srcDirs = ['src/main/res']
-            jniLibs.srcDirs = ['src/main/jniLibs']
-            assets.srcDirs = ['src/main/assets']
-        }
-
-        debug {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java', 'src/debug/java', 'src/main/aidl']
-            resources.srcDirs = ['src/main/java', 'src/main/aidl']
-            aidl.srcDirs = ['src/main/aidl']
-            //res.srcDirs = ['src/main/res']
-            jniLibs.srcDirs = ['src/main/jniLibs']
-            assets.srcDirs = ['src/main/assets']
         }
     }
 
@@ -281,7 +91,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     //注解
-    compile 'com.jakewharton:butterknife:7.0.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.tencent.bugly:crashreport:2.6.6'
     compile 'com.tencent.bugly:nativecrashreport:3.3.1'
 
@@ -311,83 +122,4 @@ dependencies {
     compile 'cn.yc:YCThreadPoolLib:1.3.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
-}
-
-//美团瓦力打包配置插件
-//关于使用脚本打包，可以参考：https://github.com/Jay-Goo/ProtectedApkResignerForWalle
-walle {
-    // 指定渠道包的输出路径
-    // app/build/outputs/channels路径
-    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
-    // 定制渠道包的APK的文件名称
-    // app-cn.ycbjie.ycaudioplayer-360-release-v1.1-2-20180707-104907
-    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk'
-    // 渠道配置文件
-    // 放在app目录下即可
-    channelFile = new File("${project.getProjectDir()}/channel")
-}
-
-
-static String[] getSigningProperties(boolean isDebug) {
-    File propFile = new File('sign.properties')
-    if(propFile.canRead()){
-        if (propFile.exists()) {
-            println 'YCAudioPlayer signing.properties is found'
-            Properties props = new Properties()
-            props.load(new FileInputStream(propFile))
-            if (props != null && props.containsKey('STORE_FILE')
-                    && props.containsKey('STORE_PASSWORD')
-                    && props.containsKey('KEY_ALIAS')
-                    && props.containsKey('KEY_PASSWORD')) {
-                if (isDebug) {
-                    def signP = new String[4]
-                    signP[0] = props['DEBUG_STORE_FILE']
-                    signP[1] = props['STORE_PASSWORD']
-                    signP[2] = props['KEY_ALIAS']
-                    signP[3] = props['KEY_PASSWORD']
-                    return signP
-                } else {
-                    def signP = new String[4]
-                    signP[0] = props['STORE_FILE']
-                    signP[1] = props['STORE_PASSWORD']
-                    signP[2] = props['KEY_ALIAS']
-                    signP[3] = props['KEY_PASSWORD']
-                    return signP
-                }
-            }else {
-                println 'YCAudioPlayer signing.properties found but some entries are missing'
-            }
-        }
-    } else {
-        println 'YCAudioPlayer signing.properties not found'
-    }
-}
-
-static int getUrl(int status) {
-    //这个文件不可写注释
-    //读取工程目录下url.properties文件
-    File propFile = new File('url.properties')
-    if(!propFile.canRead()){
-        println 'YCAudioPlayer url.properties not found'
-        return
-    }
-    if (propFile.exists()) {
-        Properties props = new Properties()
-        props.load(new FileInputStream(propFile))
-        switch (status) {
-            case 0:
-                return Integer.parseInt(props['TEST_URL'])      //测试
-            case 1:
-                return Integer.parseInt(props['PREVIEW_URL'])   //仿真
-            case 2:
-                return Integer.parseInt(props['RELEASE_URL'])   //线上
-            default:
-                return Integer.parseInt(props['RELEASE_URL'])   //线上
-        }
-    }
-    return 2        //线上
-}
-
 

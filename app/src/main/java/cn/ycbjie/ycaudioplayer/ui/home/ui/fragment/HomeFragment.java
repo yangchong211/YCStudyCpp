@@ -14,7 +14,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.base.BaseFragmentFactory;
@@ -34,17 +34,17 @@ import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
 public class HomeFragment extends BaseFragment {
 
 
-    @Bind(R.id.iv_menu)
+    @BindView(R.id.iv_menu)
     ImageView ivMenu;
-    @Bind(R.id.stl_layout)
+    @BindView(R.id.stl_layout)
     SegmentTabLayout stlLayout;
-    @Bind(R.id.ll_other)
+    @BindView(R.id.ll_other)
     LinearLayout llOther;
-    @Bind(R.id.fl_search)
+    @BindView(R.id.fl_search)
     FrameLayout flSearch;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.vp_content)
+    @BindView(R.id.vp_content)
     ViewPager vpContent;
 
     private String[] mStudyTitles = {"视频", "文件"};

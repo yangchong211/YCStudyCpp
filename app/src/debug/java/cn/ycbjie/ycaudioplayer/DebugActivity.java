@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.utils.app.RestartAppUtils;
@@ -19,19 +19,19 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class DebugActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout llTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.tv_state)
+    @BindView(R.id.tv_state)
     TextView tvState;
-    @Bind(R.id.change_test)
+    @BindView(R.id.change_test)
     RadioButton changeTest;
-    @Bind(R.id.change_preview)
+    @BindView(R.id.change_preview)
     RadioButton changePreview;
-    @Bind(R.id.change_release)
+    @BindView(R.id.change_release)
     RadioButton changeRelease;
-    @Bind(R.id.tv_restart_app)
+    @BindView(R.id.tv_restart_app)
     TextView tvRestartApp;
 
 

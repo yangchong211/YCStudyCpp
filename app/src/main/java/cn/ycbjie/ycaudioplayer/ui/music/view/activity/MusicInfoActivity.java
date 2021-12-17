@@ -22,7 +22,7 @@ import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import java.io.File;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -32,45 +32,45 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 public class MusicInfoActivity extends BaseActivity {
 
-    @Bind(R.id.iv_menu)
+    @BindView(R.id.iv_menu)
     ImageView ivMenu;
-    @Bind(R.id.stl_layout)
+    @BindView(R.id.stl_layout)
     SegmentTabLayout stlLayout;
-    @Bind(R.id.ll_other)
+    @BindView(R.id.ll_other)
     LinearLayout llOther;
-    @Bind(R.id.fl_search)
+    @BindView(R.id.fl_search)
     FrameLayout flSearch;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.iv_music_info_cover)
+    @BindView(R.id.iv_music_info_cover)
     ImageView ivMusicInfoCover;
-    @Bind(R.id.et_music_info_title)
+    @BindView(R.id.et_music_info_title)
     EditText etMusicInfoTitle;
-    @Bind(R.id.layout_music_info_title)
+    @BindView(R.id.layout_music_info_title)
     TextInputLayout layoutMusicInfoTitle;
-    @Bind(R.id.et_music_info_artist)
+    @BindView(R.id.et_music_info_artist)
     EditText etMusicInfoArtist;
-    @Bind(R.id.label_music_info_artist)
+    @BindView(R.id.label_music_info_artist)
     TextInputLayout labelMusicInfoArtist;
-    @Bind(R.id.et_music_info_album)
+    @BindView(R.id.et_music_info_album)
     EditText etMusicInfoAlbum;
-    @Bind(R.id.label_music_info_album)
+    @BindView(R.id.label_music_info_album)
     TextInputLayout labelMusicInfoAlbum;
-    @Bind(R.id.tv_music_info_duration)
+    @BindView(R.id.tv_music_info_duration)
     EditText tvMusicInfoDuration;
-    @Bind(R.id.label_music_info_duration)
+    @BindView(R.id.label_music_info_duration)
     TextInputLayout labelMusicInfoDuration;
-    @Bind(R.id.tv_music_info_file_name)
+    @BindView(R.id.tv_music_info_file_name)
     EditText tvMusicInfoFileName;
-    @Bind(R.id.label_music_info_file_name)
+    @BindView(R.id.label_music_info_file_name)
     TextInputLayout labelMusicInfoFileName;
-    @Bind(R.id.tv_music_info_file_size)
+    @BindView(R.id.tv_music_info_file_size)
     EditText tvMusicInfoFileSize;
-    @Bind(R.id.label_music_info_file_size)
+    @BindView(R.id.label_music_info_file_size)
     TextInputLayout labelMusicInfoFileSize;
-    @Bind(R.id.tv_music_info_file_path)
+    @BindView(R.id.tv_music_info_file_path)
     EditText tvMusicInfoFilePath;
-    @Bind(R.id.label_music_info_file_path)
+    @BindView(R.id.label_music_info_file_path)
     TextInputLayout labelMusicInfoFilePath;
     private AudioBean mMusic;
     private File mMusicFile;

@@ -23,7 +23,7 @@ import com.ns.yc.ycutilslib.activityManager.AppManager;
 
 import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
@@ -41,34 +41,34 @@ import cn.ycbjie.ycaudioplayer.utils.share.ShareTypeBean;
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
-    @Bind(R.id.iv_menu)
+    @BindView(R.id.iv_menu)
     ImageView ivMenu;
-    @Bind(R.id.stl_layout)
+    @BindView(R.id.stl_layout)
     SegmentTabLayout stlLayout;
-    @Bind(R.id.ll_other)
+    @BindView(R.id.ll_other)
     LinearLayout llOther;
-    @Bind(R.id.fl_search)
+    @BindView(R.id.fl_search)
     FrameLayout flSearch;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.rl_me_collect)
+    @BindView(R.id.rl_me_collect)
     RelativeLayout rlMeCollect;
-    @Bind(R.id.rl_me_question)
+    @BindView(R.id.rl_me_question)
     RelativeLayout rlMeQuestion;
-    @Bind(R.id.rl_me_setting)
+    @BindView(R.id.rl_me_setting)
     RelativeLayout rlMeSetting;
-    @Bind(R.id.rl_me_feed_back)
+    @BindView(R.id.rl_me_feed_back)
     RelativeLayout rlMeFeedBack;
-    @Bind(R.id.ll_timer)
+    @BindView(R.id.ll_timer)
     LinearLayout llTimer;
 
-    @Bind(R.id.tv_me_phone_number)
+    @BindView(R.id.tv_me_phone_number)
     TextView tvMePhoneNumber;
-    @Bind(R.id.rl_me_phone)
+    @BindView(R.id.rl_me_phone)
     LinearLayout rlMePhone;
-    @Bind(R.id.btn_exit)
+    @BindView(R.id.btn_exit)
     TextView btnExit;
-    @Bind(R.id.tv_author)
+    @BindView(R.id.tv_author)
     TextView tvAuthor;
     private MainActivity activity;
 
@@ -212,6 +212,5 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

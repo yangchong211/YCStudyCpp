@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.app.BaseApplication;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
@@ -53,47 +53,47 @@ import cn.ycbjie.ycthreadpoollib.PoolThread;
 
 public class PlayMusicFragment extends BaseFragment implements View.OnClickListener, OnPlayerEventListener {
 
-    @Bind(R.id.iv_play_page_bg)
+    @BindView(R.id.iv_play_page_bg)
     ImageView ivPlayPageBg;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.tv_artist)
+    @BindView(R.id.tv_artist)
     TextView tvArtist;
-    @Bind(R.id.iv_share)
+    @BindView(R.id.iv_share)
     ImageView ivShare;
-    @Bind(R.id.iv_playing_fav)
+    @BindView(R.id.iv_playing_fav)
     ImageView ivPlayingFav;
-    @Bind(R.id.iv_playing_down)
+    @BindView(R.id.iv_playing_down)
     ImageView ivPlayingDown;
-    @Bind(R.id.iv_playing_cmt)
+    @BindView(R.id.iv_playing_cmt)
     ImageView ivPlayingCmt;
-    @Bind(R.id.iv_playing_more)
+    @BindView(R.id.iv_playing_more)
     ImageView ivPlayingMore;
-    @Bind(R.id.ll_music_tool)
+    @BindView(R.id.ll_music_tool)
     LinearLayout llMusicTool;
-    @Bind(R.id.tv_current_time)
+    @BindView(R.id.tv_current_time)
     TextView tvCurrentTime;
-    @Bind(R.id.sb_progress)
+    @BindView(R.id.sb_progress)
     SeekBar sbProgress;
-    @Bind(R.id.tv_total_time)
+    @BindView(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.iv_mode)
+    @BindView(R.id.iv_mode)
     ImageView ivMode;
-    @Bind(R.id.iv_prev)
+    @BindView(R.id.iv_prev)
     ImageView ivPrev;
-    @Bind(R.id.iv_play)
+    @BindView(R.id.iv_play)
     ImageView ivPlay;
-    @Bind(R.id.iv_next)
+    @BindView(R.id.iv_next)
     ImageView ivNext;
-    @Bind(R.id.iv_other)
+    @BindView(R.id.iv_other)
     ImageView ivOther;
-    @Bind(R.id.ll_content)
+    @BindView(R.id.ll_content)
     LinearLayout llContent;
-    @Bind(R.id.lrc_view)
+    @BindView(R.id.lrc_view)
     YCLrcCustomView lrcView;
-    @Bind(R.id.sb_volume)
+    @BindView(R.id.sb_volume)
     SeekBar sbVolume;
     private FragmentActivity activity;
     private int mLastProgress;

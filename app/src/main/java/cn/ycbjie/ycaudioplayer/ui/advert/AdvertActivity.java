@@ -10,7 +10,7 @@ import com.ns.yc.yccountdownviewlib.CountDownView;
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -26,11 +26,11 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class AdvertActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.iv_splash)
+    @BindView(R.id.iv_splash)
     ImageView ivSplash;
-    @Bind(R.id.cdv_time)
+    @BindView(R.id.cdv_time)
     CountDownView cdvTime;
-    @Bind(R.id.ll_bottom)
+    @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
 
     private AdvertCommon.Splash mSplashAd;

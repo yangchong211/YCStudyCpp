@@ -17,7 +17,7 @@ import org.yczbj.ycrefreshviewlib.viewHolder.BaseViewHolder;
 
 import java.text.SimpleDateFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.model.bean.VideoBean;
@@ -38,17 +38,17 @@ public class LocalVideoAdapter extends RecyclerArrayAdapter<VideoBean> {
     public class LocalViewHolder extends BaseViewHolder<VideoBean> {
 
 
-        @Bind(R.id.v_playing)
+        @BindView(R.id.v_playing)
         View vPlaying;
-        @Bind(R.id.iv_cover)
+        @BindView(R.id.iv_cover)
         ImageView ivCover;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_artist)
+        @BindView(R.id.tv_artist)
         TextView tvArtist;
-        @Bind(R.id.iv_more)
+        @BindView(R.id.iv_more)
         ImageView ivMore;
-        @Bind(R.id.v_divider)
+        @BindView(R.id.v_divider)
         View vDivider;
 
         LocalViewHolder(ViewGroup parent) {

@@ -29,7 +29,7 @@ import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.ui.detail.view.activity.DetailVideoActivity;
@@ -54,7 +54,7 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
  */
 public class InnovationFragment extends BaseLazyFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
     private MainActivity activity;
     private InnovationAdapter adapter;

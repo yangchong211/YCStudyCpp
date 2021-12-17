@@ -11,7 +11,7 @@ import org.yczbj.ycvideoplayerlib.VideoPlayerController;
 import org.yczbj.ycvideoplayerlib.VideoPlayerManager;
 import org.yczbj.ycvideoplayerlib.listener.OnCompletedListener;
 import org.yczbj.ycvideoplayerlib.listener.OnVideoBackListener;
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseFragment;
 import cn.ycbjie.ycaudioplayer.model.bean.VideoBean;
@@ -28,7 +28,7 @@ import cn.ycbjie.ycaudioplayer.ui.home.ui.activity.LocalVideoActivity;
  */
 public class LocalVideoFragment extends BaseFragment {
 
-    @Bind(R.id.video_player)
+    @BindView(R.id.video_player)
     VideoPlayer videoPlayer;
     private LocalVideoActivity activity;
 

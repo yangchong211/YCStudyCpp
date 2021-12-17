@@ -33,7 +33,7 @@ import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.constant.Constant;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
@@ -64,27 +64,27 @@ import static com.meituan.android.walle.WalleChannelReader.*;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @Bind(R.id.fl_main)
+    @BindView(R.id.fl_main)
     FrameLayout flMain;
-    @Bind(R.id.iv_play_bar_cover)
+    @BindView(R.id.iv_play_bar_cover)
     ImageView ivPlayBarCover;
-    @Bind(R.id.tv_play_bar_title)
+    @BindView(R.id.tv_play_bar_title)
     TextView tvPlayBarTitle;
-    @Bind(R.id.tv_play_bar_artist)
+    @BindView(R.id.tv_play_bar_artist)
     TextView tvPlayBarArtist;
-    @Bind(R.id.iv_play_bar_list)
+    @BindView(R.id.iv_play_bar_list)
     ImageView ivPlayBarList;
-    @Bind(R.id.iv_play_bar_play)
+    @BindView(R.id.iv_play_bar_play)
     ImageView ivPlayBarPlay;
-    @Bind(R.id.iv_play_bar_next)
+    @BindView(R.id.iv_play_bar_next)
     ImageView ivPlayBarNext;
-    @Bind(R.id.pb_play_bar)
+    @BindView(R.id.pb_play_bar)
     ProgressBar pbPlayBar;
-    @Bind(R.id.fl_play_bar)
+    @BindView(R.id.fl_play_bar)
     FrameLayout flPlayBar;
-    @Bind(R.id.ctl_table)
+    @BindView(R.id.ctl_table)
     CommonTabLayout ctlTable;
-    @Bind(R.id.ll_main)
+    @BindView(R.id.ll_main)
     LinearLayout llMain;
 
     private Bundle bundle;

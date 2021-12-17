@@ -41,7 +41,7 @@ import com.pedaily.yc.ycdialoglib.toast.ToastUtils;
 
 import org.jetbrains.annotations.NotNull;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.BuildConfig;
 import cn.ycbjie.ycaudioplayer.R;
@@ -61,17 +61,17 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 public class WebViewActivity extends BaseActivity {
 
 
-    @Bind(R.id.webView)
+    @BindView(R.id.webView)
     ScrollWebView mWebView;
-    @Bind(R.id.pb)
+    @BindView(R.id.pb)
     ProgressBar pb;
-    @Bind(R.id.ll_web_view)
+    @BindView(R.id.ll_web_view)
     LinearLayout llWebView;
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout llTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     public String url;
     private String name;
@@ -427,10 +427,6 @@ public class WebViewActivity extends BaseActivity {
         // 在加载资源时通知主机应用程序发生SSL错误。
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            if (BuildConfig.IS_DEBUG) {
-                handler.proceed();
-                return;
-            }
             super.onReceivedSslError(view, handler, error);
             LogUtils.e("WebViewActivity-----onReceivedSslError-------" + error.getUrl());
 

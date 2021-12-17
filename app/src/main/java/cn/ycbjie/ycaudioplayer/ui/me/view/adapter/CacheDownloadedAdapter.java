@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.db.dl.TasksManagerModel;
@@ -69,9 +69,9 @@ public class CacheDownloadedAdapter extends RecyclerView.Adapter<CacheDownloaded
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.iv_more)
+        @BindView(R.id.iv_more)
         ImageView ivMore;
 
         MyViewHolder(View view) {

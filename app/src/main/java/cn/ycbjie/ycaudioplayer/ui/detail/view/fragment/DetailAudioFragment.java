@@ -35,7 +35,7 @@ import org.yczbj.ycvideoplayerlib.VideoPlayerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.BaseAppHelper;
 import cn.ycbjie.ycaudioplayer.constant.BaseConfig;
@@ -59,25 +59,25 @@ import cn.ycbjie.ycaudioplayer.utils.logger.AppLogUtils;
  */
 public class DetailAudioFragment extends BaseFragment implements View.OnClickListener , OnPlayerEventListener {
 
-    @Bind(R.id.ll_title_menu)
+    @BindView(R.id.ll_title_menu)
     FrameLayout flTitleMenu;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tv_current_time)
+    @BindView(R.id.tv_current_time)
     TextView tvCurrentTime;
-    @Bind(R.id.sb_progress)
+    @BindView(R.id.sb_progress)
     SeekBar sbProgress;
-    @Bind(R.id.tv_total_time)
+    @BindView(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.iv_prev)
+    @BindView(R.id.iv_prev)
     ImageView ivPrev;
-    @Bind(R.id.iv_play)
+    @BindView(R.id.iv_play)
     ImageView ivPlay;
-    @Bind(R.id.iv_next)
+    @BindView(R.id.iv_next)
     ImageView ivNext;
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
 
     private Activity activity;

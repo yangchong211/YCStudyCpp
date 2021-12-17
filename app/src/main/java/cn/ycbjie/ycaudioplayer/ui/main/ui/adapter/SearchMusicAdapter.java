@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.inter.listener.OnMoreClickListener;
@@ -57,13 +57,13 @@ public class SearchMusicAdapter extends RecyclerView.Adapter<SearchMusicAdapter.
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.iv_cover)
+        @BindView(R.id.iv_cover)
         ImageView ivCover;
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.tv_artist)
+        @BindView(R.id.tv_artist)
         TextView tvArtist;
-        @Bind(R.id.iv_more)
+        @BindView(R.id.iv_more)
         ImageView ivMore;
 
         VideoViewHolder(View itemView) {

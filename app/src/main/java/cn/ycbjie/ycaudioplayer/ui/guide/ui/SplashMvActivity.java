@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseActivity;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
@@ -22,15 +22,15 @@ import cn.ycbjie.ycstatusbarlib.bar.StateAppBar;
 
 public class SplashMvActivity extends BaseActivity {
 
-    @Bind(R.id.fl_ad)
+    @BindView(R.id.fl_ad)
     FrameLayout flAd;
-    @Bind(R.id.fl_main)
+    @BindView(R.id.fl_main)
     FrameLayout flMain;
-    @Bind(R.id.fl)
+    @BindView(R.id.fl)
     LinearLayout fl;
-    @Bind(R.id.iv_ad)
+    @BindView(R.id.iv_ad)
     ImageView ivAd;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tvTime;
 
 

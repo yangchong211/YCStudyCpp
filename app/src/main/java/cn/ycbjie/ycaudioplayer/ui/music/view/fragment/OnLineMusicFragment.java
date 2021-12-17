@@ -19,7 +19,7 @@ import org.yczbj.ycrefreshviewlib.item.RecycleViewItemLine;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import cn.ycbjie.ycaudioplayer.R;
 import cn.ycbjie.ycaudioplayer.base.view.BaseLazyFragment;
 import cn.ycbjie.ycaudioplayer.ui.main.ui.activity.MainActivity;
@@ -33,7 +33,7 @@ import cn.ycbjie.ycaudioplayer.ui.music.view.activity.OnlineMusicActivity;
  */
 public class OnLineMusicFragment extends BaseLazyFragment {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     YCRefreshView recyclerView;
 
     private MainActivity activity;
