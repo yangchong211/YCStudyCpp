@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/YCAudioPlayer.iml" filepath="$PROJECT_DIR$/.idea/modules/YCAudioPlayer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApTools/YCAudioPlayer.ApTools.iml" filepath="$PROJECT_DIR$/.idea/modules/ApTools/YCAudioPlayer.ApTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AudioAdapter/YCAudioPlayer.AudioAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/AudioAdapter/YCAudioPlayer.AudioAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AudioInterface/YCAudioPlayer.AudioInterface.iml" filepath="$PROJECT_DIR$/.idea/modules/AudioInterface/YCAudioPlayer.AudioInterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/YCAudioPlayer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/YCAudioPlayer.app.iml" />
     </modules>
   </component>
