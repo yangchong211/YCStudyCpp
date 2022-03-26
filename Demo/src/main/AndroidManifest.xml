@@ -18,7 +18,7 @@
     <!--解决办法： tools:replace="android:icon,android:label"-->
     <!--如果需要使用差异化打包-->
     <application
-        android:name=".base.app.BaseApplication"
+        android:name="com.yc.ycaudioplayer.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,12 +27,14 @@
         tools:replace="android:icon,android:label"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.yc.ycaudioplayer.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.yc.ycaudioplayer.video.CameraMainActivity"/>
+        <activity android:name="com.yc.ycaudioplayer.audio.AudioRecordActivity"/>
     </application>
 
 </manifest>

@@ -1,35 +1,29 @@
 apply plugin: 'com.android.library'
-apply from: 'upload.gradle'
+apply from: rootProject.projectDir.absolutePath + "/AudioGradle/audio.gradle"
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion project.ext.androidCompileSdkVersion
+    //buildToolsVersion project.ext.androidBuildToolsVersion
+
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
+        minSdkVersion project.ext.androidMinSdkVersion
+        targetSdkVersion project.ext.androidTargetSdkVersion
+        versionCode 2
+        versionName "1.0.2"
     }
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        abortOnError false
-    }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
+
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project.ext.AppDependencies['appcompat']
     api project(path: ':CameraInterface')
 }
 
-configurations.all {
-//    resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
-    resolutionStrategy.cacheChangingModulesFor 10, 'minutes' // SNAPSHOT
-}

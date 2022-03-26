@@ -1,17 +1,7 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-// 注：需要配置符号表时，使用bugly插件，使APP Crash堆栈的可读性更高，建议您配置符号表文件
-apply plugin: 'bugly'
-bugly {
-    appId = '521262bdd7'
-    appKey = 'e2542a9f-9cd4-4d11-9f22-333e2ea5f4ec'
-    debug = true
-    execute = true
-    upload = true
-}
+apply from: rootProject.projectDir.absolutePath + "/AudioGradle/audio.gradle"
 
 //获取时间
 static def releaseTime() {
@@ -67,63 +57,8 @@ dependencies {
     implementation project(path: ':CameraAdapter')
     implementation project(path: ':CameraAdapter')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //官方库
-    //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:support-v4:27.1.1'
-    compile 'com.android.support:recyclerview-v7:27.1.1'
-    compile 'com.android.support:design:27.1.1'
-    compile 'com.android.support:cardview-v7:27.1.1'
-    compile 'com.android.support:support-annotations:25.3.1'
-    compile 'com.android.support:multidex:1.0.1'
-
-    //网络请求retrofit2+Rx
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    compile 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
-    // Android 支持 Rxjava
-    // 此处一定要注意使用RxJava2的版本
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.11'
-    // Android 支持 Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.4.0'
-    // 衔接 Retrofit & RxJava
-    // 此处一定要注意使用RxJava2的版本
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    // 支持Gson解析
-    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
-
-    //注解
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.tencent.bugly:crashreport:2.6.6'
-    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
-
-    compile 'com.blankj:utilcode:1.12.5'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.bumptech.glide:glide:3.8.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.2'
-    compile 'pub.devrel:easypermissions:1.0.1'
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    compile 'com.liulishuo.filedownloader:library:1.7.2'
-    compile('com.alibaba.android:vlayout:1.2.2@aar') {
-        transitive = true
-    }
-    compile 'me.yokeyword:fragmentation:1.3.3'
-    compile 'com.meituan.android.walle:library:1.1.6'
-    compile 'me.jessyan:autosize:0.9.5'
-
-    compile 'org.yczbj:YCRefreshViewLib:2.5.6'
-    compile 'cn.yc:YCCountDownViewLib:1.0'
-    compile 'cn.yc:YCUtilsLib:1.6.2'
-    compile 'cn.yc:YCDialogLib:3.6.5'
-    compile 'cn.yc:YCBannerLib:1.3.2'
-    compile 'cn.yc:YCVideoPlayerLib:2.4.8'
-    compile 'cn.yc:YCBaseAdapterLib:1.3.2'
-    compile 'cn.yc:YCStatusBarLib:1.4.0'
-    compile 'cn.yc:YCProgressLib:1.2.5'
-    compile 'cn.yc:YCThreadPoolLib:1.3.2'
+    implementation project.ext.AppDependencies['appcompat']
+    implementation project.ext.AppDependencies['media']
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 

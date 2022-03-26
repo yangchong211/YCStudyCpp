@@ -1,34 +1,29 @@
 apply plugin: 'com.android.library'
-apply from: rootProject.projectDir.absolutePath + "/app.gradle"
+apply from: rootProject.projectDir.absolutePath + "/AudioGradle/audio.gradle"
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
-    buildToolsVersion project.ext.androidBuildToolsVersion
+    //buildToolsVersion project.ext.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion project.ext.androidMinSdkVersion
         targetSdkVersion project.ext.androidTargetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.2"
     }
+
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFile('proguard.cfg')
-        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    lintOptions {
-        abortOnError false
-    }
-
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':AudioInterface')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project.ext.AppDependencies['appcompat']
+    api project(path: ':AudioInterface')
 }
+
