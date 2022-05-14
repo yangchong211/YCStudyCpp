@@ -8,10 +8,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AiXunfeiAdapter/YCAudioPlayer.AiXunfeiAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/AiXunfeiAdapter/YCAudioPlayer.AiXunfeiAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AudioAdapter/YCAudioPlayer.AudioAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/AudioAdapter/YCAudioPlayer.AudioAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AudioInterface/YCAudioPlayer.AudioInterface.iml" filepath="$PROJECT_DIR$/.idea/modules/AudioInterface/YCAudioPlayer.AudioInterface.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PhoneCameraAdapter/YCAudioPlayer.CameraAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/PhoneCameraAdapter/YCAudioPlayer.CameraAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CameraAdapter/YCAudioPlayer.CameraAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/CameraAdapter/YCAudioPlayer.CameraAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CameraInterface/YCAudioPlayer.CameraInterface.iml" filepath="$PROJECT_DIR$/.idea/modules/CameraInterface/YCAudioPlayer.CameraInterface.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/YCAudioPlayer.Demo.iml" filepath="$PROJECT_DIR$/.idea/modules/app/YCAudioPlayer.Demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicPlayer/YCAudioPlayer.MusicAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicPlayer/YCAudioPlayer.MusicAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Demo/YCAudioPlayer.Demo.iml" filepath="$PROJECT_DIR$/.idea/modules/Demo/YCAudioPlayer.Demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicAdapter/YCAudioPlayer.MusicAdapter.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicAdapter/YCAudioPlayer.MusicAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicInterface/YCAudioPlayer.MusicInterface.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicInterface/YCAudioPlayer.MusicInterface.iml" />
     </modules>
   </component>

@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply from: rootProject.projectDir.absolutePath + "/AudioGradle/audio.gradle"
+apply from: rootProject.projectDir.absolutePath + "/yc.gradle"
 
 //获取时间
 static def releaseTime() {
@@ -9,16 +7,16 @@ static def releaseTime() {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    //buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     //默认配置，是ProductFlavor类型。它共享给其他ProductFlavor使用
     defaultConfig {
         //applicationId "cn.ycbjie.ycaudioplayer"
-        minSdkVersion 17
-        targetSdkVersion 27
-        versionCode 12
-        versionName "2.1.5"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
         // dex突破65535的限制
         multiDexEnabled true
 
@@ -57,8 +55,8 @@ dependencies {
     implementation project(path: ':CameraAdapter')
     implementation project(path: ':CameraAdapter')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project.ext.AppDependencies['appcompat']
-    implementation project.ext.AppDependencies['media']
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation(rootProject.ext.dependencies["appcompat"])
+    implementation(rootProject.ext.dependencies["annotation"])
+    implementation(rootProject.ext.dependencies["media"])
 }
 

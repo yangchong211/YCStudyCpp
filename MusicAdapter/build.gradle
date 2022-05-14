@@ -1,17 +1,17 @@
 apply plugin: 'com.android.library'
-apply from: rootProject.projectDir.absolutePath + "/AudioGradle/audio.gradle"
+apply from: rootProject.projectDir.absolutePath + "/yc.gradle"
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion project.ext.androidCompileSdkVersion
-    //buildToolsVersion project.ext.androidBuildToolsVersion
-
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    //buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        minSdkVersion project.ext.androidMinSdkVersion
-        targetSdkVersion project.ext.androidTargetSdkVersion
-        versionCode 2
-        versionName "1.0.2"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
+
 
     buildTypes {
         release {
@@ -23,8 +23,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project.ext.AppDependencies['appcompat']
-    implementation project.ext.AppDependencies['media']
+    implementation(rootProject.ext.dependencies["appcompat"])
+    implementation(rootProject.ext.dependencies["annotation"])
+    implementation(rootProject.ext.dependencies["media"])
     implementation 'com.github.yangchong211.YCNotification:NotificationLib:1.0.4'
 }
 
