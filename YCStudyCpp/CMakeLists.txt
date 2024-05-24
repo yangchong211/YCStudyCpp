@@ -42,7 +42,6 @@ set(CMAKE_CXX_STANDARD 17)
 # day14 指针
 # day15 引用
 # day16 时间
-# day17 输入输出
 # day18 数据结构
 # day19 类和对象
 # day20 继承
@@ -57,7 +56,6 @@ set(CMAKE_CXX_STANDARD 17)
 # day28 模版
 # day29 预处理器
 # day30 信号处理
-# day31 多线程
 
 add_executable(YCStudyCC
         main.cpp
@@ -68,7 +66,8 @@ add_executable(YCStudyCC
         study1/day4_array.cpp
         study1/day5_reference.cpp
         study1/day6_val.cpp
-        study1/day7_xsf.cpp
+        # 07.第七天：IO输入和输出
+        day7/day7_io.cpp
         study1/day8_struct_class.cpp
         study1/day9_yuju.cpp
         study1/day10_thread.cpp
@@ -76,19 +75,18 @@ add_executable(YCStudyCC
         study1/day12_array.cpp
         study1/day13_exception.cpp
         study1/day16_time.cpp
-        study1/day17_input.cpp
         study1/day19_class.cpp
         study1/day20_extend.cpp
         study1/day21_overive.cpp
         study1/day22_duotai.cpp
         study1/day23_abs.cpp
-        study1/day24_file_io.cpp
+        day7/day7_file_io.cpp
         study1/day26_memory.cpp
         study1/day27_space.cpp
         study1/day28_template.cpp
         study1/day29_define.cpp
         study1/day30_signal.cpp
-        study1/day32_web.cpp
+        day7/day7_file.cpp
         study1/day33_.cpp
         study2/text.cpp
         study4/5.cpp
@@ -96,4 +94,4 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp )
+        test/StudentManager.cpp day10/day10_pthread.cpp)

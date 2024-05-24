@@ -19,8 +19,6 @@
 
 using namespace std;
 
-//pthread_create 创建单个线程，pthread_exit 销毁线程
-void test1();
 
 //pthread_create 创建多线程
 void test2();
@@ -40,7 +38,6 @@ void test5();
 void test6();
 
 int main() {
-    //test1();
     //test2();
     //test3();
     //test4();
@@ -57,30 +54,6 @@ void *say_hello(void *args) {
         cout << "Hello Yc 2！" << endl;
     }
     return 0;
-}
-
-
-//创建线程  pthread_create 创建一个新的线程，并让它可执行。
-//终止线程  pthread_exit
-void test1() {
-    pthread_t thread;
-    //参数依次是：创建的线程，线程参数，调用的函数，传入的函数参数
-    //hread	        指向线程标识符指针。
-    //attr	        一个不透明的属性对象，可以被用来设置线程属性。您可以指定线程属性对象，也可以使用默认值 NULL。
-    //start_routine	线程运行函数起始地址，一旦线程被创建就会执行。
-    //arg	        运行函数的参数。它必须通过把引用作为指针强制转换为 void 类型进行传递。如果没有传递参数，则使用 NULL。
-    int ret1 = pthread_create(&thread, NULL, say_hello, (void *) &"yc dou bi");
-    //注意，最后一个传入参数，必须使用 & ，否则参数无法传递
-    //int ret = pthread_create(&thread,NULL, say_hello , (void *)"yc dou bi");
-    //创建线程成功时，函数返回 0，若返回值不为 0 则说明创建线程失败。
-    if (ret1 != 0) {
-        cout << "pthread_create error: error_code=" << ret1 << endl;
-    } else {
-        cout << "pthread_create success: " << ret1 << endl;
-    }
-
-    //pthread_exit 用于显式地退出一个线程。
-    //pthread_exit(thread);
 }
 
 

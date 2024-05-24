@@ -26,6 +26,8 @@ void test5_1_1_7();
 void test5_1_2_1();
 //5.1.2.3 把引用作为参数
 void test5_1_2_3();
+//5.1.2.4 把引用作为返回值
+void test5_1_2_4();
 
 //5.2.1.1 指针的算术运算介绍
 void test5_2_1_1();
@@ -54,6 +56,7 @@ int main() {
 
     test5_1_2_1();
     test5_1_2_3();
+    test5_1_2_4();
 
     test5_2_1_1();
     test5_2_1_2();
@@ -224,6 +227,32 @@ void swap(int &x , int &y) {
     x = y;
     y = temp;
 }
+
+double vals[] = {10.1, 12.6, 33.1, 24.1, 50.0};
+double &setValues(int i) {
+    double &ref = vals[i];
+    return ref;
+}
+
+
+//5.1.2.4 把引用作为返回值
+void test5_1_2_4() {
+    //通过使用引用来替代指针，会使 C++ 程序更容易阅读和维护。C++ 函数可以返回一个引用，方式与返回一个指针类似。
+    //当函数返回一个引用时，则返回一个指向返回值的隐式指针。这样，函数就可以放在赋值语句的左边。例如，请看下面这个简单的程序：
+    cout << "改变前的值" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "vals[" << i << "] = ";
+        cout << vals[i] << endl;
+    }
+    setValues(1) = 20.23; // 改变第 2 个元素
+    setValues(3) = 70.8;  // 改变第 4 个元素
+    cout << "改变后的值" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "vals[" << i << "] = ";
+        cout << vals[i] << endl;
+    }
+}
+
 
 //5.2.1.1 指针的算术运算介绍
 void test5_2_1_1() {
