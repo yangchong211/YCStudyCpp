@@ -70,7 +70,7 @@ add_executable(YCStudyCC
         day7/day7_io.cpp
         study1/day8_struct_class.cpp
         study1/day9_yuju.cpp
-        study1/day10_thread.cpp
+        day10/day10_thread.cpp
         study1/day11_num.cpp
         study1/day12_array.cpp
         study1/day13_exception.cpp
