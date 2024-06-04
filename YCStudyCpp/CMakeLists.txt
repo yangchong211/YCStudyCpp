@@ -70,6 +70,8 @@ add_executable(YCStudyCC
         day7/day7_io.cpp
         study1/day8_struct_class.cpp
         study1/day9_yuju.cpp
+        day9/day9_extend.cpp
+        day9/day9_overive.cpp
         day10/day10_thread.cpp
         study1/day11_num.cpp
         study1/day12_array.cpp
@@ -77,8 +79,7 @@ add_executable(YCStudyCC
         study1/day16_time.cpp
         study1/day19_class.cpp
         study1/day20_extend.cpp
-        study1/day21_overive.cpp
-        study1/day22_duotai.cpp
+        day9/day9_duotai.cpp
         study1/day23_abs.cpp
         day7/day7_file_io.cpp
         study1/day26_memory.cpp
@@ -94,4 +95,4 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp day10/day10_pthread.cpp)
+        test/StudentManager.cpp day10/day10_pthread.cpp )
