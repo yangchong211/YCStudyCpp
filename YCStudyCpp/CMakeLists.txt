@@ -80,7 +80,7 @@ add_executable(YCStudyCC
         study1/day19_class.cpp
         study1/day20_extend.cpp
         day9/day9_duotai.cpp
-        study1/day23_abs.cpp
+        day9/day9_abs.cpp
         day7/day7_file_io.cpp
         study1/day26_memory.cpp
         study1/day27_space.cpp
