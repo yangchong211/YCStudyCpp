@@ -17,6 +17,8 @@ void test9_4_1_3();
 void test9_4_2_1();
 //9.4.2.2 访问标签强制抽象
 void test9_4_2_2();
+//9.4.2.3 数据抽象的实例
+void test9_4_2_3();
 //9.4.2.5 数据抽象的好处
 void test9_4_2_5();
 
@@ -27,6 +29,7 @@ int main(){
     test9_4_1_3();
     test9_4_2_1();
     test9_4_2_2();
+    test9_4_2_3();
     test9_4_2_5();
     return 0;
 }
@@ -187,6 +190,36 @@ void test9_4_2_2() {
     int data = abstractClassTag.getData();
     cout << "公共函数可以访问私有成员 " << data << endl;
 }
+
+class Circle {
+    //在上述示例中，Circle类表示一个圆，它有一个私有成员radius表示半径。getArea()是一个公共函数，用于计算圆的面积。
+    //创建了一个Circle对象c，并通过getArea()函数计算了圆的面积。外部代码无法直接访问和修改Circle类的私有成员radius，只能通过公共接口getArea()来获取圆的面积。
+private:
+    double radius;
+public:
+    Circle() {}
+    Circle(double r) {
+        radius = r;
+    }
+    double getArea() {
+        return 3.14 * radius * radius;
+    }
+};
+
+
+//9.4.2.3 数据抽象的实例
+void test9_4_2_3() {
+    cout << "9.4.2.3 数据抽象的实例" << endl;
+    //下面是一个简单的C++数据抽象的实例，展示了如何使用数据抽象来隐藏类的实现细节并提供公共接口：
+    Circle c(5.0);
+    double area = c.getArea();
+    cout << "Area of the circle: " << area  << endl;
+    //这个例子展示了数据抽象的好处。外部代码不需要了解Circle类的内部实现细节，只需要通过公共接口来使用类的功能。
+    //这样可以隐藏类的实现细节，提高代码的封装性和安全性。
+    //通过数据抽象，我们可以将类的实现细节与接口分离，简化了类的使用和理解。
+    //同时，如果需要修改Circle类的实现，只需要保持公共接口的稳定性，而不会影响外部代码的使用。这提高了代码的可维护性和扩展性。
+}
+
 
 //9.4.2.5 数据抽象的好处
 void test9_4_2_5() {
