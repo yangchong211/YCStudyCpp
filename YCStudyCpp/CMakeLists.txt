@@ -53,7 +53,6 @@ set(CMAKE_CXX_STANDARD 17)
 # day25 异常处理
 # day26 动态内存
 # day27 命名空间
-# day28 模版
 # day29 预处理器
 # day30 信号处理
 
@@ -84,7 +83,7 @@ add_executable(YCStudyCC
         day7/day7_file_io.cpp
         study1/day26_memory.cpp
         study1/day27_space.cpp
-        study1/day28_template.cpp
+        day6/day6_template.cpp
         study1/day29_define.cpp
         study1/day30_signal.cpp
         day7/day7_file.cpp
