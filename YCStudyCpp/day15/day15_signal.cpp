@@ -13,12 +13,18 @@ using namespace std;
 void test15_2_1_1();
 //15.2.1.2 信号处理案例
 void test15_2_1_2();
+//15.2.1.3 signal() 函数
+void test15_2_1_3();
+//15.2.1.4 raise() 函数
+void test15_2_1_4();
 
 
 
 int main() {
-    test15_2_1_1();
-    test15_2_1_2();
+//    test15_2_1_1();
+//    test15_2_1_2();
+//    test15_2_1_3();
+    test15_2_1_4();
     return 0;
 }
 
@@ -60,6 +66,11 @@ void test15_2_1_2() {
     raise(SIGINT);
     //在上述示例中，我们定义了一个名为 signalHandlerA 的信号处理函数，它会在接收到SIGINT信号（即键盘中断信号）时被调用。
     //在函数中，我们使用signal()函数将SIGINT信号与 signalHandlerA 函数关联起来。然后，我们使用raise()函数发送SIGINT信号。
+
+    //Running...
+    //Received signal: 2
+
+    //当程序运行时，它会输出"Running..."，然后在接收到SIGINT信号时，会调用 signalHandlerA 函数，并输出"Received signal: 2"（2是SIGINT的信号编号）。
 }
 
 
@@ -72,48 +83,57 @@ void signalHandler( int signum ){
     exit(signum);
 }
 
-//C++ 信号处理库提供了 signal 函数，用来捕获突发事件。以下是 signal() 函数的语法：
-void test1(){
+//15.2.1.3 signal() 函数
+void test15_2_1_3() {
+    //#include <csignal>
+    //void (*signal(int signum, void (*handler)(int)))(int);
+
+    //signal()函数接受两个参数：
+    //signum：表示要设置处理函数的信号编号。可以使用预定义的宏（如SIGINT、SIGTERM等）或信号编号来指定信号。
+    //handler：表示要设置的信号处理函数的指针。可以是函数指针，也可以是SIG_IGN（忽略信号）或SIG_DFL（使用默认处理方式）。
+    cout << "15.2.1.3 signal() 函数" << endl;
     // 注册信号 SIGINT 和信号处理程序
-    //这个函数接收两个参数：第一个参数是要设置的信号的标识符，第二个参数是指向信号处理函数的指针。
-    //函数返回值是一个指向先前信号处理函数的指针。如果先前没有设置信号处理函数，则返回值为 SIG_DFL。
-    //如果先前设置的信号处理函数为 SIG_IGN，则返回值为 SIG_IGN。
+    //signal()函数的返回值是一个指向之前信号处理函数的指针。如果之前没有设置过信号处理函数，则返回SIG_DFL或SIG_IGN。
     signal(SIGINT, signalHandler);
     while(1){
         cout << "Going to sleep...." << endl;
         //功能：执行挂起一段时间，也就是等待一段时间在继续执行
         sleep(1);
     }
-}
 
-//raise() 函数
-//您可以使用函数 raise() 生成信号，该函数带有一个整数信号编号作为参数，语法如下：int raise (signal sig);
-//在这里，sig 是要发送的信号的编号，这些信号包括：SIGINT、SIGABRT、SIGFPE、SIGILL、SIGSEGV、SIGTERM、SIGHUP。
-//以下是我们使用 raise() 函数内部生成信号的实例：
-void test2(){
-    int i = 0;
-    // 注册信号 SIGINT 和信号处理程序
-    signal(SIGINT, signalHandler);
-    while(++i){
-        cout << "Going to sleep...." << endl;
-        if( i == 3 ){
-            raise( SIGINT);
-        }
-        sleep(1);
-    }
-
+    //现在，按 Ctrl+C 来中断程序，您会看到程序捕获信号，程序打印如下内容并退出：
     //Going to sleep....
     //Going to sleep....
     //Going to sleep....
     //Interrupt signal (2) received.
 }
 
-void test3(){
 
+//15.2.1.4 raise() 函数
+void test15_2_1_4() {
+    //raise() 函数
+    //您可以使用函数 raise() 生成信号，该函数带有一个整数信号编号作为参数，语法如下：int raise (signal sig);
+    //在这里，sig 是要发送的信号的编号，这些信号包括：SIGINT、SIGABRT、SIGFPE、SIGILL、SIGSEGV、SIGTERM、SIGHUP。
+    //以下是我们使用 raise() 函数内部生成信号的实例：
+    cout << "15.2.1.4 raise() 函数" << endl;
+    int i = 0;
+    // 注册信号 SIGINT 和信号处理程序
+    signal(SIGINT, signalHandler);
+    while(++i){
+        cout << "Going to sleep...." << endl;
+        if( i == 3 ){
+            //signum：表示要发送的信号编号。可以使用预定义的宏（如SIGINT、SIGTERM等）或信号编号来指定信号。
+            int status = raise( SIGINT);
+            //raise()函数返回一个整数值，表示函数执行的结果。如果成功发送信号，则返回0；否则，返回非零值。
+            cout << "raise return " << status << endl;
+        }
+        sleep(1);
+    }
+
+    //15.2.1.4 raise() 函数
+    //Going to sleep....
+    //Going to sleep....
+    //Going to sleep....
+    //Interrupt signal (2) received.
 }
-
-void test4(){
-
-}
-
 

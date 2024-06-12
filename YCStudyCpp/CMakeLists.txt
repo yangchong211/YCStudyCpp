@@ -84,7 +84,7 @@ add_executable(YCStudyCC
         study1/day26_memory.cpp
         study1/day27_space.cpp
         day6/day6_template.cpp
-        study1/day29_define.cpp
+        day15/day15_define.cpp
         day15/day15_signal.cpp
         day7/day7_file.cpp
         study1/day33_.cpp
