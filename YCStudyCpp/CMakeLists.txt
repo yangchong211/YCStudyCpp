@@ -47,14 +47,10 @@ set(CMAKE_CXX_STANDARD 17)
 # day20 继承
 # day21 重载
 # day22 多态
-# day23 数据抽象
 
 # day24 文件和流
 # day25 异常处理
-# day26 动态内存
 # day27 命名空间
-# day29 预处理器
-# day30 信号处理
 
 add_executable(YCStudyCC
         main.cpp
@@ -81,7 +77,7 @@ add_executable(YCStudyCC
         day9/day9_duotai.cpp
         day9/day9_abs.cpp
         day7/day7_file_io.cpp
-        study1/day26_memory.cpp
+        day12/day26_memory.cpp
         study1/day27_space.cpp
         day6/day6_template.cpp
         day15/day15_define.cpp
