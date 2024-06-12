@@ -23,7 +23,7 @@ set(CMAKE_CXX_STANDARD 17)
 # 17.第十七天：网络通信
 # 18.第十八天：综合案例
 
-
+# https://juejin.cn/post/6947657958419333151
 
 
 # day1 基础教程
@@ -67,7 +67,7 @@ add_executable(YCStudyCC
         study1/day6_val.cpp
         # 07.第七天：IO输入和输出
         day7/day7_io.cpp
-        study1/day8_struct_class.cpp
+        day8/day8_struct_class.cpp
         study1/day9_yuju.cpp
         day9/day9_extend.cpp
         day9/day9_overive.cpp
@@ -85,7 +85,7 @@ add_executable(YCStudyCC
         study1/day27_space.cpp
         day6/day6_template.cpp
         study1/day29_define.cpp
-        study1/day30_signal.cpp
+        day15/day15_signal.cpp
         day7/day7_file.cpp
         study1/day33_.cpp
         study2/text.cpp
@@ -94,4 +94,4 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp day10/day10_pthread.cpp )
+        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp)
