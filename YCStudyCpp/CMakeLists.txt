@@ -77,7 +77,7 @@ add_executable(YCStudyCC
         day9/day9_duotai.cpp
         day9/day9_abs.cpp
         day7/day7_file_io.cpp
-        day12/day26_memory.cpp
+        day12/day12_memory.cpp
         study1/day27_space.cpp
         day6/day6_template.cpp
         day15/day15_define.cpp
@@ -90,4 +90,4 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp day8/day8_namespace.cpp)
+        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp day8/day8_namespace.cpp day12/day12_std_ptr.cpp)
