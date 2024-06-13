@@ -55,7 +55,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(YCStudyCC
         main.cpp
         # 下面是c++
-        study1/day1_basics.cpp
+        day1/day1_basics.cpp
         study1/day2_expression.cpp
         study1/day3_data_type.cpp
         study1/day4_array.cpp
@@ -90,4 +90,4 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp day8/day8_namespace.cpp day12/day12_std_ptr.cpp)
+        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp day8/day8_namespace.cpp day12/day12_std_ptr.cpp day1/day1_hello.cpp day1/day1_designator.cpp)
