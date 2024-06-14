@@ -70,7 +70,7 @@ add_executable(YCStudyCC
         day10/day10_thread.cpp
         study1/day11_num.cpp
         study1/day12_array.cpp
-        study1/day13_exception.cpp
+        day13/day13_exception.cpp
         study1/day16_time.cpp
         study1/day19_class.cpp
         study1/day20_extend.cpp
