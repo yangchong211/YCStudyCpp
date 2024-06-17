@@ -56,7 +56,7 @@ add_executable(YCStudyCC
         main.cpp
         # 下面是c++
         day1/day1_basics.cpp
-        study1/day2_expression.cpp
+        day1/day1_data.cpp
         study1/day3_data_type.cpp
         study1/day4_array.cpp
         study1/day5_reference.cpp
