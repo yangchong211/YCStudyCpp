@@ -57,6 +57,8 @@ add_executable(YCStudyCC
         # 下面是c++
         day1/day1_basics.cpp
         day1/day1_data.cpp
+        day1/day1_hello.cpp
+        day1/day1_designator.cpp
         study1/day3_data_type.cpp
         study1/day4_array.cpp
         study1/day5_reference.cpp
@@ -90,4 +92,10 @@ add_executable(YCStudyCC
         study4/graduateManager.h
         study4/StudentManager.cpp
         study4/StudentManager.h
-        test/StudentManager.cpp day10/day10_pthread.cpp day8/day8_class_template.cpp day8/day8_namespace.cpp day12/day12_std_ptr.cpp day1/day1_hello.cpp day1/day1_designator.cpp day14/day14_stl.cpp day14/day14_algorithms.cpp)
+        test/StudentManager.cpp
+        day10/day10_pthread.cpp
+        day8/day8_class_template.cpp
+        day8/day8_namespace.cpp
+        day12/day12_std_ptr.cpp
+        day14/day14_stl.cpp
+        day14/day14_algorithms.cpp)
