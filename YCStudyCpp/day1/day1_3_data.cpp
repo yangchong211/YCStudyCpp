@@ -5,6 +5,8 @@
 
 #include <iostream>
 using namespace std;
+//之前一些编译器使用 C++11 的编译参数是 -std=c++11
+//g++ -std=c++11 day1_3_data.cpp
 
 
 //1.3.1.1 bool，布尔类型
@@ -22,15 +24,38 @@ void test1_3_1_6();
 //1.3.1.7 wchar_t，宽字符型
 void test1_3_1_7();
 
+//1.3.2.1 signed，有符号类型是一种整数类型
+void test1_3_2_1();
+//1.3.2.2 unsigned，无符号类型是一种整数类型
+void test1_3_2_2();
+//1.3.2.3 short，short是一种有符号短整数类型
+void test1_3_2_3();
+//1.3.2.4 long，有符号长整数类型，通常为32位或64位，范围取决于编译器和平台
+void test1_3_2_4();
+
+//1.3.3.1 size_t，是一种无符号整数类型，用于表示对象的大小或数组的索引
+void test1_3_3_1();
+//1.3.3.2 uint8_t，uint8_t是一种固定宽度的无符号整数类型
+void test1_3_3_2();
+
+
 
 int main() {
-    test1_3_1_1();
-    test1_3_1_2();
-    test1_3_1_3();
-    test1_3_1_4();
-    test1_3_1_5();
-    test1_3_1_6();
-    test1_3_1_7();
+//    test1_3_1_1();
+//    test1_3_1_2();
+//    test1_3_1_3();
+//    test1_3_1_4();
+//    test1_3_1_5();
+//    test1_3_1_6();
+//    test1_3_1_7();
+
+    test1_3_2_1();
+    test1_3_2_2();
+    test1_3_2_3();
+    test1_3_2_4();
+
+    test1_3_3_1();
+    test1_3_3_2();
     return 0;
 }
 
@@ -245,6 +270,108 @@ void test1_3_1_7() {
     int intValue = static_cast<int>(ch3); // 将宽字符转换为整数
     //需要注意的是，wchar_t类型的大小和编码方式可能会因编译器和操作系统的不同而有所变化。在处理宽字符时，需要确保使用正确的编码方式和函数。
 }
+
+
+//1.3.2.1 signed，有符号类型是一种整数类型
+void test1_3_2_1() {
+    //在C++中，signed是一个关键字，用于声明有符号类型的变量。
+    //C++中的整数类型可以分为有符号类型和无符号类型。有符号类型可以表示正数、负数和零，而无符号类型只能表示非负数和零。
+    //当您声明一个整数类型的变量时，如果不显式指定类型为有符号或无符号，默认情况下，int、short、long等整数类型都是有符号的。
+
+    signed int x;      // 声明一个有符号整数变量
+    signed short y;    // 声明一个有符号短整数变量
+    signed long z;     // 声明一个有符号长整数变量
+
+    //需要注意的是，signed关键字在大多数情况下是可选的，因为默认情况下整数类型就是有符号的。
+    //但是，使用signed关键字可以增加代码的可读性和明确性，特别是在与无符号类型进行混合运算时。
+}
+
+
+//1.3.2.2 unsigned，无符号类型是一种整数类型
+void test1_3_2_2() {
+    cout << "1.3.2.2 unsigned，无符号类型是一种整数类型" << endl;
+    //当我们需要处理非负数和零的情况时，可以使用C++中的无符号类型。下面是一些使用无符号类型的案例示例：
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    for (unsigned int i = 0; i < numbers.size(); ++i) {
+        std::cout << numbers[i] << " ";
+    }
+    //在上述示例中，我们使用无符号整数类型unsigned int来迭代遍历numbers向量中的元素。由于向量的大小是非负数，因此使用无符号类型更合适。
+}
+
+
+//1.3.2.3 short，short是一种有符号短整数类型
+void test1_3_2_3() {
+    cout << "1.3.2.3 short，short是一种有符号短整数类型" << endl;
+    short a = 10;
+    int b = 5;
+    int sum = a + b;
+    std::cout << "Sum: " << sum << std::endl;
+    //在上述示例中，我们将一个short类型的变量a和一个int类型的变量b相加。由于short类型会自动提升为int类型进行运算，所以结果也是int类型。
+    //这些示例展示了使用short类型的一些常见情况。short类型通常用于存储较小的有符号整数值，可以节省内存空间。
+}
+
+
+//1.3.2.4 long，有符号长整数类型，通常为32位或64位，范围取决于编译器和平台
+void test1_3_2_4() {
+    cout << "1.3.2.4 long，有符号长整数类型" << endl;
+    long a = 1000000;
+    int b = 500000;
+    long sum = a + b;
+    std::cout << "Sum: " << sum << std::endl;
+    //在上述示例中，我们将一个long类型的变量a和一个int类型的变量b相加。由于int类型会自动提升为long类型进行运算，所以结果也是long类型。
+    //这些示例展示了使用long类型的一些常见情况。long类型通常用于存储较大的有符号整数值。
+}
+
+
+//1.3.3.1 size_t，是一种无符号整数类型，用于表示对象的大小或数组的索引
+void test1_3_3_1() {
+    cout << "1.3.3.1 size_t，是一种无符号整数类型" << endl;
+    //size_t 它是一种 整型 类型，里面保存的是一个整数，就像 int, long 那样。这种整数用来记录一个大小(size)。
+    //size_t 的全称应该是 size type，就是说 一种用来记录大小的数据类型。
+    //通常我们用 sizeof(XXX) 操作，这个操作所得到的结果就是 size_t 类型。
+    //因为 size_t 类型的数据其实是保存了一个整数，所以它也可以做加减乘除，也可以转化为 int 并赋值给 int 类型的变量。
+    int i = 10;
+    int j = 11;
+    size_t size1 = sizeof(i);
+    size_t size2 = sizeof(j);
+    std::cout << "size1: " << size1 << std::endl;
+    std::cout << "size2: " << size2 << std::endl;
+    //size_t类型通常用于与sizeof运算符一起使用，以获取对象或类型的大小。它也常用于表示数组的长度或循环的计数器。
+    size_t size = 10;  // 使用size_t类型声明变量并赋值为10
+    std::cout << "Size: " << size << std::endl;
+}
+
+//1.3.3.2 uint8_t，uint8_t是一种固定宽度的无符号整数类型
+void test1_3_3_2() {
+    cout << "1.3.3.2 uint8_t，uint8_t是一种固定宽度的无符号整数类型" << endl;
+    //数组操作：
+    uint8_t arr[] = {10, 20, 30, 40, 50};
+    for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); ++i) {
+        std::cout << static_cast<int>(arr[i]) << " ";
+    }
+    //在上述示例中，我们使用uint8_t类型的数组arr存储一些无符号8位整数。
+    //然后，我们使用循环遍历数组并打印每个元素。由于uint8_t是一个无符号类型，我们使用static_cast<int>将其转换为int类型以便打印。
+
+
+    //位操作：
+    uint8_t value = 0b10101010;
+    uint8_t mask = 0b00001111;
+    uint8_t result = value & mask;
+    std::cout << static_cast<int>(result) << std::endl;
+    //在上述示例中，我们使用uint8_t类型的变量value存储一个8位的二进制值。
+    //然后，我们定义一个掩码mask，并使用按位与操作符&将value与mask进行位操作。最后，我们打印结果。
+
+
+    //数值范围：
+    std::cout << "Minimum value: " << static_cast<int>(std::numeric_limits<uint8_t>::min()) << std::endl;
+    std::cout << "Maximum value: " << static_cast<int>(std::numeric_limits<uint8_t>::max()) << std::endl;
+    //在上述示例中，我们使用std::numeric_limits<uint8_t>::min()和std::numeric_limits<uint8_t>::max()函数来获取uint8_t类型的最小值和最大值，并将其打印到控制台。
+
+    //这些示例展示了使用uint8_t类型的一些常见情况。uint8_t类型通常用于需要确切8位宽度的无符号整数值的场景。
+
+
+}
+
 
 
 
