@@ -64,7 +64,7 @@ public:
         cin >> year;
         cout << "month： ";
         cin >> month;
-        cout << "day： ";
+        cout << "day3： ";
         cin >> day;
     }
 

@@ -24,13 +24,7 @@ void test2_2();
 //数据类型介绍练习题
 void test2_8();
 
-//其他一些类型
 
-//枚举类型
-void test3_3();
-
-//typedef 声明
-void test4_1();
 
 //类型转换
 void test5_1();
@@ -51,8 +45,6 @@ int main() {
     test2_1();
     test2_2();
     test2_8();
-    test3_3();
-    test4_1();
     test5_1();
     test1_5_1_1();
     test1_5_1_2();
@@ -285,50 +277,6 @@ void test2_8() {
 
 
 
-void test3_3() {
-    //枚举类型
-    //枚举类型(enumeration)是C++中的一种派生数据类型，它是由用户定义的若干枚举常量的集合。
-    //如果枚举没有初始化, 即省掉"=整型常数"时, 则从第一个标识符开始。
-    //例如，下面的代码定义了一个颜色枚举，变量 c 的类型为 color。最后，c 被赋值为 "blue"。
-    enum color {
-        red, green, blue
-    } c;
-    enum day {
-        day1, day2, day3, day4
-    } d;
-    enum yc {
-        tangguo, xinyi, yc
-    };
-    c = blue;
-    d = day1;
-    cout << "color枚举" << c << endl;
-    cout << "day枚举" << d << endl;
-    //默认情况下，第一个名称的值为 0，第二个名称的值为 1，第三个名称的值为 2，以此类推。但是，您也可以给名称赋予一个特殊的值，只需要添加一个初始值即可。
-    //例如，在下面的枚举中，green 的值为 5。blue 的值为 6，因为默认情况下，每个名称都会比它前面一个名称大 1，但 red 的值依然为 0。
-    enum color2 {
-        red2, green2 = 5, blue2
-    };
-    cout << "color2枚举" << red2 << " , " << green2 << " , " << blue2 << endl;
-    //color枚举2
-    //day枚举0
-    //color2枚举0 , 5 , 6
-}
-
-
-//typedef 声明
-void test4_1() {
-    //您可以使用 typedef 为一个已有的类型取一个新的名字。下面是使用 typedef 定义一个新类型的语法：
-    //例如，下面的语句会告诉编译器，feet 是 int 的另一个名称：
-    typedef int feet;
-    //现在，下面的声明是完全合法的，它创建了一个整型变量 distance：
-    feet distance;
-    typedef int yc;
-    yc d;
-    d = 100;
-
-    //typedef 可以声明各种类型名，但不能用来定义变量。用 typedef 可以声明数组类型、字符串类型，使用比较方便。
-    //用typedef只是对已经存在的类型增加一个类型名，而没有创造新的类型。
-}
 
 
 //类型转换

@@ -97,5 +97,5 @@ add_executable(YCStudyCC
         day8/day8_class_template.cpp
         day8/day8_namespace.cpp
         day12/day12_std_ptr.cpp
-        day14/day14_stl.cpp
-        day14/day14_algorithms.cpp day14/day14_fun.cpp)
+        day14/day14_1_stl.cpp
+        day14/day14_2_algorithms.cpp day14/day14_5_fun.cpp day1/day1_4_val.cpp day14/day14_3_iterator.cpp day14/day14_4_adapter.cpp day11/day11_1_synchronization.cpp)
