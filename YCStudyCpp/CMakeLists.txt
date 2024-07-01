@@ -98,4 +98,4 @@ add_executable(YCStudyCC
         day8/day8_namespace.cpp
         day12/day12_std_ptr.cpp
         day14/day14_1_stl.cpp
-        day14/day14_2_algorithms.cpp day14/day14_5_fun.cpp day1/day1_4_val.cpp day14/day14_3_iterator.cpp day14/day14_4_adapter.cpp day11/day11_1_synchronization.cpp day4/day4_1_fun.cpp day4/day4_2_param.cpp day4/day4_3_invoke.cpp day4/day4_3_template.cpp)
+        day14/day14_2_algorithms.cpp day14/day14_5_fun.cpp day1/day1_4_val.cpp day14/day14_3_iterator.cpp day14/day14_4_adapter.cpp day11/day11_1_synchronization.cpp day4/day4_1_fun.cpp day4/day4_2_param.cpp day4/day4_3_invoke.cpp day4/day4_3_template.cpp day3/day3_1_if.cpp day3/day3_2_while.cpp)
