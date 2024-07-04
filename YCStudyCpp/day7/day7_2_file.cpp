@@ -11,6 +11,8 @@ using namespace std;
 void test7_2_1_1();
 //7.2.1.2 默认打开模式
 void test7_2_1_2();
+//7.2.1.3 打开文件同时创建文件
+void test7_2_1_3();
 
 //7.2.2.1 文件流说明
 void test7_2_2_1();
@@ -39,6 +41,7 @@ void test7_2_3_4();
 int main() {
 //    test7_2_1_1();
 //    test7_2_1_2();
+    test7_2_1_3();
 
 //    test7_2_2_1();
 //    test7_2_2_2();
@@ -87,6 +90,26 @@ void test7_2_1_2() {
     //ofstream outfile;
     //outfile.open("file.dat", ios::out | ios::trunc );
 }
+
+//7.2.1.3 打开文件同时创建文件
+void test7_2_1_3() {
+    cout << "7.2.1.3 打开文件同时创建文件" << endl;
+    //在C++中，您可以使用std::ofstream类来打开文件并创建文件（如果文件不存在）。以下是一个示例代码：
+    //std::ofstream file("ycdoubi.txt");
+    //请注意，使用std::ofstream打开文件时，文件将以写入模式打开。如果文件已经存在，它将被截断为零长度。
+    //如果您想以追加模式打开文件，可以使用std::ofstream::app标志，如下所示：这将在打开文件时将文件指针定位到文件末尾，以便在文件中追加内容。
+    std::ofstream file("ycdoubi.txt", std::ios::app);
+    //使用std::ofstream类创建了一个名为file的对象，并传递文件路径作为构造函数的参数。
+    //如果文件不存在，它将被创建。如果无法打开文件，我们可以根据需要进行错误处理。在这个示例中，我们简单地打印了一个错误消息。
+    if (!file) {
+        std::cout << "无法打开文件" << std::endl;
+        return;
+    }
+    //一旦文件打开成功，您可以使用file对象进行文件操作，如写入内容或读取文件。完成后，使用close函数关闭文件。
+    file.close();
+    std::cout << "打开文件同时创建文件" << std::endl;
+}
+
 
 //7.2.2.1 文件流说明
 void test7_2_2_1() {

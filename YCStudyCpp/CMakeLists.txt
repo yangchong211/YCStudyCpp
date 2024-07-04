@@ -61,10 +61,10 @@ add_executable(YCStudyCC
         day1/day1_2_designator.cpp
         study1/day3_data_type.cpp
         study1/day4_array.cpp
-        study1/day5_reference.cpp
+        day5/day5_2_reference.cpp
         study1/day6_val.cpp
         # 07.第七天：IO输入和输出
-        day7/day7_io.cpp
+        day7/day7_1_io.cpp
         day8/day8_struct_class.cpp
         study1/day9_yuju.cpp
         day9/day9_extend.cpp
@@ -84,7 +84,7 @@ add_executable(YCStudyCC
         day6/day6_template.cpp
         day15/day15_define.cpp
         day15/day15_signal.cpp
-        day7/day7_file.cpp
+        day7/day7_2_file.cpp
         study1/day33_.cpp
         study2/text.cpp
         study4/5.cpp
@@ -98,4 +98,4 @@ add_executable(YCStudyCC
         day8/day8_namespace.cpp
         day12/day12_std_ptr.cpp
         day14/day14_1_stl.cpp
-        day14/day14_2_algorithms.cpp day14/day14_5_fun.cpp day1/day1_4_val.cpp day14/day14_3_iterator.cpp day14/day14_4_adapter.cpp day11/day11_1_synchronization.cpp day4/day4_1_fun.cpp day4/day4_2_param.cpp day4/day4_3_invoke.cpp day4/day4_3_template.cpp day3/day3_1_if.cpp day3/day3_2_while.cpp)
+        day14/day14_2_algorithms.cpp day14/day14_5_fun.cpp day1/day1_4_val.cpp day14/day14_3_iterator.cpp day14/day14_4_adapter.cpp day11/day11_1_synchronization.cpp day4/day4_1_fun.cpp day4/day4_2_param.cpp day4/day4_3_invoke.cpp day4/day4_3_template.cpp day3/day3_1_if.cpp day3/day3_2_while.cpp day5/day5_1_reference.cpp)
