@@ -24,6 +24,8 @@ void test7_2_2_3();
 void test7_2_2_4();
 //7.2.2.5 二进制文件的读/写
 void test7_2_2_5();
+//7.2.2.6 实现文件复制
+void test7_2_2_6();
 //7.2.2.7 关闭文件
 void test7_2_2_7();
 
@@ -48,7 +50,9 @@ int main() {
 //    test7_2_2_3();
 //    test7_2_2_4();
 //    test7_2_2_5();
+    test7_2_2_6();
 //    test7_2_2_7();
+
     test7_2_3_1();
     test7_2_3_2();
     test7_2_3_3();
@@ -233,6 +237,32 @@ void test7_2_2_5() {
     } else {
         std::cout << "Failed to open the file for reading." << std::endl;
     }
+}
+
+//7.2.2.6 实现文件复制
+void test7_2_2_6() {
+    cout << "7.2.2.6 实现文件复制" << endl;
+    //使用std::ifstream类打开源文件，并使用std::ofstream类创建目标文件。我们使用std::ios::binary标志来以二进制模式打开文件，以确保正确复制文件的内容。
+    std::ifstream source_file("yc.txt",std::ios::binary);
+    std::ofstream destination_file("ycdoubi.txt",std::ios::binary);
+    if (!source_file) {
+        std::cout << "无法打开源文件" << std::endl;
+        return;
+    }
+    if (!destination_file) {
+        std::cout << "无法创建目标文件" << std::endl;
+        return;
+    }
+    char ch;
+    //使用get函数从源文件逐个字节读取内容，并使用put函数将字节写入目标文件，从而实现文件的复制。这个过程会一直进行，直到源文件的末尾。
+    while (source_file.get(ch)) {
+        destination_file.put(ch);
+    }
+    //请注意，这个示例是逐个字节复制文件的简单实现。对于大型文件，逐个字节的复制可能效率较低。
+    //在实际应用中，您可以使用更高效的方法，如缓冲区复制或使用std::copy函数。
+    source_file.close();
+    destination_file.close();
+    std::cout << "文件复制完成" << std::endl;
 }
 
 //7.2.2.7 关闭文件
