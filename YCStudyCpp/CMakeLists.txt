@@ -55,7 +55,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(YCStudyCC
         main.cpp
         # 下面是c++
-        day1/day1_basics.cpp
+        day1/day1_5_string.cpp
         day1/day1_3_data.cpp
         day1/day1_1_hello.cpp
         day1/day1_2_designator.cpp
